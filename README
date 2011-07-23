@@ -1,0 +1,61 @@
+Football Match Result Database (FMRD) 
+README Document
+
+Objective
+=========
+
+The purpose of the Football Match Result Database is to maintain the 
+match result data needed to support football research activities for 
+the benefit of the football analytics community.
+
+Mission Statement
+=================
+
+The Football Match Result Database will support the following:
+
+• Maintain data on matches that occur within football league com-
+  petitions, whether among national teams or domestic clubs.
+
+• Maintain complete top-level information on the football match, 
+  including match date, competition name and stage, participating 
+  teams, venues, and environmental conditions.
+
+• Maintain complete information on macro-events that occur during 
+  a match, including goals, penalties, disciplinary incidents, 
+  and substitutions.
+
+• Maintain complete information on participating personnel, such 
+  as players, managers, and match referees.
+
+FMRD is Free Software
+=====================
+
+The database and its data application were designed and developed by
+Howard Hamilton, founder of Soccermetrics Research & Consulting, LLC.
+
+The FMRD and its related data-entry applications are free software
+and are distributed according to the GNU General Public License (GPL).
+
+Vital Information
+=================
+
+INSTALLATION instructions can be found in docs/INSTALL.txt.
+
+LICENSING information can be found in docs/COPYING.txt.
+
+USER DOCUMENTATION can be found in docs/manual/fmrd-manual.pdf or fmrd-manual-frameset.html.
+
+SCREENSHOTS of the data entry application are in docs/screenshots/.
+
+Information for DEVELOPERS is in docs/devel/ and the subdirectories therein.
+
+Finally
+=======
+
+If you like the application and it serves your needs, let us know and
+tell a friend.
+
+If you spot a problem or, more importantly, a bug, let the authors know.
+Or, if you're eager, check out a copy of the code from its repository
+and make a contribution.
+
