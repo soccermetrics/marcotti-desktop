@@ -1,0 +1,18 @@
+PyQt4 fundamentals:
+
+* create QApplication object
+* make form object
+* place form in event queue
+* run event loop
+
+form object:
+   - define widgets, layouts
+   - define callbacks (signals/slots)
+
+
+GUI development outline:
+
+* choose form and objects
+* layout objects
+* connect signals to slots
+* preview form

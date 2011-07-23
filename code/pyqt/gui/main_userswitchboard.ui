@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>UserMainSwitchboard</class>
+ <widget class="QMainWindow" name="UserMainSwitchboard">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>360</width>
+    <height>420</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>360</width>
+    <height>420</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>360</width>
+    <height>420</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>FMRD Switchboard</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="0">
+     <layout class="QVBoxLayout" name="verticalLayout_4">
+      <item>
+       <widget class="QGroupBox" name="groupBox">
+        <property name="title">
+         <string>Match Overview</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+        </property>
+        <property name="flat">
+         <bool>false</bool>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout">
+         <item>
+          <widget class="QPushButton" name="compButton">
+           <property name="text">
+            <string>Competitions</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="teamButton">
+           <property name="text">
+            <string>Teams</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="venueButton">
+           <property name="text">
+            <string>Venues</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <spacer name="verticalSpacer">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>40</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QGroupBox" name="groupBox_2">
+        <property name="title">
+         <string>Personnel</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_2">
+         <item>
+          <widget class="QPushButton" name="playerButton">
+           <property name="text">
+            <string>Players</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="refereeButton">
+           <property name="text">
+            <string>Referees</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="managerButton">
+           <property name="text">
+            <string>Managers</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item row="0" column="1">
+     <widget class="Line" name="line">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="2">
+     <widget class="QGroupBox" name="groupBox_3">
+      <property name="title">
+       <string>Match Details</string>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_3">
+       <item>
+        <widget class="QPushButton" name="matchButton">
+         <property name="text">
+          <string>Matches</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="goalButton">
+         <property name="text">
+          <string>Goals</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="penButton">
+         <property name="text">
+          <string>Penalties</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="offenseButton">
+         <property name="text">
+          <string>Offenses</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="subButton">
+         <property name="text">
+          <string>Substitutions</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="switchButton">
+         <property name="text">
+          <string>Position Switches</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>360</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuMain">
+    <property name="title">
+     <string>&amp;Main</string>
+    </property>
+    <addaction name="actionQuit"/>
+   </widget>
+   <widget class="QMenu" name="menuHelp">
+    <property name="title">
+     <string>&amp;Help</string>
+    </property>
+    <addaction name="actionAbout"/>
+   </widget>
+   <addaction name="menuMain"/>
+   <addaction name="menuHelp"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionQuit">
+   <property name="text">
+    <string>&amp;Quit</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Q</string>
+   </property>
+  </action>
+  <action name="actionAbout">
+   <property name="text">
+    <string>&amp;About</string>
+   </property>
+   <property name="shortcut">
+    <string>F1</string>
+   </property>
+  </action>
+  <action name="actionRounds">
+   <property name="text">
+    <string>Rounds</string>
+   </property>
+  </action>
+  <action name="actionWeather_Conditions">
+   <property name="text">
+    <string>Weather Conditions</string>
+   </property>
+  </action>
+  <action name="actionConfederations">
+   <property name="text">
+    <string>Confederations</string>
+   </property>
+  </action>
+  <action name="actionCountries">
+   <property name="text">
+    <string>Countries</string>
+   </property>
+  </action>
+  <action name="actionField_Positions">
+   <property name="text">
+    <string>Field Positions</string>
+   </property>
+  </action>
+  <action name="actionFlank_Positions">
+   <property name="text">
+    <string>Flank Positions</string>
+   </property>
+  </action>
+  <action name="actionPositions">
+   <property name="text">
+    <string>Positions</string>
+   </property>
+  </action>
+  <action name="actionGoal_Events">
+   <property name="text">
+    <string>Goal Events</string>
+   </property>
+  </action>
+  <action name="actionGoal_Strikes">
+   <property name="text">
+    <string>Goal Strikes</string>
+   </property>
+  </action>
+  <action name="actionPenalty_Outcomes">
+   <property name="text">
+    <string>Penalty Outcomes</string>
+   </property>
+  </action>
+  <action name="actionFouls">
+   <property name="text">
+    <string>Fouls</string>
+   </property>
+  </action>
+  <action name="actionCards">
+   <property name="text">
+    <string>Cards</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>actionQuit</sender>
+   <signal>triggered()</signal>
+   <receiver>UserMainSwitchboard</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>170</x>
+     <y>209</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

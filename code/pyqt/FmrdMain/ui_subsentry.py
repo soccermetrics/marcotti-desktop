@@ -1,0 +1,275 @@
+# -*- coding: utf-8 -*-
+
+# Form implementation generated from reading ui file 'subs_entry.ui'
+#
+# Created: Mon Jun 13 01:24:33 2011
+#      by: PyQt4 UI code generator 4.7.2
+#
+# WARNING! All changes made in this file will be lost!
+
+from PyQt4 import QtCore, QtGui
+
+class Ui_subsEntryDlg(object):
+    def setupUi(self, subsEntryDlg):
+        subsEntryDlg.setObjectName("subsEntryDlg")
+        subsEntryDlg.resize(535, 450)
+        subsEntryDlg.setMinimumSize(QtCore.QSize(535, 450))
+        subsEntryDlg.setMaximumSize(QtCore.QSize(535, 450))
+        self.layoutWidget_3 = QtGui.QWidget(subsEntryDlg)
+        self.layoutWidget_3.setGeometry(QtCore.QRect(20, 400, 361, 41))
+        self.layoutWidget_3.setObjectName("layoutWidget_3")
+        self.horizontalLayout_2 = QtGui.QHBoxLayout(self.layoutWidget_3)
+        self.horizontalLayout_2.setObjectName("horizontalLayout_2")
+        self.firstEntry = QtGui.QPushButton(self.layoutWidget_3)
+        self.firstEntry.setMinimumSize(QtCore.QSize(77, 27))
+        self.firstEntry.setMaximumSize(QtCore.QSize(77, 27))
+        self.firstEntry.setText("")
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap(":/images/first.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.firstEntry.setIcon(icon)
+        self.firstEntry.setObjectName("firstEntry")
+        self.horizontalLayout_2.addWidget(self.firstEntry)
+        self.prevEntry = QtGui.QPushButton(self.layoutWidget_3)
+        self.prevEntry.setMinimumSize(QtCore.QSize(77, 27))
+        self.prevEntry.setMaximumSize(QtCore.QSize(77, 27))
+        self.prevEntry.setText("")
+        icon1 = QtGui.QIcon()
+        icon1.addPixmap(QtGui.QPixmap(":/images/prev.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.prevEntry.setIcon(icon1)
+        self.prevEntry.setObjectName("prevEntry")
+        self.horizontalLayout_2.addWidget(self.prevEntry)
+        self.nextEntry = QtGui.QPushButton(self.layoutWidget_3)
+        self.nextEntry.setMinimumSize(QtCore.QSize(77, 27))
+        self.nextEntry.setMaximumSize(QtCore.QSize(77, 27))
+        self.nextEntry.setText("")
+        icon2 = QtGui.QIcon()
+        icon2.addPixmap(QtGui.QPixmap(":/images/next.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.nextEntry.setIcon(icon2)
+        self.nextEntry.setObjectName("nextEntry")
+        self.horizontalLayout_2.addWidget(self.nextEntry)
+        self.lastEntry = QtGui.QPushButton(self.layoutWidget_3)
+        self.lastEntry.setMinimumSize(QtCore.QSize(77, 27))
+        self.lastEntry.setMaximumSize(QtCore.QSize(77, 27))
+        self.lastEntry.setText("")
+        icon3 = QtGui.QIcon()
+        icon3.addPixmap(QtGui.QPixmap(":/images/last.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.lastEntry.setIcon(icon3)
+        self.lastEntry.setObjectName("lastEntry")
+        self.horizontalLayout_2.addWidget(self.lastEntry)
+        self.layoutWidget_4 = QtGui.QWidget(subsEntryDlg)
+        self.layoutWidget_4.setGeometry(QtCore.QRect(10, 6, 391, 121))
+        self.layoutWidget_4.setObjectName("layoutWidget_4")
+        self.gridLayout = QtGui.QGridLayout(self.layoutWidget_4)
+        self.gridLayout.setObjectName("gridLayout")
+        self.label = QtGui.QLabel(self.layoutWidget_4)
+        self.label.setMinimumSize(QtCore.QSize(101, 31))
+        self.label.setMaximumSize(QtCore.QSize(101, 31))
+        self.label.setObjectName("label")
+        self.gridLayout.addWidget(self.label, 0, 0, 1, 1)
+        self.compSelect = QtGui.QComboBox(self.layoutWidget_4)
+        self.compSelect.setMinimumSize(QtCore.QSize(271, 31))
+        self.compSelect.setMaximumSize(QtCore.QSize(271, 31))
+        self.compSelect.setObjectName("compSelect")
+        self.gridLayout.addWidget(self.compSelect, 0, 1, 1, 1)
+        self.label_2 = QtGui.QLabel(self.layoutWidget_4)
+        self.label_2.setMinimumSize(QtCore.QSize(101, 31))
+        self.label_2.setMaximumSize(QtCore.QSize(101, 31))
+        self.label_2.setObjectName("label_2")
+        self.gridLayout.addWidget(self.label_2, 1, 0, 1, 1)
+        self.roundSelect = QtGui.QComboBox(self.layoutWidget_4)
+        self.roundSelect.setMinimumSize(QtCore.QSize(171, 31))
+        self.roundSelect.setMaximumSize(QtCore.QSize(171, 31))
+        self.roundSelect.setObjectName("roundSelect")
+        self.gridLayout.addWidget(self.roundSelect, 1, 1, 1, 1)
+        self.label_3 = QtGui.QLabel(self.layoutWidget_4)
+        self.label_3.setMinimumSize(QtCore.QSize(101, 31))
+        self.label_3.setMaximumSize(QtCore.QSize(101, 31))
+        self.label_3.setObjectName("label_3")
+        self.gridLayout.addWidget(self.label_3, 2, 0, 1, 1)
+        self.matchSelect = QtGui.QComboBox(self.layoutWidget_4)
+        self.matchSelect.setMinimumSize(QtCore.QSize(271, 31))
+        self.matchSelect.setMaximumSize(QtCore.QSize(271, 31))
+        self.matchSelect.setObjectName("matchSelect")
+        self.gridLayout.addWidget(self.matchSelect, 2, 1, 1, 1)
+        self.line = QtGui.QFrame(subsEntryDlg)
+        self.line.setGeometry(QtCore.QRect(20, 130, 391, 16))
+        self.line.setFrameShape(QtGui.QFrame.HLine)
+        self.line.setFrameShadow(QtGui.QFrame.Sunken)
+        self.line.setObjectName("line")
+        self.line_2 = QtGui.QFrame(subsEntryDlg)
+        self.line_2.setGeometry(QtCore.QRect(400, 10, 20, 381))
+        self.line_2.setFrameShape(QtGui.QFrame.VLine)
+        self.line_2.setFrameShadow(QtGui.QFrame.Sunken)
+        self.line_2.setObjectName("line_2")
+        self.layoutWidget = QtGui.QWidget(subsEntryDlg)
+        self.layoutWidget.setGeometry(QtCore.QRect(10, 150, 391, 241))
+        self.layoutWidget.setObjectName("layoutWidget")
+        self.gridLayout_2 = QtGui.QGridLayout(self.layoutWidget)
+        self.gridLayout_2.setObjectName("gridLayout_2")
+        self.label_4 = QtGui.QLabel(self.layoutWidget)
+        self.label_4.setMinimumSize(QtCore.QSize(101, 31))
+        self.label_4.setMaximumSize(QtCore.QSize(101, 31))
+        self.label_4.setObjectName("label_4")
+        self.gridLayout_2.addWidget(self.label_4, 0, 0, 1, 1)
+        self.subsID_display = QtGui.QLineEdit(self.layoutWidget)
+        self.subsID_display.setMaximumSize(QtCore.QSize(120, 27))
+        self.subsID_display.setStyleSheet("background-color: rgb(194, 190, 186);")
+        self.subsID_display.setMaxLength(7)
+        self.subsID_display.setReadOnly(True)
+        self.subsID_display.setObjectName("subsID_display")
+        self.gridLayout_2.addWidget(self.subsID_display, 0, 1, 1, 1)
+        self.label_5 = QtGui.QLabel(self.layoutWidget)
+        self.label_5.setMinimumSize(QtCore.QSize(101, 31))
+        self.label_5.setMaximumSize(QtCore.QSize(101, 31))
+        self.label_5.setObjectName("label_5")
+        self.gridLayout_2.addWidget(self.label_5, 1, 0, 1, 1)
+        self.teamSelect = QtGui.QComboBox(self.layoutWidget)
+        self.teamSelect.setMinimumSize(QtCore.QSize(261, 31))
+        self.teamSelect.setMaximumSize(QtCore.QSize(261, 31))
+        self.teamSelect.setObjectName("teamSelect")
+        self.gridLayout_2.addWidget(self.teamSelect, 1, 1, 1, 2)
+        self.label_10 = QtGui.QLabel(self.layoutWidget)
+        self.label_10.setMinimumSize(QtCore.QSize(101, 31))
+        self.label_10.setMaximumSize(QtCore.QSize(101, 31))
+        self.label_10.setObjectName("label_10")
+        self.gridLayout_2.addWidget(self.label_10, 2, 0, 1, 1)
+        self.outplayerSelect = QtGui.QComboBox(self.layoutWidget)
+        self.outplayerSelect.setMinimumSize(QtCore.QSize(231, 31))
+        self.outplayerSelect.setMaximumSize(QtCore.QSize(231, 31))
+        self.outplayerSelect.setObjectName("outplayerSelect")
+        self.gridLayout_2.addWidget(self.outplayerSelect, 2, 1, 1, 2)
+        self.label_7 = QtGui.QLabel(self.layoutWidget)
+        self.label_7.setMinimumSize(QtCore.QSize(101, 31))
+        self.label_7.setMaximumSize(QtCore.QSize(101, 31))
+        self.label_7.setObjectName("label_7")
+        self.gridLayout_2.addWidget(self.label_7, 3, 0, 1, 1)
+        self.inplayerSelect = QtGui.QComboBox(self.layoutWidget)
+        self.inplayerSelect.setMinimumSize(QtCore.QSize(231, 31))
+        self.inplayerSelect.setMaximumSize(QtCore.QSize(231, 31))
+        self.inplayerSelect.setObjectName("inplayerSelect")
+        self.gridLayout_2.addWidget(self.inplayerSelect, 3, 1, 1, 2)
+        self.label_8 = QtGui.QLabel(self.layoutWidget)
+        self.label_8.setMinimumSize(QtCore.QSize(101, 31))
+        self.label_8.setMaximumSize(QtCore.QSize(101, 31))
+        self.label_8.setObjectName("label_8")
+        self.gridLayout_2.addWidget(self.label_8, 4, 0, 1, 1)
+        self.horizontalLayout = QtGui.QHBoxLayout()
+        self.horizontalLayout.setObjectName("horizontalLayout")
+        self.subtimeEdit = QtGui.QLineEdit(self.layoutWidget)
+        self.subtimeEdit.setMinimumSize(QtCore.QSize(41, 27))
+        self.subtimeEdit.setMaximumSize(QtCore.QSize(41, 27))
+        self.subtimeEdit.setMaxLength(2)
+        self.subtimeEdit.setObjectName("subtimeEdit")
+        self.horizontalLayout.addWidget(self.subtimeEdit)
+        self.label_9 = QtGui.QLabel(self.layoutWidget)
+        self.label_9.setObjectName("label_9")
+        self.horizontalLayout.addWidget(self.label_9)
+        self.stoppageEdit = QtGui.QLineEdit(self.layoutWidget)
+        self.stoppageEdit.setMinimumSize(QtCore.QSize(41, 27))
+        self.stoppageEdit.setMaximumSize(QtCore.QSize(41, 27))
+        self.stoppageEdit.setMaxLength(2)
+        self.stoppageEdit.setObjectName("stoppageEdit")
+        self.horizontalLayout.addWidget(self.stoppageEdit)
+        self.gridLayout_2.addLayout(self.horizontalLayout, 4, 1, 1, 1)
+        spacerItem = QtGui.QSpacerItem(138, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
+        self.gridLayout_2.addItem(spacerItem, 4, 2, 1, 1)
+        self.layoutWidget1 = QtGui.QWidget(subsEntryDlg)
+        self.layoutWidget1.setGeometry(QtCore.QRect(420, 150, 101, 241))
+        self.layoutWidget1.setObjectName("layoutWidget1")
+        self.verticalLayout = QtGui.QVBoxLayout(self.layoutWidget1)
+        self.verticalLayout.setObjectName("verticalLayout")
+        self.addEntry = QtGui.QPushButton(self.layoutWidget1)
+        self.addEntry.setMinimumSize(QtCore.QSize(85, 33))
+        self.addEntry.setMaximumSize(QtCore.QSize(85, 33))
+        icon4 = QtGui.QIcon()
+        icon4.addPixmap(QtGui.QPixmap(":/images/add.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.addEntry.setIcon(icon4)
+        self.addEntry.setObjectName("addEntry")
+        self.verticalLayout.addWidget(self.addEntry)
+        self.deleteEntry = QtGui.QPushButton(self.layoutWidget1)
+        self.deleteEntry.setMinimumSize(QtCore.QSize(85, 33))
+        self.deleteEntry.setMaximumSize(QtCore.QSize(85, 33))
+        icon5 = QtGui.QIcon()
+        icon5.addPixmap(QtGui.QPixmap(":/images/delete.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.deleteEntry.setIcon(icon5)
+        self.deleteEntry.setObjectName("deleteEntry")
+        self.verticalLayout.addWidget(self.deleteEntry)
+        spacerItem1 = QtGui.QSpacerItem(20, 108, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
+        self.verticalLayout.addItem(spacerItem1)
+        self.closeButton = QtGui.QPushButton(self.layoutWidget1)
+        self.closeButton.setMinimumSize(QtCore.QSize(85, 33))
+        self.closeButton.setMaximumSize(QtCore.QSize(85, 33))
+        icon6 = QtGui.QIcon()
+        icon6.addPixmap(QtGui.QPixmap(":/images/quit.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.closeButton.setIcon(icon6)
+        self.closeButton.setObjectName("closeButton")
+        self.verticalLayout.addWidget(self.closeButton)
+
+        self.retranslateUi(subsEntryDlg)
+        QtCore.QMetaObject.connectSlotsByName(subsEntryDlg)
+
+    def retranslateUi(self, subsEntryDlg):
+        subsEntryDlg.setWindowTitle(QtGui.QApplication.translate("subsEntryDlg", "Substitution Entry", None, QtGui.QApplication.UnicodeUTF8))
+        self.firstEntry.setToolTip(QtGui.QApplication.translate("subsEntryDlg", "First Entry", None, QtGui.QApplication.UnicodeUTF8))
+        self.prevEntry.setToolTip(QtGui.QApplication.translate("subsEntryDlg", "Previous Entry", None, QtGui.QApplication.UnicodeUTF8))
+        self.nextEntry.setToolTip(QtGui.QApplication.translate("subsEntryDlg", "Next Entry", None, QtGui.QApplication.UnicodeUTF8))
+        self.lastEntry.setToolTip(QtGui.QApplication.translate("subsEntryDlg", "Last Entry", None, QtGui.QApplication.UnicodeUTF8))
+        self.label.setText(QtGui.QApplication.translate("subsEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Competition</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_2.setText(QtGui.QApplication.translate("subsEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Round</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_3.setText(QtGui.QApplication.translate("subsEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Match</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_4.setText(QtGui.QApplication.translate("subsEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Subs ID</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_5.setText(QtGui.QApplication.translate("subsEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Team</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
+        self.teamSelect.setToolTip(QtGui.QApplication.translate("subsEntryDlg", "Team to which goal is credited", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_10.setText(QtGui.QApplication.translate("subsEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Player Out</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_7.setText(QtGui.QApplication.translate("subsEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Player In</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
+        self.inplayerSelect.setToolTip(QtGui.QApplication.translate("subsEntryDlg", "Field event from which goal is scored", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_8.setText(QtGui.QApplication.translate("subsEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Match Time</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
+        self.subtimeEdit.setToolTip(QtGui.QApplication.translate("subsEntryDlg", "Match time", None, QtGui.QApplication.UnicodeUTF8))
+        self.subtimeEdit.setInputMask(QtGui.QApplication.translate("subsEntryDlg", "00; ", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_9.setText(QtGui.QApplication.translate("subsEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:14pt; font-weight:600;\">+</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
+        self.stoppageEdit.setToolTip(QtGui.QApplication.translate("subsEntryDlg", "Stoppage time", None, QtGui.QApplication.UnicodeUTF8))
+        self.stoppageEdit.setInputMask(QtGui.QApplication.translate("subsEntryDlg", "00; ", None, QtGui.QApplication.UnicodeUTF8))
+        self.addEntry.setToolTip(QtGui.QApplication.translate("subsEntryDlg", "Add Entry", None, QtGui.QApplication.UnicodeUTF8))
+        self.addEntry.setText(QtGui.QApplication.translate("subsEntryDlg", "&Add", None, QtGui.QApplication.UnicodeUTF8))
+        self.deleteEntry.setToolTip(QtGui.QApplication.translate("subsEntryDlg", "Delete Entry", None, QtGui.QApplication.UnicodeUTF8))
+        self.deleteEntry.setText(QtGui.QApplication.translate("subsEntryDlg", "&Delete", None, QtGui.QApplication.UnicodeUTF8))
+        self.closeButton.setToolTip(QtGui.QApplication.translate("subsEntryDlg", "Close Window", None, QtGui.QApplication.UnicodeUTF8))
+        self.closeButton.setText(QtGui.QApplication.translate("subsEntryDlg", "&Close", None, QtGui.QApplication.UnicodeUTF8))
+
+import fmrd_resources_rc

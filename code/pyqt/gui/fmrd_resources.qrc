@@ -1,0 +1,11 @@
+<RCC>
+  <qresource>
+    <file>images/add.png</file>
+    <file>images/delete.png</file>
+    <file>images/first.png</file>
+    <file>images/last.png</file>
+    <file>images/next.png</file>
+    <file>images/prev.png</file>
+    <file>images/quit.png</file>
+  </qresource>
+</RCC>

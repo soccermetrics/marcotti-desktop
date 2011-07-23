@@ -1,0 +1,5 @@
+Requirements List:
+
+- Postgres
+- Qt 4
+- Python 2.6
