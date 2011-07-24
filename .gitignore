@@ -1,0 +1,9 @@
+# Filetypes to be ignored by git
+*.pyc
+# Eric IDE files
+*.e4p
+*.pui
+# Ultraedit project file
+*.prj
+# Eric project directory
+.eric4project/
