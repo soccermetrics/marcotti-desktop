@@ -879,8 +879,8 @@ class lineupEntryDlg(QDialog, ui_lineupentry.Ui_lineupEntryDlg):
     # apply conditions if at first/last record
     def saveRecord(self, where):
         row = self.mapper.currentIndex()
-        print "Calling saveRecord()"
-        print "Current Row: %d" % row
+#        print "Calling saveRecord()"
+#        print "Current Row: %d" % row
         # make checks
         self.mapper.submit()
         
@@ -921,7 +921,7 @@ class lineupEntryDlg(QDialog, ui_lineupentry.Ui_lineupEntryDlg):
         self.statusReport()        
 
     def enableWidget(self):
-        print "Calling enableWidget()"
+#        print "Calling enableWidget()"
         widget = self.positionSelect
         if not widget.isEnabled():
             widget.setEnabled(True)
@@ -931,14 +931,14 @@ class lineupEntryDlg(QDialog, ui_lineupentry.Ui_lineupEntryDlg):
     #
     # Set default index of player position using tbl_players or players_list
     def setDefaultIndex(self, editor):
-        print "Calling setDefaultIndex()"
+#        print "Calling setDefaultIndex()"
         player = self.playerSelect
         playerName = player.currentText()
-        print "Player Name: %s" % playerName
+#        print "Player Name: %s" % playerName
         index = player.currentIndex()
         positionText = player.model().record(index).value("position_name").toString()
         
-        print "Default Position Name: %s" % positionText
+#        print "Default Position Name: %s" % positionText
 
         # look for position name and set index
         editor.setCurrentIndex(editor.findText(positionText, Qt.MatchExactly))

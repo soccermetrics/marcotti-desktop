@@ -113,7 +113,7 @@ class EventPlayerComboBoxDelegate(QSqlRelationalDelegate):
     
     def setEditorData(self, editor, index):
         
-        print "Calling setEditorData() in EventPlayerComboBoxDelegate"
+#        print "Calling setEditorData() in EventPlayerComboBoxDelegate"
         
         editor.blockSignals(True)
         
@@ -170,7 +170,7 @@ class EventPlayerComboBoxDelegate(QSqlRelationalDelegate):
         editor.blockSignals(False)
 
     def setModelData(self, editor, model, index):
-        print "Calling setModelData() of EventPlayerComboBoxDelegate"
+#        print "Calling setModelData() of EventPlayerComboBoxDelegate"
         
         boxIndex = editor.currentIndex()
         value = editor.model().record(boxIndex).value("lineup_id")
@@ -197,7 +197,7 @@ class SwitchPlayerComboBoxDelegate(QSqlRelationalDelegate):
     
     def setEditorData(self, editor, index):
         
-        print "Calling setEditorData() in SwitchPlayerComboBoxDelegate"
+#        print "Calling setEditorData() in SwitchPlayerComboBoxDelegate"
         
         editor.blockSignals(True)
         
@@ -258,7 +258,7 @@ class SwitchPlayerComboBoxDelegate(QSqlRelationalDelegate):
         editor.blockSignals(False)
 
     def setModelData(self, editor, model, index):
-        print "Calling setModelData() of SwitchPlayerComboBoxDelegate"
+#        print "Calling setModelData() of SwitchPlayerComboBoxDelegate"
         
         boxIndex = editor.currentIndex()
         value = editor.model().record(boxIndex).value("lineup_id")
@@ -278,14 +278,14 @@ class SwitchPlayerComboBoxDelegate(QSqlRelationalDelegate):
 class SubOutComboBoxDelegate(QStyledItemDelegate):
     
     def __init__(self, parent=None):
-        print "Calling init() of SubOutComboBoxDelegate"
+#        print "Calling init() of SubOutComboBoxDelegate"
         super(SubOutComboBoxDelegate, self).__init__(parent)
         
         self.match = parent.matchSelect
         self.team = parent.teamSelect        
         
     def setEditorData(self, editor, index):
-        print "Calling setEditorData() of SubOutComboBoxDelegate"       
+#        print "Calling setEditorData() of SubOutComboBoxDelegate"       
         
         editor.blockSignals(True)
         
@@ -321,7 +321,7 @@ class SubOutComboBoxDelegate(QStyledItemDelegate):
         #    SELECT player FROM tbl_lineups WHERE lineup_id IN
         #        (SELECT lineup_id FROM tbl_insubstitutions) AND NOT lp_starting AND match_id = ? AND team_id = ?
 
-        print "Index: %d" % index.row()
+#        print "Index: %d" % index.row()
         if index.row() == -1:
             # no entry --> invalid index
             playerName = "-1"
@@ -350,10 +350,10 @@ class SubOutComboBoxDelegate(QStyledItemDelegate):
             else:
                 team_id = "-1"        
    
-        print "Current (OUT) match ID: %s" % match_id   
-        print "Current (OUT) lineup ID: %s" % lineup_id
-        print "Current (OUT) team ID: %s" % team_id
-        print "Current (OUT) player: %s" % playerName
+#        print "Current (OUT) match ID: %s" % match_id   
+#        print "Current (OUT) lineup ID: %s" % lineup_id
+#        print "Current (OUT) team ID: %s" % team_id
+#        print "Current (OUT) player: %s" % playerName
         
         filterString = QString("lineup_id NOT IN (SELECT lineup_id FROM tbl_outsubstitutions WHERE lineup_id <> %1) "
                                "AND lineup_id IN (SELECT lineup_id FROM tbl_lineups WHERE lp_starting AND match_id = %2 AND team_id = %3) "
@@ -373,7 +373,7 @@ class SubOutComboBoxDelegate(QStyledItemDelegate):
     #
     # Obtain id from combobox selection and call setData() of linking model.
     def setModelData(self, editor, model, index):
-        print "Calling setModelData() of SubOutComboBoxDelegate"
+#        print "Calling setModelData() of SubOutComboBoxDelegate"
         
         boxIndex = editor.currentIndex()
         value = editor.model().record(boxIndex).value("lineup_id")
@@ -391,14 +391,14 @@ class SubOutComboBoxDelegate(QStyledItemDelegate):
 class SubInComboBoxDelegate(QStyledItemDelegate):
 
     def __init__(self, parent=None):
-        print "Calling init() of SubInComboBoxDelegate"
+#        print "Calling init() of SubInComboBoxDelegate"
         super(SubInComboBoxDelegate, self).__init__(parent)
         
         self.match = parent.matchSelect
         self.team = parent.teamSelect
         
     def setEditorData(self, editor, index):
-        print "Calling setEditorData() of SubInComboBoxDelegate"   
+#        print "Calling setEditorData() of SubInComboBoxDelegate"   
         
         editor.blockSignals(True)
         
@@ -432,7 +432,7 @@ class SubInComboBoxDelegate(QStyledItemDelegate):
         #        (SELECT lineup_id FROM tbl_insubstitutions) AND 
         #        NOT lp_starting AND match_id = ? AND team_id = ?
         
-        print "Index: %d" % index.row()
+#        print "Index: %d" % index.row()
         if index.row() == -1:
             # no entry --> invalid index
             playerName = "-1"
@@ -461,10 +461,10 @@ class SubInComboBoxDelegate(QStyledItemDelegate):
             else:
                 team_id = "-1"        
 
-        print "Current (IN) match ID: %s" % match_id
-        print "Current (IN) lineup ID: %s" % lineup_id
-        print "Current (IN) team ID: %s" % team_id
-        print "Current (IN) player: %s" % playerName
+#        print "Current (IN) match ID: %s" % match_id
+#        print "Current (IN) lineup ID: %s" % lineup_id
+#        print "Current (IN) team ID: %s" % team_id
+#        print "Current (IN) player: %s" % playerName
         
         filterString = QString("lineup_id NOT IN "
                                    "(SELECT lineup_id FROM tbl_insubstitutions WHERE lineup_id <> %1) AND "
@@ -474,7 +474,7 @@ class SubInComboBoxDelegate(QStyledItemDelegate):
         # filter Player combobox
         lineupListModel.setFilter(filterString)
 
-        print editor.findText(playerName, Qt.MatchExactly)
+#        print editor.findText(playerName, Qt.MatchExactly)
 
         # set current index to item that matches data value
         editor.setCurrentIndex(editor.findText(playerName, Qt.MatchExactly))
@@ -486,7 +486,7 @@ class SubInComboBoxDelegate(QStyledItemDelegate):
     #
     # Obtain id from combobox selection and call setData() of linking model.
     def setModelData(self, editor, model, index):
-        print "Calling setModelData() of SubInComboBoxDelegate"
+#        print "Calling setModelData() of SubInComboBoxDelegate"
         
         boxIndex = editor.currentIndex()
         value = editor.model().record(boxIndex).value("lineup_id")
@@ -556,7 +556,7 @@ class LineupTeamDisplayDelegate(QSqlRelationalDelegate):
         editor.setText(self.teamName)
         
     def setModelData(self, editor, model, index):
-        print "Calling setModelData() of LineupTeamDisplayDelegate"
+#        print "Calling setModelData() of LineupTeamDisplayDelegate"
         # get team name
         teamName = editor.text()
         # get team ID from tbl_teams
@@ -630,11 +630,11 @@ class LineupPositionComboBoxDelegate(QSqlRelationalDelegate):
     def setEditorData(self, editor, index):
         lineupModel = index.model()
         
-        print "Calling setEditorData() of LineupPositionComboBoxDelegate"
+#        print "Calling setEditorData() of LineupPositionComboBoxDelegate"
 
         # if position not already defined in model, get default position from Player entry
         positionText = lineupModel.data(index, Qt.DisplayRole).toString()
-        print "Position in match: %s" % positionText
+#        print "Position in match: %s" % positionText
         
         # look for position name and set index
         editor.setCurrentIndex(editor.findText(positionText, Qt.MatchExactly))
@@ -739,13 +739,13 @@ class WeatherComboBoxDelegate(QStyledItemDelegate):
     
     def __init__(self, parent=None):
         super(WeatherComboBoxDelegate, self).__init__(parent)
-        print "Calling init() of WeatherComboBoxDelegate"
+#        print "Calling init() of WeatherComboBoxDelegate"
         
     def setEditorData(self, editor, index):
-        print "Calling setEditorData() of WeatherComboBoxDelegate"
+#        print "Calling setEditorData() of WeatherComboBoxDelegate"
         parentModel = index.model()
         
-        print "Index: %d" % index.row()
+#        print "Index: %d" % index.row()
         if index.row() == -1:
             currentIndex = -1
         else:
@@ -761,7 +761,7 @@ class WeatherComboBoxDelegate(QStyledItemDelegate):
             currentIndex = editor.findText(wxCondition, Qt.MatchExactly)
                         
         # set current index to item that matches data value
-        print "current Index = %d" % currentIndex
+#        print "current Index = %d" % currentIndex
         editor.setCurrentIndex(currentIndex)
         
     # Routine: setModelData
@@ -769,7 +769,7 @@ class WeatherComboBoxDelegate(QStyledItemDelegate):
     #
     # Obtain id from combobox selection and call setData() of linking model.
     def setModelData(self, editor, model, index):
-        print "Calling setModelData() of WeatherComboBoxDelegate"
+#        print "Calling setModelData() of WeatherComboBoxDelegate"
         
         # convert combobox selection to id number
         boxIndex = editor.currentIndex()
@@ -790,7 +790,7 @@ class TeamComboBoxDelegateTemplate(QStyledItemDelegate):
     
     def __init__(self, parent=None):
         super(TeamComboBoxDelegateTemplate, self).__init__(parent)
-        print "Calling init() of TeamComboBoxDelegateTemplate"
+#        print "Calling init() of TeamComboBoxDelegateTemplate"
         
     # Routine: setEditorData
     # Parameters: editor (combobox), index (of model)
@@ -799,7 +799,7 @@ class TeamComboBoxDelegateTemplate(QStyledItemDelegate):
     # filter entry list in combobox to prevent possibility of selecting same team
     # for home and away.
     def setEditorData(self, editor, index):
-        print "Calling setEditorData() of TeamComboBoxDelegateTemplate"
+#        print "Calling setEditorData() of TeamComboBoxDelegateTemplate"
         linkingModel = index.model()        
         teamModel = editor.model()
         
@@ -808,7 +808,7 @@ class TeamComboBoxDelegateTemplate(QStyledItemDelegate):
         # flush filter on editor model
         teamModel.setFilter(QString())
         
-        print "Index: %d" % index.row()
+#        print "Index: %d" % index.row()
         if index.row() == -1:
             teamName = "-1"
         else:
@@ -858,7 +858,7 @@ class MgrComboBoxDelegateTemplate(QStyledItemDelegate):
     
     def __init__(self, parent=None):
         super(MgrComboBoxDelegateTemplate, self).__init__(parent)
-        print "Calling init() of MgrComboBoxDelegateTemplate"        
+#        print "Calling init() of MgrComboBoxDelegateTemplate"        
         
     # Routine: setEditorData
     # Parameters: editor (combobox), index (of model)
@@ -867,7 +867,7 @@ class MgrComboBoxDelegateTemplate(QStyledItemDelegate):
     # filter entry list in combobox to prevent possibility of selecting same manager
     # for home and away.        
     def setEditorData(self, editor, index):
-        print "Calling setEditorData() of MgrComboBoxDelegateTemplate"       
+#        print "Calling setEditorData() of MgrComboBoxDelegateTemplate"       
         linkingModel = index.model()
         teamModel = editor.model()
         
@@ -876,7 +876,7 @@ class MgrComboBoxDelegateTemplate(QStyledItemDelegate):
         # flush filter on editor model
         teamModel.setFilter(QString())
 
-        print "Index: %d" % index.row()
+#        print "Index: %d" % index.row()
         if index.row() == -1:
             managerName = "-1"
         else:
@@ -924,7 +924,7 @@ class HomeTeamComboBoxDelegate(TeamComboBoxDelegateTemplate):
     
     def __init__(self, parent=None):
         super(HomeTeamComboBoxDelegate, self).__init__(parent)
-        print "Calling init() in HomeTeamComboBoxDelegate"
+#        print "Calling init() in HomeTeamComboBoxDelegate"
         
         self.opposingModel = parent.awayteamModel
 
@@ -938,7 +938,7 @@ class AwayTeamComboBoxDelegate(TeamComboBoxDelegateTemplate):
     
     def __init__(self, parent=None):
         super(AwayTeamComboBoxDelegate, self).__init__(parent)
-        print "Calling init() in AwayTeamComboBoxDelegate"
+#        print "Calling init() in AwayTeamComboBoxDelegate"
 
         self.opposingModel = parent.hometeamModel
 
@@ -952,7 +952,7 @@ class HomeMgrComboBoxDelegate(MgrComboBoxDelegateTemplate):
     
     def __init__(self, parent=None):
         super(HomeMgrComboBoxDelegate, self).__init__(parent)
-        print "Calling init() in HomeMgrComboBoxDelegate"
+#        print "Calling init() in HomeMgrComboBoxDelegate"
 
         self.opposingModel = parent.awaymgrModel
 
@@ -966,7 +966,7 @@ class AwayMgrComboBoxDelegate(MgrComboBoxDelegateTemplate):
     
     def __init__(self, parent=None):
         super(AwayMgrComboBoxDelegate, self).__init__(parent)
-        print "Calling init() in AwayMgrComboBoxDelegate"
+#        print "Calling init() in AwayMgrComboBoxDelegate"
 
         self.opposingModel = parent.homemgrModel
 

@@ -356,7 +356,7 @@ class matchEntryDlg(QDialog, ui_matchentry.Ui_matchEntryDlg):
     #
     # Update linking table if no rows apply to entry
     def updateLinkingTable(self, mapper, editor):
-        print "Calling updateLinkingTable()"
+#        print "Calling updateLinkingTable()"
         # database table associated with mapper
         # get current index of model
         linkmodel = mapper.model()
@@ -384,8 +384,8 @@ class matchEntryDlg(QDialog, ui_matchentry.Ui_matchEntryDlg):
     def openLineups(self, match_id, teamName):
         self.mapper.submit()
         subdialog = lineupEntryDlg(match_id, teamName, self)
-        print "Match ID: %s" % match_id
-        print "Team Name: %s" % teamName
+#        print "Match ID: %s" % match_id
+#        print "Team Name: %s" % teamName
         subdialog.exec_()
     
 # enviroEntryDlg: Environmental conditions entry dialog
@@ -396,7 +396,7 @@ class enviroEntryDlg(QDialog, ui_enviroentry.Ui_enviroEntryDlg):
     def __init__(self, match_id, parent=None):
         super(enviroEntryDlg, self).__init__(parent)
         self.setupUi(self)
-        print "Calling init() in enviroEntryDlg"
+#        print "Calling init() in enviroEntryDlg"
         
         # define local parameters
         WX_COND = KICKOFF_WX = HALFTIME_WX = FULLTIME_WX = 1
@@ -514,7 +514,7 @@ class enviroEntryDlg(QDialog, ui_enviroentry.Ui_enviroEntryDlg):
         QDialog.accept(self)
         
     def updateLinkingTable(self, mapper, editor):
-        print "Calling updateLinkingTable()"
+#        print "Calling updateLinkingTable()"
         # database table associated with mapper
         # get current index of model
         linkmodel = mapper.model()

@@ -692,15 +692,15 @@ class penaltyEntryDlg(QDialog, ui_penaltyentry.Ui_penaltyEntryDlg):
     # Set index of team box to correspond with selected player
     def refreshTeamBox(self):
         
-        print "Calling refreshTeamBox()"
+#        print "Calling refreshTeamBox()"
         
         compName = self.compSelect.currentText()
         roundName = self.roundSelect.currentText()
         playerName = self.playerSelect.currentText()
         
-        print "Competition: %s" % compName
-        print "Round: %s" % roundName
-        print "Player: %s" % playerName
+#        print "Competition: %s" % compName
+#        print "Round: %s" % roundName
+#        print "Player: %s" % playerName
         
         # look for team name
         query = QSqlQuery()
@@ -1147,7 +1147,7 @@ class offenseEntryDlg(QDialog, ui_offenseentry.Ui_offenseEntryDlg):
     # Set filter for Offenses table from match selection
     # Set filter for Teams combobox
     def filterOffensesAndTeams(self):
-        print "Calling filterOffensesAndTeams()"
+#        print "Calling filterOffensesAndTeams()"
         # enable add/delete entry buttons
         self.addEntry.setEnabled(True)
         self.deleteEntry.setEnabled(True)
@@ -1201,15 +1201,15 @@ class offenseEntryDlg(QDialog, ui_offenseentry.Ui_offenseEntryDlg):
     # Set index of team box to correspond with selected player
     def refreshTeamBox(self):
         
-        print "Calling refreshTeamBox()"
+#        print "Calling refreshTeamBox()"
         
         compName = self.compSelect.currentText()
         roundName = self.roundSelect.currentText()
         playerName = self.playerSelect.currentText()
         
-        print "Competition: %s" % compName
-        print "Round: %s" % roundName
-        print "Player: %s" % playerName
+#        print "Competition: %s" % compName
+#        print "Round: %s" % roundName
+#        print "Player: %s" % playerName
         
         # look for team name
         query = QSqlQuery()
@@ -1644,15 +1644,15 @@ class subsEntryDlg(QDialog, ui_subsentry.Ui_subsEntryDlg):
     # Set index of team box to correspond with selected player
     def refreshTeamBox(self):
         
-        print "Calling refreshTeamBox()"
+#        print "Calling refreshTeamBox()"
         
         compName = self.compSelect.currentText()
         roundName = self.roundSelect.currentText()
         playerName = self.inplayerSelect.currentText()
         
-        print "Competition: %s" % compName
-        print "Round: %s" % roundName
-        print "Player: %s" % playerName
+#        print "Competition: %s" % compName
+#        print "Round: %s" % roundName
+#        print "Player: %s" % playerName
         
         # look for team name
         query = QSqlQuery()
@@ -1702,7 +1702,7 @@ class subsEntryDlg(QDialog, ui_subsentry.Ui_subsEntryDlg):
     #
     # Update linking table if no rows apply to entry
     def updateLinkingTable(self, mapper, editor):
-        print "Calling updateLinkingTable()"
+#        print "Calling updateLinkingTable()"
         # database table associated with mapper
         # get current index of model
         linkmodel = mapper.model()
@@ -1721,7 +1721,7 @@ class subsEntryDlg(QDialog, ui_subsentry.Ui_subsEntryDlg):
     # Players who can be subbed into a match
     def filterInSubs(self):
         
-        print "Calling filterInSubs()"
+#        print "Calling filterInSubs()"
         
         # suppress signals from inplayerSelect
         self.inplayerSelect.blockSignals(True)
@@ -1796,7 +1796,7 @@ class subsEntryDlg(QDialog, ui_subsentry.Ui_subsEntryDlg):
     # Players who can be subbed out of a match        
     def filterOutSubs(self):
         
-        print "Calling filterOutSubs()"
+#        print "Calling filterOutSubs()"
         
         self.outplayerSelect.blockSignals(True)
         
@@ -2271,15 +2271,15 @@ class switchEntryDlg(QDialog, ui_switchentry.Ui_switchEntryDlg):
     # Set index of team box to correspond with selected player
     def refreshTeamBox(self):
         
-        print "Calling refreshTeamBox()"
+#        print "Calling refreshTeamBox()"
         
         compName = self.compSelect.currentText()
         roundName = self.roundSelect.currentText()
         playerName = self.playerSelect.currentText()
         
-        print "Competition: %s" % compName
-        print "Round: %s" % roundName
-        print "Player: %s" % playerName
+#        print "Competition: %s" % compName
+#        print "Round: %s" % roundName
+#        print "Player: %s" % playerName
         
         # look for team name
         query = QSqlQuery()
