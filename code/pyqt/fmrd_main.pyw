@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 #
 #    Desktop-based data entry tool for the Football Match Result Database (FMRD)
-#    Entry point for data entry tools.  Login verification and opens user or admin switchboards.
 #
 #    Copyright (C) 2010-2011, Howard Hamilton
 #
@@ -28,25 +27,34 @@ from fmrd_login import *
 from fmrd_switchboard import *
 from fmrd_user_switchboard import * 
 
+"""
+This module is the entry point for the data entry tools.  
+
+Performs login verification and opens either user or admin switchboards.
+"""
+
 # Function: main
 #
-# Conducts database authentication
-# Connects to database
-# If successful, executes GUI execution loop
     
 def main():
+    """ Conducts database authentication and executes GUI loop if successful."""
     
+    # switchboard type definition
     USER = 1
     ADMIN = 2
     
     # create app and login objects
     app = QApplication(sys.argv)
-        
     login = dbLoginDlg() 
         
     # open login window with wrapper function so that tuple is returned
+    # status = (QDialog.DialogCode, ButtonState)
     status = login.execute()
-    # if login is successful open switchboard based on return value of status[1]
+        
+    # if login is successful (QDialog.DialogCode == QDialog.Accepted)
+    #    open switchboard based on return value of ButtonState
+    # if login unsuccessful or aborted (QDialog.DialogCode == QDialog.Rejected)
+    #    exit application
     if status[0] == QDialog.Accepted:
         if status[1] == USER:
             userwindow = UserMainSwitchboard()

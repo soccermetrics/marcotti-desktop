@@ -1,14 +1,21 @@
 #!/usr/bin/env python
 #
-# Football Match Result Database (FMRD)
-# Desktop-based data entry tool
+#    Desktop-based data entry tool for the Football Match Result Database (FMRD)
 #
-# Contains classes that implement entry forms to main tables of FMRD.
-# 
-# Soccermetrics Research & Consulting, LLC
-# Howard Hamilton
-# 2011.01.25 - Initial coding
+#    Copyright (C) 2010-2011, Howard Hamilton
 #
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
@@ -21,13 +28,26 @@ from FmrdLib.CustomModels import *
 
 from fmrd_personnel import lineupEntryDlg
 
-# matchEntryDlg: Match entry dialog
-class matchEntryDlg(QDialog, ui_matchentry.Ui_matchEntryDlg):
+"""Contains classes that implement entry forms to match tables of FMRD.
 
+Classes:
+enviroEntryDlg - data entry to Environments table
+matchEntryDlg - data entry to Matches table
+"""
+
+class matchEntryDlg(QDialog, ui_matchentry.Ui_matchEntryDlg):
+    """Implements match entry dialog, and accesses and writes to Matches table.
+    
+    This dialog is one of the central dialogs of the database entry form. It accepts
+    high-level data on the match and opens subdialogs on match lineups and 
+    environmental conditions of the match.
+    
+    """
     FIRST,  PREV,  NEXT,  LAST = range(4)
     ID,  DATE, HALF1, HALF2, COMP_ID, ROUND_ID, VENUE_ID, REF_ID = range(8)
     
     def __init__(self, parent=None):
+        """Constructor for matchEntryDlg class."""
         super(matchEntryDlg, self).__init__(parent)
         self.setupUi(self)
         
@@ -94,6 +114,8 @@ class matchEntryDlg(QDialog, ui_matchentry.Ui_matchEntryDlg):
         self.mapper.toFirst()
         
         # define models used in Team and Manager comboboxes
+        # we need multiple instantiations of Teams and Managers tables
+        # so that there is no confusion in SQL logic
         
         homeTeamModel = QSqlTableModel(self)
         homeTeamModel.setTable("tbl_teams")
@@ -223,19 +245,13 @@ class matchEntryDlg(QDialog, ui_matchentry.Ui_matchEntryDlg):
         self.connect(self.awayLineupButton, SIGNAL("clicked()"), 
                                                                lambda: self.openLineups(self.matchID_display.text(), self.awayteamSelect.currentText()))
 
-    # Method: accept
-    #
-    # Submit changes to database, and then close window
     def accept(self):
+        """Submits changes to database and closes window."""
         self.mapper.submit()
         QDialog.accept(self)
     
-    # Method: saveRecord
-    # 
-    # Submit changes to database,
-    # advance to next record, reset subforms,
-    # apply conditions if at first/last record
     def saveRecord(self, where):
+        """"Submits changes to database, navigates through form, and resets subforms."""
         row = self.mapper.currentIndex()
         self.mapper.submit()
         
@@ -274,11 +290,8 @@ class matchEntryDlg(QDialog, ui_matchentry.Ui_matchEntryDlg):
         currentID = self.matchID_display.text()
         self.refreshSubForms(currentID)
 
-    # Method: refreshSubForms
-    #
-    # Set match ID for linking models and refresh models to update them.
-    # Refresh mappers associated with these models.
     def refreshSubForms(self, currentID):
+        """Sets match ID for linking models and refreshes models and mappers."""
         self.hometeamModel.setID(currentID)
         self.hometeamModel.refresh()
         
@@ -296,13 +309,12 @@ class matchEntryDlg(QDialog, ui_matchentry.Ui_matchEntryDlg):
         self.homemgrMapper.toFirst()
         self.awaymgrMapper.toFirst()
 
-    # Method: addRecord
-    #
-    # Add new record at end of entry list
-    # Disable comboboxes
-    # Set focus to Date field
     def addRecord(self):
+        """Adds new record at end of entry list.
         
+        Disables comboboxes and sets focus to Date field.
+        
+        """
         # save current index if valid
         row = self.mapper.currentIndex()
         if row != -1:
@@ -352,10 +364,9 @@ class matchEntryDlg(QDialog, ui_matchentry.Ui_matchEntryDlg):
         # refresh subforms
         self.refreshSubForms(match_id)        
 
-    # Method: updateLinkingTable
-    #
-    # Update linking table if no rows apply to entry
     def updateLinkingTable(self, mapper, editor):
+        """Updates custom linking table."""
+        
 #        print "Calling updateLinkingTable()"
         # database table associated with mapper
         # get current index of model
@@ -369,31 +380,57 @@ class matchEntryDlg(QDialog, ui_matchentry.Ui_matchEntryDlg):
             value = editor.model().record(boxIndex).value(0)
             ok = linkmodel.setData(index, value)
 
-    # Method: enableWidget
-    #
-    # Enable widget passed in function parameter, if not already enabled
     def enableWidget(self, widget):
+        """Enables widget passed in function parameter, if not already enabled."""
         if not widget.isEnabled():
             widget.setEnabled(True)
         
     def openEnviros(self, match_id):
+        """Opens Environment subdialog for a specific match from Match dialog.
+        
+        Saves current match record and instantiates enviroEntryDlg object and opens window.
+        Argument: 
+        match_id -- primary key of current record in Matches table
+        
+        """
         self.mapper.submit()
         subdialog = enviroEntryDlg(match_id, self)
         subdialog.exec_()
         
     def openLineups(self, match_id, teamName):
+        """Opens Lineups subdialog for one of the teams in a specific match from Match dialog.
+        
+        Saves current match record, instantiates lineupEntryDlg object and opens window.
+        Arguments: 
+        match_id -- primary key of current record in Matches table
+        teamName -- team name corresponding to one of the two participants in 
+                            current Match record
+        
+        This method is only allowed to be called when all of the home/away team
+        and manager fields have been populated with non-NULL values.
+        
+        """
         self.mapper.submit()
         subdialog = lineupEntryDlg(match_id, teamName, self)
 #        print "Match ID: %s" % match_id
 #        print "Team Name: %s" % teamName
         subdialog.exec_()
     
-# enviroEntryDlg: Environmental conditions entry dialog
 class enviroEntryDlg(QDialog, ui_enviroentry.Ui_enviroEntryDlg):
+    """Implements environmental conditions data entry dialog, and accesses and writes to Environments table.
+    
+    This is a subdialog of the environmental conditions of the match -- kickoff time, ambient temperature, 
+    weather conditions at kickoff, halftime, and fulltime.
+    
+    Argument:
+    match_id -- primary key of current record in Matches table
+    
+    """
 
     ENVIRO_ID,  MATCH_ID,  KICKOFF,  TEMP = range(4)
     
     def __init__(self, match_id, parent=None):
+        """Constructor for enviroEntryDlg class"""
         super(enviroEntryDlg, self).__init__(parent)
         self.setupUi(self)
 #        print "Calling init() in enviroEntryDlg"
@@ -506,14 +543,18 @@ class enviroEntryDlg(QDialog, ui_enviroentry.Ui_enviroEntryDlg):
         self.connect(self.envFTWxSelect, SIGNAL("currentIndexChanged(int)"), 
                                                                       lambda: self.updateLinkingTable(self.fulltimeWeatherMapper, self.envFTWxSelect))
         
-    # Method: accept
-    #
-    # Submit changes to database, and then close window
     def accept(self):
+        """Submits changes to database and closes window."""
         self.mapper.submit()
         QDialog.accept(self)
         
     def updateLinkingTable(self, mapper, editor):
+        """Updates current record or inserts new record in custom linking table.
+        
+        Arguments:
+        mapper -- mapper object associated with data widget and data model
+        editor -- data widget object
+        """
 #        print "Calling updateLinkingTable()"
         # database table associated with mapper
         # get current index of model

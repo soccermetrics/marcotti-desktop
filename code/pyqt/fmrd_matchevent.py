@@ -1,9 +1,6 @@
 #!/usr/bin/env python
 #
-#    Football Match Result Database (FMRD)
-#    Desktop-based data entry tool
-#
-#    Contains classes that implement match event entry forms to main tables of FMRD.
+#    Desktop-based data entry tool for the Football Match Result Database (FMRD)
 #
 #    Copyright (C) 2010-2011, Howard Hamilton
 #
@@ -29,13 +26,30 @@ from FmrdLib import Constants
 from FmrdLib.CustomDelegates import *
 from FmrdLib.CustomModels import *
 
+"""Contains classes that implement match event entry forms to main tables of FMRD. 
+
+Classes:
+goalEntryDlg -- data entry to Goals table
+penaltyEntryDlg -- data entry to Penalties table
+offenseEntryDlg -- data entry to Offenses table
+subsEntryDlg -- data entry to Substitutions table
+switchEntryDlg -- data entry to Switch Positions table
+"""
+
 # goalEntryDlg: Goal entry dialog (run of play)
 class goalEntryDlg(QDialog, ui_goalentry.Ui_goalEntryDlg):
+    """Implements goal data entry dialog, and accesses and writes to Goals table.
     
+    This dialog accepts data on goals scored in the run of play. Penalty kick events
+    are handled in the penaltyEntryDlg class.  Goals are attributed to a team but can
+    be scored by any player in the match lineup, thus own goals can be recorded.
+    
+    """
     FIRST,  PREV,  NEXT,  LAST = range(4)
     ID, TEAM_ID, LINEUP_ID, BODY_ID, PLAY_ID, TIME, STIME = range(7)
 
     def __init__(self, parent=None):
+        """Constructor for goalEntryDlg class."""
         super(goalEntryDlg, self).__init__(parent)
         self.setupUi(self)
         
@@ -182,19 +196,13 @@ class goalEntryDlg(QDialog, ui_goalentry.Ui_goalEntryDlg):
         self.connect(self.goaltimeEdit, SIGNAL("textChanged()"),  lambda: self.enableStoppageTime(self.stoppageEdit))
    
    
-    # Method: accept
-    #
-    # Submit changes to database, and then close window
     def accept(self):
+        """Submits changes to database and closes window."""
         self.mapper.submit()
         QDialog.accept(self)
    
-    # Method: saveRecord
-    # 
-    # Submit changes to database,
-    # advance to next record, reset subforms,
-    # apply conditions if at first/last record
     def saveRecord(self, where):
+        """Submits changes to database, navigates through form, and resets subforms."""
         row = self.mapper.currentIndex()
         self.mapper.submit()
         
@@ -231,9 +239,8 @@ class goalEntryDlg(QDialog, ui_goalentry.Ui_goalEntryDlg):
             
         self.mapper.setCurrentIndex(row)
 
-    # deleteRecord: delete record from database
-    #                        ask user to confirm deletion
     def deleteRecord(self):
+        """Deletes record from database upon user confirmation."""
         if QMessageBox.question(self, QString("Delete Record"), 
                                 QString("Delete current record?"), 
                                 QMessageBox.Yes|QMessageBox.No) == QMessageBox.No:
@@ -245,11 +252,8 @@ class goalEntryDlg(QDialog, ui_goalentry.Ui_goalEntryDlg):
             row = self.model.rowCount() - 1
         self.mapper.setCurrentIndex(row) 
 
-    # Method: addRecord
-    #
-    # Add new record at end of entry list
-    # Set focus to Date field
     def addRecord(self):
+        """Adds new record at end of entry list."""
         
         # save current index if valid
         row = self.mapper.currentIndex()
@@ -293,10 +297,8 @@ class goalEntryDlg(QDialog, ui_goalentry.Ui_goalEntryDlg):
         self.stoppageEdit.setText("0")
         self.goaltimeEdit.setText(QString())
 
-    # Method: filterGoals
-    # 
-    # Set filter for goals table from match selection
     def filterGoals(self):
+        """Sets filter for Goals table based on Match selection."""
         
         # enable add/delete entry buttons
         self.addEntry.setEnabled(True)
@@ -333,12 +335,12 @@ class goalEntryDlg(QDialog, ui_goalentry.Ui_goalEntryDlg):
             self.nextEntry.setEnabled(True)
             self.lastEntry.setEnabled(True)        
  
-    # Method: enableAndFilterRounds
-    #
-    # Enable Rounds combobox if not enabled already 
-    # Filter Rounds combobox on competition selection
     def enableAndFilterRounds(self, widget):
+        """Enables Rounds combobox and filters its contents based on Competition selection.
         
+        Argument:
+        widget -- data widget object (roundSelect)
+        """
         widget.blockSignals(True)
 
         # enable widget if not enabled already
@@ -366,14 +368,13 @@ class goalEntryDlg(QDialog, ui_goalentry.Ui_goalEntryDlg):
         # set current index of widget to -1
         widget.setCurrentIndex(-1)
         widget.blockSignals(False)
-                
-
- 
-    # Method: enableAndFilterMatches
-    #
-    # Enable Matches combobox if not enabled already 
-    # Filter Matches combobox on matchday selection
+    
     def enableAndFilterMatches(self, widget):
+        """Enables Match combobox and filters its contents based on matchday (Rounds) selection.
+        
+        Argument:
+        widget -- data widget object (matchSelect)
+        """
         
         widget.blockSignals(True)
         
@@ -413,19 +414,30 @@ class goalEntryDlg(QDialog, ui_goalentry.Ui_goalEntryDlg):
     # Enable stoppage time widget if minutes elapsed are nonzero and divisible by 45
     #       OR minutes elapsed exceed 90 and are divisible by 15 (handle extra time period)
     def enableStoppageTime(self, widget):
+        """Enables stoppage time widget. 
+        
+        Enables widget if one of the following conditions are met:
+            (1) minutes elapsed are nonzero and divisible by 45
+            (2) minutes elapsed exceed 90 and are divisible by 15
+        Argument:
+        widget -- data widget object (stoppageEdit)
+        
+        """
         minutes = self.goaltimeEdit.text().toInt()[0]
         if (minutes and not (minutes % 45)) or (minutes > 90 and not (minutes % 15)):
             widget.setEnabled(True)
-            
 
-        
-# penaltyEntryDlg: Penalty kick entry dialog
+
 class penaltyEntryDlg(QDialog, ui_penaltyentry.Ui_penaltyEntryDlg):
+    """Implements penalty kick data entry dialog, and accesses and writes to Penalties table.
     
+    This dialog accepts data on penalty kick events during a match.
+   """
     FIRST,  PREV,  NEXT,  LAST = range(4)
     ID, LINEUP_ID, FOUL_ID, OUTCOME_ID, TIME, STIME = range(6)
     
     def __init__(self, parent=None):
+        """Constructor for penaltyEntryDlg class."""
         super(penaltyEntryDlg, self).__init__(parent)
         self.setupUi(self)
         
@@ -576,19 +588,13 @@ class penaltyEntryDlg(QDialog, ui_penaltyentry.Ui_penaltyEntryDlg):
         self.connect(self.teamSelect, SIGNAL("currentIndexChanged(int)"), self.enablePlayerData)        
         self.connect(self.pentimeEdit, SIGNAL("textChanged()"),  lambda: self.enableStoppageTime(self.stoppageEdit))
 
-    # Method: accept
-    #
-    # Submit changes to database, and then close window
     def accept(self):
+        """Submits changes to database and closes window."""
         ok = self.mapper.submit()
         QDialog.accept(self)
    
-    # Method: saveRecord
-    # 
-    # Submit changes to database,
-    # advance to next record, reset subforms,
-    # apply conditions if at first/last record
     def saveRecord(self, where):
+        """Submits changes to database, navigates through form, and resets subforms."""
         row = self.mapper.currentIndex()
         self.mapper.submit()
         
@@ -628,9 +634,8 @@ class penaltyEntryDlg(QDialog, ui_penaltyentry.Ui_penaltyEntryDlg):
         self.refreshTeamBox()
         self.teamSelect.blockSignals(False)
 
-    # deleteRecord: delete record from database
-    #                        ask user to confirm deletion
     def deleteRecord(self):
+        """Deletes record from database upon user confirmation."""
         if QMessageBox.question(self, QString("Delete Record"), 
                                 QString("Delete current record?"), 
                                 QMessageBox.Yes|QMessageBox.No) == QMessageBox.No:
@@ -642,12 +647,8 @@ class penaltyEntryDlg(QDialog, ui_penaltyentry.Ui_penaltyEntryDlg):
             row = self.model.rowCount() - 1
         self.mapper.setCurrentIndex(row) 
 
-    # Method: addRecord
-    #
-    # Add new record at end of entry list
-    # Set focus to Date field
     def addRecord(self):
-        
+        """Adds new record at end of entry list."""        
         # save current index if valid
         row = self.mapper.currentIndex()
         if row != -1:
@@ -688,10 +689,8 @@ class penaltyEntryDlg(QDialog, ui_penaltyentry.Ui_penaltyEntryDlg):
         self.stoppageEdit.setText("0")
         self.pentimeEdit.setText(QString())
 
-    # Method: refreshTeamBox
-    # Set index of team box to correspond with selected player
     def refreshTeamBox(self):
-        
+        """Sets index of team box so that it corresponds with selected player."""
 #        print "Calling refreshTeamBox()"
         
         compName = self.compSelect.currentText()
@@ -718,22 +717,16 @@ class penaltyEntryDlg(QDialog, ui_penaltyentry.Ui_penaltyEntryDlg):
         currentIndex = self.teamSelect.findText(teamName, Qt.MatchExactly)
         self.teamSelect.setCurrentIndex(currentIndex)
 
-    # Method: enablePlayerData
-    #
-    # Enable player, offense, and card comboboxes if not enabled already
     def enablePlayerData(self):
+        """Enables player, offense, and card comboboxes if not enabled already."""
         
         self.playerSelect.setEnabled(True)
         self.foulSelect.setEnabled(True)
         self.penoutcomeSelect.setEnabled(True)
         self.pentimeEdit.setEnabled(True)
 
-
-    # Method: filterPenaltiesAndTeams
-    # 
-    # Set filter for Penalty table from match selection
-    # Filter Matches combobox on matchday selection    
     def filterPenaltiesAndTeams(self):
+        """Filters Penalties table to display all entries from selected match, and filters Teams combobox down to the two participants."""
         
         # enable add/delete entry buttons
         self.addEntry.setEnabled(True)
@@ -784,13 +777,12 @@ class penaltyEntryDlg(QDialog, ui_penaltyentry.Ui_penaltyEntryDlg):
             self.nextEntry.setEnabled(True)
             self.lastEntry.setEnabled(True)      
 
-
-    # Method: enableAndFilterRounds
-    #
-    # Enable Rounds combobox if not enabled already 
-    # Filter Rounds combobox on competition selection
     def enableAndFilterRounds(self, widget):
+        """Enables Rounds combobox and filters its contents based on Competition selection.
         
+        Argument:
+        widget -- data widget object (roundSelect)
+        """
         widget.blockSignals(True)
 
         # enable widget if not enabled already
@@ -819,14 +811,12 @@ class penaltyEntryDlg(QDialog, ui_penaltyentry.Ui_penaltyEntryDlg):
         widget.setCurrentIndex(-1)
         widget.blockSignals(False)
                 
-
- 
-    # Method: enableAndFilterMatches
-    #
-    # Enable Matches combobox if not enabled already 
-    # Filter Matches combobox on matchday selection
     def enableAndFilterMatches(self, widget):
+        """Enables Match combobox and filters its contents based on matchday (Rounds) selection.
         
+        Argument:
+        widget -- data widget object (matchSelect)
+        """
         widget.blockSignals(True)
         
         # enable widget if not enabled already        
@@ -859,25 +849,32 @@ class penaltyEntryDlg(QDialog, ui_penaltyentry.Ui_penaltyEntryDlg):
         widget.setCurrentIndex(-1)
         widget.blockSignals(False)
  
-
-    # Method: enableStoppageTime
-    #
-    # Enable stoppage time widget if minutes elapsed are nonzero and divisible by 45
-    #       OR minutes elapsed exceed 90 and are divisible by 15 (handle extra time period)
     def enableStoppageTime(self, widget):
+        """Enables stoppage time widget. 
+        
+        Enables widget if one of the following conditions are met:
+            (1) minutes elapsed are nonzero and divisible by 45
+            (2) minutes elapsed exceed 90 and are divisible by 15
+        Argument:
+        widget -- data widget object (stoppageEdit)
+        
+        """
         minutes = self.goaltimeEdit.text().toInt()[0]
         if (minutes and not (minutes % 45)) or (minutes > 90 and not (minutes % 15)):
             widget.setEnabled(True)
-        
 
-        
-# offenseEntryDlg: Bookable offense entry dialog
+
 class offenseEntryDlg(QDialog, ui_offenseentry.Ui_offenseEntryDlg):
+    """Implements bookable offense data entry dialog, and accesses and writes to Offenses table.
+    
+    This dialog accepts data on disciplinary incidents during a match.
+   """
 
     FIRST,  PREV,  NEXT,  LAST = range(4)
     ID, LINEUP_ID, FOUL_ID, CARD_ID, TIME, STIME = range(6)
 
     def __init__(self, parent=None):
+        """Constructor for offenseEntryDlg class."""
         super(offenseEntryDlg, self).__init__(parent)
         self.setupUi(self)
         
@@ -1028,19 +1025,13 @@ class offenseEntryDlg(QDialog, ui_offenseentry.Ui_offenseEntryDlg):
         self.connect(self.teamSelect, SIGNAL("currentIndexChanged(int)"), self.filterPlayers)
         self.connect(self.foultimeEdit, SIGNAL("textChanged()"),  lambda: self.enableStoppageTime(self.stoppageEdit))
 
-    # Method: accept
-    #
-    # Submit changes to database, and then close window
     def accept(self):
+        """Submits changes to database and closes window."""
         ok = self.mapper.submit()
         QDialog.accept(self)
    
-    # Method: saveRecord
-    # 
-    # Submit changes to database,
-    # advance to next record, reset subforms,
-    # apply conditions if at first/last record
     def saveRecord(self, where):
+        """Submits changes to database, navigates through form, and resets subforms."""
         row = self.mapper.currentIndex()
         
         ok = self.mapper.submit()
@@ -1083,9 +1074,8 @@ class offenseEntryDlg(QDialog, ui_offenseentry.Ui_offenseEntryDlg):
         self.refreshTeamBox()
         self.teamSelect.blockSignals(False)
 
-    # deleteRecord: delete record from database
-    #                        ask user to confirm deletion
     def deleteRecord(self):
+        """Deletes record from database upon user confirmation."""
         if QMessageBox.question(self, QString("Delete Record"), 
                                 QString("Delete current record?"), 
                                 QMessageBox.Yes|QMessageBox.No) == QMessageBox.No:
@@ -1097,12 +1087,8 @@ class offenseEntryDlg(QDialog, ui_offenseentry.Ui_offenseEntryDlg):
             row = self.model.rowCount() - 1
         self.mapper.setCurrentIndex(row) 
 
-    # Method: addRecord
-    #
-    # Add new record at end of entry list
-    # Set focus to Date field
     def addRecord(self):
-        
+        """Adds new record at end of entry list."""
         # save current index if valid
         row = self.mapper.currentIndex()
         if row != -1:
@@ -1142,11 +1128,8 @@ class offenseEntryDlg(QDialog, ui_offenseentry.Ui_offenseEntryDlg):
         self.stoppageEdit.setText("0")
         self.foultimeEdit.setText(QString())
 
-    # Method: filterOffensesAndTeams
-    # 
-    # Set filter for Offenses table from match selection
-    # Set filter for Teams combobox
     def filterOffensesAndTeams(self):
+        """Filters Offenses table down to entries from selected match, and filters Teams combobox down to both participants."""
 #        print "Calling filterOffensesAndTeams()"
         # enable add/delete entry buttons
         self.addEntry.setEnabled(True)
@@ -1197,9 +1180,8 @@ class offenseEntryDlg(QDialog, ui_offenseentry.Ui_offenseEntryDlg):
             self.nextEntry.setEnabled(True)
             self.lastEntry.setEnabled(True)      
 
-    # Method: refreshTeamBox
-    # Set index of team box to correspond with selected player
     def refreshTeamBox(self):
+        """Sets index of team box so that it corresponds with selected player."""
         
 #        print "Calling refreshTeamBox()"
         
@@ -1227,11 +1209,8 @@ class offenseEntryDlg(QDialog, ui_offenseentry.Ui_offenseEntryDlg):
         currentIndex = self.teamSelect.findText(teamName, Qt.MatchExactly)
         self.teamSelect.setCurrentIndex(currentIndex)
 
-
-    # Method: filterPlayers
-    #
-    # Enable player, offense, and card comboboxes if not enabled already
     def filterPlayers(self):
+        """Filters Players combobox down to players in match lineup for selected team, and enable remaining data widgets."""
         
         self.playerSelect.blockSignals(True)
         
@@ -1276,13 +1255,12 @@ class offenseEntryDlg(QDialog, ui_offenseentry.Ui_offenseEntryDlg):
         self.playerSelect.setCurrentIndex(-1)        
         self.playerSelect.blockSignals(False)
 
-
-    # Method: enableAndFilterRounds
-    #
-    # Enable Rounds combobox if not enabled already 
-    # Filter Rounds combobox on competition selection
     def enableAndFilterRounds(self, widget):
+        """Enables Rounds combobox and filters its contents based on Competition selection.
         
+        Argument:
+        widget -- data widget object (roundSelect)
+        """
         widget.blockSignals(True)
 
         # enable widget if not enabled already
@@ -1311,14 +1289,12 @@ class offenseEntryDlg(QDialog, ui_offenseentry.Ui_offenseEntryDlg):
         widget.setCurrentIndex(-1)
         widget.blockSignals(False)
                 
-
- 
-    # Method: enableAndFilterMatches
-    #
-    # Enable Matches combobox if not enabled already 
-    # Filter Matches combobox on matchday selection
     def enableAndFilterMatches(self, widget):
+        """Enables Match combobox and filters its contents based on matchday (Rounds) selection.
         
+        Argument:
+        widget -- data widget object (matchSelect)
+        """
         widget.blockSignals(True)
         
         # enable widget if not enabled already        
@@ -1351,24 +1327,31 @@ class offenseEntryDlg(QDialog, ui_offenseentry.Ui_offenseEntryDlg):
         widget.setCurrentIndex(-1)
         widget.blockSignals(False)
  
-
-    # Method: enableStoppageTime
-    #
-    # Enable stoppage time widget if minutes elapsed are nonzero and divisible by 45
-    #       OR minutes elapsed exceed 90 and are divisible by 15 (handle extra time period)
     def enableStoppageTime(self, widget):
+        """Enables stoppage time widget. 
+        
+        Enables widget if one of the following conditions are met:
+            (1) minutes elapsed are nonzero and divisible by 45
+            (2) minutes elapsed exceed 90 and are divisible by 15
+        Argument:
+        widget -- data widget object (stoppageEdit)
+        
+        """
         minutes = self.goaltimeEdit.text().toInt()[0]
         if (minutes and not (minutes % 45)) or (minutes > 90 and not (minutes % 15)):
             widget.setEnabled(True)
-        
-        
-# subsEntryDlg: Substitutions entry dialog
+
+
 class subsEntryDlg(QDialog, ui_subsentry.Ui_subsEntryDlg):
+    """Implements substitutions data entry dialog, and accesses and writes to Substitutions table and In(Out)Substitutions linking tables.
     
+    This dialog accepts data on substitution events during a match. 
+   """
     FIRST,  PREV,  NEXT,  LAST = range(4)
     ID, TIME, STIME = range(3)
     
     def __init__(self, parent=None):
+        """Constructor for subsEntryDlg class."""
         super(subsEntryDlg, self).__init__(parent)
         self.setupUi(self)
         
@@ -1534,19 +1517,13 @@ class subsEntryDlg(QDialog, ui_subsentry.Ui_subsEntryDlg):
                                                                       lambda: self.updateLinkingTable(self.outplayerMapper, self.outplayerSelect))
         self.connect(self.subtimeEdit, SIGNAL("textChanged()"),  lambda: self.enableStoppageTime(self.stoppageEdit))
  
-    # Method: accept
-    #
-    # Submit changes to database, and then close window
     def accept(self):
+        """Submits changes to database and closes window."""
         ok = self.mapper.submit()
         QDialog.accept(self)
    
-    # Method: saveRecord
-    # 
-    # Submit changes to database,
-    # advance to next record, reset subforms,
-    # apply conditions if at first/last record
     def saveRecord(self, where):
+        """Submits changes to database, navigates through form, and resets subforms."""
         row = self.mapper.currentIndex()
         self.mapper.submit()
         
@@ -1591,11 +1568,8 @@ class subsEntryDlg(QDialog, ui_subsentry.Ui_subsEntryDlg):
         self.refreshTeamBox()
         self.teamSelect.blockSignals(False)
 
-    # Method: addRecord
-    #
-    # Add new record at end of entry table
     def addRecord(self):
-        
+        """Adds new record at end of entry list."""
         # save current index if valid
         row = self.mapper.currentIndex()
         if row != -1:
@@ -1639,11 +1613,8 @@ class subsEntryDlg(QDialog, ui_subsentry.Ui_subsEntryDlg):
         # refresh subforms
         self.refreshSubForms(subs_id)        
 
-
-    # Method: refreshTeamBox
-    # Set index of team box to correspond with selected player
     def refreshTeamBox(self):
-        
+        """Sets index of team box so that it corresponds with selected player."""
 #        print "Calling refreshTeamBox()"
         
         compName = self.compSelect.currentText()
@@ -1670,12 +1641,8 @@ class subsEntryDlg(QDialog, ui_subsentry.Ui_subsEntryDlg):
         currentIndex = self.teamSelect.findText(teamName, Qt.MatchExactly)
         self.teamSelect.setCurrentIndex(currentIndex)
 
-
-    # Method: enablePlayerData
-    #
-    # Enable substitution comboboxes if not enabled already
     def enablePlayerData(self):
-        
+        """Enables player, offense, and card comboboxes if not enabled already."""
         # enable data entry widgets if table is non-empty
         self.inplayerSelect.setEnabled(True)
         self.outplayerSelect.setEnabled(True)
@@ -1684,11 +1651,8 @@ class subsEntryDlg(QDialog, ui_subsentry.Ui_subsEntryDlg):
         self.filterInSubs()
         self.filterOutSubs()
         
-    # Method: refreshSubForms
-    #
-    # Set match ID for linking models and refresh models to update them.
-    # Refresh mappers associated with these models.
     def refreshSubForms(self, currentID):
+        """Sets match ID for linking models and refreshes models and mappers."""
         self.inplayerModel.setID(currentID)
         self.inplayerModel.refresh()
         
@@ -1698,10 +1662,8 @@ class subsEntryDlg(QDialog, ui_subsentry.Ui_subsEntryDlg):
         self.inplayerMapper.toFirst()
         self.outplayerMapper.toFirst()
         
-    # Method: updateLinkingTable
-    #
-    # Update linking table if no rows apply to entry
     def updateLinkingTable(self, mapper, editor):
+        """Updates custom linking table."""
 #        print "Calling updateLinkingTable()"
         # database table associated with mapper
         # get current index of model
@@ -1715,12 +1677,16 @@ class subsEntryDlg(QDialog, ui_subsentry.Ui_subsEntryDlg):
             value = editor.model().record(boxIndex).value(0)
             ok = linkmodel.setData(index, value)
 
-    # Method: filterInSubs
-    #
-    # Filter for In Player combobox based on team selection and current index of combobox
-    # Players who can be subbed into a match
     def filterInSubs(self):
+        """Filters In Player combobox based on match and team selections.
         
+        Players eligible for substitutions into match are lineup entries who meet all conditions:
+            -- same match
+            -- same team
+            -- not starting
+            -- not already subbed in
+            
+        """
 #        print "Calling filterInSubs()"
         
         # suppress signals from inplayerSelect
@@ -1795,7 +1761,15 @@ class subsEntryDlg(QDialog, ui_subsentry.Ui_subsEntryDlg):
     # Filter for Out Player combobox based on team selection and current index of combobox
     # Players who can be subbed out of a match        
     def filterOutSubs(self):
+        """Filters Out Player combobox based on match and team selections.
         
+        Players eligible for substitutions out of match are lineup entries who meet all conditions:
+            -- same match
+            -- same team
+            -- starting OR (non-starter and already subbed in)
+            -- not already subbed out
+            
+        """
 #        print "Calling filterOutSubs()"
         
         self.outplayerSelect.blockSignals(True)
@@ -1865,11 +1839,8 @@ class subsEntryDlg(QDialog, ui_subsentry.Ui_subsEntryDlg):
         
         self.outplayerSelect.blockSignals(False)
 
-
-    # Method: filterSubstitutionsAndTeams
-    # 
-    # Set filter for Substitutions table from match selection
     def filterSubstitutionsAndTeams(self):
+        """Filters Substitutions table from match selection."""
         
         # enable add/delete entry buttons
         self.addEntry.setEnabled(True)
@@ -1923,12 +1894,12 @@ class subsEntryDlg(QDialog, ui_subsentry.Ui_subsEntryDlg):
             self.nextEntry.setEnabled(True)
             self.lastEntry.setEnabled(True)      
 
-    # Method: enableAndFilterRounds
-    #
-    # Enable Rounds combobox if not enabled already 
-    # Filter Rounds combobox on competition selection
     def enableAndFilterRounds(self, widget):
+        """Enables Rounds combobox and filters its contents based on Competition selection.
         
+        Argument:
+        widget -- data widget object (roundSelect)
+        """        
         widget.blockSignals(True)
 
         # enable widget if not enabled already
@@ -1957,12 +1928,12 @@ class subsEntryDlg(QDialog, ui_subsentry.Ui_subsEntryDlg):
         widget.setCurrentIndex(-1)
         widget.blockSignals(False)
  
-    # Method: enableAndFilterMatches
-    #
-    # Enable Matches combobox if not enabled already 
-    # Filter Matches combobox on matchday selection
     def enableAndFilterMatches(self, widget):
+        """Enables Match combobox and filters its contents based on matchday (Rounds) selection.
         
+        Argument:
+        widget -- data widget object (matchSelect)
+        """        
         widget.blockSignals(True)
         
         # enable widget if not enabled already        
@@ -1996,11 +1967,16 @@ class subsEntryDlg(QDialog, ui_subsentry.Ui_subsEntryDlg):
         
         widget.blockSignals(False)
  
-    # Method: enableStoppageTime
-    #
-    # Enable stoppage time widget if minutes elapsed are nonzero and divisible by 45
-    #       OR minutes elapsed exceed 90 and are divisible by 15 (handle extra time period)
     def enableStoppageTime(self, widget):
+        """Enables stoppage time widget. 
+        
+        Enables widget if one of the following conditions are met:
+            (1) minutes elapsed are nonzero and divisible by 45
+            (2) minutes elapsed exceed 90 and are divisible by 15
+        Argument:
+        widget -- data widget object (stoppageEdit)
+        
+        """
         minutes = self.subtimeEdit.text().toInt()[0]
         if (minutes and not (minutes % 45)) or (minutes > 90 and not (minutes % 15)):
             widget.setEnabled(True)
@@ -2008,7 +1984,12 @@ class subsEntryDlg(QDialog, ui_subsentry.Ui_subsEntryDlg):
 
 # switchEntryDlg: Position switch entry dialog
 class switchEntryDlg(QDialog, ui_switchentry.Ui_switchEntryDlg):
+    """Implements position switch data entry dialog, and accesses and writes to SwitchPositions table.
     
+    This dialog accepts data on position switch events during a match. It is primarily focused on
+    tracking forced changes of in-field players due to an expulsion of a goalkeeper, but it can
+    track tactical position changes as well.
+   """
     FIRST,  PREV,  NEXT,  LAST = range(4)
     ID, LINEUP_ID, POS_ID, TIME, STIME = range(5)
     
@@ -2153,19 +2134,13 @@ class switchEntryDlg(QDialog, ui_switchentry.Ui_switchEntryDlg):
         self.connect(self.teamSelect, SIGNAL("currentIndexChanged(int)"), self.filterPlayers)                
         self.connect(self.switchtimeEdit, SIGNAL("textChanged()"),  lambda: self.enableStoppageTime(self.stoppageEdit))        
         
-    # Method: accept
-    #
-    # Submit changes to database, and then close window
     def accept(self):
+        """Submits changes to database and closes window."""
         ok = self.mapper.submit()
         QDialog.accept(self)
    
-    # Method: saveRecord
-    # 
-    # Submit changes to database,
-    # advance to next record, reset subforms,
-    # apply conditions if at first/last record
     def saveRecord(self, where):
+        """Submits changes to database, navigates through form, and resets subforms."""
         row = self.mapper.currentIndex()
         self.mapper.submit()
         
@@ -2207,10 +2182,8 @@ class switchEntryDlg(QDialog, ui_switchentry.Ui_switchEntryDlg):
         self.refreshTeamBox()
         self.teamSelect.blockSignals(False)
         
-
-    # deleteRecord: delete record from database
-    #                        ask user to confirm deletion
     def deleteRecord(self):
+        """Deletes record from database upon user confirmation."""
         if QMessageBox.question(self, QString("Delete Record"), 
                                 QString("Delete current record?"), 
                                 QMessageBox.Yes|QMessageBox.No) == QMessageBox.No:
@@ -2222,11 +2195,8 @@ class switchEntryDlg(QDialog, ui_switchentry.Ui_switchEntryDlg):
             row = self.model.rowCount() - 1
         self.mapper.setCurrentIndex(row) 
 
-    # Method: addRecord
-    #
-    # Add new record at end of entry table
     def addRecord(self):
-        
+        """Adds new record at end of entry list."""        
         # save current index if valid
         row = self.mapper.currentIndex()
         if row != -1:
@@ -2267,10 +2237,8 @@ class switchEntryDlg(QDialog, ui_switchentry.Ui_switchEntryDlg):
         self.stoppageEdit.setText("0")
         self.switchtimeEdit.setText(QString())
         
-    # Method: refreshTeamBox
-    # Set index of team box to correspond with selected player
     def refreshTeamBox(self):
-        
+        """Sets index of team box so that it corresponds with selected player."""
 #        print "Calling refreshTeamBox()"
         
         compName = self.compSelect.currentText()
@@ -2304,7 +2272,15 @@ class switchEntryDlg(QDialog, ui_switchentry.Ui_switchEntryDlg):
     #  User will select players who have started (and not been substituted) 
     #  and non-starting players who have been substituted into the match.
     def filterPlayers(self):
+        """Filters Players combobox down to players in match lineup for selected team, and enable remaining data widgets.
         
+        Players eligible for substitutions out of match are lineup entries who meet all conditions:
+            -- same match
+            -- same team
+            -- starting OR (non-starter and already subbed in)
+            -- not already subbed out
+                    
+        """
         self.playerSelect.blockSignals(True)
         
         # get current matchup from current text in matchSelect (main form)
@@ -2373,12 +2349,8 @@ class switchEntryDlg(QDialog, ui_switchentry.Ui_switchEntryDlg):
         self.playerSelect.setCurrentIndex(-1)        
         self.playerSelect.blockSignals(False)
 
-
-    # Method: filterSwitchesAndTeams
-    # 
-    # Set filter for SwitchPositions table from match selection
     def filterSwitchesAndTeams(self):
-        
+        """Filters SwitchPositions table from match selection."""
         # enable add/delete entry buttons
         self.addEntry.setEnabled(True)
         self.deleteEntry.setEnabled(True)
@@ -2428,12 +2400,12 @@ class switchEntryDlg(QDialog, ui_switchentry.Ui_switchEntryDlg):
             self.nextEntry.setEnabled(True)
             self.lastEntry.setEnabled(True)      
 
-    # Method: enableAndFilterRounds
-    #
-    # Enable Rounds combobox if not enabled already 
-    # Filter Rounds combobox on competition selection
     def enableAndFilterRounds(self, widget):
+        """Enables Rounds combobox and filters its contents based on Competition selection.
         
+        Argument:
+        widget -- data widget object (roundSelect)
+        """
         widget.blockSignals(True)
 
         # enable widget if not enabled already
@@ -2462,12 +2434,12 @@ class switchEntryDlg(QDialog, ui_switchentry.Ui_switchEntryDlg):
         widget.setCurrentIndex(-1)
         widget.blockSignals(False)
  
-    # Method: enableAndFilterMatches
-    #
-    # Enable Matches combobox if not enabled already 
-    # Filter Matches combobox on matchday selection
     def enableAndFilterMatches(self, widget):
+        """Enables Match combobox and filters its contents based on matchday (Rounds) selection.
         
+        Argument:
+        widget -- data widget object (matchSelect)
+        """
         widget.blockSignals(True)
         
         # enable widget if not enabled already        
@@ -2501,11 +2473,16 @@ class switchEntryDlg(QDialog, ui_switchentry.Ui_switchEntryDlg):
         
         widget.blockSignals(False)
  
-    # Method: enableStoppageTime
-    #
-    # Enable stoppage time widget if minutes elapsed are nonzero and divisible by 45
-    #       OR minutes elapsed exceed 90 and are divisible by 15 (handle extra time period)
     def enableStoppageTime(self, widget):
+        """Enables stoppage time widget. 
+        
+        Enables widget if one of the following conditions are met:
+            (1) minutes elapsed are nonzero and divisible by 45
+            (2) minutes elapsed exceed 90 and are divisible by 15
+        Argument:
+        widget -- data widget object (stoppageEdit)
+        
+        """
         minutes = self.switchtimeEdit.text().toInt()[0]
         if (minutes and not (minutes % 45)) or (minutes > 90 and not (minutes % 15)):
             widget.setEnabled(True)

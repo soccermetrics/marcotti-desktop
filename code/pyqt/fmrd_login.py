@@ -1,9 +1,6 @@
 #!/usr/bin/env python
 #
-#    Football Match Result Database (FMRD)
-#    Desktop-based data entry tool
-#
-#    Contains implementation of login dialog for access to FMRD.
+#    Desktop-based data entry tool for the Football Match Result Database (FMRD)
 #
 #    Copyright (C) 2010-2011, Howard Hamilton
 #
@@ -26,33 +23,45 @@ from PyQt4.QtSql import *
 
 from FmrdMain import ui_fmrdlogin
 
-# dbLoginDlg: login dialog to database
+"""
+Contains implementation of login dialog for access to FMRD.
+
+Only class: dbLoginDlg
+"""
+
+
 class dbLoginDlg(QDialog, ui_fmrdlogin.Ui_dbLoginDlg):
+    """Implements login dialog for access to database application.
+    
+    Inherits Ui_dbLoginDlg (ui_fmrdlogin)
+    """
     
     USER = 1
     ADMIN = 2
     MAXLOGINS = 3
     
     def __init__(self):
+        """ Constructor for dbLoginDlg class."""
         super(dbLoginDlg, self).__init__()
         self.setupUi(self)
-        
-        self.option = dbLoginDlg.USER*self.userButton.isChecked() + dbLoginDlg.ADMIN*self.adminButton.isChecked()
-        
+
         self.attempts = 0
+
+        self.option = dbLoginDlg.USER*self.userButton.isChecked() + dbLoginDlg.ADMIN*self.adminButton.isChecked()
         
         # Define signals and slots
         self.connect(self.dbNameEdit, SIGNAL("textChanged()"), lambda: self.enableWidget(self.loginEdit))
         self.connect(self.loginEdit, SIGNAL("textChanged()"), lambda: self.enableWidget(self.passwordEdit))
 
-    # Method: authenticate
-    #
-    # Perform database authentication.  Record value corresponding to switchboard type selection.
-    # If authentication is successful, hide login dialog and return.
-    # If authentication is not successful, alert user and clear entry fields.
-    # Exit application if three consecutive failed logins are made.
     def authenticate(self):
+        """ Performs database authentication.  
         
+        Records value corresponding to switchboard type selection.
+        If authentication is successful, hides login dialog and returns.
+        If authentication is not successful, alerts user and clears entry fields.
+        If three consecutive failed logins have been made, returns Rejected to caller function.
+        
+        """
         # get authentication data
         dbName = self.dbNameEdit.text()
         login = self.loginEdit.text()
@@ -96,17 +105,16 @@ class dbLoginDlg(QDialog, ui_fmrdlogin.Ui_dbLoginDlg):
         else:
             self.accept()
 
-    # Method: enableWidget
-    #
-    # Enable widget passed in function parameter, if not already enabled
     def enableWidget(self, widget):
+        """Enables widget passed as a parameter if not already enabled."""
         if not widget.isEnabled():
             widget.setEnabled(True)
 
-    # Method: execute
-    # 
-    # Wrapper function to call exec_() 
-    # Returns two-member tuple that contains return value of exec_() and switchboard type.
     def execute(self):
+        """Calls exec_() and returns a tuple.
+        
+        Returns two-member tuple that contains return value of exec_() and switchboard type.
+        
+        """
         ok = self.exec_()
         return (ok, self.option)
