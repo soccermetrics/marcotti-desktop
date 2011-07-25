@@ -585,7 +585,7 @@ class penaltyEntryDlg(QDialog, ui_penaltyentry.Ui_penaltyEntryDlg):
         self.connect(self.compSelect, SIGNAL("currentIndexChanged(int)"), lambda: self.enableAndFilterRounds(self.roundSelect))
         self.connect(self.roundSelect, SIGNAL("currentIndexChanged(int)"),  lambda: self.enableAndFilterMatches(self.matchSelect))
         self.connect(self.matchSelect, SIGNAL("currentIndexChanged(int)"), self.filterPenaltiesAndTeams)
-        self.connect(self.teamSelect, SIGNAL("currentIndexChanged(int)"), self.enablePlayerData)        
+        self.connect(self.teamSelect, SIGNAL("currentIndexChanged(int)"), self.filterPlayers)        
         self.connect(self.pentimeEdit, SIGNAL("textChanged()"),  lambda: self.enableStoppageTime(self.stoppageEdit))
 
     def accept(self):
@@ -717,13 +717,51 @@ class penaltyEntryDlg(QDialog, ui_penaltyentry.Ui_penaltyEntryDlg):
         currentIndex = self.teamSelect.findText(teamName, Qt.MatchExactly)
         self.teamSelect.setCurrentIndex(currentIndex)
 
-    def enablePlayerData(self):
-        """Enables player, offense, and card comboboxes if not enabled already."""
+    def filterPlayers(self):
+        """Filters Players combobox down to players in match lineup for selected team, and enable remaining data widgets."""
         
+        self.playerSelect.blockSignals(True)
+        
+        lineupListModel = self.playerSelect.model()
+        lineupListModel.setFilter(QString())
+        
+        # get current matchup
+        matchup = self.matchSelect.currentText()
+                
+        # get match_id by making a query on match_list with matchup
+        query = QSqlQuery()
+        query.prepare("SELECT match_id FROM match_list WHERE matchup = ?")
+        query.addBindValue(QVariant(matchup))
+        query.exec_()
+        if query.next():
+            match_id = query.value(0).toString()
+        
+        # get current team
+        teamName = self.teamSelect.currentText()
+        
+        # get team_id by querying tbl_teams with team name
+        team_id = "-1"
+        query = QSqlQuery()
+        query.prepare("SELECT team_id FROM tbl_teams WHERE tm_name = ?")
+        query.addBindValue(QVariant(teamName))
+        query.exec_()
+        if query.next():
+            team_id = query.value(0).toString()
+        
+        # filter lineup list model by match_id
+        lineupListModel.setFilter(QString("lineup_id IN "
+                                                          "(SELECT lineup_id FROM tbl_lineups WHERE match_id = %1 AND team_id = %2)").arg(match_id, team_id))
+                
+        # enable comboboxes if not enabled already
         self.playerSelect.setEnabled(True)
         self.foulSelect.setEnabled(True)
         self.penoutcomeSelect.setEnabled(True)
         self.pentimeEdit.setEnabled(True)
+        self.stoppageEdit.setEnabled(True)
+        
+        # set current index to -1
+        self.playerSelect.setCurrentIndex(-1)        
+        self.playerSelect.blockSignals(False)
 
     def filterPenaltiesAndTeams(self):
         """Filters Penalties table to display all entries from selected match, and filters Teams combobox down to the two participants."""
