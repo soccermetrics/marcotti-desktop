@@ -426,6 +426,8 @@ class goalEntryDlg(QDialog, ui_goalentry.Ui_goalEntryDlg):
         minutes = self.goaltimeEdit.text().toInt()[0]
         if (minutes and not (minutes % 45)) or (minutes > 90 and not (minutes % 15)):
             widget.setEnabled(True)
+        else:
+            widget.setDisabled(True)
 
 
 class penaltyEntryDlg(QDialog, ui_penaltyentry.Ui_penaltyEntryDlg):
@@ -900,7 +902,8 @@ class penaltyEntryDlg(QDialog, ui_penaltyentry.Ui_penaltyEntryDlg):
         minutes = self.goaltimeEdit.text().toInt()[0]
         if (minutes and not (minutes % 45)) or (minutes > 90 and not (minutes % 15)):
             widget.setEnabled(True)
-
+        else:
+            widget.setDisabled(True)
 
 class offenseEntryDlg(QDialog, ui_offenseentry.Ui_offenseEntryDlg):
     """Implements bookable offense data entry dialog, and accesses and writes to Offenses table.
@@ -1378,7 +1381,8 @@ class offenseEntryDlg(QDialog, ui_offenseentry.Ui_offenseEntryDlg):
         minutes = self.goaltimeEdit.text().toInt()[0]
         if (minutes and not (minutes % 45)) or (minutes > 90 and not (minutes % 15)):
             widget.setEnabled(True)
-
+        else:
+            widget.setDisabled(True)
 
 class subsEntryDlg(QDialog, ui_subsentry.Ui_subsEntryDlg):
     """Implements substitutions data entry dialog, and accesses and writes to Substitutions table and In(Out)Substitutions linking tables.
@@ -2018,9 +2022,9 @@ class subsEntryDlg(QDialog, ui_subsentry.Ui_subsEntryDlg):
         minutes = self.subtimeEdit.text().toInt()[0]
         if (minutes and not (minutes % 45)) or (minutes > 90 and not (minutes % 15)):
             widget.setEnabled(True)
+        else:
+            widget.setDisabled(True)
 
-
-# switchEntryDlg: Position switch entry dialog
 class switchEntryDlg(QDialog, ui_switchentry.Ui_switchEntryDlg):
     """Implements position switch data entry dialog, and accesses and writes to SwitchPositions table.
     
@@ -2303,12 +2307,6 @@ class switchEntryDlg(QDialog, ui_switchentry.Ui_switchEntryDlg):
         currentIndex = self.teamSelect.findText(teamName, Qt.MatchExactly)
         self.teamSelect.setCurrentIndex(currentIndex)
         
-    # Method: filterPlayers
-    #
-    # Enable player, offense, and card comboboxes if not enabled already
-    #
-    #  User will select players who have started (and not been substituted) 
-    #  and non-starting players who have been substituted into the match.
     def filterPlayers(self):
         """Filters Players combobox down to players in match lineup for selected team, and enable remaining data widgets.
         
@@ -2524,4 +2522,5 @@ class switchEntryDlg(QDialog, ui_switchentry.Ui_switchEntryDlg):
         minutes = self.switchtimeEdit.text().toInt()[0]
         if (minutes and not (minutes % 45)) or (minutes > 90 and not (minutes % 15)):
             widget.setEnabled(True)
-        
+        else:
+            widget.setDisabled(True)
