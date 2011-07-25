@@ -22,6 +22,7 @@ from PyQt4.QtGui import *
 from PyQt4.QtSql import *
 
 from FmrdMain import ui_fmrdlogin
+from FmrdLib import Constants
 
 """
 Contains implementation of login dialog for access to FMRD.
@@ -35,11 +36,7 @@ class dbLoginDlg(QDialog, ui_fmrdlogin.Ui_dbLoginDlg):
     
     Inherits Ui_dbLoginDlg (ui_fmrdlogin)
     """
-    
-    USER = 1
-    ADMIN = 2
-    MAXLOGINS = 3
-    
+        
     def __init__(self):
         """ Constructor for dbLoginDlg class."""
         super(dbLoginDlg, self).__init__()
@@ -47,7 +44,7 @@ class dbLoginDlg(QDialog, ui_fmrdlogin.Ui_dbLoginDlg):
 
         self.attempts = 0
 
-        self.option = dbLoginDlg.USER*self.userButton.isChecked() + dbLoginDlg.ADMIN*self.adminButton.isChecked()
+        self.option = Constants.USER*self.userButton.isChecked() + Constants.ADMIN*self.adminButton.isChecked()
         
         # Define signals and slots
         self.connect(self.dbNameEdit, SIGNAL("textChanged()"), lambda: self.enableWidget(self.loginEdit))
@@ -67,7 +64,7 @@ class dbLoginDlg(QDialog, ui_fmrdlogin.Ui_dbLoginDlg):
         login = self.loginEdit.text()
         password = self.passwordEdit.text()
 
-        self.option = dbLoginDlg.USER*self.userButton.isChecked() + dbLoginDlg.ADMIN*self.adminButton.isChecked()
+        self.option = Constants.USER*self.userButton.isChecked() + Constants.ADMIN*self.adminButton.isChecked()
         
         # attempt to open connection to database
         if self.attempts == 0:
@@ -96,7 +93,7 @@ class dbLoginDlg(QDialog, ui_fmrdlogin.Ui_dbLoginDlg):
             db.removeDatabase("QPSQL")
             
             # Alert user and send rejection to exec_() if it's 3rd consecutive fail
-            if self.attempts == dbLoginDlg.MAXLOGINS:
+            if self.attempts == Constants.MAXLOGINS:
                 QMessageBox.critical(None,
                     "Maximum Login Attempts Exceeded",
                     "You have exceeded the maximum number of login attempts. Press Close to exit.", 

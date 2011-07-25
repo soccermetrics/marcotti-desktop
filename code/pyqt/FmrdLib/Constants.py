@@ -1,9 +1,6 @@
 #!/usr/bin/env python
 #
-#    Football Match Result Database (FMRD)
-#    Desktop-based data entry tool
-#
-#    Contains constants for use in application source code.
+#    Desktop-based data entry tool for the Football Match Result Database (FMRD)
 #
 #    Copyright (C) 2010-2011, Howard Hamilton
 #
@@ -19,6 +16,8 @@
 #
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+"""Contains constants for use in application source code."""
 
 # #############
 # Table IDs
@@ -61,6 +60,13 @@ MinCountryID         = "100"
 # #############
 # Constants
 # #############
+
+# switchboard type definition
+USER = 1
+ADMIN = 2
+
+# Define maximum number of login attempts
+MAXLOGINS = 3
 
 # Define minimum number of personnel 
 MIN_STARTERS = 11

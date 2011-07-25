@@ -23,6 +23,8 @@ import functools
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 
+from FmrdLib import Constants
+
 from fmrd_login import *
 from fmrd_switchboard import *
 from fmrd_user_switchboard import * 
@@ -38,11 +40,7 @@ Performs login verification and opens either user or admin switchboards.
     
 def main():
     """ Conducts database authentication and executes GUI loop if successful."""
-    
-    # switchboard type definition
-    USER = 1
-    ADMIN = 2
-    
+        
     # create app and login objects
     app = QApplication(sys.argv)
     login = dbLoginDlg() 
@@ -56,10 +54,10 @@ def main():
     # if login unsuccessful or aborted (QDialog.DialogCode == QDialog.Rejected)
     #    exit application
     if status[0] == QDialog.Accepted:
-        if status[1] == USER:
+        if status[1] == Constants.USER:
             userwindow = UserMainSwitchboard()
             userwindow.show()
-        elif status[1] == ADMIN:
+        elif status[1] == Constants.ADMIN:
             adminwindow = MainSwitchboard()
             adminwindow.show()
         sys.exit(app.exec_())
