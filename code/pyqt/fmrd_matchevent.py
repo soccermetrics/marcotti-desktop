@@ -36,7 +36,6 @@ subsEntryDlg -- data entry to Substitutions table
 switchEntryDlg -- data entry to Switch Positions table
 """
 
-# goalEntryDlg: Goal entry dialog (run of play)
 class goalEntryDlg(QDialog, ui_goalentry.Ui_goalEntryDlg):
     """Implements goal data entry dialog, and accesses and writes to Goals table.
     

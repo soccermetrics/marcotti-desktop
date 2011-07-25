@@ -1,9 +1,6 @@
 #!/usr/bin/env python
 #
-#    Football Match Result Database (FMRD)
-#    Desktop-based data entry tool
-#
-#    Contains classes that implement personnel entry forms to main tables of FMRD.
+#    Desktop-based data entry tool for the Football Match Result Database (FMRD)
 #
 #    Copyright (C) 2010-2011, Howard Hamilton
 #
@@ -30,13 +27,27 @@ from FmrdLib.CustomDelegates import *
 from FmrdLib.CustomModels import *
 from FmrdLib.CheckTables import *
 
+"""Contains classes that implement personnel entry forms to main tables of FMRD.
+
+Classes:
+managerEntryDlg -- data entry to Managers table
+playerEntryDlg -- data entry to Players table
+refereeEntryDlg -- data entry to Referees table
+lineupEntryDlg -- data entry to Lineups table
+"""
+
 # managerEntryDlg: Manager entry dialog
 class managerEntryDlg(QDialog, ui_managerentry.Ui_managerEntryDlg):
-
+    """Implements manager data entry dialog, and accesses and writes to Managers table.
+    
+    This dialog accepts data on the managers who participate in a football competition. In
+    particular, data on the manager's nationality and date of birth are tracked.
+   """
     FIRST,  PREV,  NEXT,  LAST = range(4)
     ID,  CTRY_ID, DOB, FNAME, LNAME, NNAME = range(6)
 
     def __init__(self, parent=None):
+        """Constructor for managerEntryDlg class."""
         super(managerEntryDlg, self).__init__(parent)
         self.setupUi(self)
 
@@ -106,69 +117,18 @@ class managerEntryDlg(QDialog, ui_managerentry.Ui_managerEntryDlg):
         self.connect(self.nextEntry, SIGNAL("clicked()"), lambda: self.saveRecord(managerEntryDlg.NEXT))
         self.connect(self.lastEntry, SIGNAL("clicked()"), lambda: self.saveRecord(managerEntryDlg.LAST))
         self.connect(self.addEntry, SIGNAL("clicked()"), self.addRecord)
-        self.connect(self.deleteEntry, SIGNAL("clicked()"), self.deleteRecord)        
+#        self.connect(self.deleteEntry, SIGNAL("clicked()"), self.deleteRecord)        
         self.connect(self.closeButton, SIGNAL("clicked()"), self.accept)
         self.connect(self.mapper, SIGNAL("currentIndexChanged(int)"), self.updateConfed)
         self.connect(self.mgrConfedSelect, SIGNAL("activated(int)"), self.filterCountryBox)
      
-    # Method: updateConfed
-    #
-    # Update current index of Confederation combobox
-    # Ensures consistency between confederation and nation
-    # in existing records
-    def updateConfed(self):
-        # look for current index on Country combobox
-        # extract confed_id from underlying model
-        currIdx = self.mgrCountrySelect.currentIndex()
-        currCountry = self.mgrCountrySelect.currentText()
-        id = self.countryModel.record(currIdx).value("confed_id").toString()
-        
-        # make query on tbl_confederations
-        # extract confederation name corresponding to confederation ID
-        # there will only be one confederation in query result
-        query = QSqlQuery()
-        query.exec_(QString("SELECT confed_name FROM tbl_confederations WHERE confed_id = %1").arg(id))
-        if query.isActive():
-            query.next()
-            confedStr = query.value(0).toString()
-        else:
-            confedStr = "-1"
-            
-        # search for confederation name in combobox, set index to current index
-        self.mgrConfedSelect.setCurrentIndex(self.mgrConfedSelect.findText(confedStr, Qt.MatchExactly))
-        
-        # update index of Country combobox to that of currCountry
-        self.filterCountryBox()
-        self.mgrCountrySelect.setCurrentIndex(self.mgrCountrySelect.findText(currCountry, Qt.MatchExactly))
-     
-    # Method: filterCountryBox
-    #
-    # Enable Country combobox (if not already enabled) and filter contents 
-    # of Country combobox when confederation is selected
-    def filterCountryBox(self):
-        # enable Country combobox if disabled
-        if ~self.mgrCountrySelect.isEnabled():
-            self.mgrCountrySelect.setEnabled(True)
-        
-        # filter tbl_countries based on confederation selection
-        currIdx = self.mgrConfedSelect.currentIndex()
-        id = self.confedModel.record(currIdx).value("confed_id").toString()
-        self.countryModel.setFilter(QString("confed_id = %1").arg(id))
-        self.countryModel.select()
-        
-    # Method: accept
-    #
-    # Submit changes to database, and then close window
     def accept(self):
+        """Submits changes to database and closes window."""
         self.mapper.submit()
         QDialog.accept(self)
     
-    # Method: saveRecord
-    # 
-    # Submit changes to database,
-    # advance to next record, 
-    # apply conditions if at first/last record
     def saveRecord(self, where):
+        """Submits changes to database and navigates through form."""
         row = self.mapper.currentIndex()
         self.mapper.submit()
         if where == managerEntryDlg.FIRST:
@@ -206,13 +166,8 @@ class managerEntryDlg(QDialog, ui_managerentry.Ui_managerEntryDlg):
             row = self.model.rowCount() - 1
         self.mapper.setCurrentIndex(row)
         
-    # Method: addRecord
-    #
-    # Add new record at end of entry list
-    # Disable Country combobox
-    # Set focus to First Name field
     def addRecord(self):
-        
+        """Adds new record at end of entry list."""        
         # save current index if valid
         row = self.mapper.currentIndex()
         if row != -1:
@@ -244,10 +199,8 @@ class managerEntryDlg(QDialog, ui_managerentry.Ui_managerEntryDlg):
         self.mgrCountrySelect.setDisabled(True)        
         self.mgrFirstNameEdit.setFocus()
     
-    # Method: deleteRecord
-    #
-    # Delete record from database upon user confirmation
     def deleteRecord(self):
+        """Deletes record from database upon user confirmation."""
         if QMessageBox.question(self, QString("Delete Record"), 
                                 QString("Delete current record?"), 
                                 QMessageBox.Yes|QMessageBox.No) == QMessageBox.No:
@@ -259,13 +212,60 @@ class managerEntryDlg(QDialog, ui_managerentry.Ui_managerEntryDlg):
             row = self.model.rowCount() - 1
         self.mapper.setCurrentIndex(row) 
         
-# refereeEntryDlg: Referee entry dialog
+    def updateConfed(self):
+        """Updates current index of Confederation combobox.
+        
+        Ensures consistency between confederation and selected nation in Country combobox.
+        
+        """
+        # look for current index on Country combobox
+        # extract confed_id from underlying model
+        currIdx = self.mgrCountrySelect.currentIndex()
+        currCountry = self.mgrCountrySelect.currentText()
+        id = self.countryModel.record(currIdx).value("confed_id").toString()
+        
+        # make query on tbl_confederations
+        # extract confederation name corresponding to confederation ID
+        # there will only be one confederation in query result
+        query = QSqlQuery()
+        query.exec_(QString("SELECT confed_name FROM tbl_confederations WHERE confed_id = %1").arg(id))
+        if query.isActive():
+            query.next()
+            confedStr = query.value(0).toString()
+        else:
+            confedStr = "-1"
+            
+        # search for confederation name in combobox, set index to current index
+        self.mgrConfedSelect.setCurrentIndex(self.mgrConfedSelect.findText(confedStr, Qt.MatchExactly))
+        
+        # update index of Country combobox to that of currCountry
+        self.filterCountryBox()
+        self.mgrCountrySelect.setCurrentIndex(self.mgrCountrySelect.findText(currCountry, Qt.MatchExactly))
+     
+    def filterCountryBox(self):
+        """Enables and filters Country combobox upon selection in Confederation combobox."""
+        # enable Country combobox if disabled
+        if ~self.mgrCountrySelect.isEnabled():
+            self.mgrCountrySelect.setEnabled(True)
+        
+        # filter tbl_countries based on confederation selection
+        currIdx = self.mgrConfedSelect.currentIndex()
+        id = self.confedModel.record(currIdx).value("confed_id").toString()
+        self.countryModel.setFilter(QString("confed_id = %1").arg(id))
+        self.countryModel.select()
+        
+        
 class refereeEntryDlg(QDialog, ui_refereeentry.Ui_refereeEntryDlg):
-
+    """Implements referee data entry dialog, and accesses and writes to Referees table.
+    
+    This dialog accepts data on the referees who participate in a football competition. In
+    particular, data on the referee's nationality and date of birth are tracked.
+   """
     FIRST,  PREV,  NEXT,  LAST = range(4)
     ID,  CTRY_ID, DOB, FNAME, LNAME = range(5)
 
     def __init__(self, parent=None):
+        """Constructor of refereeEntryDlg class."""
         super(refereeEntryDlg, self).__init__(parent)
         self.setupUi(self)
         
@@ -333,69 +333,18 @@ class refereeEntryDlg(QDialog, ui_refereeentry.Ui_refereeEntryDlg):
         self.connect(self.nextEntry, SIGNAL("clicked()"), lambda: self.saveRecord(refereeEntryDlg.NEXT))
         self.connect(self.lastEntry, SIGNAL("clicked()"), lambda: self.saveRecord(refereeEntryDlg.LAST))
         self.connect(self.addEntry, SIGNAL("clicked()"), self.addRecord)
-        self.connect(self.deleteEntry, SIGNAL("clicked()"), self.deleteRecord)        
+#        self.connect(self.deleteEntry, SIGNAL("clicked()"), self.deleteRecord)        
         self.connect(self.closeButton, SIGNAL("clicked()"), self.accept)
         self.connect(self.mapper, SIGNAL("currentIndexChanged(int)"), self.updateConfed)
         self.connect(self.refConfedSelect, SIGNAL("activated(int)"), self.filterCountryBox)
      
-    # Method: updateConfed
-    #
-    # Update current index of Confederation combobox
-    # Ensures consistency between confederation and nation
-    # in existing records
-    def updateConfed(self):
-        # look for current index on Country combobox
-        # extract confed_id from underlying model
-        currIdx = self.refCountrySelect.currentIndex()
-        currCountry = self.refCountrySelect.currentText()
-        id = self.countryModel.record(currIdx).value("confed_id").toString()
-        
-        # make query on tbl_confederations
-        # extract confederation name corresponding to confederation ID
-        # there will only be one confederation in query result
-        query = QSqlQuery()
-        query.exec_(QString("SELECT confed_name FROM tbl_confederations WHERE confed_id = %1").arg(id))
-        if query.isActive():
-            query.next()
-            confedStr = query.value(0).toString()
-        else:
-            confedStr = "-1"
-            
-        # search for confederation name in combobox, set index to current index
-        self.refConfedSelect.setCurrentIndex(self.refConfedSelect.findText(confedStr, Qt.MatchExactly))
-        
-        # update index of Country combobox to that of currCountry
-        self.filterCountryBox()
-        self.refCountrySelect.setCurrentIndex(self.refCountrySelect.findText(currCountry, Qt.MatchExactly))
-     
-    # Method: filterCountryBox
-    #
-    # Enable Country combobox (if not already enabled) and filter contents 
-    # of Country combobox when confederation is selected
-    def filterCountryBox(self):
-        # enable Country combobox if disabled
-        if ~self.refCountrySelect.isEnabled():
-            self.refCountrySelect.setEnabled(True)
-        
-        # filter tbl_countries based on confederation selection
-        currIdx = self.refConfedSelect.currentIndex()
-        id = self.confedModel.record(currIdx).value("confed_id").toString()
-        self.countryModel.setFilter(QString("confed_id = %1").arg(id))
-        self.countryModel.select()
-    
-    # Method: accept
-    #
-    # Submit changes to database, and then close window
     def accept(self):
+        """Submits changes to database and closes window."""
         self.mapper.submit()
         QDialog.accept(self)
     
-    # Method: saveRecord
-    # 
-    # Submit changes to database,
-    # advance to next record, 
-    # apply conditions if at first/last record
     def saveRecord(self, where):
+        """Submits changes to database and navigates through form."""
         row = self.mapper.currentIndex()
         self.mapper.submit()
 
@@ -434,13 +383,8 @@ class refereeEntryDlg(QDialog, ui_refereeentry.Ui_refereeEntryDlg):
             row = self.model.rowCount() - 1        
         self.mapper.setCurrentIndex(row)
         
-    # Method: addRecord
-    #
-    # Add new record at end of entry list
-    # Disable Country combobox
-    # Set focus to First Name field
     def addRecord(self):
-        
+        """Adds new record at end of entry list."""        
         # save current index if valid
         row = self.mapper.currentIndex()
         if row != -1:
@@ -473,10 +417,8 @@ class refereeEntryDlg(QDialog, ui_refereeentry.Ui_refereeEntryDlg):
         self.refCountrySelect.setDisabled(True)        
         self.refFirstNameEdit.setFocus()
     
-    # Method: deleteRecord
-    #
-    # Delete record from database upon user confirmation
     def deleteRecord(self):
+        """Deletes record from database upon user confirmation."""
         if QMessageBox.question(self, QString("Delete Record"), 
                                 QString("Delete current record?"), 
                                 QMessageBox.Yes|QMessageBox.No) == QMessageBox.No:
@@ -487,14 +429,61 @@ class refereeEntryDlg(QDialog, ui_refereeentry.Ui_refereeEntryDlg):
         if row + 1 >= self.model.rowCount():
             row = self.model.rowCount() - 1
         self.mapper.setCurrentIndex(row) 
+
+    def updateConfed(self):
+        """Updates current index of Confederation combobox.
         
-# playerEntryDlg: Player entry dialog
+        Ensures consistency between confederation and selected nation in Country combobox.
+        
+        """
+        # look for current index on Country combobox
+        # extract confed_id from underlying model
+        currIdx = self.refCountrySelect.currentIndex()
+        currCountry = self.refCountrySelect.currentText()
+        id = self.countryModel.record(currIdx).value("confed_id").toString()
+        
+        # make query on tbl_confederations
+        # extract confederation name corresponding to confederation ID
+        # there will only be one confederation in query result
+        query = QSqlQuery()
+        query.exec_(QString("SELECT confed_name FROM tbl_confederations WHERE confed_id = %1").arg(id))
+        if query.isActive():
+            query.next()
+            confedStr = query.value(0).toString()
+        else:
+            confedStr = "-1"
+            
+        # search for confederation name in combobox, set index to current index
+        self.refConfedSelect.setCurrentIndex(self.refConfedSelect.findText(confedStr, Qt.MatchExactly))
+        
+        # update index of Country combobox to that of currCountry
+        self.filterCountryBox()
+        self.refCountrySelect.setCurrentIndex(self.refCountrySelect.findText(currCountry, Qt.MatchExactly))
+     
+    def filterCountryBox(self):
+        """Enables and filters Country combobox upon selection in Confederation combobox."""
+        # enable Country combobox if disabled
+        if ~self.refCountrySelect.isEnabled():
+            self.refCountrySelect.setEnabled(True)
+        
+        # filter tbl_countries based on confederation selection
+        currIdx = self.refConfedSelect.currentIndex()
+        id = self.confedModel.record(currIdx).value("confed_id").toString()
+        self.countryModel.setFilter(QString("confed_id = %1").arg(id))
+        self.countryModel.select()
+    
+
 class playerEntryDlg(QDialog, ui_playerentry.Ui_playerEntryDlg):
- 
+    """Implements player data entry dialog, and accesses and writes to Players table.
+    
+    This dialog accepts data on the players who participate in a football competition. In
+    particular, data on the player's nationality, date of birth, and default position are tracked.
+   """
     FIRST,  PREV,  NEXT,  LAST = range(4)
     ID,  CTRY_ID, DOB, FNAME, LNAME, NNAME, POS_ID = range(7)
  
     def __init__(self, parent=None):
+        """Constructor of playerEntryDlg class."""
         super(playerEntryDlg, self).__init__(parent)
         self.setupUi(self)
 
@@ -581,68 +570,13 @@ class playerEntryDlg(QDialog, ui_playerentry.Ui_playerEntryDlg):
         self.connect(self.mapper, SIGNAL("currentIndexChanged(int)"), self.updateConfed)
         self.connect(self.plyrConfedSelect, SIGNAL("currentIndexChanged(int)"), self.filterCountryBox)
      
-    # Method: updateConfed
-    #
-    # Update current index of Confederation combobox
-    # Ensures consistency between confederation and nation
-    # in existing records
-    def updateConfed(self):
-        # look for current index on Country combobox
-        # extract confed_id from underlying model
-        currIdx = self.plyrCountrySelect.currentIndex()
-        currCountry = self.plyrCountrySelect.currentText()
-        id = self.countryModel.record(currIdx).value("confed_id").toString()
-        
-        # make query on tbl_confederations
-        # extract confederation name corresponding to confederation ID
-        # there will only be one confederation in query result
-        query = QSqlQuery()
-        query.exec_(QString("SELECT confed_name FROM tbl_confederations WHERE confed_id = %1").arg(id))
-        if query.isActive():
-            query.next()
-            confedStr = query.value(0).toString()
-        else:
-            confedStr = "-1"
-            
-        # search for confederation name in combobox, set index to current index
-        self.plyrConfedSelect.setCurrentIndex(self.plyrConfedSelect.findText(confedStr, Qt.MatchExactly))
-        
-        # update index of Country combobox to that of currCountry
-        self.filterCountryBox()
-        self.plyrCountrySelect.setCurrentIndex(self.plyrCountrySelect.findText(currCountry, Qt.MatchExactly))
-     
-    # Method: filterCountryBox
-    #
-    # Enable Country combobox (if not already enabled) and filter contents 
-    # of Country combobox when confederation is selected
-    def filterCountryBox(self):
-        # enable Country combobox if disabled
-        if ~self.plyrCountrySelect.isEnabled():
-            self.plyrCountrySelect.setEnabled(True)
-            
-        # flush filter
-        self.countryModel.setFilter(QString())
-        self.countryModel.select()
-        
-        # filter tbl_countries based on confederation selection
-        currIdx = self.plyrConfedSelect.currentIndex()
-        id = self.confedModel.record(currIdx).value("confed_id").toString()
-        self.countryModel.setFilter(QString("confed_id = %1").arg(id))
-        self.countryModel.select()
-        
-    # Method: accept
-    #
-    # Submit changes to database, and then close window
     def accept(self):
+        """Submits changes to database and closes window."""
         self.mapper.submit()
         QDialog.accept(self)
     
-    # Method: saveRecord
-    # 
-    # Submit changes to database,
-    # advance to next record, 
-    # apply conditions if at first/last record
     def saveRecord(self, where):
+        """Submits changes to database and navigates through form."""
         row = self.mapper.currentIndex()
         self.mapper.submit()
         
@@ -679,12 +613,8 @@ class playerEntryDlg(QDialog, ui_playerentry.Ui_playerEntryDlg):
             
         self.mapper.setCurrentIndex(row)
         
-    # Method: addRecord
-    #
-    # Add new record at end of entry list
-    # Disable Country combobox
-    # Set focus to First Name field
     def addRecord(self):
+        """Adds new record at end of entry list."""        
         
         # save current index if valid
         row = self.mapper.currentIndex()
@@ -719,10 +649,8 @@ class playerEntryDlg(QDialog, ui_playerentry.Ui_playerEntryDlg):
         self.plyrCountrySelect.setDisabled(True)        
         self.plyrFirstNameEdit.setFocus()
     
-    # Method: deleteRecord
-    #
-    # Delete record from database upon user confirmation
     def deleteRecord(self):
+        """Deletes record from database upon user confirmation."""
         if QMessageBox.question(self, QString("Delete Record"), 
                                 QString("Delete current record?"), 
                                 QMessageBox.Yes|QMessageBox.No) == QMessageBox.No:
@@ -734,13 +662,67 @@ class playerEntryDlg(QDialog, ui_playerentry.Ui_playerEntryDlg):
             row = self.model.rowCount() - 1
         self.mapper.setCurrentIndex(row) 
         
-# lineupEntryDlg: Match lineup entry dialog
+    def updateConfed(self):
+        """Updates current index of Confederation combobox.
+        
+        Ensures consistency between confederation and selected nation in Country combobox.
+        
+        """
+        # look for current index on Country combobox
+        # extract confed_id from underlying model
+        currIdx = self.plyrCountrySelect.currentIndex()
+        currCountry = self.plyrCountrySelect.currentText()
+        id = self.countryModel.record(currIdx).value("confed_id").toString()
+        
+        # make query on tbl_confederations
+        # extract confederation name corresponding to confederation ID
+        # there will only be one confederation in query result
+        query = QSqlQuery()
+        query.exec_(QString("SELECT confed_name FROM tbl_confederations WHERE confed_id = %1").arg(id))
+        if query.isActive():
+            query.next()
+            confedStr = query.value(0).toString()
+        else:
+            confedStr = "-1"
+            
+        # search for confederation name in combobox, set index to current index
+        self.plyrConfedSelect.setCurrentIndex(self.plyrConfedSelect.findText(confedStr, Qt.MatchExactly))
+        
+        # update index of Country combobox to that of currCountry
+        self.filterCountryBox()
+        self.plyrCountrySelect.setCurrentIndex(self.plyrCountrySelect.findText(currCountry, Qt.MatchExactly))
+     
+    def filterCountryBox(self):
+        """Enables and filters Country combobox upon selection in Confederation combobox."""
+        # enable Country combobox if disabled
+        if ~self.plyrCountrySelect.isEnabled():
+            self.plyrCountrySelect.setEnabled(True)
+            
+        # flush filter
+        self.countryModel.setFilter(QString())
+        self.countryModel.select()
+        
+        # filter tbl_countries based on confederation selection
+        currIdx = self.plyrConfedSelect.currentIndex()
+        id = self.confedModel.record(currIdx).value("confed_id").toString()
+        self.countryModel.setFilter(QString("confed_id = %1").arg(id))
+        self.countryModel.select()
+        
+        
 class lineupEntryDlg(QDialog, ui_lineupentry.Ui_lineupEntryDlg):
-
+    """Implements lineup data entry dialog, and accesses and writes to Lineups table.
+    
+    This dialog accepts data on the players who participate in a specific football match,
+    whether as starting players or substitutes. It is here that the players are connected
+    to teams and designated as either starters or captain. The Match Events tables are 
+    dependent on the data in the Lineups table to insure integrity between the players 
+    and the matches in which they participate.
+   """
     FIRST,  PREV,  NEXT,  LAST = range(4)
     ID,  MATCH_ID, TEAM_ID, PLYR_ID, POS_ID, ST_FLAG, CAPT_FLAG = range(7)
     
     def __init__(self, match_id, teamName, parent=None):
+        """Constructor for lineupEntryDlg class."""
         super(lineupEntryDlg, self).__init__(parent)
         self.setupUi(self)
         self.teamName = teamName
@@ -822,19 +804,16 @@ class lineupEntryDlg(QDialog, ui_lineupentry.Ui_lineupEntryDlg):
         
         self.connect(self.playerSelect, SIGNAL("currentIndexChanged(int)"), self.enableWidget)
         
-     
     def accept(self, match_id):
+        """Submits changes to database and closes window."""
         #if self.checkPersonnelRecords(match_id, teamName):
         QDialog.accept(self)
         #else:
             # open dialog window  -- option to correct or close
         #    MsgPrompts.LineupErrorPrompt(self)
     
-    # make checks, update number of 
-    # starting players, designated goalkeeper/captain
-    # alert user if more than one goalkeeper or captain already designated
     def addRecord(self):
-        
+        """Adds new record at end of entry list and updates status bar."""                
         # save current index if valid
         row = self.mapper.currentIndex()
         if row != -1:
@@ -872,12 +851,8 @@ class lineupEntryDlg(QDialog, ui_lineupentry.Ui_lineupEntryDlg):
         # update status bar
         self.statusReport()
 
-    # Method: saveRecord
-    # 
-    # Submit changes to database,
-    # advance to next record, 
-    # apply conditions if at first/last record
     def saveRecord(self, where):
+        """Submits changes to database and navigates through form."""
         row = self.mapper.currentIndex()
 #        print "Calling saveRecord()"
 #        print "Current Row: %d" % row
@@ -921,16 +896,15 @@ class lineupEntryDlg(QDialog, ui_lineupentry.Ui_lineupEntryDlg):
         self.statusReport()        
 
     def enableWidget(self):
+        """Enables Position combobox and calls setDefaultIndex()."""
 #        print "Calling enableWidget()"
         widget = self.positionSelect
         if not widget.isEnabled():
             widget.setEnabled(True)
         self.setDefaultIndex(widget)
 
-    # Method: setDefaultIndex
-    #
-    # Set default index of player position using tbl_players or players_list
     def setDefaultIndex(self, editor):
+        """Sets initial index of player position using PlayersList view."""
 #        print "Calling setDefaultIndex()"
         player = self.playerSelect
         playerName = player.currentText()
@@ -943,13 +917,16 @@ class lineupEntryDlg(QDialog, ui_lineupentry.Ui_lineupEntryDlg):
         # look for position name and set index
         editor.setCurrentIndex(editor.findText(positionText, Qt.MatchExactly))
         
-    
-    # Method: checkPersonnelRecords
-    # before exit from lineup entry, ensure that there are:
-    #   exactly 11 starters
-    #   exactly one starting goalkeeper
-    #   exactly one starting captain
     def checkPersonnelRecords(self, match_id, team_id):
+        """Checks number of personnel records in Lineup table for specific match and team.
+        
+        Required number of personnel records:
+            (1) Exactly 11 starting players
+            (2) Exactly 1 starting goalkeeper
+            (3) Exactly 1 starting captain
+        There also has to be at least one substitute in order to open the Substitutes dialog.
+        
+        """
         reqStarters = (CountStarters(match_id, team_id) == Constants.MAX_TEAM_STARTERS)
         reqCaptain = (CountCaptains(match_id, team_id) == Constants.MAX_TEAM_STARTING_CAPTAINS)
         reqGoalkeeper = (CountGoalkeepers(match_id, team_id) == Constants.MAX_TEAM_STARTING_GOALKEEPERS)
@@ -957,7 +934,18 @@ class lineupEntryDlg(QDialog, ui_lineupentry.Ui_lineupEntryDlg):
         return reqStarters & reqCaptain & reqGoalkeeper
 
     def statusReport(self):
-        # update text blocks
+        """Updates status fields at bottom of Lineups data entry dialog.
+        
+        Calls CountStarters(), CountSubstitutes(), CountCaptains() and CountGoalkeepers() 
+        and reports results in status fields. Required number of personnel records:
+            (1) Exactly 11 starting players
+            (2) Exactly 1 starting goalkeeper
+            (3) Exactly 1 starting captain
+        Calls ColorCode() to set background color of fields:
+            Red -- At least one of the requirements are not met
+            Green -- All three requirements have been met
+            
+        """
         text = QString()
         
         match_id = self.match_id
@@ -991,6 +979,13 @@ class lineupEntryDlg(QDialog, ui_lineupentry.Ui_lineupEntryDlg):
         self.colorCode(self.NumGK_display, Constants.MAX_TEAM_STARTING_GOALKEEPERS)
         
     def colorCode(self, editor, threshold):
+        """Assigns text and background colors in editor widget based on editor text.
+        
+        Arguments:
+            editor -- editable widget
+            threshold -- required quantity 
+            
+        """
         
         red = QColor(255, 0, 0)
         green = QColor(0, 255, 0)
