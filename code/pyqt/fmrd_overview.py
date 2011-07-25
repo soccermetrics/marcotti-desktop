@@ -1,9 +1,7 @@
 #!/usr/bin/env python
 #
 #    Football Match Result Database (FMRD)
-#    Desktop-based data entry tool
-#
-#    Contains classes that implement match overview entry forms to main tables of FMRD.
+#    Desktop-based data entry tool for the Football Match Result Database (FMRD)
 #
 #    Copyright (C) 2010-2011, Howard Hamilton
 #
@@ -28,16 +26,26 @@ from FmrdMain import *
 from FmrdLib import Constants
 from FmrdLib.CustomDelegates import *
 
-# Class: compEntryDlg
-# Inherits: Ui_compEntryDlg (ui_competitionentry)
-#
-# Implements user interface to Competitions table.
-class compEntryDlg(QDialog, ui_competitionentry.Ui_compEntryDlg):
+"""Contains classes that implement match overview entry forms to main tables of FMRD.
 
+Classes:
+compEntryDlg -- data entry to Competitions table
+teamEntryDlg -- data entry to Teams table
+venueEntryDlg -- data entry to Venues table
+
+"""
+
+class compEntryDlg(QDialog, ui_competitionentry.Ui_compEntryDlg):
+    """Implements competition data entry dialog, and accesses and writes to Competitions table.
+    
+    This dialog accepts data on the name of the football competition.
+    
+    """
     FIRST,  PREV,  NEXT,  LAST = range(4)
     ID,  DESC = range(2)
     
     def __init__(self, parent=None):
+        """Constructor for compEntryDlg class."""
         super(compEntryDlg, self).__init__(parent)
         self.setupUi(self)
         
@@ -67,18 +75,16 @@ class compEntryDlg(QDialog, ui_competitionentry.Ui_compEntryDlg):
         self.connect(self.nextEntry, SIGNAL("clicked()"), lambda: self.saveRecord(compEntryDlg.NEXT))
         self.connect(self.lastEntry, SIGNAL("clicked()"), lambda: self.saveRecord(compEntryDlg.LAST))
         self.connect(self.addEntry, SIGNAL("clicked()"), self.addRecord)
-        self.connect(self.deleteEntry, SIGNAL("clicked()"), self.deleteRecord)        
+#        self.connect(self.deleteEntry, SIGNAL("clicked()"), self.deleteRecord)        
         self.connect(self.closeButton, SIGNAL("clicked()"), self.accept)
         
-    # accept: Submit changes to database, and then close window
     def accept(self):
+        """Submits changes to database and closes window."""
         self.mapper.submit()
         QDialog.accept(self)
     
-    # saveRecord: Submit changes to database,
-    #                     advance to next record 
-    #                     apply conditions if at first/last record
     def saveRecord(self, where):
+        """Submits changes to database and navigates through form."""
         row = self.mapper.currentIndex()
         self.mapper.submit()
         if where == teamEntryDlg.FIRST:
@@ -116,10 +122,8 @@ class compEntryDlg(QDialog, ui_competitionentry.Ui_compEntryDlg):
             row = self.model.rowCount() - 1
         self.mapper.setCurrentIndex(row)
         
-    # addRecord: add new record at end of entry list
-    #                    set focus to edit line    
     def addRecord(self):
-        
+        """Adds new record at end of entry list, and sets focus on Competition Name editable field."""
         # save current index if valid
         row = self.mapper.currentIndex()
         if row != -1:
@@ -146,9 +150,8 @@ class compEntryDlg(QDialog, ui_competitionentry.Ui_compEntryDlg):
         self.lastEntry.setDisabled(True)        
         self.competitionEdit.setFocus()
     
-    # deleteRecord: delete record from database
-    #                        ask user to confirm deletion
     def deleteRecord(self):
+        """Deletes record from database upon user confirmation."""
         if QMessageBox.question(self, QString("Delete Record"), 
                                 QString("Delete current record?"), 
                                 QMessageBox.Yes|QMessageBox.No) == QMessageBox.No:
@@ -160,16 +163,17 @@ class compEntryDlg(QDialog, ui_competitionentry.Ui_compEntryDlg):
             row = self.model.rowCount() - 1
         self.mapper.setCurrentIndex(row)        
                 
-# Class: teamEntryDlg
-# Inherits: Ui_teamEntryDlg (ui_teamentry)
-#
-# Implements user interface for Teams table.
 class teamEntryDlg(QDialog, ui_teamentry.Ui_teamEntryDlg):
-
+    """Implements Teams data entry dialog, and accesses and writes to Teams table.
+    
+    This dialog accepts data on the names of the teams participating in the football competition.
+    
+    """
     FIRST,  PREV,  NEXT,  LAST = range(4)
     ID,  NAME = range(2)
     
     def __init__(self, parent=None):
+        """Constructor for teamEntryDlg class."""
         super(teamEntryDlg, self).__init__(parent)
         self.setupUi(self)
 
@@ -199,18 +203,16 @@ class teamEntryDlg(QDialog, ui_teamentry.Ui_teamEntryDlg):
         self.connect(self.nextEntry, SIGNAL("clicked()"), lambda: self.saveRecord(teamEntryDlg.NEXT))
         self.connect(self.lastEntry, SIGNAL("clicked()"), lambda: self.saveRecord(teamEntryDlg.LAST))
         self.connect(self.addEntry, SIGNAL("clicked()"), self.addRecord)
-        self.connect(self.deleteEntry, SIGNAL("clicked()"), self.deleteRecord)        
+#        self.connect(self.deleteEntry, SIGNAL("clicked()"), self.deleteRecord)        
         self.connect(self.closeButton, SIGNAL("clicked()"), self.accept)
         
-    # accept: Submit changes to database, and then close window
     def accept(self):
+        """Submits changes to database and closes window."""
         self.mapper.submit()
         QDialog.accept(self)
     
-    # saveRecord: Submit changes to database,
-    #                     advance to next record 
-    #                     apply conditions if at first/last record
     def saveRecord(self, where):
+        """Submits changes to database and navigates through form."""
         row = self.mapper.currentIndex()
         self.mapper.submit()
         if where == teamEntryDlg.FIRST:
@@ -248,10 +250,8 @@ class teamEntryDlg(QDialog, ui_teamentry.Ui_teamEntryDlg):
             row = self.model.rowCount() - 1
         self.mapper.setCurrentIndex(row)
         
-    # addRecord: add new record at end of entry list
-    #                    set focus to edit line    
     def addRecord(self):
-        
+        """Adds new record at end of entry list, and sets focus on Team Name editable field."""
         # save current index if valid
         row = self.mapper.currentIndex()
         if row != -1:
@@ -278,9 +278,8 @@ class teamEntryDlg(QDialog, ui_teamentry.Ui_teamEntryDlg):
         self.lastEntry.setDisabled(True)
         self.teamNameEdit.setFocus()
     
-    # deleteRecord: delete record from database
-    #                        ask user to confirm deletion
     def deleteRecord(self):
+        """Deletes record from database upon user confirmation."""
         if QMessageBox.question(self, QString("Delete Record"), 
                                 QString("Delete current record?"), 
                                 QMessageBox.Yes|QMessageBox.No) == QMessageBox.No:
@@ -292,9 +291,12 @@ class teamEntryDlg(QDialog, ui_teamentry.Ui_teamEntryDlg):
             row = self.model.rowCount() - 1
         self.mapper.setCurrentIndex(row)        
         
-# venueEntryDlg: Venue entry dialog
 class venueEntryDlg(QDialog, ui_venueentry.Ui_venueEntryDlg):
-
+    """Implements Venues data entry dialog, and accesses and writes to Venues table.
+    
+    This dialog accepts data on the match venues used in the football competition.
+    
+    """
     FIRST,  PREV,  NEXT,  LAST = range(4)
     ID,  TEAM_ID,  CTRY_ID, CITY, NAME, ALT, LAT, LONG = range(8)
 
@@ -375,69 +377,18 @@ class venueEntryDlg(QDialog, ui_venueentry.Ui_venueEntryDlg):
         self.connect(self.nextEntry, SIGNAL("clicked()"), lambda: self.saveRecord(venueEntryDlg.NEXT))
         self.connect(self.lastEntry, SIGNAL("clicked()"), lambda: self.saveRecord(venueEntryDlg.LAST))
         self.connect(self.addEntry, SIGNAL("clicked()"), self.addRecord)
-        self.connect(self.deleteEntry, SIGNAL("clicked()"), self.deleteRecord)        
+#        self.connect(self.deleteEntry, SIGNAL("clicked()"), self.deleteRecord)        
         self.connect(self.closeButton, SIGNAL("clicked()"), self.accept)
         self.connect(self.mapper, SIGNAL("currentIndexChanged(int)"), self.updateConfed)
         self.connect(self.venueConfedSelect, SIGNAL("activated(int)"), self.filterCountryBox)
      
-    # Method: updateConfed
-    #
-    # Update current index of Confederation combobox
-    # Ensures consistency between confederation and nation
-    # in existing records
-    def updateConfed(self):
-        # look for current index on Country combobox
-        # extract confed_id from underlying model
-        currIdx = self.venueCountrySelect.currentIndex()
-        currCountry = self.venueCountrySelect.currentText()
-        id = self.countryModel.record(currIdx).value("confed_id").toString()
-        
-        # make query on tbl_confederations
-        # extract confederation name corresponding to confederation ID
-        # there will only be one confederation in query result
-        query = QSqlQuery()
-        query.exec_(QString("SELECT confed_name FROM tbl_confederations WHERE confed_id = %1").arg(id))
-        if query.isActive():
-            query.next()
-            confedStr = query.value(0).toString()
-        else:
-            confedStr = "-1"
-            
-        # search for confederation name in combobox, set index to current index
-        self.venueConfedSelect.setCurrentIndex(self.venueConfedSelect.findText(confedStr, Qt.MatchExactly))
-        
-        # update index of Country combobox to that of currCountry
-        self.filterCountryBox()
-        self.venueCountrySelect.setCurrentIndex(self.venueCountrySelect.findText(currCountry, Qt.MatchExactly))
-     
-    # Method: filterCountryBox
-    #
-    # Enable Country combobox (if not already enabled) and filter contents 
-    # of Country combobox when confederation is selected
-    def filterCountryBox(self):
-        # enable Country combobox if disabled
-        if ~self.venueCountrySelect.isEnabled():
-            self.venueCountrySelect.setEnabled(True)
-        
-        # filter tbl_countries based on confederation selection
-        currIdx = self.venueConfedSelect.currentIndex()
-        id = self.confedModel.record(currIdx).value("confed_id").toString()
-        self.countryModel.setFilter(QString("confed_id = %1").arg(id))
-        self.countryModel.select()
-        
-    # Method: accept
-    #
-    # Submit changes to database, and then close window
     def accept(self):
+        """Submits changes to database and closes window."""
         self.mapper.submit()
         QDialog.accept(self)
     
-    # Method: saveRecord
-    # 
-    # Submit changes to database,
-    # advance to next record, 
-    # apply conditions if at first/last record
     def saveRecord(self, where):
+        """Submits changes to database and navigates through form."""
         row = self.mapper.currentIndex()
         self.mapper.submit()
         if where == teamEntryDlg.FIRST:
@@ -475,12 +426,8 @@ class venueEntryDlg(QDialog, ui_venueentry.Ui_venueEntryDlg):
             row = self.model.rowCount() - 1            
         self.mapper.setCurrentIndex(row)
         
-    # Method: addRecord
-    #
-    # Add new record at end of entry list
-    # Disable Country combobox
-    # Set focus to First Name field
     def addRecord(self):
+        """Adds new record at end of entry list, and sets focus on Venue Name editable field while disabling all others."""
         
         # save current index if valid
         row = self.mapper.currentIndex()
@@ -509,10 +456,8 @@ class venueEntryDlg(QDialog, ui_venueentry.Ui_venueEntryDlg):
         self.venueCountrySelect.setDisabled(True)        
         self.venueNameEdit.setFocus()
     
-    # Method: deleteRecord
-    #
-    # Delete record from database upon user confirmation
     def deleteRecord(self):
+        """Deletes record from database upon user confirmation."""
         if QMessageBox.question(self, QString("Delete Record"), 
                                 QString("Delete current record?"), 
                                 QMessageBox.Yes|QMessageBox.No) == QMessageBox.No:
@@ -524,3 +469,43 @@ class venueEntryDlg(QDialog, ui_venueentry.Ui_venueEntryDlg):
             row = self.model.rowCount() - 1
         self.mapper.setCurrentIndex(row) 
 
+    def updateConfed(self):
+        """Updates current index of Confederation combobox.
+        
+        Ensures consistency between the current nation and its confederation.
+        """
+        # look for current index on Country combobox
+        # extract confed_id from underlying model
+        currIdx = self.venueCountrySelect.currentIndex()
+        currCountry = self.venueCountrySelect.currentText()
+        id = self.countryModel.record(currIdx).value("confed_id").toString()
+        
+        # make query on tbl_confederations
+        # extract confederation name corresponding to confederation ID
+        # there will only be one confederation in query result
+        query = QSqlQuery()
+        query.exec_(QString("SELECT confed_name FROM tbl_confederations WHERE confed_id = %1").arg(id))
+        if query.isActive():
+            query.next()
+            confedStr = query.value(0).toString()
+        else:
+            confedStr = "-1"
+            
+        # search for confederation name in combobox, set index to current index
+        self.venueConfedSelect.setCurrentIndex(self.venueConfedSelect.findText(confedStr, Qt.MatchExactly))
+        
+        # update index of Country combobox to that of currCountry
+        self.filterCountryBox()
+        self.venueCountrySelect.setCurrentIndex(self.venueCountrySelect.findText(currCountry, Qt.MatchExactly))
+     
+    def filterCountryBox(self):
+        """Enables Country combobox and filters contents on Country combobox upon selection of Confederation."""
+        # enable Country combobox if disabled
+        if ~self.venueCountrySelect.isEnabled():
+            self.venueCountrySelect.setEnabled(True)
+        
+        # filter tbl_countries based on confederation selection
+        currIdx = self.venueConfedSelect.currentIndex()
+        id = self.confedModel.record(currIdx).value("confed_id").toString()
+        self.countryModel.setFilter(QString("confed_id = %1").arg(id))
+        self.countryModel.select()
