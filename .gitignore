@@ -6,4 +6,4 @@
 # Ultraedit project file
 *.prj
 # Eric project directory
-.eric4project/
+.eric4project/*
