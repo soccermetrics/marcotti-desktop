@@ -1545,7 +1545,7 @@ class subsEntryDlg(QDialog, ui_subsentry.Ui_subsEntryDlg):
         self.connect(self.nextEntry, SIGNAL("clicked()"), lambda: self.saveRecord(subsEntryDlg.NEXT))
         self.connect(self.lastEntry, SIGNAL("clicked()"), lambda: self.saveRecord(subsEntryDlg.LAST))
         self.connect(self.addEntry, SIGNAL("clicked()"), self.addRecord)
-#        self.connect(self.deleteEntry, SIGNAL("clicked()"), self.deleteRecord)           
+        self.connect(self.deleteEntry, SIGNAL("clicked()"), self.deleteRecord)           
         self.connect(self.closeButton, SIGNAL("clicked()"), self.accept)
         
         self.connect(self.compSelect, SIGNAL("currentIndexChanged(int)"), lambda: self.enableAndFilterRounds(self.roundSelect))
@@ -1608,6 +1608,33 @@ class subsEntryDlg(QDialog, ui_subsentry.Ui_subsEntryDlg):
 
         self.refreshTeamBox()
         self.teamSelect.blockSignals(False)
+
+    def deleteRecord(self):
+        """Deletes record from database upon user confirmation.
+        
+        Delete records in linking tables first, then delete record in parent table.
+        
+        """
+        if QMessageBox.question(self, QString("Delete Record"), 
+                                QString("Delete current record?"), 
+                                QMessageBox.Yes|QMessageBox.No) == QMessageBox.No:
+            return
+            
+        # get current subs_id
+        subs_id = self.subsID_display.text()
+        
+        # delete corresponding records in linking tables
+        self.inplayerModel.delete(subs_id)
+        self.outplayerModel.delete(subs_id)
+        
+        # delete current record in parent table
+        row = self.mapper.currentIndex()
+        self.model.removeRow(row)
+        self.model.submitAll()
+        
+        if row + 1 >= self.model.rowCount():
+            row = self.model.rowCount() - 1
+        self.mapper.setCurrentIndex(row) 
 
     def addRecord(self):
         """Adds new record at end of entry list."""
