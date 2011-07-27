@@ -1,12 +1,7 @@
 #!/usr/bin/env python
 #
-#    Football Match Result Database (FMRD)
-#    Desktop-based data entry tool
+#    Desktop-based data entry tool for the Football Match Result Database (FMRD)
 #
-#    Implements the Main User Switchboard for the FMRD data entry tool.
-#    Instantiates objects that handle data entry interfaces for the 
-#    setup and main tables.
-# 
 #    Copyright (C) 2010-2011, Howard Hamilton
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -38,14 +33,20 @@ from fmrd_matchevent import *
 from fmrd_overview import *
 from fmrd_personnel import *
 
-# Class: UserMainSwitchboard
-# Inherits: Ui_UserMainSwitchboard (ui_usermainswitchboard)
-#
-# Implements switchboard console in FMRD data entry tool.
-# For end-users only (no admin privileges).
+"""Implements the Main User Switchboard for the FMRD data entry tool.
+
+Instantiates objects that handle data entry interfaces for the 
+setup and main tables.
+"""
+
 class UserMainSwitchboard(QMainWindow, ui_usermainswitchboard.Ui_UserMainSwitchboard):
+    """Implements switchboard console in FMRD data entry tool.
+    
+    Console set up for end-users without administrative privileges.
+    """
     
     def __init__(self, parent=None):
+        """Constructor for UserMainSwitchboard class."""
         super(UserMainSwitchboard, self).__init__(parent)
         self.setupUi(self) 
         
@@ -86,32 +87,43 @@ class UserMainSwitchboard(QMainWindow, ui_usermainswitchboard.Ui_UserMainSwitchb
      # routines for opening menu dialogs
      
     def OpenAbout(self):
+        """Opens About window."""
         dialog = AboutDlg(self)
         dialog.exec_()
     
     # routines for opening main dialogs (access by pushbuttons)
     
     def OpenCompetitions(self):
+        """Opens Competitions window."""
         dialog = compEntryDlg(self)
         dialog.exec_()
                 
     def OpenTeams(self):
+        """Opens Teams window."""
         dialog = teamEntryDlg(self)
         dialog.exec_()
         
     def OpenPlayers(self):
+        """Opens Players window."""
         dialog = playerEntryDlg(self)
         dialog.exec_()
         
     def OpenManagers(self):
+        """Opens Managers window."""
         dialog = managerEntryDlg(self)
         dialog.exec_()
         
     def OpenReferees(self):
+        """Opens Referees window."""
         dialog = refereeEntryDlg(self)
         dialog.exec_()
 
     def OpenVenues(self):
+        """Opens Venues window.
+        
+        Window opens if there is at least one record in Teams table.
+        
+        """
         if not CheckMinimumVenueHosts():
             VenueErrorPrompt(self)
         else:
@@ -119,6 +131,16 @@ class UserMainSwitchboard(QMainWindow, ui_usermainswitchboard.Ui_UserMainSwitchb
             dialog.exec_()
         
     def OpenMatches(self):
+        """Opens Matches window.
+        
+        Window opens only if all of the conditions are met:
+            (1) at least one record in Referees table
+            (2) at least two records in Managers table
+            (3) at least two records in Teams table
+            (4) at least one record in Venues table
+            (5) at least one record in Competitions table
+            
+        """
         if not CheckMinimumMatchCriteria():
             MatchErrorPrompt(self)
         else:
@@ -126,6 +148,14 @@ class UserMainSwitchboard(QMainWindow, ui_usermainswitchboard.Ui_UserMainSwitchb
             dialog.exec_()
 
     def OpenGoals(self):
+        """Opens Goals window.
+        
+        Window opens only if all of the conditions are met:
+            (1) at least 11 entries in Lineups table where Starting = TRUE
+            (2) at least one starting player in Lineups table where Captain = TRUE
+            (3) at least one starting player in Lineups table at Goalkeeper position
+
+        """
         if not CheckMinimumLineups():
             MatchDetailErrorPrompt(self)
         else:
@@ -133,6 +163,14 @@ class UserMainSwitchboard(QMainWindow, ui_usermainswitchboard.Ui_UserMainSwitchb
             dialog.exec_()
         
     def OpenPenalties(self):
+        """Opens Penalties window.
+        
+        Window opens only if all of the conditions are met:
+            (1) at least 11 entries in Lineups table where Starting = TRUE
+            (2) at least one starting player in Lineups table where Captain = TRUE
+            (3) at least one starting player in Lineups table at Goalkeeper position
+
+        """        
         if not CheckMinimumLineups():
             MatchDetailErrorPrompt(self)
         else:
@@ -140,6 +178,14 @@ class UserMainSwitchboard(QMainWindow, ui_usermainswitchboard.Ui_UserMainSwitchb
             dialog.exec_()
         
     def OpenOffenses(self):
+        """Opens Offenses window.
+        
+        Window opens only if all of the conditions are met:
+            (1) at least 11 entries in Lineups table where Starting = TRUE
+            (2) at least one starting player in Lineups table where Captain = TRUE
+            (3) at least one starting player in Lineups table at Goalkeeper position
+
+        """
         if not CheckMinimumLineups():
             MatchDetailErrorPrompt(self)
         else:      
@@ -147,6 +193,11 @@ class UserMainSwitchboard(QMainWindow, ui_usermainswitchboard.Ui_UserMainSwitchb
             dialog.exec_()
         
     def OpenSubstitutions(self):
+        """Opens Substitutions window.
+        
+        Window opens if there is at least one record in Lineups table where Starting = FALSE.
+        
+        """
         if not CheckMinimumSubstitutes():
             SubstitutesErrorPrompt(self)
         else:
@@ -154,6 +205,14 @@ class UserMainSwitchboard(QMainWindow, ui_usermainswitchboard.Ui_UserMainSwitchb
             dialog.exec_()
         
     def OpenPosSwitches(self):
+        """Opens Position Switches window.
+        
+        Window opens only if all of the conditions are met:
+            (1) at least 11 entries in Lineups table where Starting = TRUE
+            (2) at least one starting player in Lineups table where Captain = TRUE
+            (3) at least one starting player in Lineups table at Goalkeeper position
+
+        """
         if not CheckMinimumLineups():
             MatchDetailErrorPrompt(self)
         else:        
@@ -161,4 +220,5 @@ class UserMainSwitchboard(QMainWindow, ui_usermainswitchboard.Ui_UserMainSwitchb
             dialog.exec_()
         
     def close(self):
+        """Hides Switchboard window and exits application."""
         sys.exit()

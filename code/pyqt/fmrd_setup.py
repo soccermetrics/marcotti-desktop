@@ -1,12 +1,6 @@
 #!/usr/bin/env python
 #
-#    Football Match Result Database (FMRD)
-#    Desktop-based data entry tool
-#
-#    Contains classes that implement entry forms to administrative tables of FMRD.
-#    These tables are pre-loaded when the database is initially set up, so they do not 
-#    need to be changed by the user.  With exception of About window, these 
-#    modules would be incorporated into an administration version of the tool.
+#    Desktop-based data entry tool for the Football Match Result Database (FMRD)
 # 
 #    Copyright (C) 2010-2011, Howard Hamilton
 #
@@ -31,29 +25,52 @@ from FmrdAdmin import *
 from FmrdLib import Constants
 from FmrdLib.CustomDelegates import *
 
-# Class: AboutDlg
-# Inherits: Ui_AboutDlg (ui_aboutwindow)
-#
-# Displays About box.  Just a simple dialog window.
+""" 
+Contains classes that implement entry forms to administrative tables of FMRD.
+
+These tables are pre-loaded when the database is initially set up, so they do not 
+need to be changed by the user.  With exception of About window, these 
+modules would be incorporated only into an administration version of the tool. 
+
+Classes:
+AboutDlg -- display About window
+cardSetupDlg -- data entry to Disciplinary Card table
+confedSetupDlg -- data entry to Confederations table
+countrySetupDlg -- data entry to Countries table
+fieldposSetupDlg -- data entry to Field Positions table
+flankposSetupDlg -- data entry to Flank Positions table
+foulSetupDlg -- data entry to Fouls table
+goaleventSetupDlg -- data entry to Goal Events table
+goalstrikeSetupDlg -- data entry to Goal Strikes table
+penSetupDlg -- data entry to Penalty Outcomes table
+posSetupDlg -- data entry to Positions table
+roundSetupDlg -- data entry to Rounds table
+wxcondSetupDlg -- data entry to Weather Conditions table
+
+"""
+
 class AboutDlg(QDialog, ui_aboutwindow.Ui_AboutDlg):
+    """Implements About dialog.
     
+    Displays descriptive information about the data-entry tool.
+    
+    """    
     def __init__(self, parent=None):
+        "Constructor for AboutDlg class."
         super(AboutDlg, self).__init__(parent)
         self.setupUi(self)
         
         # configure signal/slot
         QObject.connect(self.pushButton, SIGNAL("clicked()"), self, SLOT("close()"))
 
-# Class: cardSetupDlg
-# Inherits: Ui_cardSetupDlg (ui_cardsetup)
-#
-# Implements user interface to Disciplinary Card table.
+
 class cardSetupDlg(QDialog, ui_cardsetup.Ui_cardSetupDlg):
- 
+    """Implements card data entry dialog, and accesses and writes to Disciplinary Card table."""
     FIRST,  PREV,  NEXT,  LAST = range(4)
     ID,  DESC = range(2)
     
     def __init__(self, parent=None):
+        """Constructor for cardSetupDlg class."""
         super(cardSetupDlg, self).__init__(parent)
         self.setupUi(self)
         
@@ -86,15 +103,13 @@ class cardSetupDlg(QDialog, ui_cardsetup.Ui_cardSetupDlg):
         self.connect(self.deleteEntry, SIGNAL("clicked()"), self.deleteRecord)        
         self.connect(self.closeButton, SIGNAL("clicked()"), self.accept)
 
-    # accept: Submit changes to database, and then close window
     def accept(self):
+        """Submits changes to database and closes window."""
         self.mapper.submit()
         QDialog.accept(self)
     
-    # saveRecord: Submit changes to database,
-    #                     advance to next record 
-    #                     apply conditions if at first/last record
     def saveRecord(self, where):
+        """Submits changes to database and navigates through form."""
         row = self.mapper.currentIndex()
         self.mapper.submit()
         if where == cardSetupDlg.FIRST:
@@ -132,10 +147,8 @@ class cardSetupDlg(QDialog, ui_cardsetup.Ui_cardSetupDlg):
             row = self.model.rowCount() - 1
         self.mapper.setCurrentIndex(row)
         
-    # addRecord: add new record at end of entry list
-    #                    set focus to edit line    
     def addRecord(self):
-        
+        """Adds new record at end of entry list."""                
         # save current index if valid
         row = self.mapper.currentIndex()
         if row != -1:
@@ -162,9 +175,8 @@ class cardSetupDlg(QDialog, ui_cardsetup.Ui_cardSetupDlg):
         self.lastEntry.setDisabled(True)        
         self.cardtypeEdit.setFocus()
     
-    # deleteRecord: delete record from database
-    #                        ask user to confirm deletion
     def deleteRecord(self):
+        """Deletes record from database upon user confirmation."""
         if QMessageBox.question(self, QString("Delete Record"), 
                                 QString("Delete current record?"), 
                                 QMessageBox.Yes|QMessageBox.No) == QMessageBox.No:
@@ -176,16 +188,15 @@ class cardSetupDlg(QDialog, ui_cardsetup.Ui_cardSetupDlg):
             row = self.model.rowCount() - 1
         self.mapper.setCurrentIndex(row) 
         
-# Class: foulSetupDlg
-# Inherits: Ui_foulSetupDlg (ui_foulsetup)
-#
-# Implements user interface to Fouls table.
+        
 class foulSetupDlg(QDialog, ui_foulsetup.Ui_foulSetupDlg):
+    """ Implements fouls data entry dialog, and accesses and writes to Fouls table. """
 
     FIRST,  PREV,  NEXT,  LAST = range(4)
     ID,  DESC = range(2)
  
     def __init__(self, parent=None):
+        """Constructor for foulSetupDlg class."""
         super(foulSetupDlg, self).__init__(parent)
         self.setupUi(self)
  
@@ -218,15 +229,13 @@ class foulSetupDlg(QDialog, ui_foulsetup.Ui_foulSetupDlg):
         self.connect(self.deleteEntry, SIGNAL("clicked()"), self.deleteRecord)        
         self.connect(self.closeButton, SIGNAL("clicked()"), self.accept)
 
-    # accept: Submit changes to database, and then close window
     def accept(self):
+        """Submits changes to database and closes window."""
         self.mapper.submit()
         QDialog.accept(self)
     
-    # saveRecord: Submit changes to database,
-    #                     advance to next record 
-    #                     apply conditions if at first/last record
     def saveRecord(self, where):
+        """Submits changes to database and navigates through form."""
         row = self.mapper.currentIndex()
         self.mapper.submit()
         if where == foulSetupDlg.FIRST:
@@ -264,10 +273,8 @@ class foulSetupDlg(QDialog, ui_foulsetup.Ui_foulSetupDlg):
             row = self.model.rowCount() - 1
         self.mapper.setCurrentIndex(row)
         
-    # addRecord: add new record at end of entry list
-    #                    set focus to edit line    
     def addRecord(self):
-        
+        """Adds new record at end of entry list."""                        
         # save current index if valid
         row = self.mapper.currentIndex()
         if row != -1:
@@ -294,9 +301,8 @@ class foulSetupDlg(QDialog, ui_foulsetup.Ui_foulSetupDlg):
         self.lastEntry.setDisabled(True)
         self.foulDescEdit.setFocus()
     
-    # deleteRecord: delete record from database
-    #                        ask user to confirm deletion
     def deleteRecord(self):
+        """Deletes record from database upon user confirmation."""
         if QMessageBox.question(self, QString("Delete Record"), 
                                 QString("Delete current record?"), 
                                 QMessageBox.Yes|QMessageBox.No) == QMessageBox.No:
@@ -308,16 +314,14 @@ class foulSetupDlg(QDialog, ui_foulsetup.Ui_foulSetupDlg):
             row = self.model.rowCount() - 1
         self.mapper.setCurrentIndex(row)  
         
-# Class: penSetupDlg
-# Inherits: Ui_penSetupDlg (ui_penoutcomesetup)
-# 
-# Implements user interface to Penalty Outcomes table.
+        
 class penSetupDlg(QDialog, ui_penoutcomesetup.Ui_penSetupDlg):
- 
+    """ Implements penalty outcome data entry dialog, and accesses and writes to Penalty Outcomes table. """
     FIRST,  PREV,  NEXT,  LAST = range(4)
     ID,  DESC = range(2)
  
     def __init__(self, parent=None):
+        """Constructor for penSetupDlg class."""
         super(penSetupDlg, self).__init__(parent)
         self.setupUi(self)
         
@@ -350,15 +354,13 @@ class penSetupDlg(QDialog, ui_penoutcomesetup.Ui_penSetupDlg):
         self.connect(self.deleteEntry, SIGNAL("clicked()"), self.deleteRecord)        
         self.connect(self.closeButton, SIGNAL("clicked()"), self.accept)
 
-    # accept: Submit changes to database, and then close window
     def accept(self):
+        """Submits changes to database and closes window."""
         self.mapper.submit()
         QDialog.accept(self)
     
-    # saveRecord: Submit changes to database,
-    #                     advance to next record 
-    #                     apply conditions if at first/last record
     def saveRecord(self, where):
+        """Submits changes to database and navigates through form."""
         row = self.mapper.currentIndex()
         self.mapper.submit()
         if where == penSetupDlg.FIRST:
@@ -396,10 +398,8 @@ class penSetupDlg(QDialog, ui_penoutcomesetup.Ui_penSetupDlg):
             row = self.model.rowCount() - 1
         self.mapper.setCurrentIndex(row)
         
-    # addRecord: add new record at end of entry list
-    #                    set focus to edit line    
     def addRecord(self):
-        
+        """Adds new record at end of entry list."""                        
         # save current index if valid
         row = self.mapper.currentIndex()
         if row != -1:
@@ -426,9 +426,8 @@ class penSetupDlg(QDialog, ui_penoutcomesetup.Ui_penSetupDlg):
         self.lastEntry.setDisabled(True)
         self.penOutcomeEdit.setFocus()
     
-    # deleteRecord: delete record from database
-    #                        ask user to confirm deletion
     def deleteRecord(self):
+        """Deletes record from database upon user confirmation."""
         if QMessageBox.question(self, QString("Delete Record"), 
                                 QString("Delete current record?"), 
                                 QMessageBox.Yes|QMessageBox.No) == QMessageBox.No:
@@ -440,16 +439,14 @@ class penSetupDlg(QDialog, ui_penoutcomesetup.Ui_penSetupDlg):
             row = self.model.rowCount() - 1
         self.mapper.setCurrentIndex(row)
 
-# Class: goaleventSetupDlg
-# Inherits: Ui_goaleventSetupDlg (ui_goaleventsetup)
-#
-# Implements user interface to Goal Events table.
-class goaleventSetupDlg(QDialog, ui_goaleventsetup.Ui_goaleventSetupDlg):
 
+class goaleventSetupDlg(QDialog, ui_goaleventsetup.Ui_goaleventSetupDlg):
+    """Implements goal data entry dialog, and accesses and writes to Goal Events table."""
     FIRST,  PREV,  NEXT,  LAST = range(4)
     ID,  DESC = range(2)
  
     def __init__(self, parent=None):
+        """Constructor for goaleventSetupDlg class."""
         super(goaleventSetupDlg, self).__init__(parent)
         self.setupUi(self)
         
@@ -482,15 +479,13 @@ class goaleventSetupDlg(QDialog, ui_goaleventsetup.Ui_goaleventSetupDlg):
         self.connect(self.deleteEntry, SIGNAL("clicked()"), self.deleteRecord)        
         self.connect(self.closeButton, SIGNAL("clicked()"), self.accept)
 
-    # accept: Submit changes to database, and then close window
     def accept(self):
+        """Submits changes to database and closes window."""
         self.mapper.submit()
         QDialog.accept(self)
     
-    # saveRecord: Submit changes to database,
-    #                     advance to next record 
-    #                     apply conditions if at first/last record
     def saveRecord(self, where):
+        """Submits changes to database and navigates through form."""
         row = self.mapper.currentIndex()
         self.mapper.submit()
         if where == goaleventSetupDlg.FIRST:
@@ -528,10 +523,8 @@ class goaleventSetupDlg(QDialog, ui_goaleventsetup.Ui_goaleventSetupDlg):
             row = self.model.rowCount() - 1
         self.mapper.setCurrentIndex(row)
         
-    # addRecord: add new record at end of entry list
-    #                    set focus to edit line    
-    def addRecord(self):
-        
+    def addRecord(self):        
+        """Adds new record at end of entry list."""                        
         # save current index if valid
         row = self.mapper.currentIndex()
         if row != -1:
@@ -558,9 +551,8 @@ class goaleventSetupDlg(QDialog, ui_goaleventsetup.Ui_goaleventSetupDlg):
         self.lastEntry.setDisabled(True)
         self.goaleventEdit.setFocus()
     
-    # deleteRecord: delete record from database
-    #                        ask user to confirm deletion
     def deleteRecord(self):
+        """Deletes record from database upon user confirmation."""
         if QMessageBox.question(self, QString("Delete Record"), 
                                 QString("Delete current record?"), 
                                 QMessageBox.Yes|QMessageBox.No) == QMessageBox.No:
@@ -572,12 +564,9 @@ class goaleventSetupDlg(QDialog, ui_goaleventsetup.Ui_goaleventSetupDlg):
             row = self.model.rowCount() - 1
         self.mapper.setCurrentIndex(row)
 
-# Class: goalstrikeSetupDlg
-# Inherits: Ui_goalstrikeSetupDlg (ui_goalstrikesetup)
-#
-# Implements user interface to Goal Strikes table.
-class goalstrikeSetupDlg(QDialog, ui_goalstrikesetup.Ui_goalstrikeSetupDlg):
 
+class goalstrikeSetupDlg(QDialog, ui_goalstrikesetup.Ui_goalstrikeSetupDlg):
+    """Implements goal strike data entry dialog, and accesses and writes Goal Strikes table."""
     FIRST,  PREV,  NEXT,  LAST = range(4)
     ID,  DESC = range(2)
  
@@ -614,15 +603,13 @@ class goalstrikeSetupDlg(QDialog, ui_goalstrikesetup.Ui_goalstrikeSetupDlg):
         self.connect(self.deleteEntry, SIGNAL("clicked()"), self.deleteRecord)        
         self.connect(self.closeButton, SIGNAL("clicked()"), self.accept)
 
-    # accept: Submit changes to database, and then close window
     def accept(self):
+        """Submits changes to database and closes window."""
         self.mapper.submit()
         QDialog.accept(self)
     
-    # saveRecord: Submit changes to database,
-    #                     advance to next record 
-    #                     apply conditions if at first/last record
     def saveRecord(self, where):
+        """Submits changes to database and navigates through form."""
         row = self.mapper.currentIndex()
         self.mapper.submit()
         if where == goalstrikeSetupDlg.FIRST:
@@ -660,10 +647,8 @@ class goalstrikeSetupDlg(QDialog, ui_goalstrikesetup.Ui_goalstrikeSetupDlg):
             row = self.model.rowCount() - 1
         self.mapper.setCurrentIndex(row)
         
-    # addRecord: add new record at end of entry list
-    #                    set focus to edit line    
     def addRecord(self):
-        
+        """Adds new record at end of entry list."""                
         # save current index if valid
         row = self.mapper.currentIndex()
         if row != -1:
@@ -690,9 +675,8 @@ class goalstrikeSetupDlg(QDialog, ui_goalstrikesetup.Ui_goalstrikeSetupDlg):
         self.lastEntry.setDisabled(True)
         self.goalstrikeEdit.setFocus()
     
-    # deleteRecord: delete record from database
-    #                        ask user to confirm deletion
     def deleteRecord(self):
+        """Deletes record from database upon user confirmation."""
         if QMessageBox.question(self, QString("Delete Record"), 
                                 QString("Delete current record?"), 
                                 QMessageBox.Yes|QMessageBox.No) == QMessageBox.No:
@@ -704,16 +688,14 @@ class goalstrikeSetupDlg(QDialog, ui_goalstrikesetup.Ui_goalstrikeSetupDlg):
             row = self.model.rowCount() - 1
         self.mapper.setCurrentIndex(row)
         
-# Class: fieldposSetupDlg
-# Inherits: Ui_fieldposSetupDlg (ui_fieldpossetup)
-#
-# Implements user interface to Field Position table.
-class fieldposSetupDlg(QDialog, ui_fieldpossetup.Ui_fieldposSetupDlg):
 
+class fieldposSetupDlg(QDialog, ui_fieldpossetup.Ui_fieldposSetupDlg):
+    """Implements field position data entry dialog, and accesses and writes to Field Names table."""
     FIRST,  PREV,  NEXT,  LAST = range(4)
     ID,  DESC = range(2)
  
     def __init__(self, parent=None):
+        """Constructor for fieldposSetupDlg class."""
         super(fieldposSetupDlg, self).__init__(parent)
         self.setupUi(self)
 
@@ -746,15 +728,13 @@ class fieldposSetupDlg(QDialog, ui_fieldpossetup.Ui_fieldposSetupDlg):
         self.connect(self.deleteEntry, SIGNAL("clicked()"), self.deleteRecord)        
         self.connect(self.closeButton, SIGNAL("clicked()"), self.accept)
 
-    # accept: Submit changes to database, and then close window
     def accept(self):
+        """Submits changes to database and closes window."""
         self.mapper.submit()
         QDialog.accept(self)
     
-    # saveRecord: Submit changes to database,
-    #                     advance to next record 
-    #                     apply conditions if at first/last record
     def saveRecord(self, where):
+        """Submits changes to database and navigates through form."""
         row = self.mapper.currentIndex()
         self.mapper.submit()
         if where == fieldposSetupDlg.FIRST:
@@ -792,10 +772,8 @@ class fieldposSetupDlg(QDialog, ui_fieldpossetup.Ui_fieldposSetupDlg):
             row = self.model.rowCount() - 1
         self.mapper.setCurrentIndex(row)
         
-    # addRecord: add new record at end of entry list
-    #                    set focus to edit line    
     def addRecord(self):
-        
+        """Adds new record at end of entry list."""                
         # save current index if valid
         row = self.mapper.currentIndex()
         if row != -1:
@@ -822,9 +800,8 @@ class fieldposSetupDlg(QDialog, ui_fieldpossetup.Ui_fieldposSetupDlg):
         self.lastEntry.setDisabled(True)
         self.fieldposEdit.setFocus()
     
-    # deleteRecord: delete record from database
-    #                        ask user to confirm deletion
     def deleteRecord(self):
+        """Deletes record from database upon user confirmation."""
         if QMessageBox.question(self, QString("Delete Record"), 
                                 QString("Delete current record?"), 
                                 QMessageBox.Yes|QMessageBox.No) == QMessageBox.No:
@@ -836,16 +813,14 @@ class fieldposSetupDlg(QDialog, ui_fieldpossetup.Ui_fieldposSetupDlg):
             row = self.model.rowCount() - 1
         self.mapper.setCurrentIndex(row)
         
-# Class: flankposSetupDlg
-# Inherits: Ui_flankposSetupDlg (ui_flankpossetup)
-#
-# Implements user interface to Flank Position table.
+        
 class flankposSetupDlg(QDialog, ui_flankpossetup.Ui_flankposSetupDlg):
-
+    """Implements flank position data entry dialog, and accesses and writes to Flank Names table."""
     FIRST,  PREV,  NEXT,  LAST = range(4)
     ID,  DESC = range(2)
  
     def __init__(self, parent=None):
+        """Constructor of flankposSetupDlg class."""
         super(flankposSetupDlg, self).__init__(parent)
         self.setupUi(self)
 
@@ -881,15 +856,13 @@ class flankposSetupDlg(QDialog, ui_flankpossetup.Ui_flankposSetupDlg):
         self.connect(self.deleteEntry, SIGNAL("clicked()"), self.deleteRecord)        
         self.connect(self.closeButton, SIGNAL("clicked()"), self.accept)
 
-    # accept: Submit changes to database, and then close window
     def accept(self):
+        """Submits changes to database and closes window."""
         self.mapper.submit()
         QDialog.accept(self)
     
-    # saveRecord: Submit changes to database,
-    #                     advance to next record 
-    #                     apply conditions if at first/last record
     def saveRecord(self, where):
+        """Submits changes to database and navigates through form."""
         row = self.mapper.currentIndex()
         self.mapper.submit()
         if where == flankposSetupDlg.FIRST:
@@ -927,10 +900,8 @@ class flankposSetupDlg(QDialog, ui_flankpossetup.Ui_flankposSetupDlg):
             row = self.model.rowCount() - 1
         self.mapper.setCurrentIndex(row)
         
-    # addRecord: add new record at end of entry list
-    #                    set focus to edit line    
     def addRecord(self):
-        
+        """Adds new record at end of entry list."""                
         # save current index if valid
         row = self.mapper.currentIndex()
         if row != -1:
@@ -957,9 +928,8 @@ class flankposSetupDlg(QDialog, ui_flankpossetup.Ui_flankposSetupDlg):
         self.lastEntry.setDisabled(True)
         self.flankposEdit.setFocus()
     
-    # deleteRecord: delete record from database
-    #                        ask user to confirm deletion
     def deleteRecord(self):
+        """Deletes record from database upon user confirmation."""
         if QMessageBox.question(self, QString("Delete Record"), 
                                 QString("Delete current record?"), 
                                 QMessageBox.Yes|QMessageBox.No) == QMessageBox.No:
@@ -972,16 +942,19 @@ class flankposSetupDlg(QDialog, ui_flankpossetup.Ui_flankposSetupDlg):
         self.mapper.setCurrentIndex(row)
 
         
-# Class: posSetupDlg
-# Inherits: Ui_posSetupDlg (ui_positionsetup)
-# 
 # Implements user interface to Position table, which links to Flank Position and Field Position tables.
 class posSetupDlg(QDialog, ui_positionsetup.Ui_posSetupDlg):
-
+    """Implements position data entry dialog, which accesses and writes to the Positions table.
+    
+    The player position is a composite of the flank descriptor and the field position.  Some positions do
+    not have a field descriptor (goalkeeper), so the flank descriptor can be left blank.
+    
+    """
     FIRST,  PREV,  NEXT,  LAST = range(4)
     POS_ID,  FIELD_ID,  FLANK_ID = range(3)    
 
     def __init__(self, parent=None):
+        """Constructor to posSetupDlg class."""
         super(posSetupDlg, self).__init__(parent)
         self.setupUi(self)
         
@@ -1026,11 +999,13 @@ class posSetupDlg(QDialog, ui_positionsetup.Ui_posSetupDlg):
         self.connect(self.deleteEntry, SIGNAL("clicked()"), self.deleteRecord)        
         self.connect(self.closeButton, SIGNAL("clicked()"), self.accept)
         
-    def accept(self):
+    def accept(self):        
+        """Submits changes to database and closes window."""
         self.mapper.submit()
         QDialog.accept(self)
         
     def saveRecord(self, where):
+        """Submits changes to database and navigates through form."""
         row = self.mapper.currentIndex()
         self.mapper.submit()
         if where == posSetupDlg.FIRST:
@@ -1069,7 +1044,7 @@ class posSetupDlg(QDialog, ui_positionsetup.Ui_posSetupDlg):
         self.mapper.setCurrentIndex(row)
         
     def addRecord(self):
-        
+        """Adds new record at end of entry list."""                
         # save current index if valid
         row = self.mapper.currentIndex()
         if row != -1:
@@ -1098,6 +1073,7 @@ class posSetupDlg(QDialog, ui_positionsetup.Ui_posSetupDlg):
         self.confedSelect.setCurrentIndex(-1)
         
     def deleteRecord(self):
+        """Deletes record from database upon user confirmation."""
         if QMessageBox.question(self, QString("Delete Record"), 
                                 QString("Delete current record?"), 
                                 QMessageBox.Yes|QMessageBox.No) == QMessageBox.No:
@@ -1109,16 +1085,17 @@ class posSetupDlg(QDialog, ui_positionsetup.Ui_posSetupDlg):
             row = self.model.rowCount() - 1
         self.mapper.setCurrentIndex(row)
 
-# Class: countrySetupDlg
-# Inherits: Ui_countrySetupDlg (ui_countrysetup)
-#
-# Implements user interface to Country table, which links to Confederation table.
 class countrySetupDlg(QDialog, ui_countrysetup.Ui_countrySetupDlg):
+    """Implements country data entry dialog, which accesses and writes to Countries table.
     
+    The country is linked with the confederation of which it is a member.
+    
+    """
     FIRST,  PREV,  NEXT,  LAST = range(4)
     ID,  REGION_ID,  NAME = range(3)    
     
     def __init__(self, parent=None):
+        """Constructor for countrySetupDlg class."""
         super(countrySetupDlg, self).__init__(parent)
         self.setupUi(self)         
         
@@ -1159,10 +1136,12 @@ class countrySetupDlg(QDialog, ui_countrysetup.Ui_countrySetupDlg):
         self.connect(self.closeButton, SIGNAL("clicked()"), self.accept)
         
     def accept(self):
+        """Submits changes to database and closes window."""
         self.mapper.submit()
         QDialog.accept(self)
         
     def saveRecord(self, where):
+        """Submits changes to database and navigates through form."""
         row = self.mapper.currentIndex()
         self.mapper.submit()
         if where == countrySetupDlg.FIRST:
@@ -1201,7 +1180,7 @@ class countrySetupDlg(QDialog, ui_countrysetup.Ui_countrySetupDlg):
         self.mapper.setCurrentIndex(row)
         
     def addRecord(self):
-        
+        """Adds new record at end of entry list."""                
         # save current index if valid
         row = self.mapper.currentIndex()
         if row != -1:
@@ -1230,6 +1209,7 @@ class countrySetupDlg(QDialog, ui_countrysetup.Ui_countrySetupDlg):
         self.confedSelect.setCurrentIndex(-1)
         
     def deleteRecord(self):
+        """Deletes record from database upon user confirmation."""
         if QMessageBox.question(self, QString("Delete Record"), 
                                 QString("Delete current record?"), 
                                 QMessageBox.Yes|QMessageBox.No) == QMessageBox.No:
@@ -1242,16 +1222,13 @@ class countrySetupDlg(QDialog, ui_countrysetup.Ui_countrySetupDlg):
         self.mapper.setCurrentIndex(row)
         
 
-# Class: confedSetupDlg
-# Inherits: Ui_confedSetupDlg (ui_confederationsetup)
-# 
-# Implements user interface to Confederation table.
 class confedSetupDlg(QDialog, ui_confederationsetup.Ui_confedSetupDlg):
-    
+    """Implements confederation data entry dialog, which accesses and writes to Confederations table."""
     FIRST,  PREV,  NEXT,  LAST = range(4)
     ID,  NAME = range(2)
     
     def __init__(self, parent=None):
+        """Constructor for confedSetupDlg class."""
         super(confedSetupDlg, self).__init__(parent)
         self.setupUi(self)
         
@@ -1285,10 +1262,12 @@ class confedSetupDlg(QDialog, ui_confederationsetup.Ui_confedSetupDlg):
         self.connect(self.closeButton, SIGNAL("clicked()"), self.accept)
 
     def accept(self):
+        """Submits changes to database and closes window."""
         self.mapper.submit()
         QDialog.accept(self)
         
     def saveRecord(self, where):
+        """Submits changes to database and navigates through form."""
         row = self.mapper.currentIndex()
         self.mapper.submit()
         if where == confedSetupDlg.FIRST:
@@ -1326,10 +1305,8 @@ class confedSetupDlg(QDialog, ui_confederationsetup.Ui_confedSetupDlg):
             row = self.model.rowCount() - 1
         self.mapper.setCurrentIndex(row)
         
-    # addRecord: add new record at end of entry list
-    #                    set focus to edit line    
     def addRecord(self):
-        
+        """Adds new record at end of entry list."""                
         # save current index if valid
         row = self.mapper.currentIndex()
         if row != -1:
@@ -1358,6 +1335,7 @@ class confedSetupDlg(QDialog, ui_confederationsetup.Ui_confedSetupDlg):
         self.confederationEdit.setFocus()
         
     def deleteRecord(self):
+        """Deletes record from database upon user confirmation."""
         if QMessageBox.question(self, QString("Delete Record"), 
                                 QString("Delete current record?"), 
                                 QMessageBox.Yes|QMessageBox.No) == QMessageBox.No:
@@ -1369,16 +1347,14 @@ class confedSetupDlg(QDialog, ui_confederationsetup.Ui_confedSetupDlg):
             row = self.model.rowCount() - 1
         self.mapper.setCurrentIndex(row)
 
-# Class: roundSetupDlg
-# Inherits: Ui_roundSetupDlg (ui_roundsetup)
-#
-# Implements user interface to Rounds table.
+
 class roundSetupDlg(QDialog, ui_roundsetup.Ui_roundSetupDlg):
- 
+    """Implements matchday data entry dialog, and accesses and writes to Rounds table."""
     FIRST,  PREV,  NEXT,  LAST = range(4)
     ID,  DESC = range(2)
     
     def __init__(self, parent=None):
+        """Constructor for roundSetupDlg class."""
         super(roundSetupDlg, self).__init__(parent)
         self.setupUi(self)
         
@@ -1411,15 +1387,13 @@ class roundSetupDlg(QDialog, ui_roundsetup.Ui_roundSetupDlg):
         self.connect(self.deleteEntry, SIGNAL("clicked()"), self.deleteRecord)        
         self.connect(self.closeButton, SIGNAL("clicked()"), self.accept)
     
-    # accept: Submit changes to database, and then close window
     def accept(self):
+        """Submits changes to database and closes window."""
         self.mapper.submit()
         QDialog.accept(self)
     
-    # saveRecord: Submit changes to database,
-    #                     advance to next record 
-    #                     apply conditions if at first/last record
     def saveRecord(self, where):
+        """Submits changes to database and navigates through form."""
         row = self.mapper.currentIndex()
         self.mapper.submit()
         if where == roundSetupDlg.FIRST:
@@ -1457,10 +1431,8 @@ class roundSetupDlg(QDialog, ui_roundsetup.Ui_roundSetupDlg):
             row = self.model.rowCount() - 1
         self.mapper.setCurrentIndex(row)
         
-    # addRecord: add new record at end of entry list
-    #                    set focus to edit line    
     def addRecord(self):
-        
+        """Adds new record at end of entry list."""                
         # save current index if valid
         row = self.mapper.currentIndex()
         if row != -1:
@@ -1487,9 +1459,8 @@ class roundSetupDlg(QDialog, ui_roundsetup.Ui_roundSetupDlg):
         self.lastEntry.setDisabled(True)        
         self.rounddescEdit.setFocus()
     
-    # deleteRecord: delete record from database
-    #                        ask user to confirm deletion
     def deleteRecord(self):
+        """Deletes record from database upon user confirmation."""
         if QMessageBox.question(self, QString("Delete Record"), 
                                 QString("Delete current record?"), 
                                 QMessageBox.Yes|QMessageBox.No) == QMessageBox.No:
@@ -1501,16 +1472,14 @@ class roundSetupDlg(QDialog, ui_roundsetup.Ui_roundSetupDlg):
             row = self.model.rowCount() - 1
         self.mapper.setCurrentIndex(row)    
             
-# Class: wxcondSetupDlg
-# Inherits: Ui_wxcondSetupDlg (ui_weathersetup)
-#
-# Implements user interface to Weather Conditions table.
+            
 class wxcondSetupDlg(QDialog, ui_weathersetup.Ui_wxcondSetupDlg):
- 
+    """Implements weather condition data entry dialog, accesses and writes to WeatherConditions table."""
     FIRST,  PREV,  NEXT,  LAST = range(4)
     ID,  DESC = range(2)
     
     def __init__(self, parent=None):
+        """Constructor for wxcondSetupDlg class."""
         super(wxcondSetupDlg, self).__init__(parent)
         self.setupUi(self)
  
@@ -1543,16 +1512,13 @@ class wxcondSetupDlg(QDialog, ui_weathersetup.Ui_wxcondSetupDlg):
         self.connect(self.deleteEntry, SIGNAL("clicked()"), self.deleteRecord)        
         self.connect(self.closeButton, SIGNAL("clicked()"), self.accept)
 
-    # accept: Submit changes to database, and then close window
     def accept(self):
+        """Submits changes to database and closes window."""
         self.mapper.submit()
         QDialog.accept(self)
     
-    # saveRecord: Submit changes to database,
-    #                     advance to next record 
-    #                     apply conditions if at first/last record
     def saveRecord(self, where):
-
+        """Submits changes to database and navigates through form."""
         row = self.mapper.currentIndex()
         self.mapper.submit()
         if where == wxcondSetupDlg.FIRST:
@@ -1590,10 +1556,8 @@ class wxcondSetupDlg(QDialog, ui_weathersetup.Ui_wxcondSetupDlg):
             row = self.model.rowCount() - 1
         self.mapper.setCurrentIndex(row)
         
-    # addRecord: add new record at end of entry list
-    #                    set focus to edit line    
     def addRecord(self):
-        
+        """Adds new record at end of entry list."""                
         # save current index if valid
         row = self.mapper.currentIndex()
         if row != -1:
@@ -1620,9 +1584,8 @@ class wxcondSetupDlg(QDialog, ui_weathersetup.Ui_wxcondSetupDlg):
         self.lastEntry.setDisabled(True)
         self.wxcondEdit.setFocus()
     
-    # deleteRecord: delete record from database
-    #                        ask user to confirm deletion
     def deleteRecord(self):
+        """Deletes record from database upon user confirmation."""
         if QMessageBox.question(self, QString("Delete Record"), 
                                 QString("Delete current record?"), 
                                 QMessageBox.Yes|QMessageBox.No) == QMessageBox.No:
