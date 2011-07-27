@@ -54,8 +54,8 @@ cannot filter Lineups table using match and team IDs
         --> need to use teamName, NOT team_id
 
 2011-06-09
-sort_name field in tbl_lineups
-    tbl_lineups was already populated, so I placed sort_name at end
+sort_name field in lineup_list
+    tbl_lineups was already populated, so I placed sort_name at end of lineup_list
     sort_name should be placed after player field
 
 2011-07-07

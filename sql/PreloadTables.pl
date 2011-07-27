@@ -10,14 +10,36 @@
 use DBI;
 use DBI qw(:sql_types);
 use DBD::Pg;
+use Term::ReadKey;
+
+($dbname) = @ARGV;
+
+$attempt = 0;
+$success = 0;
 
 # connect to database
-$dbname = "fmrd_test";
-$user = "howard";
-$password = "1234";
-$dbh = DBI->connect("dbi:Pg:dbname=$dbname",'','',{AutoCommit=>0}) || die "Cannot connect";
+print "Preload tables...";
 
-$roundnum = 10;
+do {
+    print("\nEnter username: ");
+    chomp(my $user = <STDIN>);
+    print("Enter password: ");
+    ReadMode('noecho');
+    chomp(my $password = <STDIN>);
+    ReadMode(0);
+    print "\n";
+    
+    if (!($dbh = DBI->connect("dbi:Pg:dbname=$dbname",$user,$password,{AutoCommit=>0}))) {
+    	print "Login failed.\n";
+    	$attempt++;
+    }
+    else {
+    	$success = 1;
+    }
+} until ($attempt == 3) || $success;
+print("\nDatabase authentication confirmed.\n");
+print("Enter number of rounds: ");
+chomp(my $roundnum = <STDIN>);
 
 # Populate database tables
 load_confederations();

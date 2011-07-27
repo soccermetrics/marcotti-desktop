@@ -7,11 +7,10 @@
 #  Version: 0.8
 #   Author: Howard Hamilton, Soccermetrics Research & Consulting, LLC
 
+dropdb $1
+createdb $1
 
-dropdb fmrd_test
-createdb fmrd_test
+psql -f fmrd.sql $1
+psql -f fmrd-views.sql $1
 
-psql -f fmrd.sql fmrd_test
-psql -f fmrd-views.sql fmrd_test
-
-./PreloadTables.pl
+./PreloadTables.pl $1
