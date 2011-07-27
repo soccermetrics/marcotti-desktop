@@ -1,10 +1,7 @@
 #!/usr/bin/env python
 #
-#    Football Match Result Database (FMRD)
-#    Desktop-based data entry tool
+#    Desktop-based data entry tool for the Football Match Result Database (FMRD)
 #
-#    Contains functions that count number of records in FMRD tables.
-# 
 #    Copyright (C) 2010-2011, Howard Hamilton
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -25,13 +22,10 @@ from PyQt4.QtGui import *
 from PyQt4.QtSql import *
 from FmrdLib import Constants
 
-# Function: CheckMinimumCompetitions
-#
-# Check Competition table
-# Returns TRUE if there is at least one record in 
-# Competition table
+"""Contains functions that count number of records in FMRD tables."""
+
 def CheckMinimumCompetitions():
-    
+    """Check Competitions table and returns True if there is at least one record in it."""
     CompetitionQuery = QSqlQuery()
     CompetitionQuery.prepare("SELECT COUNT(*) FROM tbl_competitions")
     CompetitionQuery.exec_()
@@ -46,12 +40,8 @@ def CheckMinimumCompetitions():
     else:
         return 0
 
-# Function: CheckMinimumTeams
-#
-# Check Teams table
-# Returns TRUE if there are at least two records in Teams table
 def CheckMinimumTeams():
-    
+    """Check Teams table and returns True if there are at least two records in it."""
     TeamsQuery = QSqlQuery()
     TeamsQuery.prepare("SELECT COUNT(*) FROM tbl_teams")
     TeamsQuery.exec_()
@@ -66,12 +56,8 @@ def CheckMinimumTeams():
     else:
         return 0
     
-# Function: CheckMinimumVenueHosts
-#
-# Check Teams table
-# Returns TRUE if there is at least one record in Teams table
 def CheckMinimumVenueHosts():
-    
+    """Check Teams table and returns True if there is at least one record in it."""
     HostsQuery = QSqlQuery()
     HostsQuery.prepare("SELECT COUNT(*) FROM tbl_teams")
     HostsQuery.exec_()
@@ -86,12 +72,8 @@ def CheckMinimumVenueHosts():
     else:
         return 0
         
-# Function: CheckMinimumManagers
-#
-# Check Managers table
-# Returns TRUE if there are at least two records in Managers table
 def CheckMinimumManagers():
-    
+    """Check Managers table and returns True if there are at least two records in it."""
     ManagerQuery = QSqlQuery()
     ManagerQuery.prepare("SELECT COUNT(*) FROM tbl_managers")
     ManagerQuery.exec_()
@@ -106,12 +88,8 @@ def CheckMinimumManagers():
     else:
         return 0
 
-# Function: CheckMinimumReferees
-#
-# Check Referees table
-# Returns TRUE if there is at least one referee in Referees table
 def CheckMinimumReferees():
-    
+    """Check Referees table and returns True if there is at least one record in it."""
     RefereeQuery = QSqlQuery()
     RefereeQuery.prepare("SELECT COUNT(*) FROM tbl_referees")
     RefereeQuery.exec_()
@@ -126,18 +104,16 @@ def CheckMinimumReferees():
     else:
         return 0
 
-
-# Function: CheckMinimumMatchCriteria
-#
-# Call other functions to determine minimum criteria for match entry
-# Returns TRUE only if ALL conditions are satisfied in tables:
-#   -- at least one referee
-#   -- at least two managers
-#   -- at least two teams
-#   -- at least one venue
-#   -- at least one competition
 def CheckMinimumMatchCriteria():
+    """Checks minimum criteria for match entry.
     
+    Returns True if all of the following conditions are met:
+        (1) at least one record in Referees table
+        (2) at least two records in Managers table
+        (3) at least two records in Teams table
+        (4) at least one record in Venues table
+        (5) at least one record in Competitions table    
+    """
     if CheckMinimumCompetitions():
         if CheckMinimumVenueHosts() and CheckMinimumTeams():
                 if CheckMinimumManagers() and CheckMinimumReferees():
@@ -145,15 +121,14 @@ def CheckMinimumMatchCriteria():
                 
     return 0
 
-# Function: CheckMinimumLineups
-#
-# Check Lineup table
-# Returns TRUE only if ALL conditions are satisfied in table:
-#   -- at least 11 starting players
-#   -- at least one designated captain
-#   -- at least one goalkeeper among starting players
 def CheckMinimumLineups():
-        
+    """Checks minimum criteria for match event entry.
+    
+    Returns True if all of the following conditions are met:
+        (1) at least 11 entries in Lineups table where Starting = TRUE
+        (2) at least one starting player in Lineups table where Captain = TRUE
+        (3) at least one starting player in Lineups table at Goalkeeper position
+    """
     StartersQuery = QSqlQuery()
     StartersQuery.prepare("SELECT COUNT(*) FROM tbl_lineups WHERE lp_starting")
     StartersQuery.exec_()
@@ -186,13 +161,12 @@ def CheckMinimumLineups():
     else:
         return 0
 
-# Function: CheckMinimumSubstitutes
-#
-# Check number of designated substitutes in Lineup table
-# Returns TRUE only there are at least three substitutes 
-# (non-starting players) in table
 def CheckMinimumSubstitutes():
+    """Checks minimum criteria for substitution data entry.
     
+    Returns True if there is at least one record in Lineups table where Starting = FALSE.
+    
+    """
     SubstituteQuery = QSqlQuery()
     SubstituteQuery.prepare("SELECT COUNT(*) FROM tbl_lineups WHERE NOT lp_starting")
     SubstituteQuery.exec_()
@@ -208,14 +182,15 @@ def CheckMinimumSubstitutes():
     else:
         return 0
 
-
-# Function: CountStarters
-#
-# Count number of starters for a team in Lineup table
-# Returns number of entries where starter flag set to TRUE
-#   for a given match and team
 def CountStarters(match_id, team_id):
+    """Counts number of starters for a team in Lineup table and returns an integer.
     
+    Returns number of entries where starter = TRUE.
+    Arguments:
+        match_id - ID number from Matches table
+        team_id - ID number from Teams table
+        
+    """
     StartersQuery = QSqlQuery()
     StartersQuery.prepare("SELECT COUNT(*) FROM tbl_lineups WHERE match_id=? AND team_id=? AND lp_starting")
     StartersQuery.addBindValue(QVariant(match_id))
@@ -227,14 +202,15 @@ def CountStarters(match_id, team_id):
     else:
         return 0
         
-
-# Function: CountSubstitutes
-#
-# Count number of substitutes for a team in Lineup table
-# Returns number of entries where starter flag set to FALSE
-#   for a given match and team
 def CountSubstitutes(match_id, team_id):
+    """Counts number of substitutes for a team in Lineup table and returns an integer.
     
+    Returns number of entries where starter = FALSE.
+    Arguments:
+        match_id - ID number from Matches table
+        team_id - ID number from Teams table
+        
+    """
     SubstituteQuery = QSqlQuery()
     SubstituteQuery.prepare("SELECT COUNT(*) FROM tbl_lineups WHERE match_id=? AND team_id=? AND NOT lp_starting")
     SubstituteQuery.addBindValue(QVariant(match_id))
@@ -246,14 +222,15 @@ def CountSubstitutes(match_id, team_id):
     else:
         return 0
 
-
-# Function: CountCaptains
-#
-# Count number of captains for a team in Lineup table
-# Returns number of entries where captain flag set to TRUE
-#   for a given match and team
 def CountCaptains(match_id, team_id):
+    """Counts number of captains for a team in Lineup table and returns an integer.
     
+    Returns number of entries where captain = TRUE.
+    Arguments:
+        match_id - ID number from Matches table
+        team_id - ID number from Teams table
+    
+    """
     CaptainQuery = QSqlQuery()
     CaptainQuery.prepare("SELECT COUNT(*) FROM tbl_lineups WHERE match_id=? AND team_id=? AND lp_starting AND lp_captain")
     CaptainQuery.addBindValue(QVariant(match_id))
@@ -265,13 +242,15 @@ def CountCaptains(match_id, team_id):
     else:
         return 0
 
-
-# Function: CountGoalkeepers
-#
-# Count number of starting goalkeepers for a team in Lineup table
-# Returns number of entries where starting flag set to TRUE and 
-# position is goalkeeper for a given match and team
 def CountGoalkeepers(match_id, team_id):
+    """Counts number of goalkeepers for a team in Lineup table and returns an integer.
+    
+    Returns number of entries where starter = TRUE and position ID corresponds to Goalkeeper.
+    Arguments:
+        match_id - ID number from Matches table
+        team_id - ID number from Teams table
+        
+    """
     
     GoalkeeperQuery = QSqlQuery()
     GoalkeeperQuery.prepare("SELECT COUNT(*) FROM tbl_lineups WHERE match_id=? AND team_id=? AND lp_starting \
