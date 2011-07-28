@@ -217,7 +217,7 @@ class teamEntryDlg(QDialog, ui_teamentry.Ui_teamEntryDlg):
         self.connect(self.nextEntry, SIGNAL("clicked()"), lambda: self.saveRecord(teamEntryDlg.NEXT))
         self.connect(self.lastEntry, SIGNAL("clicked()"), lambda: self.saveRecord(teamEntryDlg.LAST))
         self.connect(self.addEntry, SIGNAL("clicked()"), self.addRecord)
-#        self.connect(self.deleteEntry, SIGNAL("clicked()"), self.deleteRecord)        
+        self.connect(self.deleteEntry, SIGNAL("clicked()"), self.deleteRecord)        
         self.connect(self.closeButton, SIGNAL("clicked()"), self.accept)
         
     def accept(self):
@@ -410,7 +410,7 @@ class venueEntryDlg(QDialog, ui_venueentry.Ui_venueEntryDlg):
         self.connect(self.nextEntry, SIGNAL("clicked()"), lambda: self.saveRecord(venueEntryDlg.NEXT))
         self.connect(self.lastEntry, SIGNAL("clicked()"), lambda: self.saveRecord(venueEntryDlg.LAST))
         self.connect(self.addEntry, SIGNAL("clicked()"), self.addRecord)
-#        self.connect(self.deleteEntry, SIGNAL("clicked()"), self.deleteRecord)        
+        self.connect(self.deleteEntry, SIGNAL("clicked()"), self.deleteRecord)        
         self.connect(self.closeButton, SIGNAL("clicked()"), self.accept)
         self.connect(self.mapper, SIGNAL("currentIndexChanged(int)"), self.updateConfed)
         self.connect(self.venueConfedSelect, SIGNAL("activated(int)"), self.filterCountryBox)

@@ -693,7 +693,7 @@ class playerEntryDlg(QDialog, ui_playerentry.Ui_playerEntryDlg):
         fieldName = "player_id"
         player_id = self.plyrID_display.text()
         
-        if not CountChildRecords(childTableList, fieldName, lineup_id):
+        if not CountChildRecords(childTableList, fieldName, player_id):
             if QMessageBox.question(self, QString("Delete Record"), 
                                                 QString("Delete current record?"), 
                                                 QMessageBox.Yes|QMessageBox.No) == QMessageBox.No:

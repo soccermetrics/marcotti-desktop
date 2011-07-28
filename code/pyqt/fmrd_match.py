@@ -372,7 +372,7 @@ class matchEntryDlg(QDialog, ui_matchentry.Ui_matchEntryDlg):
         itive confirmation, delete records in the following order:
             (1) HomeTeams and AwayTeams linking tables
             (2) HomeManagers and AwayManagers linking tables
-            (3) KickoffWeather, HalftimeWeather, and FulltimeWeather linking tables
+            (3) WeatherKickoff, WeatherHalftime, and WeatherFulltime linking tables
             (4) Environments table
             (5) Match table
         If match record is being referenced by Lineups, alert user.
