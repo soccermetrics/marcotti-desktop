@@ -151,17 +151,31 @@ class compEntryDlg(QDialog, ui_competitionentry.Ui_compEntryDlg):
         self.competitionEdit.setFocus()
     
     def deleteRecord(self):
-        """Deletes record from database upon user confirmation."""
-        if QMessageBox.question(self, QString("Delete Record"), 
-                                QString("Delete current record?"), 
-                                QMessageBox.Yes|QMessageBox.No) == QMessageBox.No:
-            return
-        row = self.mapper.currentIndex()
-        self.model.removeRow(row)
-        self.model.submitAll()
-        if row + 1 >= self.model.rowCount():
-            row = self.model.rowCount() - 1
-        self.mapper.setCurrentIndex(row)        
+        """Deletes record from database upon user confirmation.
+        
+        First, check that the competition record is not being referenced in the Matches table.
+        If it is not being referenced in the dependent tables, ask for user confirmation and delete 
+        record upon positive confirmation.  If it is being referenced by child tables, alert user.
+        """
+        
+        childTableList = ["tbl_matches"]
+        fieldName = "competition_id"
+        competition_id = self.compID_display.text()
+        
+        if not CountChildRecords(childTableList, fieldName, competition_id):
+            if QMessageBox.question(self, QString("Delete Record"), 
+                                                QString("Delete current record?"), 
+                                                QMessageBox.Yes|QMessageBox.No) == QMessageBox.No:
+                return
+            else:
+                row = self.mapper.currentIndex()
+                self.model.removeRow(row)
+                self.model.submitAll()
+                if row + 1 >= self.model.rowCount():
+                    row = self.model.rowCount() - 1
+                self.mapper.setCurrentIndex(row) 
+        else:
+                DeletionErrorPrompt(self)
                 
 class teamEntryDlg(QDialog, ui_teamentry.Ui_teamEntryDlg):
     """Implements Teams data entry dialog, and accesses and writes to Teams table.
@@ -279,18 +293,37 @@ class teamEntryDlg(QDialog, ui_teamentry.Ui_teamEntryDlg):
         self.teamNameEdit.setFocus()
     
     def deleteRecord(self):
-        """Deletes record from database upon user confirmation."""
-        if QMessageBox.question(self, QString("Delete Record"), 
-                                QString("Delete current record?"), 
-                                QMessageBox.Yes|QMessageBox.No) == QMessageBox.No:
-            return
-        row = self.mapper.currentIndex()
-        self.model.removeRow(row)
-        self.model.submitAll()
-        if row + 1 >= self.model.rowCount():
-            row = self.model.rowCount() - 1
-        self.mapper.setCurrentIndex(row)        
+        """Deletes record from database upon user confirmation.
         
+        First, check that the record in Teams table is not being referenced in any of the following tables:
+            - HomeTeams linking table
+            - AwayTeams linking table
+            - Venues table
+            - Lineups table
+            - Goals table
+        If it is not being referenced in any of the child tables, ask for user confirmation and delete 
+        record upon positive confirmation.  If it is being referenced by child tables, alert user.
+        """
+        
+        childTableList = ["tbl_hometeams", "tbl_awayteams", "tbl_venues", "tbl_lineups", "tbl_goals"]
+        fieldName = "team_id"
+        team_id = self.teamID_display.text()
+        
+        if not CountChildRecords(childTableList, fieldName, team_id):
+            if QMessageBox.question(self, QString("Delete Record"), 
+                                                QString("Delete current record?"), 
+                                                QMessageBox.Yes|QMessageBox.No) == QMessageBox.No:
+                return
+            else:
+                row = self.mapper.currentIndex()
+                self.model.removeRow(row)
+                self.model.submitAll()
+                if row + 1 >= self.model.rowCount():
+                    row = self.model.rowCount() - 1
+                self.mapper.setCurrentIndex(row) 
+        else:
+                DeletionErrorPrompt(self)
+                
 class venueEntryDlg(QDialog, ui_venueentry.Ui_venueEntryDlg):
     """Implements Venues data entry dialog, and accesses and writes to Venues table.
     
@@ -457,17 +490,31 @@ class venueEntryDlg(QDialog, ui_venueentry.Ui_venueEntryDlg):
         self.venueNameEdit.setFocus()
     
     def deleteRecord(self):
-        """Deletes record from database upon user confirmation."""
-        if QMessageBox.question(self, QString("Delete Record"), 
-                                QString("Delete current record?"), 
-                                QMessageBox.Yes|QMessageBox.No) == QMessageBox.No:
-            return
-        row = self.mapper.currentIndex()
-        self.model.removeRow(row)
-        self.model.submitAll()
-        if row + 1 >= self.model.rowCount():
-            row = self.model.rowCount() - 1
-        self.mapper.setCurrentIndex(row) 
+        """Deletes record from database upon user confirmation.
+        
+        First, check that the venue record is not being referenced in the Matches table.
+        If it is not being referenced in the dependent table, ask for user confirmation and delete 
+        record upon positive confirmation.  If it is being referenced by dependent table, alert user.
+        """
+        
+        childTableList = ["tbl_matches"]
+        fieldName = "venue_id"
+        venue_id = self.venueID_display.text()
+        
+        if not CountChildRecords(childTableList, fieldName, venue_id):
+            if QMessageBox.question(self, QString("Delete Record"), 
+                                                QString("Delete current record?"), 
+                                                QMessageBox.Yes|QMessageBox.No) == QMessageBox.No:
+                return
+            else:
+                row = self.mapper.currentIndex()
+                self.model.removeRow(row)
+                self.model.submitAll()
+                if row + 1 >= self.model.rowCount():
+                    row = self.model.rowCount() - 1
+                self.mapper.setCurrentIndex(row) 
+        else:
+                DeletionErrorPrompt(self)
 
     def updateConfed(self):
         """Updates current index of Confederation combobox.
