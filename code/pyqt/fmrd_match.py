@@ -218,7 +218,7 @@ class matchEntryDlg(QDialog, ui_matchentry.Ui_matchEntryDlg):
         self.connect(self.nextEntry, SIGNAL("clicked()"), lambda: self.saveRecord(matchEntryDlg.NEXT))
         self.connect(self.lastEntry, SIGNAL("clicked()"), lambda: self.saveRecord(matchEntryDlg.LAST))
         self.connect(self.addEntry, SIGNAL("clicked()"), self.addRecord)
-#        self.connect(self.deleteEntry, SIGNAL("clicked()"), self.deleteRecord)           
+        self.connect(self.deleteEntry, SIGNAL("clicked()"), self.deleteRecord)           
         self.connect(self.closeButton, SIGNAL("clicked()"), self, SLOT("close()"))
 
         self.connect(self.hometeamSelect, SIGNAL("currentIndexChanged(int)"), 
@@ -364,6 +364,73 @@ class matchEntryDlg(QDialog, ui_matchentry.Ui_matchEntryDlg):
         # refresh subforms
         self.refreshSubForms(match_id)        
 
+    def deleteRecord(self):
+        """Deletes record from database upon user confirmation.
+        
+        First, check that the match record is not being referenced in the Lineups table.
+        If it is not being referenced in Lineups, ask for user confirmation and upon pos-
+        itive confirmation, delete records in the following order:
+            (1) HomeTeams and AwayTeams linking tables
+            (2) HomeManagers and AwayManagers linking tables
+            (3) KickoffWeather, HalftimeWeather, and FulltimeWeather linking tables
+            (4) Environments table
+            (5) Match table
+        If match record is being referenced by Lineups, alert user.
+        """
+        
+        childTableList = ["tbl_lineups"]
+        fieldName = "match_id"
+        match_id = self.matchID_display.text()
+        
+        if not CountChildRecords(childTableList, fieldName, match_id):
+            if QMessageBox.question(self, QString("Delete Record"), 
+                                                QString("Delete current record?"), 
+                                                QMessageBox.Yes|QMessageBox.No) == QMessageBox.No:
+                return
+            else:
+                # delete corresponding records in HomeTeams and AwayTeams 
+                self.hometeamModel.delete(match_id)
+                self.awayteamModel.delete(match_id)
+                
+                # delete corresponding records in HomeManagers and AwayManagers
+                self.homemgrModel.delete(match_id)
+                self.awaymgrModel.delete(match_id)
+                
+                # find enviro_id in Environments table that contains match_id
+                self.deleteEnviroTables(match_id)
+                
+                # delete record in Match table
+                row = self.mapper.currentIndex()
+                self.model.removeRow(row)
+                self.model.submitAll()
+                if row + 1 >= self.model.rowCount():
+                    row = self.model.rowCount() - 1
+                self.mapper.setCurrentIndex(row) 
+        else:
+                DeletionErrorPrompt(self)
+
+    def deleteEnviroTables(self, match_id):
+        """Deletes environmental conditions tables that reference a specific match.
+        
+        (1) Find the enviro_id record in Environments that is tied to a specific match (match_id).
+        (2) Delete the linking tables associated with enviro_id.
+        (3) Delete the enviro_id record in Environments table.
+        
+        """
+        query = QSqlQuery()
+        query.prepare("SELECT enviro_id FROM tbl_environments WHERE match_id = ?")
+        query.addBindValue(QVariant(match_id))
+        query.exec_()
+        if query.next():
+            enviro_id = query.value(0).toInt()[0]
+            
+        list = ["tbl_weatherkickoff", "tbl_weatherhalftime", "tbl_weatherfulltime",  "tbl_environments"]
+        deletionQuery = QSqlQuery()
+        for table in list:
+            deletionQuery.prepare("DELETE FROM %1 WHERE enviro_id = ?")
+            deletionQuery.addBindValue(QVariant(enviro_id))
+            deletionQuery.exec_()
+                
     def updateLinkingTable(self, mapper, editor):
         """Updates custom linking table."""
         
