@@ -69,3 +69,8 @@ def LineupErrorPrompt(parent):
                          """You need exactly <b>11</b> starting players in the team lineup, of which<br>
                          <b>ONE</b> is designated captain<br>
                          <b>ONE</b> is designated goalkeeper""", QMessageBox.Close)
+                         
+def DeletionErrorPrompt(parent):
+    QMessageBox.critical(parent, "Cannot Delete Record", 
+                         """There are records in child tables dependent on this record.<br>
+                         Please delete child records that refer to this record first.""", QMessageBox.Close)

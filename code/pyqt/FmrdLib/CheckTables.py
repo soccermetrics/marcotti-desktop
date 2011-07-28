@@ -264,3 +264,26 @@ def CountGoalkeepers(match_id, team_id):
         return GoalkeeperQuery.value(0).toInt()[0]
     else:
         return 0
+
+def CountChildRecords(list, field, id):
+    """Counts number of records in child table that refer to a field ID belonging to a parent table and returns an integer.
+    
+    Arguments:
+        list - list of tables (string)
+        field - name of foreign key field  (string)
+        id - ID number of foreign key field (string)
+        
+    """
+
+    numRecords = 0
+    query = QSqlQuery()
+    for table in list:
+        queryString = QString("SELECT COUNT(*) FROM %1 WHERE %2=?").arg(table).arg(field)
+        query.prepare(queryString)
+        query.addBindValue(id)
+        query.exec_()
+        if query.next():
+            numRecords += query.value(0).toInt()[0]
+        else:
+            return -1
+    return numRecords
