@@ -1,9 +1,6 @@
 #!/usr/bin/env python
 #
-#    Football Match Result Database (FMRD)
-#    Desktop-based data entry tool
-#
-#    Contains functions that produce Message Box popups to alert user to errors.
+#    Desktop-based data entry tool for the Football Match Result Database (FMRD)
 #
 #    Copyright (C) 2010-2011, Howard Hamilton
 #
@@ -23,28 +20,20 @@
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 
+"""Contains functions that produce Message Box popups to alert user to errors."""
 
-
-# Method: VenueErrorPrompt
-#
-# Pop-up message box to alert user of insufficient number of teams in Venues table
 def VenueErrorPrompt(parent):
+    """Displays pop-up message box to alert user of insufficient number of teams in Venues table."""
     QMessageBox.critical(parent, "Insufficient Teams Table", 
                          """You need at least <b>ONE</b> entry in Teams table""", QMessageBox.Close)
     
-
-# Method: SubstitutesErrorPrompt
-#
-# Pop-up message box to alert user of insufficient number of subs in Lineup table
 def SubstitutesErrorPrompt(parent):
+    """Displays pop-up message box to alert user of insufficient number of subs in Lineup table."""
     QMessageBox.critical(parent, "Insufficient Lineup Table", 
                          """You need at least <b>THREE</b> substitutes in Lineup table""", QMessageBox.Close)
 
-
-# Method: MatchErrorPrompt
-#
-# Pop-up message box to alert user of incomplete support tables for Match entry
 def MatchErrorPrompt(parent):
+    """Displays pop-up message box to alert user of incomplete support tables for Match entry."""
     QMessageBox.critical(parent, "Cannot enter Match data", 
                          """In order to enter data in Match table, please ensure the following:<br>
                          -- at least <b>ONE</b> entry in Competitions table<br>
@@ -53,24 +42,22 @@ def MatchErrorPrompt(parent):
                          -- at least <b>TWO</b> entries in Managers table<br>
                          -- at least <b>ONE</b> entry in Referees table""", QMessageBox.Close)
     
-
-# Method: MatchDetailErrorPrompt
-#
-# Pop-up message box to alert user of insufficient data in Lineup table
 def MatchDetailErrorPrompt(parent):
+    """Displays pop-up message box to alert user of insufficient data in Lineup table."""
     QMessageBox.critical(parent, "Insufficient Lineup Table", 
                          """You need at least <b>11</b> starting players in Lineup table, of which<br>
                          <b>ONE</b> is designated captain<br>
                          <b>ONE</b> is designated goalkeeper""", QMessageBox.Close)
 
-
 def LineupErrorPrompt(parent):
+    """Displays pop-up message box to alert user of insufficient data in Lineup table."""
     QMessageBox.critical(parent, "Insufficient Team Lineup Entries", 
                          """You need exactly <b>11</b> starting players in the team lineup, of which<br>
                          <b>ONE</b> is designated captain<br>
                          <b>ONE</b> is designated goalkeeper""", QMessageBox.Close)
                          
 def DeletionErrorPrompt(parent):
+    """Displays pop-up message box to alert user of existing records that depend on parent record to be deleted."""
     QMessageBox.critical(parent, "Cannot Delete Record", 
                          """There are records in child tables dependent on this record.<br>
                          Please delete child records that refer to this record first.""", QMessageBox.Close)

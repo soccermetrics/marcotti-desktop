@@ -17,7 +17,7 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-"""Contains constants for use in application source code."""
+"""Contains constants and initial table ID numbers for use in application source code."""
 
 # #############
 # Table IDs

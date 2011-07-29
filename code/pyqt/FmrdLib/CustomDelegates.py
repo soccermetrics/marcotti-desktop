@@ -1,9 +1,6 @@
 #!/usr/bin/env python
 #
-#    Football Match Result Database (FMRD)
-#    Desktop-based data entry tool
-#
-#    Contains generic classes used by various dialogs of FMRD tool.
+#    Desktop-based data entry tool for the Football Match Result Database (FMRD)
 #
 #    Copyright (C) 2010-2011, Howard Hamilton
 #
@@ -24,19 +21,59 @@ from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 from PyQt4.QtSql import *
 
-# Class: NullLineEditDelegate
-# Inherits: QSqlRelationalDelegate
-#
-# Implements custom delegate for LineEdit widgets.  Converts empty strings
-# to NULL for use in databases.
+"""Contains custom and generic delegates used by various dialogs of FMRD tool.
+
+Classes:
+AwayMgrComboBoxDelegate -- delegate for Away Manager combobox
+AwayTeamComboBoxDelegate -- delegate for Away Team combobox
+CheckBoxDelegate -- delegate for CheckBox widgets
+CountryComboBoxDelegate -- delegate for Country comboboxes
+EventPlayerComboBoxDelegate -- delegate for Player combobox in Match Events dialogs
+EventTeamComboBoxDelegate -- delegate for Team combobox in Match Events dialogs
+GenericDelegate -- container class for array of custom delegates
+GoalPlayerComboBoxDelegate -- delegate for Player combobox in Goals dialog
+HomeMgrComboBoxDelegate -- delegate for Home Manager combobox
+HomeTeamComboBoxDelegate -- delegate for Home Team combobox
+LineupPlayerComboBoxDelegate -- delegate for Player combobox in Lineup dialog
+LineupPositionComboBoxDelegate -- delegate for Position combobox in Lineup dialog
+LineupTeamDisplayDelegate -- delegate for Team combobox in Lineup dialog
+MgrConfedComboBoxDelegate -- delegate for Confederation combobox in Manager dialog
+NullLineEditDelegate -- delegate for handling NULLs in LineEdit widgets
+PlyrConfedComboBoxDelegate -- delegate for Confederation combobox in Player dialog
+RefConfedComboBoxDelegate -- delegate for Confederation combobox in Referee dialog
+SubInComboBoxDelegate -- delegate for Players (In) combobox in Substitutions dialog
+SubOutComboBoxDelegate -- delegate for Players (Out) combobox in Substitutions dialog
+SwitchPlayerComboBoxDelegate -- delegate for Players combobox in Switch Positions dialog
+VenConfedComboBoxDelegate -- delegate for Confederation combobox in Venues dialog
+WeatherComboBoxDelegate -- delegate for Weather Conditions combobox in Environments dialog
+
+Templates:
+ConfedComboBoxDelegateTemplate -- template class for Confederation comboboxes in Personnel dialogs
+MgrComboBoxDelegateTemplate -- template class for Manager comboboxes in Match dialog
+TeamComboBoxDelegateTemplate -- template class for Team comboboxes in Match dialog
+
+"""
+
 class NullLineEditDelegate(QSqlRelationalDelegate):
+    """Implements custom delegate for LineEdit widgets.  
     
+    Converts empty strings to NULL for use in databases.
+    
+    Inherits QSqlRelationalDelegate.
+    
+    """
     def __init__(self, parent=None):
+        """Constructor to NullLineEditDelegate class."""
         super(NullLineEditDelegate, self).__init__(parent)
         
     def setEditorData(self, editor, index):
-        # read data from model
-        # if data is NULL, send an empty string to edit field
+        """Writes current data from model into editor.  If data is NULL, sets currentText to an empty string.
+        
+        Arguments:
+            editor -- LineEdit widget
+            index -- current index of database table model
+            
+        """
         rawData = index.data(Qt.DisplayRole)
         if rawData.isNull():
             value = QString()
@@ -45,27 +82,43 @@ class NullLineEditDelegate(QSqlRelationalDelegate):
         editor.setText(value)
         
     def setModelData(self, editor, model, index):
-        # strip whitespace before/after edit field text
-        # if an empty string, send NULL to model
+        """Writes current text from editor to current entry in database model. If current text is empty, writes NULL to model record.
+        
+        Arguments:
+            editor -- LineEdit widget
+            model -- underlying database table model
+            index -- current index of database table model
+            
+        """
         textline = editor.text()
         textline.trimmed()
         model.setData(index, QVariant((QVariant.String)) if textline.length() == 0 else textline)
         
         
-# Class: EventTeamComboBoxDelegate
-# Inherits: QSqlRelationalDelegate
-#
-# Implements custom delegate template for Team ComboBox in Match Event dialogs.
 class EventTeamComboBoxDelegate(QSqlRelationalDelegate):
+    """Implements custom delegate template for Team ComboBox in Match Event dialogs.
+    
+    Inherits QSqlRelationalDelegate.
+    
+    """
     
     def __init__(self, parent=None):
+        """Constructor for EventTeamComboBoxDelegate class."""
         super(EventTeamComboBoxDelegate, self).__init__(parent)
         
         # get current matchup
         self.matchSelect = parent.matchSelect
         
     def setEditorData(self, editor, index):
-
+        """Writes current data from model into editor. 
+        
+        Filters contents of combobox so that only options are the two competing teams in the match.
+        
+        Arguments:
+            editor -- ComboBox widget
+            index -- current index of database table model
+            
+        """
         # goals model
         eventModel = index.model()
         
@@ -98,21 +151,33 @@ class EventTeamComboBoxDelegate(QSqlRelationalDelegate):
         editor.setCurrentIndex(editor.findText(teamText, Qt.MatchExactly))
 
 
-# Class: EventPlayerComboBoxDelegate
-# Inherits: QSqlRelationalDelegate
-#
-# Implements custom delegate template for Player ComboBox in Match Event dialogs.
-# Filters player combobox on match and team.
 class EventPlayerComboBoxDelegate(QSqlRelationalDelegate):
+    """Implements custom delegate template for Player ComboBox in Match Event dialogs.
+    
+    Filters player combobox on match and team.
+    
+    Inherits QSqlRelationalDelegate.
+    
+    """
     
     def __init__(self, parent=None):
+        """Constructor for EventPlayerComboBoxDelegate class."""
         super(EventPlayerComboBoxDelegate, self).__init__(parent)
 
         # get match select combobox object
         self.matchSelect = parent.matchSelect
     
     def setEditorData(self, editor, index):
+        """Writes current data from model into editor. 
         
+        Filters contents of combobox so that only options are the players in the 
+        match lineup for the same team and match.
+        
+        Arguments:
+            editor -- ComboBox widget
+            index -- current index of database table model
+            
+        """
 #        print "Calling setEditorData() in EventPlayerComboBoxDelegate"
         
         editor.blockSignals(True)
@@ -170,6 +235,14 @@ class EventPlayerComboBoxDelegate(QSqlRelationalDelegate):
         editor.blockSignals(False)
 
     def setModelData(self, editor, model, index):
+        """Maps selected index in editor to its model field, and writes to the current entry in the database table.
+        
+        Arguments:
+            editor -- ComboBox widget
+            model -- underlying database table model
+            index -- current index of database table model
+            
+        """
 #        print "Calling setModelData() of EventPlayerComboBoxDelegate"
         
         boxIndex = editor.currentIndex()
@@ -180,23 +253,35 @@ class EventPlayerComboBoxDelegate(QSqlRelationalDelegate):
             print "Insertion error"
 
 
-# Class: SwitchPlayerComboBoxDelegate
-# Inherits: QSqlRelationalDelegate
-#
-# Implements custom delegate template for Player ComboBox in Switch Position dialogs.
-# Ensure that players in starting match lineup for same team who have not 
-# already been substituted, and non-starting players who have been 
-# substituted in, are listed in combobox.
 class SwitchPlayerComboBoxDelegate(QSqlRelationalDelegate):
+    """Implements custom delegate template for Player ComboBox in Switch Position dialogs.
+    
+    Ensure that players in starting match lineup for same team who have not 
+    already been substituted, and non-starting players who have been 
+    substituted in, are listed in combobox.
+    
+    Inherits QSqlRelationalDelegate.
+    
+    """
     
     def __init__(self, parent=None):
+        """Constructor for SwitchPlayerComboBoxDelegate class."""
         super(SwitchPlayerComboBoxDelegate, self).__init__(parent)
 
         # get match select combobox object
         self.matchSelect = parent.matchSelect
     
     def setEditorData(self, editor, index):
+        """Writes current data from model into editor. 
         
+        Filters contents of combobox so that only options are the eligible players in the 
+        match lineup for the same team and match.
+        
+        Arguments:
+            editor -- ComboBox widget
+            index -- current index of database table model
+            
+        """
 #        print "Calling setEditorData() in SwitchPlayerComboBoxDelegate"
         
         editor.blockSignals(True)
@@ -258,6 +343,14 @@ class SwitchPlayerComboBoxDelegate(QSqlRelationalDelegate):
         editor.blockSignals(False)
 
     def setModelData(self, editor, model, index):
+        """Maps selected index in editor to its model field, and writes to the current entry in the database table.
+        
+        Arguments:
+            editor -- ComboBox widget
+            model -- underlying database table model
+            index -- current index of database table model
+            
+        """
 #        print "Calling setModelData() of SwitchPlayerComboBoxDelegate"
         
         boxIndex = editor.currentIndex()
@@ -268,16 +361,19 @@ class SwitchPlayerComboBoxDelegate(QSqlRelationalDelegate):
             print "Insertion error"
 
 
-# Class: SubOutComboBoxDelegate
-# Inherits: QStyledItemDelegate
-#
-# Implements custom delegate template for Out Substitutions combobox.
-# Ensure that players in starting match lineup for same team who have not 
-# already been substituted, and non-starting players who have been 
-# substituted in, are listed in combobox.
 class SubOutComboBoxDelegate(QStyledItemDelegate):
+    """ Implements custom delegate template for Out Substitutions combobox.
+    
+     Ensure that players in starting match lineup for same team who have not 
+     already been substituted, and non-starting players who have been 
+     substituted in, are listed in combobox.
+     
+     Inherits QStyledItemDelegate.
+
+    """
     
     def __init__(self, parent=None):
+        """Constructor for SubOutComboBoxDelegate class."""
 #        print "Calling init() of SubOutComboBoxDelegate"
         super(SubOutComboBoxDelegate, self).__init__(parent)
         
@@ -285,6 +381,16 @@ class SubOutComboBoxDelegate(QStyledItemDelegate):
         self.team = parent.teamSelect        
         
     def setEditorData(self, editor, index):
+        """Writes current data from model into editor. 
+        
+        Filters contents of combobox so that only options are the players eligible
+        to be substituted out who are in the match lineup for the same team and match.
+        
+        Arguments:
+            editor -- ComboBox widget
+            index -- current index of database table model
+            
+        """
 #        print "Calling setEditorData() of SubOutComboBoxDelegate"       
         
         editor.blockSignals(True)
@@ -368,11 +474,15 @@ class SubOutComboBoxDelegate(QStyledItemDelegate):
         editor.setCurrentIndex(editor.findText(playerName, Qt.MatchExactly))
         editor.blockSignals(False)
 
-    # Routine: setModelData
-    # Parameters: editor (combobox), model (database), index (of model)
-    #
-    # Obtain id from combobox selection and call setData() of linking model.
     def setModelData(self, editor, model, index):
+        """Maps selected index in editor to its model field, and writes to the current entry in the database table.
+        
+        Arguments:
+            editor -- ComboBox widget
+            model -- underlying database table model
+            index -- current index of database table model
+            
+        """
 #        print "Calling setModelData() of SubOutComboBoxDelegate"
         
         boxIndex = editor.currentIndex()
@@ -381,16 +491,18 @@ class SubOutComboBoxDelegate(QStyledItemDelegate):
         model.setData(index, value)
         
 
-# Class: SubInComboBoxDelegate
-# Inherits: QStyledItemDelegate
-#
-# Implements custom delegate template for In Substitutions combobox.
-# Ensure that players in match lineup for same team, who are not 
-# starting players and have not already been substituted, are listed 
-# in combobox.
 class SubInComboBoxDelegate(QStyledItemDelegate):
-
+    """ Implements custom delegate template for In Substitutions combobox.
+     Ensure that players in match lineup for same team, who are not 
+     starting players and have not already been substituted, are listed 
+     in combobox.
+    
+    Inherits QStyledItemDelegate.
+    
+    """
+    
     def __init__(self, parent=None):
+        """Constructor for SubInComboBoxDelegate class."""
 #        print "Calling init() of SubInComboBoxDelegate"
         super(SubInComboBoxDelegate, self).__init__(parent)
         
@@ -398,6 +510,16 @@ class SubInComboBoxDelegate(QStyledItemDelegate):
         self.team = parent.teamSelect
         
     def setEditorData(self, editor, index):
+        """Writes current data from model into editor. 
+        
+        Filters contents of combobox so that only options are the players eligible 
+        to be substituted out who are in the match lineup for the same team and match.
+        
+        Arguments:
+            editor -- ComboBox widget
+            index -- current index of database table model
+            
+        """
 #        print "Calling setEditorData() of SubInComboBoxDelegate"   
         
         editor.blockSignals(True)
@@ -480,12 +602,15 @@ class SubInComboBoxDelegate(QStyledItemDelegate):
         editor.setCurrentIndex(editor.findText(playerName, Qt.MatchExactly))
         editor.blockSignals(False)
         
-
-    # Routine: setModelData
-    # Parameters: editor (combobox), model (database), index (of model)
-    #
-    # Obtain id from combobox selection and call setData() of linking model.
     def setModelData(self, editor, model, index):
+        """Maps selected index in editor to its model field, and writes to the current entry in the database table.
+        
+        Arguments:
+            editor -- ComboBox widget
+            model -- underlying database table model
+            index -- current index of database table model
+            
+        """
 #        print "Calling setModelData() of SubInComboBoxDelegate"
         
         boxIndex = editor.currentIndex()
@@ -494,21 +619,34 @@ class SubInComboBoxDelegate(QStyledItemDelegate):
         model.setData(index, value)
         
 
-# Class: GoalPlayerComboBoxDelegate
-# Inherits: QSqlRelationalDelegate
-#
-# Implements custom delegate template for Player ComboBox in Goal dialogs.
-# This is handled differently from other Match Event dialogs because of 
-# possibility of own goals, so cannot filter by team_id.
 class GoalPlayerComboBoxDelegate(QSqlRelationalDelegate):
+    """ Implements custom delegate template for Player ComboBox in Goal dialogs.
+    
+     This is handled differently from other Match Event dialogs because of 
+     possibility of own goals, so cannot filter by team_id.
+    
+    Inherits QSqlRelationalDelegate.
+    
+    """    
     
     def __init__(self, parent=None):
+        """Constructor for GoalPlayerComboBoxDelegate class."""
         super(GoalPlayerComboBoxDelegate, self).__init__(parent)
 
         # get current matchup
         self.matchSelect = parent.matchSelect
         
     def setEditorData(self, editor, index):
+        """Writes current data from model into editor. 
+        
+        Filters contents of combobox so that only options are the players in the 
+        match lineup for the same match.
+        
+        Arguments:
+            editor -- ComboBox widget
+            index -- current index of database table model
+            
+        """
         
         # goals model
         goalModel = index.model()
@@ -540,22 +678,44 @@ class GoalPlayerComboBoxDelegate(QSqlRelationalDelegate):
         editor.setCurrentIndex(editor.findText(playerText, Qt.MatchExactly))
 
 
-# Class: LineupTeamDisplayDelegate
-# Inherits: QSqlRelationalDelegate
-#
-# Implements custom delegate template for Team LineEdit display in Lineup dialog.
-# Responsible for mapping displayed team name to team ID for insertion in Lineup table.
 class LineupTeamDisplayDelegate(QSqlRelationalDelegate):
+    """ Implements custom delegate template for Team LineEdit display in Lineup dialog.
     
+     Responsible for mapping displayed team name to team ID for insertion in Lineup table.
+    
+    Inherits QSqlRelationalDelegate.
+    
+    """   
+
     def __init__(self, parent=None):
+        """Constructor for LineupTeamDisplayDelegate class.
+        
+        Argument:
+        parent - parent class (default None)
+        
+        """
         super(LineupTeamDisplayDelegate, self).__init__(parent)
         self.teamName = parent.teamName
         
     def setEditorData(self, editor, index):
+        """Writes team name into editor. 
         
+        Arguments:
+            editor -- ComboBox widget
+            index -- current index of database table model
+            
+        """
         editor.setText(self.teamName)
         
     def setModelData(self, editor, model, index):
+        """Maps team name to ID number in Teams model, and writes ID to the current entry in the database table.
+        
+        Arguments:
+            editor -- ComboBox widget
+            model -- underlying database table model
+            index -- current index of database table model
+            
+        """
 #        print "Calling setModelData() of LineupTeamDisplayDelegate"
         # get team name
         teamName = editor.text()
@@ -571,19 +731,33 @@ class LineupTeamDisplayDelegate(QSqlRelationalDelegate):
         
         model.setData(index, QVariant(teamID))
 
-# Class: LineupPlayerComboBoxDelegate
-# Inherits: QSqlRelationalDelegate
-#
-# Implements custom delegate template for Player ComboBox in Lineup dialog.
-# Filters combobox to list of players not already selected for match.  Also set
-# index of combobox to correct index.
+
 class LineupPlayerComboBoxDelegate(QSqlRelationalDelegate):
+    """ Implements custom delegate template for Player ComboBox in Lineup dialog.
     
+    Filters combobox to list of players not already selected for match.  Also set
+    index of combobox to correct index.
+    
+    Inherits QSqlRelationalDelegate.
+    
+    """    
+
     def __init__(self, parent=None):
+        """Constructor for LineupPlayerComboBoxDelegate class."""
         super(LineupPlayerComboBoxDelegate, self).__init__(parent)
         self.matchID_display = parent.matchID_display
 
     def setEditorData(self, editor, index):
+        """Writes current data from model into editor. 
+        
+        Filters contents of combobox so that only options are the players not already
+        selected for the match.
+        
+        Arguments:
+            editor -- ComboBox widget
+            index -- current index of database table model
+            
+        """
         lineupModel = index.model()
         playerModel = editor.model()
         
@@ -616,18 +790,28 @@ class LineupPlayerComboBoxDelegate(QSqlRelationalDelegate):
         editor.blockSignals(False)
 
 
-# Class: LineupPositionComboBoxDelegate
-# Inherits: QSqlRelationalDelegate
-#
-# Implements custom delegate template for Position ComboBox in Lineup dialog.
-# Set currentIndex of Position ComboBox to default player position.  If player undefined
-# make currentIndex = -1.
 class LineupPositionComboBoxDelegate(QSqlRelationalDelegate):
+    """ Implements custom delegate template for Position ComboBox in Lineup dialog.
+    
+     Set currentIndex of Position ComboBox to default player position.  If player undefined
+     make currentIndex = -1.
+    
+    Inherits QSqlRelationalDelegate.   
+    
+    """
     
     def __init__(self, parent=None):
+        """Constructor for LineupPositionComboBoxDelegate class."""
         super(LineupPositionComboBoxDelegate, self).__init__(parent)
 
     def setEditorData(self, editor, index):
+        """Writes current data from model into editor. 
+        
+        Arguments:
+            editor -- ComboBox widget
+            index -- current index of database table model
+            
+        """
         lineupModel = index.model()
         
 #        print "Calling setEditorData() of LineupPositionComboBoxDelegate"
@@ -640,38 +824,68 @@ class LineupPositionComboBoxDelegate(QSqlRelationalDelegate):
         editor.setCurrentIndex(editor.findText(positionText, Qt.MatchExactly))
 
 
-# Class: CheckBoxDelegate
-# Inherits: QSqlRelationalDelegate
-#
-# Implements custom delegate template for CheckBox widgets.
-# Set CheckBox state according to Boolean value of flag in table, and write
-# Boolean value to database.
 class CheckBoxDelegate(QSqlRelationalDelegate):
+    """ Implements custom delegate template for CheckBox widgets.
     
+     Set CheckBox state according to Boolean value of flag in table, and write
+     Boolean value to database.
+    
+    Inherits QSqlRelationalDelegate.
+    
+    """
+
     def __init__(self, parent=None):
+        """Constructor for CheckBoxDelegate class."""
         super(CheckBoxDelegate, self).__init__(parent)
 
     def setEditorData(self, editor, index):
+        """Writes current data from model into editor. Sets checkbox status from Boolean value.
+        
+        Arguments:
+            editor -- ComboBox widget
+            index -- current index of database table model
+        
+        """
         editor.setChecked(index.model().data(index, Qt.DisplayRole).toBool())
 
     def setModelData(self, editor, model, index):
+        """Maps checkbox value in editor to its model field, and writes to the current entry in the database table.
+        
+        Arguments:
+            editor -- ComboBox widget
+            model -- underlying database table model
+            index -- current index of database table model
+            
+        """        
         model.setData(index, QVariant(editor.isChecked()))
 
 
-# Class: CountryComboBoxDelegate
-# Inherits: QSqlRelationalDelegate
-#
-# Implements custom delegate template for Country ComboBox.  Filters
-# combobox to list of countries from same confederation (according to
-# current index of Confederation combobox).  Also set index of combobox
-# to correct index.  
 class CountryComboBoxDelegate(QSqlRelationalDelegate):
+    """ Implements custom delegate template for Country ComboBox.  
     
+    Filters combobox to list of countries from same confederation (according to
+    current index of Confederation combobox).  Also set index of combobox
+    to correct index.  
+    
+    Inherits QSqlRelationalDelegate.
+    
+    """
+
     def __init__(self, parent=None):
+        """Constructor for CountryComboBoxDelegate class."""
         super(CountryComboBoxDelegate, self).__init__(parent)
         
     def setEditorData(self, editor, index):
-    
+        """Writes current data from model into editor. 
+        
+        Filters contents of combobox so that only options are the countries
+        from the same confederation.
+        
+        Arguments:
+            editor -- ComboBox widget
+            index -- current index of database table model
+            
+        """
         # get parent table and current location in table
         parentModel = index.model()
         
@@ -696,6 +910,14 @@ class CountryComboBoxDelegate(QSqlRelationalDelegate):
         editor.setCurrentIndex(editor.findText(countryText, Qt.MatchExactly))
         
     def setModelData(self, editor, model, index):
+        """Maps selected index in editor to its model field, and writes to the current entry in the database table.
+        
+        Arguments:
+            editor -- ComboBox widget
+            model -- underlying database table model
+            index -- current index of database table model
+            
+        """
         # convert combobox selection to id number
         boxIndex = editor.currentIndex()
         value = editor.model().record(boxIndex).value("country_id")
@@ -703,19 +925,28 @@ class CountryComboBoxDelegate(QSqlRelationalDelegate):
         # call setData()
         ok = model.setData(index, value)
 
-# Class: ConfedComboBoxDelegateTemplate
-# Inherits: QStyledItemDelegate
-#
-# Implements custom delegate template for Confederation ComboBox.  Sets
-# index of combobox to correct index.  This is used as a base class for 
-# Confederation comboboxes in different dialogs.
 class ConfedComboBoxDelegateTemplate(QStyledItemDelegate):
+    """ Implements custom delegate template for Confederation ComboBox.  
+    
+    Sets index of combobox to correct index.  This is used as a base class for 
+    Confederation comboboxes in different dialogs.
+    
+    Inherits QStyledItemDelegate.
+    
+    """
 
     def __init__(self, parent=None):
+        """Constructor for ConfedComboBoxDelegateTemplate class."""
         super(ConfedComboBoxDelegateTemplate, self).__init__(parent)
         
     def setEditorData(self, editor, index):
+        """Uses current index and ID in Country combobox to set current index in Confederation editor. 
         
+        Arguments:
+            editor -- ComboBox widget
+            index -- current index of database table model (not used)
+            
+        """        
         countryIndex = self.countryBox.currentIndex()
         countryModel = self.countryBox.model()
         id = countryModel.record(countryIndex).value("confed_id").toString()
@@ -736,12 +967,25 @@ class ConfedComboBoxDelegateTemplate(QStyledItemDelegate):
 
 
 class WeatherComboBoxDelegate(QStyledItemDelegate):
+    """Implements custom delegate for Weather Conditions ComboBox.
+    
+    Inherits QStyledItemDelegate.
+    
+    """
     
     def __init__(self, parent=None):
+        """Constructor for WeatherComboBoxDelegate class."""
         super(WeatherComboBoxDelegate, self).__init__(parent)
 #        print "Calling init() of WeatherComboBoxDelegate"
         
     def setEditorData(self, editor, index):
+        """Writes current data from model into editor, or sets index to -1 if no record in model.
+        
+        Arguments:
+            editor -- ComboBox widget
+            index -- current index of database table model
+            
+        """
 #        print "Calling setEditorData() of WeatherComboBoxDelegate"
         parentModel = index.model()
         
@@ -764,11 +1008,15 @@ class WeatherComboBoxDelegate(QStyledItemDelegate):
 #        print "current Index = %d" % currentIndex
         editor.setCurrentIndex(currentIndex)
         
-    # Routine: setModelData
-    # Parameters: editor (combobox), model (database), index (of model)
-    #
-    # Obtain id from combobox selection and call setData() of linking model.
     def setModelData(self, editor, model, index):
+        """Maps selected index in editor to its model field, and writes to the current entry in the database table.
+        
+        Arguments:
+            editor -- ComboBox widget
+            model -- underlying database table model
+            index -- current index of database table model
+            
+        """
 #        print "Calling setModelData() of WeatherComboBoxDelegate"
         
         # convert combobox selection to id number
@@ -777,28 +1025,34 @@ class WeatherComboBoxDelegate(QStyledItemDelegate):
         
         # call setData()
         model.setData(index, value)
-        
-        
 
-# Class: TeamComboBoxDelegateTemplate
-# Inherits: QStyledItemDelegate
-#
-# Implements custom delegate template for Home/Away Team ComboBoxes.  Sets
-# index of combobox to correct index and filters combobox items.  This is used as a 
-# base class for Team comboboxes in the Match Entrydialog.
+
 class TeamComboBoxDelegateTemplate(QStyledItemDelegate):
+    """Implements custom delegate template for Home/Away Team ComboBoxes.  
     
+    Sets index of combobox to correct index and filters combobox items.  This is used as a 
+    base class for Team comboboxes in the Match Entrydialog.
+    
+    Inherits QStyledItemDelegate.
+    
+    """
+
     def __init__(self, parent=None):
+        """Constructor for TeamComboBoxDelegateTemplate class."""
         super(TeamComboBoxDelegateTemplate, self).__init__(parent)
 #        print "Calling init() of TeamComboBoxDelegateTemplate"
         
-    # Routine: setEditorData
-    # Parameters: editor (combobox), index (of model)
-    #
-    # Set combobox index to correspond with current row in database model, and
-    # filter entry list in combobox to prevent possibility of selecting same team
-    # for home and away.
     def setEditorData(self, editor, index):
+        """ Sets combobox index to correspond with current row in database model.
+        
+        Filters entry list in combobox to prevent possibility of selecting same team
+        in home and away comboboxes.
+        
+        Arguments:
+            editor -- ComboBox widget
+            index -- current index of database table model
+        
+        """
 #        print "Calling setEditorData() of TeamComboBoxDelegateTemplate"
         linkingModel = index.model()        
         teamModel = editor.model()
@@ -834,12 +1088,15 @@ class TeamComboBoxDelegateTemplate(QStyledItemDelegate):
         
         editor.blockSignals(False)
         
-    # Routine: setModelData
-    # Parameters: editor (combobox), model (database), index (of model)
-    #
-    # Obtain id from combobox selection and call setData() of linking model.
     def setModelData(self, editor, model, index):
+        """Maps selected index in editor to its model field, and writes to the current entry in the database table.
         
+        Arguments:
+            editor -- ComboBox widget
+            model -- underlying database table model
+            index -- current index of database table model
+            
+        """        
         # convert combobox selection to id number
         boxIndex = editor.currentIndex()
         value = editor.model().record(boxIndex).value("team_id")
@@ -848,25 +1105,32 @@ class TeamComboBoxDelegateTemplate(QStyledItemDelegate):
         model.setData(index, value)
 
 
-# Class: MgrComboBoxDelegateTemplate
-# Inherits: QStyledItemDelegate
-#
-# Implements custom delegate template for Home/Away Manager ComboBoxes.  Sets
-# index of combobox to correct index and filters combobox items.  This is used as a 
-# base class for Manager comboboxes in the Match Entrydialog.
 class MgrComboBoxDelegateTemplate(QStyledItemDelegate):
+    """ Implements custom delegate template for Home/Away Manager ComboBoxes.  
+    
+    Sets index of combobox to correct index and filters combobox items.  This is used as a 
+    base class for Manager comboboxes in the Match Entrydialog.
+    
+    Inherits QStyledItemDelegate.
+    
+    """
     
     def __init__(self, parent=None):
+        """Constructor for MgrComboBoxDelegateTemplate class."""
         super(MgrComboBoxDelegateTemplate, self).__init__(parent)
 #        print "Calling init() of MgrComboBoxDelegateTemplate"        
         
-    # Routine: setEditorData
-    # Parameters: editor (combobox), index (of model)
-    #
-    # Set combobox index to correspond with current row in database model, and
-    # filter entry list in combobox to prevent possibility of selecting same manager
-    # for home and away.        
     def setEditorData(self, editor, index):
+        """Writes current data from model into editor. 
+        
+         Filters entry list in combobox to prevent possibility of selecting same manager
+         in home and away comboboxes.
+        
+        Arguments:
+            editor -- ComboBox widget
+            index -- current index of database table model
+            
+        """
 #        print "Calling setEditorData() of MgrComboBoxDelegateTemplate"       
         linkingModel = index.model()
         teamModel = editor.model()
@@ -903,147 +1167,197 @@ class MgrComboBoxDelegateTemplate(QStyledItemDelegate):
         
         editor.blockSignals(False)
 
-    # Routine: setModelData
-    # Parameters: editor (combobox), model (database), index (of model)
-    #
-    # Obtain id from combobox selection and call setData() of linking model.
     def setModelData(self, editor, model, index):
+        """Maps selected index in editor to its model field, and writes to the current entry in the database table.
         
+        Arguments:
+            editor -- ComboBox widget
+            model -- underlying database table model
+            index -- current index of database table model
+            
+        """
         boxIndex = editor.currentIndex()
         value = editor.model().record(boxIndex).value("manager_id")
         
         model.setData(index, value)
 
 
-# Class: HomeTeamComboBoxDelegate
-# Inherits: TeamComboBoxDelegateTemplate
-#
-# Implements custom delegate for Home Team ComboBox in Match dialog.  Sets
-# index of combobox to correct index and filters combobox.
 class HomeTeamComboBoxDelegate(TeamComboBoxDelegateTemplate):
+    """ Implements custom delegate for Home Team ComboBox in Match dialog.  
     
+    Sets opposingModel member to model corresponding to away team combobox.
+    
+    Inherits TeamComboBoxDelegateTemplate.
+    
+    """    
+
     def __init__(self, parent=None):
+        """Constructor for HomeTeamComboBoxDelegate class."""
         super(HomeTeamComboBoxDelegate, self).__init__(parent)
 #        print "Calling init() in HomeTeamComboBoxDelegate"
         
         self.opposingModel = parent.awayteamModel
 
 
-# Class: AwayTeamComboBoxDelegate
-# Inherits: TeamComboBoxDelegateTemplate
-#
-# Implements custom delegate for Away Team ComboBox in Match dialog.  Sets
-# index of combobox to correct index and filters combobox.
 class AwayTeamComboBoxDelegate(TeamComboBoxDelegateTemplate):
+    """ Implements custom delegate for Away Team ComboBox in Match dialog.  
+    
+    Sets opposingModel member to model corresponding to home team combobox.
+    
+    Inherits TeamComboBoxDelegateTemplate.
+    
+    """    
     
     def __init__(self, parent=None):
+        """Constructor for AwayTeamComboBoxDelegate class."""
         super(AwayTeamComboBoxDelegate, self).__init__(parent)
 #        print "Calling init() in AwayTeamComboBoxDelegate"
 
         self.opposingModel = parent.hometeamModel
 
 
-# Class: HomeMgrComboBoxDelegate
-# Inherits: MgrComboBoxDelegateTemplate
-#
-# Implements custom delegate for Home Manager ComboBox in Match dialog.  Sets
-# index of combobox to correct index and filters combobox.
 class HomeMgrComboBoxDelegate(MgrComboBoxDelegateTemplate):
+    """ Implements custom delegate for Home Manager ComboBox in Match dialog.  
+    
+    Sets opposingModel member to model corresponding to away manager combobox.
+    
+    Inherits MgrComboBoxDelegateTemplate.
+    
+    """    
     
     def __init__(self, parent=None):
+        """Constructor for HomeMgrComboBoxDelegate class."""
         super(HomeMgrComboBoxDelegate, self).__init__(parent)
 #        print "Calling init() in HomeMgrComboBoxDelegate"
 
         self.opposingModel = parent.awaymgrModel
 
 
-# Class: AwayMgrComboBoxDelegate
-# Inherits: MgrComboBoxDelegateTemplate
-#
-# Implements custom delegate for Away Manager ComboBox in Match dialog.  Sets
-# index of combobox to correct index and filters combobox.
 class AwayMgrComboBoxDelegate(MgrComboBoxDelegateTemplate):
+    """ Implements custom delegate for Away Manager ComboBox in Match dialog.  
+    
+    Sets opposingModel member to model corresponding to home manager combobox.
+    
+    Inherits MgrComboBoxDelegateTemplate.
+    
+    """    
     
     def __init__(self, parent=None):
+        """Constructor for AwayMgrComboBoxDelegate class."""
         super(AwayMgrComboBoxDelegate, self).__init__(parent)
 #        print "Calling init() in AwayMgrComboBoxDelegate"
 
         self.opposingModel = parent.homemgrModel
 
 
-# Class: MgrConfedComboBoxDelegate
-# Inherits: ConfedComboBoxDelegateTemplate
-#
-# Implements custom delegate for Confederation ComboBox in Manager dialog.  Sets
-# index of combobox to correct index. 
 class MgrConfedComboBoxDelegate(ConfedComboBoxDelegateTemplate):
+    """Implements custom delegate for Confederation ComboBox in Manager dialog.  
+    
+    Sets countryBox member to Country combobox in Manager dialog, 
+    which is used to set index of Confederation combobox.
+    
+    Inherits ConfedComboBoxDelegateTemplate.
+    
+    """
 
     def __init__(self, parent=None):
+        """Constructor for MgrConfedComboBoxDelegate class."""
         super(MgrConfedComboBoxDelegate, self).__init__(parent)
         
         self.countryBox = parent.mgrCountrySelect
 
 
-# Class: PlyrConfedComboBoxDelegate
-# Inherits: ConfedComboBoxDelegateTemplate
-#
-# Implements custom delegate for Confederation ComboBox in Player dialog.  Sets
-# index of combobox to correct index. 
 class PlyrConfedComboBoxDelegate(ConfedComboBoxDelegateTemplate):
+    """Implements custom delegate for Confederation ComboBox in Player dialog.  
+    
+    Sets countryBox member to Country combobox in Player dialog, 
+    which is used to set index of Confederation combobox.
+    
+    Inherits ConfedComboBoxDelegateTemplate.
+    
+    """
 
     def __init__(self, parent=None):
+        """Constructor for PlyrConfedComboBoxDelegate class."""
         super(PlyrConfedComboBoxDelegate, self).__init__(parent)
         
         self.countryBox = parent.plyrCountrySelect
 
 
-# Class: RefConfedComboBoxDelegate
-# Inherits: ConfedComboBoxDelegateTemplate
-#
-# Implements custom delegate for Confederation ComboBox in Referee dialog.  Sets
-# index of combobox to correct index. 
 class RefConfedComboBoxDelegate(ConfedComboBoxDelegateTemplate):
+    """Implements custom delegate for Confederation ComboBox in Referee dialog.  
+    
+    Sets countryBox member to Country combobox in Referee dialog, 
+    which is used to set index of Confederation combobox.
+    
+    Inherits ConfedComboBoxDelegateTemplate.
+    
+    """
 
     def __init__(self, parent=None):
+        """Constructor for RefConfedComboBoxDelegate class."""
         super(RefConfedComboBoxDelegate, self).__init__(parent)
         
         self.countryBox = parent.refCountrySelect
 
 
-# Class: VenConfedComboBoxDelegate
-# Inherits: ConfedComboBoxDelegateTemplate
-#
-# Implements custom delegate for Confederation ComboBox in Venue dialog.  Sets
-# index of combobox to correct index. 
 class VenConfedComboBoxDelegate(ConfedComboBoxDelegateTemplate):
+    """Implements custom delegate for Confederation ComboBox in Venues dialog.  
+    
+    Sets countryBox member to Country combobox in Venues dialog, 
+    which is used to set index of Confederation combobox.
+    
+    Inherits ConfedComboBoxDelegateTemplate.
+    
+    """
 
     def __init__(self, parent=None):
+        """Constructor for VenConfedComboBoxDelegate class."""
         super(VenConfedComboBoxDelegate, self).__init__(parent)
         
         self.countryBox = parent.venueCountrySelect
 
 
-# Class: GenericDelegate
-# Inherits: QSqlRelationalDelegate
-#
-# This class contains methods that implement generic components of UI delegates.
-# Source: "Rapid GUI Programming with Python and Qt" by Mark Summerfield,
-# Prentice-Hall, 2008, pg. 483-486.
 class GenericDelegate(QSqlRelationalDelegate):
+    """Implements generic components of UI delegates.
     
+    This class is designed to accommodate a list of custom column delegates. 
+    Can implement either baseclass paint(), createEditor(), setEditorData() and
+    setModelData() methods or custom methods if defined by the subclass.
+    
+    Source: "Rapid GUI Programming with Python and Qt" by Mark Summerfield, 
+    Prentice-Hall, 2008, pg. 483-486.
+    
+    Inherits QSqlRelationalDelegate.
+    
+    """    
+
     def __init__(self, parent=None):
+        """Constructor for GenericDelegate class.
+        
+        Defines delegates member as empty dictionary.  Keys will be column numbers.
+        
+        """
         super(GenericDelegate, self).__init__(parent)
         self.delegates = {}
         
     def insertColumnDelegate(self, column, delegate):
+        """Inserts delegate and column number in delegate dictionary."""
         delegate.setParent(self)
         self.delegates[column] = delegate
         
     def removeColumnDelegate(self, column):
+        """Removes delegate from delegate dictionary."""
         if column in self.delegates:
             del self.delegates[column]
             
     def paint(self, painter, option, index):
+        """Calls either custom or baseclass paint methods for widget.
+        
+        Custom method is called if delegate is defined for the column.
+        Base class method is called otherwise.
+        
+        """
         delegate = self.delegates.get(index.column())
         if delegate is not None:
             delegate.paint(painter, option, index)
@@ -1051,6 +1365,12 @@ class GenericDelegate(QSqlRelationalDelegate):
             QSqlRelationalDelegate.paint(self, painter, option, index)
             
     def createEditor(self, parent, option, index):
+        """Calls either custom or baseclass editor creation methods for widget.
+        
+        Custom method is called if delegate is defined for the column.
+        Base class method is called otherwise.
+        
+        """
         delegate = self.delegates.get(index.column())
         if delegate is not None:
             return delegate.createEditor(parent, option, index)
@@ -1058,6 +1378,12 @@ class GenericDelegate(QSqlRelationalDelegate):
             return QSqlRelationalDelegate.createEditor(self, parent, option, index)
             
     def setEditorData(self, editor, index):
+        """Calls either custom or standard models to write data from database model to editor.
+        
+        Custom method is called if delegate is defined for the column.
+        Base class method is called otherwise.
+        
+        """
         delegate = self.delegates.get(index.column())
         if delegate is not None:
             delegate.setEditorData(editor, index)
@@ -1065,6 +1391,12 @@ class GenericDelegate(QSqlRelationalDelegate):
             QSqlRelationalDelegate.setEditorData(self, editor, index)
             
     def setModelData(self, editor, model, index):
+        """Calls either custom or standard methods to write data from editor to database model.
+        
+        Custom method is called if delegate is defined for the column.
+        Base class method is called otherwise.
+        
+        """
         delegate = self.delegates.get(index.column())
         if delegate is not None:
             delegate.setModelData(editor, model, index)
