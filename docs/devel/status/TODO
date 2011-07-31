@@ -16,7 +16,6 @@ TO DO list for FMRD
 	- Venue ID
 	- Playing Surface Type
 	- Seating Capacity
-	- Length/Width
 		
 * (COMPLETED) Geographic data for match venues (decimal lat/long degrees)
 * (COMPLETED) Rename 'tblEvents' to 'tblMatches'
