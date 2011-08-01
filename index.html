@@ -1,106 +1,161 @@
-<!DOCTYPE html>
-<html>
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-  <meta charset='utf-8'>
-
-  <title>hhamilton-src/fmrd-desktop @ GitHub</title>
-
-  <style type="text/css">
-    body {
-      margin-top: 1.0em;
-      background-color: #0c09be;
-      font-family: Helvetica, Arial, FreeSans, san-serif;
-      color: #ffffff;
-    }
-    #container {
-      margin: 0 auto;
-      width: 700px;
-    }
-    h1 { font-size: 3.8em; color: #f3f641; margin-bottom: 3px; }
-    h1 .small { font-size: 0.4em; }
-    h1 a { text-decoration: none }
-    h2 { font-size: 1.5em; color: #f3f641; }
-    h3 { text-align: center; color: #f3f641; }
-    a { color: #f3f641; }
-    .description { font-size: 1.2em; margin-bottom: 30px; margin-top: 30px; font-style: italic;}
-    .download { float: right; }
-    pre { background: #000; color: #fff; padding: 15px;}
-    hr { border: 0; width: 80%; border-bottom: 1px solid #aaa}
-    .footer { text-align:center; padding-top:30px; font-style: italic; }
-  </style>
+  <meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+  <title>Football Match Result Database: Desktop Application</title>
+  <meta name="generator" content="Amaya, see http://www.w3.org/Amaya/" />
 </head>
 
-<body>
-  <a href="http://github.com/hhamilton-src/fmrd-desktop"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub" /></a>
+<body
+style="font-family: Times New Roman,Times,serif; font-size: medium; font-style: normal; font-weight:normal; font-variant: normal; text-align: left; text-decoration: none; border: solid medium #0000ff;">
+<h1>FMRD-Desktop 1.0.2</h1>
 
-  <div id="container">
+<p>The Football Match Result Database (FMRD) stores and maintains the match
+result data needed to support football (soccer) research activities for the
+benefit of the football analytics community. The current version of the
+database models league competitions. </p>
 
-    <div class="download">
-      <a href="http://github.com/hhamilton-src/fmrd-desktop/zipball/master">
-        <img border="0" width="90" src="http://github.com/images/modules/download/zip.png"></a>
-      <a href="http://github.com/hhamilton-src/fmrd-desktop/tarball/master">
-        <img border="0" width="90" src="http://github.com/images/modules/download/tar.png"></a>
-    </div>
+<p>The Football Match Result Database has the following features: </p>
+<ul>
+  <li>Maintains data on matches that occur within football league competitions,
+    whether among national teams or domestic clubs.</li>
+  <li>Maintains complete top-level data on the football match, including
+    <ul>
+      <li>Match date</li>
+      <li>Competition name</li>
+      <li>Competition stage</li>
+      <li>Participating teams</li>
+      <li>Host venues</li>
+      <li>Environmental conditions such as kickoff time, temperature, and
+        weather conditions at kickoff, halftime, and fulltime</li>
+    </ul>
+  </li>
+  <li>Maintains complete information on participating personnel, such as
+    <ul>
+      <li>Players</li>
+      <li>Managers</li>
+      <li>Match referees</li>
+    </ul>
+  </li>
+  <li>Maintains complete information on macro-events that occur during a match
+    <ul>
+      <li>Goals</li>
+      <li>Penalties</li>
+      <li>Disciplinary incidents</li>
+      <li>Substitutions</li>
+      <li>Forced or tactical position changes</li>
+    </ul>
+  </li>
+</ul>
 
-    <h1><a href="http://github.com/hhamilton-src/fmrd-desktop">fmrd-desktop</a>
-      <span class="small">by <a href="http://github.com/hhamilton-src">hhamilton-src</a></span></h1>
+<h2>Dependencies</h2>
+<ul>
+  <li>Python 2.5-2.7 (3.0 not supported)</li>
+  <li>Nokia Qt 4 toolkit</li>
+  <li>PyQt libraries</li>
+  <li>PostgreSQL 8.x</li>
+  <li>Perl (DBI package)</li>
+</ul>
 
-    <div class="description">
-      Football Match Result Database: Desktop data-entry application
-    </div>
-
-    <p>The Football Match Result Database (FMRD) stores and maintains the match result data needed to support football (soccer) research activities for the benefit of the football analytics community. The current version of the database handles domestic league competitions. 
-
-The Football Match Result Database does the following:
-
-• Maintain data on matches that occur within football league competitions, whether among national teams or domestic clubs.
-
-• Maintain complete top-level information on the football match, including match date, competition name and stage, participating teams, venues, and environmental conditions.
-
-• Maintain complete information on macro-events that occur during a match, including goals, penalties, disciplinary incidents, and substitutions.
-
-• Maintain complete information on participating personnel, such as players, managers, and match referees.</p><h2>Dependencies</h2>
-<p>Requires:
-
-• Python up to version 2.7 (3.0 not supported)
-• Nokia Qt 4 toolkit
-• PyQt libraries
-• PostgreSQL (Any version in last 2-3 years should work, but 7.0+ preferred)
-• Perl (DBI package)</p>
-<h2>Install</h2>
-<p>• Check out the most recent release of the application from the GitHub repository into a local working directory.
-• Set up a local Postgres server on your machine, and obtain a username and password.  Assistance from your system administrator may be required.
-• Go to the sql/ directory and run the following script:
-> installdb-fmrd.sh db_name
-After the database is formed you will be asked to enter username and password.  After this, the validation tables of the database will be loaded.
-• Run the data-entry application from the command-line:
-> ./fmrd-main.pyw</p>
 <h2>License</h2>
-<p>The FMRD and its related data-entry applications are free software
-and are distributed according to the GNU General Public License (GPL).</p>
-<h2>Authors</h2>
-<p>Howard Hamilton (hhamilton@soccermetrics.net)<br/><br/>      </p>
+
+<p>The FMRD and its related data-entry applications are free software and are
+distributed according to the GNU General Public License (GPL).</p>
+
+<h2>Downloads</h2>
+
+<p>The current version of the application is 1.0.2.</p>
+
+<table border="5">
+  <col />
+  <col />
+  <col />
+  <tbody>
+    <tr>
+      <td>Latest Version</td>
+      <td><a
+        href="http://github.com/hhamilton-src/fmrd-desktop/zipball/master">ZIP</a>
+        file</td>
+      <td><a
+        href="http://github.com/hhamilton-src/fmrd-desktop/tarball/master">TAR</a>
+        file</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>Development</h2>
+
+<p>The code repository is located at <a
+href="http://github.com/hhamilton-src/fmrd-desktop">http://github.com/hhamilton-src/fmrd-desktop</a>.
+You can clone the project in Git with the following command:</p>
+
+<p><code>$ git clone git://github.com/hhamilton-src/fmrd-desktop</code></p>
+
+<p>The code and supporting documentation can be downloaded by all, but in order
+to contribute to code development you'll have to create a <a
+href="http://github.com">Github</a> account.</p>
+
+<p></p>
+
+<h2>Installation</h2>
+<ul>
+  <li>Check out the most recent release of the application from the GitHub
+    repository into a local working directory.</li>
+  <li>Set up a local Postgres server on your machine, and obtain a username and
+    password. Assistance from your system administrator may be required.</li>
+  <li>Go to the sql/ directory and run the following script: 
+    <p><code>$ installdb-fmrd.sh db_name </code></p>
+  </li>
+  <li>After the database is formed you will be asked to enter username and
+    password. The script will then load the validation tables of the database
+    will be loaded.</li>
+  <li>Run the data-entry application from the command-line: 
+    <p><code>$ ./fmrd-main.pyw</code></p>
+  </li>
+</ul>
+
+<h2>Community</h2>
+
+<p>There are three mailing lists associated with the Football Match Result
+Database:</p>
+
+<table border="2">
+  <col />
+  <col />
+  <col />
+  <tbody>
+    <tr>
+      <td><strong>FMRD Users</strong></td>
+      <td><a
+        href="http://groups.google.com/group/fmrd-users">http://groups.google.com/group/fmrd-users</a></td>
+      <td>Forum for users of FMRD and its applications. Open to all.</td>
+    </tr>
+    <tr>
+      <td><strong>FMRD Developers</strong></td>
+      <td><a
+        href="http://groups.google.com/group/fmrd-developers">http://groups.google.com/group/fmrd-developers</a></td>
+      <td>Forum for discussions of FMRD code development.</td>
+    </tr>
+    <tr>
+      <td><strong>FMRD Announce</strong></td>
+      <td><a
+        href="http://groups.google.com/group/fmrd-announce">http://groups.google.com/group/fmrd-announce</a></td>
+      <td>Low-traffic list for release and patch announcements.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>Issue Tracker</h2>
+
+<p>The issue tracker for FMRD-Desktop is located at <a
+href="http://github.com/hhamilton-src/fmrd-desktop/issues">http://github.com/hhamilton-src/fmrd-desktop/issues</a>.
+Click on "New Issue" to submit a bug report or feature request.</p>
+
 <h2>Contact</h2>
-<p>Howard Hamilton (hhamilton@soccermetrics.net)<br/>      </p>
 
-
-    <h2>Download</h2>
-    <p>
-      You can download this project in either
-      <a href="http://github.com/hhamilton-src/fmrd-desktop/zipball/master">zip</a> or
-      <a href="http://github.com/hhamilton-src/fmrd-desktop/tarball/master">tar</a> formats.
-    </p>
-    <p>You can also clone the project with <a href="http://git-scm.com">Git</a>
-      by running:
-      <pre>$ git clone git://github.com/hhamilton-src/fmrd-desktop</pre>
-    </p>
-
-    <div class="footer">
-      get the source code on GitHub : <a href="http://github.com/hhamilton-src/fmrd-desktop">hhamilton-src/fmrd-desktop</a>
-    </div>
-
-  </div>
-
-  
+<p>Howard Hamilton (<a
+href="mailto:hhamilton@soccermetrics.net">hhamilton@soccermetrics.net</a>) </p>
 </body>
 </html>
