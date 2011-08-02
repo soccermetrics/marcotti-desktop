@@ -1,0 +1,2789 @@
+#LyX 1.6.5 created this file. For more info see http://www.lyx.org/
+\lyxformat 345
+\begin_document
+\begin_header
+\textclass article
+\begin_preamble
+\date{}
+\end_preamble
+\use_default_options false
+\language english
+\inputencoding auto
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_amsmath 0
+\use_esint 0
+\cite_engine basic
+\use_bibtopic false
+\paperorientation portrait
+\leftmargin 2.54cm
+\topmargin 2.54cm
+\rightmargin 2.54cm
+\bottommargin 2.54cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\defskip medskip
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\author "" 
+\author "" 
+\end_header
+
+\begin_body
+
+\begin_layout Title
+FMRD: Desktop-Based Data Entry Application
+\end_layout
+
+\begin_layout Author
+Howard Hamilton
+\end_layout
+
+\begin_layout Section
+Introduction
+\end_layout
+
+\begin_layout Standard
+The Football Match Result Database (FMRD) stores and maintains the match
+ result data needed to support football (soccer) research activities for
+ the benefit of the football analytics community.
+ The current version of the database handles domestic league competitions.
+ 
+\end_layout
+
+\begin_layout Standard
+The Football Match Result Database does the following:
+\end_layout
+
+\begin_layout Itemize
+Maintain data on matches that occur within football league competitions,
+ whether among national teams or domestic clubs.
+\end_layout
+
+\begin_layout Itemize
+Maintain complete top-level information on the football match, including
+ match date, competition name and stage, participating teams, venues, and
+ environmental conditions.
+\end_layout
+
+\begin_layout Itemize
+Maintain complete information on macro-events that occur during a match,
+ including goals, penalties, disciplinary incidents, and substitutions.
+\end_layout
+
+\begin_layout Itemize
+Maintain complete information on participating personnel, such as players,
+ managers, and match referees.
+\end_layout
+
+\begin_layout Section
+System Requirements
+\end_layout
+
+\begin_layout Standard
+Requires:
+\end_layout
+
+\begin_layout Itemize
+Python up to version 2.7 (3.0 not supported)
+\end_layout
+
+\begin_layout Itemize
+PostgreSQL (Any version in last 2-3 years should work, but 7.0+ preferred)
+\end_layout
+
+\begin_layout Itemize
+Perl (DBI package)
+\end_layout
+
+\begin_layout Standard
+FMRD was originally coded on a 64-bit Linux operating system (Ubuntu Lucid
+ Lynx), but was built using the Qt and PyQt libraries, so it should be able
+ to function across Windows and Mac platforms.
+ This has not been tested, however.
+\end_layout
+
+\begin_layout Section
+Installation
+\end_layout
+
+\begin_layout Subsection
+Software download
+\end_layout
+
+\begin_layout Standard
+Check out FMRD from the Downloads section of the website located at 
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+http://www.fmrd-site.org/downloads/
+\end_layout
+
+\begin_layout Standard
+\noindent
+Will add information about binary executable.
+\end_layout
+
+\begin_layout Subsection
+Database setup
+\end_layout
+
+\begin_layout Standard
+Will have to work with system administrator to run a local Postgres server.
+ Should be given a username and password for access.
+\end_layout
+
+\begin_layout Standard
+\noindent
+Go to sql/ directory and run the 
+\family typewriter
+installdb-fmrd
+\family default
+ shell script to create and set up FMRD:
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+> cd sql/
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+> installdb-fmrd.sh
+\end_layout
+
+\begin_layout Standard
+\noindent
+The following information is required:
+\end_layout
+
+\begin_layout Itemize
+Database name
+\end_layout
+
+\begin_layout Itemize
+User name
+\end_layout
+
+\begin_layout Itemize
+User password
+\end_layout
+
+\begin_layout Itemize
+Maximum number of rounds in league competition
+\end_layout
+
+\begin_layout Standard
+The script will create a database with tables and views from the FMRD template
+ and populate the base tables.
+ These tables support the main tables of the database and will be altered
+ very seldom by the user.
+ 
+\end_layout
+
+\begin_layout Section
+Logging In
+\end_layout
+
+\begin_layout Standard
+The user can populate the main tables of the FMRD with the data-entry applicatio
+n.
+ To run the data-entry application, enter the following at the command prompt:
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+>./fmrd-main.py
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /home/howard/research/soccermetrics/SoccerResultDB/trunk/docs/screenshots/fmrd-login.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Login Window
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+The user will be challenged by the login dialog to enter the database name,
+ username and password.
+ There is also a pair of radio buttons along the top of the dialog to select
+ between data-entry switchboards for users and administrators.
+ 
+\end_layout
+
+\begin_layout Standard
+After the login information is entered, the user can authenticate by pressing
+ the Ok button (keyboard shortcut Alt-O).
+ If the user wishes to exit the program, press the Cancel button (Alt-C).
+\end_layout
+
+\begin_layout Standard
+The application will close on three consecutive failed attempts.
+\end_layout
+
+\begin_layout Section
+The Data Entry Switchboards
+\end_layout
+
+\begin_layout Standard
+The switchboard is the centerpiece of the data-entry application.
+ It is composed of buttons that open dialog windows that allow the user
+ to enter match information.
+ There are two switchboards: a "user" switchboard with a basic menu bar
+ that allows the user to quit the application and display About information,
+ and an "administrator" switchboard that includes a Setup menu for access
+ to the base tables.
+ Database operations do not occur at the switchboard level.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="1" columns="2">
+<features>
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename /home/howard/research/soccermetrics/SoccerResultDB/trunk/docs/screenshots/fmrd-user-switchboard.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename /home/howard/research/soccermetrics/SoccerResultDB/trunk/docs/screenshots/fmrd-admin-switchboard.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Main switchboard for data-entry application.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+The buttons open the data-entry dialogs and are grouped in three categories.
+ The dialogs related to the high-level details of the match are grouped
+ under "Match Overview", the dialogs related to the players, referees, and
+ managers are in the "Personnel" section, and the dialogs pertaining to
+ the football match are found under "Match Details".
+\end_layout
+
+\begin_layout Standard
+The menus are organized accordingly with keyboard shortcuts in parentheses:
+\end_layout
+
+\begin_layout Itemize
+Main menu (Alt-M)
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\series bold
+Quit
+\series default
+ (Ctrl-Q, or Alt-M,Q): Close application.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Setup menu (Alt-S)
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\series bold
+Overview
+\series default
+ submenu (Alt-S,O): Access base tables related to high-level match information.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Personnel
+\series default
+ submenu (Alt-S,P): Access base tables related to personnel.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Events
+\series default
+ submenu (Alt-S,E): Access base tables related to match events.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Help menu (Alt-H)
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\series bold
+About
+\series default
+ (F1, or Alt-H,A): Show information window on application.
+\end_layout
+
+\end_deeper
+\begin_layout Section
+Getting Started with Data Entry
+\end_layout
+
+\begin_layout Standard
+This section describes the data entry dialogs on the application.
+ For each dialog there is a read-only field for the ID number of the current
+ record and fields that populate the underlying database table by entering
+ data or selecting from a data list.
+ Unless stated otherwise, the fields cannot be left blank or unselected.
+\end_layout
+
+\begin_layout Standard
+It is important to remember that the database builds on itself.
+ The data entry application is designed so that the user cannot enter match
+ information before entering information about the players involved, to
+ give one example.
+ The match overview and personnel tables must be populated with a minimum
+ number of records before the match detail dialogs are enabled.
+\end_layout
+
+\begin_layout Standard
+All of the dialogs, with the exception of the Environmental Conditions dialog,
+ have navigation buttons that allow the user to access records in sequential
+ order, as well as skip to either the first or last record.
+ There are three other buttons in the dialogs: 
+\end_layout
+
+\begin_layout Itemize
+an "
+\series bold
+Add
+\series default
+" (Alt-A) button that allows the user to append a new record to the end
+ of the underlying table, 
+\end_layout
+
+\begin_layout Itemize
+a "
+\series bold
+Delete
+\series default
+" (Alt-D) button that erases the current record (subject to permission by
+ the database), and 
+\end_layout
+
+\begin_layout Itemize
+a "
+\series bold
+Close
+\series default
+" (Alt-C) button that saves the current record to the database and closes
+ the dialog.
+\end_layout
+
+\begin_layout Subsection
+Pre-Competition Data
+\end_layout
+
+\begin_layout Subsubsection
+Competitions
+\end_layout
+
+\begin_layout Standard
+The Competitions dialog allows entry of the names of the league competitions.
+ All matches are tied to a specific league competition, so the Competitions
+ table in the FMRD must be populated with at least one entry.
+ There is only one field that can be accessed by the user, which is the
+ Competition field.
+ The field cannot be left blank.
+\end_layout
+
+\begin_layout Standard
+If data from multiple league seasons are to be contained in a single database,
+ it is recommended that the user differentiate the competition names, such
+ as "2009-10 English Premier League" and "2010-11 English Premier League".
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /home/howard/research/soccermetrics/SoccerResultDB/trunk/docs/screenshots/fmrd-competitions.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Competition data entry dialog.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Teams
+\end_layout
+
+\begin_layout Standard
+The Teams dialog allows entry of the team name.
+ Match venues can be associated with a home team, while matches, match lineups,
+ and match events must be associated with teams.
+ There is only one field that can be accessed by the user, which is the
+ Teams field.
+ This field cannot be left blank.
+\end_layout
+
+\begin_layout Standard
+Users typically enter the official name of the team or its popular name.
+ Of course, the entry is at the discretion of the user, but it should be
+ distinctive from other names in the database.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /home/howard/research/soccermetrics/SoccerResultDB/trunk/docs/screenshots/fmrd-teams.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Team data entry dialog.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Venues
+\end_layout
+
+\begin_layout Standard
+The Venues dialog allows for entry of data associated with football venues.
+ This dialog is opened if there is more than one entry in the Teams database
+ table.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /home/howard/research/soccermetrics/SoccerResultDB/trunk/docs/screenshots/fmrd-venues.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Venue data entry dialog.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The following fields are in the Venues dialog:
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Venue Name
+\series default
+ (Alt-V): Self-explanatory editable text entry.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Venue City
+\series default
+ (Alt-C): Self-explanatory editable text entry
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Confederation
+\series default
+ (Alt-F): The confederation in which the venue resides (AFC, CAF, CONCACAF,
+ CONMEBOL, OFC, UEFA).
+ This is not stored in the database but used to filter the Country field.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Country
+\series default
+ (Alt-N): The country in which the venue resides.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Home Team
+\series default
+ (Alt-T): The team that plays the majority of its matches at the venue.
+ This field can be left unselected.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Altitude
+\series default
+: The altitude above mean sea level (MSL) of the venue, in meters.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Latitude
+\series default
+: The geographical latitude of the venue, in decimal degrees.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Longitude
+\series default
+: The geographical longitude of the venue, in decimal degrees.
+\end_layout
+
+\begin_layout Subsubsection
+Players
+\end_layout
+
+\begin_layout Standard
+The Players dialog allows for entry of player data.
+ One thing that might be surprising to users who use other sports databases
+ is that the team associated with the player is not entered here; rather,
+ the association is handled via the match lineups.
+ Thus the Players table is easier to maintain over time.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /home/howard/research/soccermetrics/SoccerResultDB/trunk/docs/screenshots/fmrd-players.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Player data entry dialog.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The following fields are in the Players dialog:
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+First Name
+\series default
+ (Alt-F): The first name of the player.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Last Name
+\series default
+ (Alt-L): The last name of the player.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Nickname
+\series default
+ (Alt-K): The nickname or popular name of the player.
+ If there is no popular name this field is left blank.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Date of Birth
+\series default
+ (Alt-B): The player's date of birth, in ISO YYYY-MM-DD format.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Region
+\series default
+ (Alt-R): The confederation of the country for which the player holds FIFA
+ eligibility.
+ This field is selected in order to filter the Country field.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Country
+\series default
+ (Alt-N): The country for which the player holds FIFA eligibility.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Default Position
+\series default
+ (Alt-P): The default position of the player.
+ This is used to set the Position field in the Match Lineups dialog to an
+ initial index.
+\end_layout
+
+\begin_layout Subsubsection
+Managers
+\end_layout
+
+\begin_layout Standard
+The Managers dialog allows the user to enter manager data.
+ As in the Player dialog, the team associated with the manager is not selected
+ here but instead handled by the Match dialog.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /home/howard/research/soccermetrics/SoccerResultDB/trunk/docs/screenshots/fmrd-managers.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Manager data entry dialog.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The following fields are in the Managers dialog:
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+First Name
+\series default
+ (Alt-F): The first name of the manager.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Last Name
+\series default
+ (Alt-L): The last name of the manager.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Nickname
+\series default
+ (Alt-K): The nickname or popular name of the manager.
+ If there is no popular name the field is left blank.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Date of Birth
+\series default
+ (Alt-B): The manager's date of birth, in ISO YYYY-MM-DD format.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Region
+\series default
+ (Alt-R): The confederation of the country for which the manager holds citizensh
+ip.
+ This field is selected in order to filter the Country field.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Country
+\series default
+ (Alt-N): The country for which the manager holds citizenship.
+\end_layout
+
+\begin_layout Subsubsection
+Referees
+\end_layout
+
+\begin_layout Standard
+The Referees dialog allows the user to enter data on the central referee.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /home/howard/research/soccermetrics/SoccerResultDB/trunk/docs/screenshots/fmrd-referees.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Referee data entry dialog.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The following fields are in the Referee dialog:
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+First Name
+\series default
+ (Alt-F): The first name of the referee.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Last Name
+\series default
+ (Alt-L): The last name of the referee.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Date of Birth
+\series default
+ (Alt-B): The referee's date of birth, in ISO YYYY-MM-DD format.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Region
+\series default
+ (Alt-R): The confederation of the country for which the referee holds citizensh
+ip.
+ This field is selected in order to filter the Country field.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Country
+\series default
+ (Alt-N): The country for which the referee holds citizenship.
+\end_layout
+
+\begin_layout Subsection
+Pre-Match Data
+\end_layout
+
+\begin_layout Subsubsection
+Matches
+\end_layout
+
+\begin_layout Standard
+The Match dialog is the central dialog in the data-entry process.
+ It allows the user to enter high-level information on the match, such as
+ its date, the competition and matchday to which the match belongs, the
+ match venue and the central referee, the competing teams and associated
+ managers, and the elapsed match time.
+ This dialog will open only if the following pre-competition conditions
+ have been met:
+\end_layout
+
+\begin_layout Itemize
+At least one entry in Competition table
+\end_layout
+
+\begin_layout Itemize
+At least one entry in Venues table
+\end_layout
+
+\begin_layout Itemize
+At least one entry in Referees table
+\end_layout
+
+\begin_layout Itemize
+At least two entries in Managers table
+\end_layout
+
+\begin_layout Itemize
+At least two entries in Teams table
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /home/howard/research/soccermetrics/SoccerResultDB/trunk/docs/screenshots/fmrd-matches.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Match data entry dialog.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The following fields are in the Match dialog:
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Date
+\series default
+: Date of the match in ISO YYYY-MM-DD format.
+\end_layout
+
+\begin_layout Itemize
+Match Overview:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\series bold
+Competition
+\series default
+: The competition to which the match belongs.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Round
+\series default
+: The matchday to which the match belongs.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Venue
+\series default
+: The match venue.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Referee
+\series default
+: The central referee for the match.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Match Time:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\series bold
+1st half
+\series default
+: The elapsed time of the first half (including stoppage time), in minutes.
+ Time must be positive and nonzero.
+ Default elapsed time is 45.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+2nd half
+\series default
+: The elapsed time of the second half (including stoppage time), in minutes.
+ Time must be nonnegative (zero minutes permitted).
+ Default elapsed time is 45.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Home/Away Teams:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\series bold
+Team
+\series default
+: The home or away team listbox.
+ When a team from one listbox is selected, the other listbox is filtered
+ so that the same team cannot be selected in both listboxes.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Manager
+\series default
+: The manager listbox associated with the home or away team.
+ When a manager from one listbox is selected, the other listbox is filtered
+ so that the same manager cannot be selected in both listboxes.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+The following buttons access subdialogs to the Match dialog:
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Home Lineups
+\series default
+ (Alt-H): Open Match Lineup subdialog for the home team.
+ This button is activated only when the team and manager fields of the home
+ team have been selected.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Away Lineups
+\series default
+ (Alt-W): Open Match Lineup subdialog for the away team.
+ This button is activated only when the team and manager fields of the away
+ team have been selected.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Environments
+\series default
+ (Alt-E): Open Environmental Conditions subdialog.
+ This button is activated when the Match dialog is opened.
+\end_layout
+
+\begin_layout Subsubsection
+Environments
+\end_layout
+
+\begin_layout Standard
+The Environmental Conditions subdialog records atmospheric conditions of
+ the match.
+ Entry of the environmental conditions is optional, but only those conditions
+ associated with the current match can be changed.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /home/howard/research/soccermetrics/SoccerResultDB/trunk/docs/screenshots/fmrd-enviro.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Environmental Conditions data entry dialog.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The following fields are in the Environmental Conditions dialog:
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Time
+\series default
+: The kickoff time of the football match, in local time and in 24-hour time
+ format (HH:MM).
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Temperature
+\series default
+: The ambient temperature at kickoff, in degrees Celsius.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Weather Conditions
+\series default
+: The predominate weather condition, using terms from NOAA National Weather
+ Service.
+ Collected at three intervals during the match:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\series bold
+Kickoff
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Halftime
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Fulltime
+\series default
+ (End of Match)
+\end_layout
+
+\end_deeper
+\begin_layout Subsubsection
+Lineups
+\end_layout
+
+\begin_layout Standard
+The Player Lineup subdialog is the second-most important dialog in the FMRD.
+ It allows the user to designate the match lineup for a team, select starters,
+ substitutes, and the captain.
+ The match event dialogs draw their list of players from those in the match
+ lineup.
+ A match lineup must have exactly 11 starters, of which exactly one is the
+ captain and exactly one the goalkeeper.
+ 
+\end_layout
+
+\begin_layout Standard
+To assist the user there are status boxes along the bottom of the dialog
+ that tabulate the number of starters, substitutes, captains and goalkeepers.
+ The background of the boxes turn red if the number of players do not match
+ requirements, and change to green when the requirements are met.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /home/howard/research/soccermetrics/SoccerResultDB/trunk/docs/screenshots/fmrd-lineup.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Match Lineup data entry dialog.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The following fields are in the Player Lineup dialog:
+\end_layout
+
+\begin_layout Itemize
+Player: Player drawn from list of players in Player table.
+\end_layout
+
+\begin_layout Itemize
+Position: Player's position.
+ Set to default position (defined in Player dialog).
+\end_layout
+
+\begin_layout Itemize
+Starting Player: Checkbox to designate starting player.
+ Left unchecked (default) if substitute.
+\end_layout
+
+\begin_layout Itemize
+Captain: Checkbox to designate captain.
+ Left unchecked by default.
+\end_layout
+
+\begin_layout Subsection
+In-Match Data
+\end_layout
+
+\begin_layout Standard
+The following dialogs allow the user to input data on the match details.
+ There must be entries in the Match Lineup table to enable the dialogs;
+ otherwise, the following error message appears:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /home/howard/research/soccermetrics/SoccerResultDB/trunk/docs/screenshots/error.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Error message for insufficient Match Lineup table.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The Match event dialogs use a series of listboxes to filter the database
+ so that the user views (and inputs) data for a specific team in a specific
+ match.
+ Follow these steps to access the data:
+\end_layout
+
+\begin_layout Enumerate
+Upon opening the dialog, only the Competition listbox will be activated.
+ Select the appropriate competition.
+\end_layout
+
+\begin_layout Enumerate
+The Rounds listbox will become active.
+ The listbox will be populated with the matchdays for which there exist
+ a competition's matches in the database.
+ Select the appropriate matchday.
+\end_layout
+
+\begin_layout Enumerate
+The Match listbox will become active.
+ It will be populated with the matches of the selected competition and matchday.
+ Select the appropriate match.
+\end_layout
+
+\begin_layout Standard
+Upon selecting the match, the rest of the dialog will become active if there
+ are entries in the database corresponding to the selected match, matchday,
+ and competition, or only the Add/Close buttons will become active in the
+ case of no entries.
+\end_layout
+
+\begin_layout Standard
+If there are entries in the database that correspond to the selected match,
+ matchday, and competition, the dialog will start at the first of the entries.
+ The user can advance through the entries, add a new entry, or modify current
+ entries.
+\end_layout
+
+\begin_layout Standard
+Follow these steps to add new entries:
+\end_layout
+
+\begin_layout Enumerate
+Press the "Add" button.
+ An empty record will be formed at the end of the database table.
+ The Team listbox will be active as well as the navigation buttons.
+\end_layout
+
+\begin_layout Enumerate
+The Team listbox will contain the two teams competing in the match.
+ Select the appropriate team.
+\end_layout
+
+\begin_layout Enumerate
+The rest of the dialog will be activated.
+ The Player listbox will be active and contain the players of the selected
+ team who are in the match lineup.
+ Select the appropriate player and complete the remainder of the dialog.
+\end_layout
+
+\begin_layout Subsubsection
+Goals
+\end_layout
+
+\begin_layout Standard
+The Goals dialog records goals scored in open play, including own goals.
+ Goals scored from a penalty kick are recorded in the Penalty dialog.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /home/howard/research/soccermetrics/SoccerResultDB/trunk/docs/screenshots/fmrd-goals.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+(Open Play) Goals data entry dialog.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The following fields are in the Goals dialog:
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Team
+\series default
+: The team to which the goal is credited.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Player
+\series default
+: The player who is credited with the goal.
+ The Players listbox contains all of the players, starters or substitutes,
+ who are in the match lineup.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Match Event
+\series default
+: The type of on-field play that resulted in the goal.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+How Scored
+\series default
+: The body part used to score the goal.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Match Time
+\series default
+: The time at which the goal was scored, in whole minutes.
+ If the match time is 45 or 90, the second box is activated so that the
+ user may enter the stoppage time, also in whole minutes.
+\end_layout
+
+\begin_layout Subsubsection
+Penalties
+\end_layout
+
+\begin_layout Standard
+The Penalties dialog records all penalty kick events in a match, regardless
+ of outcome.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /home/howard/research/soccermetrics/SoccerResultDB/trunk/docs/screenshots/fmrd-penalties.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Penalties data entry dialog.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The following fields are in the Penalties dialog:
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Team
+\series default
+: The team to which the penalty kick is awarded.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Player
+\series default
+: The player who takes the penalty kick.
+ The Players listbox contains all of the players, starters or substitutes,
+ who are in the match lineup.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Foul
+\series default
+: The description of the foul that drew the penalty kick decision.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Penalty Outcome
+\series default
+: The final outcome of the penalty kick after all retakes, if necessary.
+ It can be either a goal or no goal for various reasons.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Match Time
+\series default
+: The time at which the penalty kick occurred, in whole minutes.
+ If the match time is 45 or 90, the second box is activated so that the
+ user may enter the stoppage time, also in whole minutes.
+\end_layout
+
+\begin_layout Subsubsection
+Offenses
+\end_layout
+
+\begin_layout Standard
+The Offenses dialog records all fouls that resulted in a disciplinary card
+ being issued by the central referee.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /home/howard/research/soccermetrics/SoccerResultDB/trunk/docs/screenshots/fmrd-offenses.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Offenses data entry dialog.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The following fields are in the Offenses dialog:
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Team
+\series default
+: The team to which the foul is charged.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Player
+\series default
+: The player who is charged with the foul.
+ The Players listbox contains all of the players, starters or substitutes,
+ who are in the match lineup.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Booking Foul
+\series default
+: The description of the foul that resulted in the booking by the referee.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Card Given
+\series default
+: The color of the disciplinary card shown by the referee.
+ Yellow and red cards can be shown directly; if a second yellow card is
+ shown, select "Yellow/Red".
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Match Time
+\series default
+: The time at which the foul occurred, in whole minutes.
+ If the match time is 45 or 90, the second box is activated so that the
+ user may enter the stoppage time, also in whole minutes.
+\end_layout
+
+\begin_layout Subsubsection
+Substitutions
+\end_layout
+
+\begin_layout Standard
+The Substitutions dialog records all substitutions that occurred in the
+ match.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /home/howard/research/soccermetrics/SoccerResultDB/trunk/docs/screenshots/fmrd-subs.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Substitutions data entry dialog.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The following fields are in the Substitutions dialog:
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Team
+\series default
+: The team to which the substitution is credited.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Player Out
+\series default
+: The player who exits the match to be replaced by Player In.
+ The listbox contains all of the players who are in the match lineup and
+ meet one of two criteria:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Starting and not already substituted out of the match
+\end_layout
+
+\begin_layout Itemize
+Non-starting and substituted into the match
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+
+\series bold
+Player In
+\series default
+: The player who enters the match to replace Player Out.
+ The listbox contains all nonstarting players in the match lineup who have
+ not already entered the match.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Match Time
+\series default
+: The time at which the substitution occurred, in whole minutes.
+ If the match time is 45 or 90, the second box is activated so that the
+ user may enter the stoppage time, also in whole minutes.
+\end_layout
+
+\begin_layout Subsubsection
+Position Switches
+\end_layout
+
+\begin_layout Standard
+The Switch Position dialog is used to record on-field changes in position
+ during a match.
+ It accounts primarily for forced position changes in the event that a goalkeepe
+r is sent off and a field player takes his place.
+ It can be used to track tactical changes as well.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /home/howard/research/soccermetrics/SoccerResultDB/trunk/docs/screenshots/fmrd-switches.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Position Switches data entry dialog.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The following fields are in the Switch Positions dialog:
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Team
+\series default
+: The team to which the position switch is credited.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Player
+\series default
+: The player who will switch on-field position.
+ The listbox contains all of the players who are in the match lineup and
+ meet one of two criteria:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Starting and not already substituted out of the match
+\end_layout
+
+\begin_layout Itemize
+Non-starting and substituted into the match
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+
+\series bold
+New Position
+\series default
+: The new field position of the player.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Match Time
+\series default
+: The time at which the position switch occurred, in whole minutes.
+ If the match time is 45 or 90, the second box is activated so that the
+ user may enter the stoppage time, also in whole minutes.
+\end_layout
+
+\begin_layout Section
+Altering the Base Tables
+\end_layout
+
+\begin_layout Standard
+The base tables contain basic information about organizations, match events,
+ and other descriptions and terms that are used by the main FMRD tables.
+ You can access these tables via the Setup menu in the Administrator switchboard.
+ Regular users should not have much need to alter the base tables in the
+ FMRD.
+ This description of the Setup menu is added for administrators and for
+ completeness.
+\end_layout
+
+\begin_layout Subsection
+Overview Base Tables
+\end_layout
+
+\begin_layout Standard
+To access the match overview base tables, activate the Setup menu at the
+ top of the Administrator switchboard and then mouseover the Overview submenu.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /home/howard/research/soccermetrics/SoccerResultDB/trunk/docs/screenshots/switchboard-overview-setup.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Overview submenu in Setup menu.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Competition Phase
+\end_layout
+
+\begin_layout Standard
+The Competition Phase dialog allows the user to change the matchday descriptions
+ in a league competition.
+ In some leagues all of the teams play matches on the same day or weekend;
+ in other leagues matches are spread out during the week.
+ The Round Description field (Alt-R) is the only active field.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /home/howard/research/soccermetrics/SoccerResultDB/trunk/docs/screenshots/fmrd-setup-rounds.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Competition Phase setup dialog.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Weather Conditions
+\end_layout
+
+\begin_layout Standard
+The Weather Conditions dialog allows the user to edit the description of
+ the predominate weather conditions in the football match.
+ The descriptions are taken from NOAA's National Weather Service in the
+ USA.
+ The Weather Conditions field (Alt-W) is the only active field.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /home/howard/research/soccermetrics/SoccerResultDB/trunk/docs/screenshots/fmrd-setup-wxconds.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Weather Conditions setup dialog.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Personnel Base Tables
+\end_layout
+
+\begin_layout Standard
+To access the personnel base tables, activate the Setup menu at the top
+ of the Administrator switchboard and then mouseover the Personnel submenu.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /home/howard/research/soccermetrics/SoccerResultDB/trunk/docs/screenshots/switchboard-personnel-setup.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Personnel submenu in Setup menu.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Confederations
+\end_layout
+
+\begin_layout Standard
+The Confederations dialog allows the user to edit the acronyms of the confederat
+ions in international football.
+ The Confederations field (Alt-N) is the only active field.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /home/howard/research/soccermetrics/SoccerResultDB/trunk/docs/screenshots/fmrd-setup-confederation.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Confederations setup dialog.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Country
+\end_layout
+
+\begin_layout Standard
+The Country dialog allows the user to edit the name of the country and pair
+ the country with its home confederation.
+ In FIFA terminology, a country is one with its own football association,
+ so the United Kingdom is a country in the United Nations, but England,
+ Scotland, Wales, and Northern Ireland are countries in FIFA.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /home/howard/research/soccermetrics/SoccerResultDB/trunk/docs/screenshots/fmrd-setup-country.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Country setup dialog.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The following fields are in the Country dialog:
+\end_layout
+
+\begin_layout Itemize
+Country (Alt-N): The popular name of the member association in FIFA.
+\end_layout
+
+\begin_layout Itemize
+Confederation (Alt-F): The confederation to which the member association
+ belongs.
+\end_layout
+
+\begin_layout Subsubsection
+Field Positions
+\end_layout
+
+\begin_layout Standard
+The Field Positions dialog allows the user to edit the generic descriptions
+ of the positions on a football pitch.
+ These descriptions must not contain information about the field location,
+ such as "left back" or "right winger"; field locations are handled in the
+ Flank Position dialog and table.
+ In this dialog the Field Position (Alt-F) is the only active field.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /home/howard/research/soccermetrics/SoccerResultDB/trunk/docs/screenshots/fmrd-setup-fieldpos.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Field Position setup dialog.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Flank Positions
+\end_layout
+
+\begin_layout Standard
+The Flank Positions dialog allows the user to edit the flank description
+ that modifies the football position.
+ The default field locations are "left", "right", "center/centre", or a
+ blank entry to designate a generic location.
+ Only the Flank Position field (Alt-F) is active.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /home/howard/research/soccermetrics/SoccerResultDB/trunk/docs/screenshots/fmrd-setup-flankpos.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Flank position setup dialog.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Positions
+\end_layout
+
+\begin_layout Standard
+The Positions dialog allows the user to edit the composite position of a
+ football player that combines the flank and field position names.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /home/howard/research/soccermetrics/SoccerResultDB/trunk/docs/screenshots/fmrd-setup-compositeposition.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Positions setup dialog.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The following fields are in the Positions dialog:
+\end_layout
+
+\begin_layout Itemize
+Flank Position (Alt-K): The sector of the football field, used as an adjective
+ of the field position.
+ To create a generic position such as "midfielder", select the blank description.
+ Goalkeeper must have a blank flank position selected.
+\end_layout
+
+\begin_layout Itemize
+Field Position (Alt-F): The field position of the football player.
+\end_layout
+
+\begin_layout Subsection
+Match Event Base Tables
+\end_layout
+
+\begin_layout Standard
+To access the match event base tables, activate the Setup menu at the top
+ of the Administrator switchboard and then mouseover the Events submenu.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /home/howard/research/soccermetrics/SoccerResultDB/trunk/docs/screenshots/switchboard-events-setup.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Events submenu in Setup menu.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Goal Events
+\end_layout
+
+\begin_layout Standard
+The Goal Events dialog allows the user to edit descriptions of the on-field
+ actions that ended in a goal scored from open play.
+ The Goal Events field (Alt-G) is the only active field.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /home/howard/research/soccermetrics/SoccerResultDB/trunk/docs/screenshots/fmrd-setup-goalevents.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Goal Events setup dialog.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Goal Strikes Table
+\end_layout
+
+\begin_layout Standard
+The Goal Strikes dialog allows the user to edit descriptions of the body
+ parts with which the goal was scored.
+ Examples include "left foot", "right foot", or "head".
+ The Goal Strikes field (Alt-G) is the only active field.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /home/howard/research/soccermetrics/SoccerResultDB/trunk/docs/screenshots/fmrd-setup-goalstrikes.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Goal Strikes setup dialog.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Penalty Outcomes Table
+\end_layout
+
+\begin_layout Standard
+The Penalty Outcomes dialog allows the user to edit descriptions of penalty
+ kick outcomes.
+ Examples include "Goal" and "Hit Post".
+ The Penalty Outcome field (Alt-P) is the only active field.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /home/howard/research/soccermetrics/SoccerResultDB/trunk/docs/screenshots/fmrd-setup-penoutcome.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Penalty Outcomes setup dialog.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Fouls Table
+\end_layout
+
+\begin_layout Standard
+The Fouls dialog allows the user to edit descriptions of actions that are
+ often judged to be fouls.
+ These data will be used to classify actions that led to penalty kicks and
+ bookings.
+ The Foul Description field (Alt-F) is the only active field.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /home/howard/research/soccermetrics/SoccerResultDB/trunk/docs/screenshots/fmrd-setup-fouls.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Foul Description setup dialog.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Cards Table
+\end_layout
+
+\begin_layout Standard
+The Cards dialog allows the user to edit the color descriptions of the disciplin
+ary card.
+ The only descriptions used are "Yellow", "Yellow/Red", and "Red".
+ The Card Description field (Alt-R) is the only active field.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /home/howard/research/soccermetrics/SoccerResultDB/trunk/docs/screenshots/fmrd-setup-cards.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Disciplinary Card setup dialog.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document

@@ -1,0 +1,20 @@
+UI Design
+
+- Invent users
+	* Me
+	* Analysts
+	* Interns
+
+- What are the user's important activities?
+	* Entering match result data
+		# team
+		# league
+
+- Develop user model
+	(how will user accomplish activities?)
+	
+- First draft of UI design
+
+- Iteration of UI design
+
+- Test with real humans
