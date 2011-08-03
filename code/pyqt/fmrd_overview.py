@@ -41,7 +41,7 @@ class compEntryDlg(QDialog, ui_competitionentry.Ui_compEntryDlg):
     This dialog accepts data on the name of the football competition.
     
     """
-    FIRST,  PREV,  NEXT,  LAST = range(4)
+    
     ID,  DESC = range(2)
     
     def __init__(self, parent=None):
@@ -70,10 +70,10 @@ class compEntryDlg(QDialog, ui_competitionentry.Ui_compEntryDlg):
         self.prevEntry.setDisabled(True)        
         
         # configure signal/slot
-        self.connect(self.firstEntry, SIGNAL("clicked()"), lambda: self.saveRecord(compEntryDlg.FIRST))
-        self.connect(self.prevEntry, SIGNAL("clicked()"), lambda: self.saveRecord(compEntryDlg.PREV))
-        self.connect(self.nextEntry, SIGNAL("clicked()"), lambda: self.saveRecord(compEntryDlg.NEXT))
-        self.connect(self.lastEntry, SIGNAL("clicked()"), lambda: self.saveRecord(compEntryDlg.LAST))
+        self.connect(self.firstEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.FIRST))
+        self.connect(self.prevEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.PREV))
+        self.connect(self.nextEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.NEXT))
+        self.connect(self.lastEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.LAST))
         self.connect(self.addEntry, SIGNAL("clicked()"), self.addRecord)
 #        self.connect(self.deleteEntry, SIGNAL("clicked()"), self.deleteRecord)        
         self.connect(self.closeButton, SIGNAL("clicked()"), self.accept)
@@ -87,14 +87,14 @@ class compEntryDlg(QDialog, ui_competitionentry.Ui_compEntryDlg):
         """Submits changes to database and navigates through form."""
         row = self.mapper.currentIndex()
         self.mapper.submit()
-        if where == teamEntryDlg.FIRST:
+        if where == Constants.FIRST:
             self.firstEntry.setDisabled(True)
             self.prevEntry.setDisabled(True)
             if not self.nextEntry.isEnabled():
                 self.nextEntry.setEnabled(True)
                 self.lastEntry.setEnabled(True)
             row = 0
-        elif where == teamEntryDlg.PREV:
+        elif where == Constants.PREV:
             if row <= 1:
                 self.firstEntry.setDisabled(True)
                 self.prevEntry.setDisabled(True)                
@@ -104,7 +104,7 @@ class compEntryDlg(QDialog, ui_competitionentry.Ui_compEntryDlg):
                     self.nextEntry.setEnabled(True)
                     self.lastEntry.setEnabled(True)                    
                 row -= 1
-        elif where == teamEntryDlg.NEXT:
+        elif where == Constants.NEXT:
             row += 1
             if not self.prevEntry.isEnabled():
                 self.prevEntry.setEnabled(True)
@@ -113,7 +113,7 @@ class compEntryDlg(QDialog, ui_competitionentry.Ui_compEntryDlg):
                 self.nextEntry.setDisabled(True)
                 self.lastEntry.setDisabled(True)
                 row = self.model.rowCount() - 1
-        elif where == teamEntryDlg.LAST:
+        elif where == Constants.LAST:
             self.nextEntry.setDisabled(True)
             self.lastEntry.setDisabled(True)
             if not self.prevEntry.isEnabled():
@@ -183,7 +183,7 @@ class teamEntryDlg(QDialog, ui_teamentry.Ui_teamEntryDlg):
     This dialog accepts data on the names of the teams participating in the football competition.
     
     """
-    FIRST,  PREV,  NEXT,  LAST = range(4)
+    
     ID,  NAME = range(2)
     
     def __init__(self, parent=None):
@@ -212,10 +212,10 @@ class teamEntryDlg(QDialog, ui_teamentry.Ui_teamEntryDlg):
         self.prevEntry.setDisabled(True)
         
         # configure signal/slot
-        self.connect(self.firstEntry, SIGNAL("clicked()"), lambda: self.saveRecord(teamEntryDlg.FIRST))
-        self.connect(self.prevEntry, SIGNAL("clicked()"), lambda: self.saveRecord(teamEntryDlg.PREV))
-        self.connect(self.nextEntry, SIGNAL("clicked()"), lambda: self.saveRecord(teamEntryDlg.NEXT))
-        self.connect(self.lastEntry, SIGNAL("clicked()"), lambda: self.saveRecord(teamEntryDlg.LAST))
+        self.connect(self.firstEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.FIRST))
+        self.connect(self.prevEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.PREV))
+        self.connect(self.nextEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.NEXT))
+        self.connect(self.lastEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.LAST))
         self.connect(self.addEntry, SIGNAL("clicked()"), self.addRecord)
         self.connect(self.deleteEntry, SIGNAL("clicked()"), self.deleteRecord)        
         self.connect(self.closeButton, SIGNAL("clicked()"), self.accept)
@@ -229,14 +229,14 @@ class teamEntryDlg(QDialog, ui_teamentry.Ui_teamEntryDlg):
         """Submits changes to database and navigates through form."""
         row = self.mapper.currentIndex()
         self.mapper.submit()
-        if where == teamEntryDlg.FIRST:
+        if where == Constants.FIRST:
             self.firstEntry.setDisabled(True)
             self.prevEntry.setDisabled(True)
             if not self.nextEntry.isEnabled():
                 self.nextEntry.setEnabled(True)
                 self.lastEntry.setEnabled(True)
             row = 0
-        elif where == teamEntryDlg.PREV:
+        elif where == Constants.PREV:
             if row <= 1:
                 self.firstEntry.setDisabled(True)
                 self.prevEntry.setDisabled(True)                
@@ -246,7 +246,7 @@ class teamEntryDlg(QDialog, ui_teamentry.Ui_teamEntryDlg):
                     self.nextEntry.setEnabled(True)
                     self.lastEntry.setEnabled(True)                    
                 row -= 1
-        elif where == teamEntryDlg.NEXT:
+        elif where == Constants.NEXT:
             row += 1
             if not self.prevEntry.isEnabled():
                 self.prevEntry.setEnabled(True)
@@ -255,7 +255,7 @@ class teamEntryDlg(QDialog, ui_teamentry.Ui_teamEntryDlg):
                 self.nextEntry.setDisabled(True)
                 self.lastEntry.setDisabled(True)
                 row = self.model.rowCount() - 1
-        elif where == teamEntryDlg.LAST:
+        elif where == Constants.LAST:
             self.nextEntry.setDisabled(True)
             self.lastEntry.setDisabled(True)
             if not self.prevEntry.isEnabled():
@@ -330,7 +330,7 @@ class venueEntryDlg(QDialog, ui_venueentry.Ui_venueEntryDlg):
     This dialog accepts data on the match venues used in the football competition.
     
     """
-    FIRST,  PREV,  NEXT,  LAST = range(4)
+    
     ID,  TEAM_ID,  CTRY_ID, CITY, NAME, ALT, LAT, LONG = range(8)
 
     def __init__(self, parent=None):
@@ -405,10 +405,10 @@ class venueEntryDlg(QDialog, ui_venueentry.Ui_venueEntryDlg):
         self.prevEntry.setDisabled(True)       
 
          # configure signal/slot
-        self.connect(self.firstEntry, SIGNAL("clicked()"), lambda: self.saveRecord(venueEntryDlg.FIRST))
-        self.connect(self.prevEntry, SIGNAL("clicked()"), lambda: self.saveRecord(venueEntryDlg.PREV))
-        self.connect(self.nextEntry, SIGNAL("clicked()"), lambda: self.saveRecord(venueEntryDlg.NEXT))
-        self.connect(self.lastEntry, SIGNAL("clicked()"), lambda: self.saveRecord(venueEntryDlg.LAST))
+        self.connect(self.firstEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.FIRST))
+        self.connect(self.prevEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.PREV))
+        self.connect(self.nextEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.NEXT))
+        self.connect(self.lastEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.LAST))
         self.connect(self.addEntry, SIGNAL("clicked()"), self.addRecord)
         self.connect(self.deleteEntry, SIGNAL("clicked()"), self.deleteRecord)        
         self.connect(self.closeButton, SIGNAL("clicked()"), self.accept)
@@ -424,14 +424,14 @@ class venueEntryDlg(QDialog, ui_venueentry.Ui_venueEntryDlg):
         """Submits changes to database and navigates through form."""
         row = self.mapper.currentIndex()
         self.mapper.submit()
-        if where == teamEntryDlg.FIRST:
+        if where == Constants.FIRST:
             self.firstEntry.setDisabled(True)
             self.prevEntry.setDisabled(True)
             if not self.nextEntry.isEnabled():
                 self.nextEntry.setEnabled(True)
                 self.lastEntry.setEnabled(True)
             row = 0
-        elif where == teamEntryDlg.PREV:
+        elif where == Constants.PREV:
             if row <= 1:
                 self.firstEntry.setDisabled(True)
                 self.prevEntry.setDisabled(True)                
@@ -441,7 +441,7 @@ class venueEntryDlg(QDialog, ui_venueentry.Ui_venueEntryDlg):
                     self.nextEntry.setEnabled(True)
                     self.lastEntry.setEnabled(True)                    
                 row -= 1
-        elif where == teamEntryDlg.NEXT:
+        elif where == Constants.NEXT:
             row += 1
             if not self.prevEntry.isEnabled():
                 self.prevEntry.setEnabled(True)
@@ -450,7 +450,7 @@ class venueEntryDlg(QDialog, ui_venueentry.Ui_venueEntryDlg):
                 self.nextEntry.setDisabled(True)
                 self.lastEntry.setDisabled(True)
                 row = self.model.rowCount() - 1
-        elif where == teamEntryDlg.LAST:
+        elif where == Constants.LAST:
             self.nextEntry.setDisabled(True)
             self.lastEntry.setDisabled(True)
             if not self.prevEntry.isEnabled():
