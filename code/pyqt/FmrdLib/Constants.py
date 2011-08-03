@@ -68,6 +68,9 @@ ADMIN = 2
 # Define maximum number of login attempts
 MAXLOGINS = 3
 
+# Navigation enums
+FIRST,  PREV,  NEXT,  LAST = range(4)
+
 # Define minimum number of personnel 
 MIN_STARTERS = 11
 MIN_SUBSTITUTES = 3
