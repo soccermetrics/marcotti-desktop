@@ -44,7 +44,7 @@ class goalEntryDlg(QDialog, ui_goalentry.Ui_goalEntryDlg):
     be scored by any player in the match lineup, thus own goals can be recorded.
     
     """
-    FIRST,  PREV,  NEXT,  LAST = range(4)
+    
     ID, TEAM_ID, LINEUP_ID, BODY_ID, PLAY_ID, TIME, STIME = range(7)
 
     def __init__(self, parent=None):
@@ -181,10 +181,10 @@ class goalEntryDlg(QDialog, ui_goalentry.Ui_goalEntryDlg):
         # Signals/Slots configuration
         #
         
-        self.connect(self.firstEntry, SIGNAL("clicked()"), lambda: self.saveRecord(goalEntryDlg.FIRST))
-        self.connect(self.prevEntry, SIGNAL("clicked()"), lambda: self.saveRecord(goalEntryDlg.PREV))
-        self.connect(self.nextEntry, SIGNAL("clicked()"), lambda: self.saveRecord(goalEntryDlg.NEXT))
-        self.connect(self.lastEntry, SIGNAL("clicked()"), lambda: self.saveRecord(goalEntryDlg.LAST))
+        self.connect(self.firstEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.FIRST))
+        self.connect(self.prevEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.PREV))
+        self.connect(self.nextEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.NEXT))
+        self.connect(self.lastEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.LAST))
         self.connect(self.addEntry, SIGNAL("clicked()"), self.addRecord)        
         self.connect(self.deleteEntry, SIGNAL("clicked()"), self.deleteRecord)        
         self.connect(self.closeButton, SIGNAL("clicked()"), self.accept)
@@ -205,14 +205,14 @@ class goalEntryDlg(QDialog, ui_goalentry.Ui_goalEntryDlg):
         row = self.mapper.currentIndex()
         self.mapper.submit()
         
-        if where == goalEntryDlg.FIRST:
+        if where == Constants.FIRST:
             self.firstEntry.setDisabled(True)
             self.prevEntry.setDisabled(True)
             if not self.nextEntry.isEnabled():
                 self.nextEntry.setEnabled(True)
                 self.lastEntry.setEnabled(True)
             row = 0
-        elif where == goalEntryDlg.PREV:
+        elif where == Constants.PREV:
             row -= 1
             if not self.nextEntry.isEnabled():
                     self.nextEntry.setEnabled(True)
@@ -220,7 +220,7 @@ class goalEntryDlg(QDialog, ui_goalentry.Ui_goalEntryDlg):
             if row == 0:
                 self.firstEntry.setDisabled(True)
                 self.prevEntry.setDisabled(True)                
-        elif where == goalEntryDlg.NEXT:
+        elif where == Constants.NEXT:
             row += 1
             if not self.prevEntry.isEnabled():
                 self.prevEntry.setEnabled(True)
@@ -228,7 +228,7 @@ class goalEntryDlg(QDialog, ui_goalentry.Ui_goalEntryDlg):
             if row == self.model.rowCount() - 1:
                 self.nextEntry.setDisabled(True)
                 self.lastEntry.setDisabled(True)
-        elif where == goalEntryDlg.LAST:
+        elif where == Constants.LAST:
             self.nextEntry.setDisabled(True)
             self.lastEntry.setDisabled(True)
             if not self.prevEntry.isEnabled():
@@ -434,7 +434,7 @@ class penaltyEntryDlg(QDialog, ui_penaltyentry.Ui_penaltyEntryDlg):
     
     This dialog accepts data on penalty kick events during a match.
    """
-    FIRST,  PREV,  NEXT,  LAST = range(4)
+   
     ID, LINEUP_ID, FOUL_ID, OUTCOME_ID, TIME, STIME = range(6)
     
     def __init__(self, parent=None):
@@ -575,10 +575,10 @@ class penaltyEntryDlg(QDialog, ui_penaltyentry.Ui_penaltyEntryDlg):
         # Signals/Slots configuration
         #
         
-        self.connect(self.firstEntry, SIGNAL("clicked()"), lambda: self.saveRecord(penaltyEntryDlg.FIRST))
-        self.connect(self.prevEntry, SIGNAL("clicked()"), lambda: self.saveRecord(penaltyEntryDlg.PREV))
-        self.connect(self.nextEntry, SIGNAL("clicked()"), lambda: self.saveRecord(penaltyEntryDlg.NEXT))
-        self.connect(self.lastEntry, SIGNAL("clicked()"), lambda: self.saveRecord(penaltyEntryDlg.LAST))
+        self.connect(self.firstEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.FIRST))
+        self.connect(self.prevEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.PREV))
+        self.connect(self.nextEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.NEXT))
+        self.connect(self.lastEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.LAST))
         self.connect(self.addEntry, SIGNAL("clicked()"), self.addRecord)        
         self.connect(self.deleteEntry, SIGNAL("clicked()"), self.deleteRecord)        
         self.connect(self.closeButton, SIGNAL("clicked()"), self.accept)
@@ -599,14 +599,14 @@ class penaltyEntryDlg(QDialog, ui_penaltyentry.Ui_penaltyEntryDlg):
         row = self.mapper.currentIndex()
         self.mapper.submit()
         
-        if where == penaltyEntryDlg.FIRST:
+        if where == Constants.FIRST:
             self.firstEntry.setDisabled(True)
             self.prevEntry.setDisabled(True)
             if not self.nextEntry.isEnabled():
                 self.nextEntry.setEnabled(True)
                 self.lastEntry.setEnabled(True)
             row = 0
-        elif where == penaltyEntryDlg.PREV:
+        elif where == Constants.PREV:
             row -= 1
             if not self.nextEntry.isEnabled():
                     self.nextEntry.setEnabled(True)
@@ -614,7 +614,7 @@ class penaltyEntryDlg(QDialog, ui_penaltyentry.Ui_penaltyEntryDlg):
             if row == 0:
                 self.firstEntry.setDisabled(True)
                 self.prevEntry.setDisabled(True)                
-        elif where == penaltyEntryDlg.NEXT:
+        elif where == Constants.NEXT:
             row += 1
             if not self.prevEntry.isEnabled():
                 self.prevEntry.setEnabled(True)
@@ -622,7 +622,7 @@ class penaltyEntryDlg(QDialog, ui_penaltyentry.Ui_penaltyEntryDlg):
             if row == self.model.rowCount() - 1:
                 self.nextEntry.setDisabled(True)
                 self.lastEntry.setDisabled(True)
-        elif where == penaltyEntryDlg.LAST:
+        elif where == Constants.LAST:
             self.nextEntry.setDisabled(True)
             self.lastEntry.setDisabled(True)
             if not self.prevEntry.isEnabled():
@@ -910,7 +910,6 @@ class offenseEntryDlg(QDialog, ui_offenseentry.Ui_offenseEntryDlg):
     This dialog accepts data on disciplinary incidents during a match.
    """
 
-    FIRST,  PREV,  NEXT,  LAST = range(4)
     ID, LINEUP_ID, FOUL_ID, CARD_ID, TIME, STIME = range(6)
 
     def __init__(self, parent=None):
@@ -1051,10 +1050,10 @@ class offenseEntryDlg(QDialog, ui_offenseentry.Ui_offenseEntryDlg):
         # Signals/Slots configuration
         #
         
-        self.connect(self.firstEntry, SIGNAL("clicked()"), lambda: self.saveRecord(offenseEntryDlg.FIRST))
-        self.connect(self.prevEntry, SIGNAL("clicked()"), lambda: self.saveRecord(offenseEntryDlg.PREV))
-        self.connect(self.nextEntry, SIGNAL("clicked()"), lambda: self.saveRecord(offenseEntryDlg.NEXT))
-        self.connect(self.lastEntry, SIGNAL("clicked()"), lambda: self.saveRecord(offenseEntryDlg.LAST))
+        self.connect(self.firstEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.FIRST))
+        self.connect(self.prevEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.PREV))
+        self.connect(self.nextEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.NEXT))
+        self.connect(self.lastEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.LAST))
         self.connect(self.addEntry, SIGNAL("clicked()"), self.addRecord)        
         self.connect(self.deleteEntry, SIGNAL("clicked()"), self.deleteRecord)        
         self.connect(self.closeButton, SIGNAL("clicked()"), self.accept)
@@ -1078,14 +1077,14 @@ class offenseEntryDlg(QDialog, ui_offenseentry.Ui_offenseEntryDlg):
         if not ok:
             print self.model.lastError().text()
         
-        if where == offenseEntryDlg.FIRST:
+        if where == Constants.FIRST:
             self.firstEntry.setDisabled(True)
             self.prevEntry.setDisabled(True)
             if not self.nextEntry.isEnabled():
                 self.nextEntry.setEnabled(True)
                 self.lastEntry.setEnabled(True)
             row = 0
-        elif where == offenseEntryDlg.PREV:
+        elif where == Constants.PREV:
             row -= 1
             if not self.nextEntry.isEnabled():
                     self.nextEntry.setEnabled(True)
@@ -1093,7 +1092,7 @@ class offenseEntryDlg(QDialog, ui_offenseentry.Ui_offenseEntryDlg):
             if row == 0:
                 self.firstEntry.setDisabled(True)
                 self.prevEntry.setDisabled(True)                
-        elif where == offenseEntryDlg.NEXT:
+        elif where == Constants.NEXT:
             row += 1
             if not self.prevEntry.isEnabled():
                 self.prevEntry.setEnabled(True)
@@ -1101,7 +1100,7 @@ class offenseEntryDlg(QDialog, ui_offenseentry.Ui_offenseEntryDlg):
             if row == self.model.rowCount() - 1:
                 self.nextEntry.setDisabled(True)
                 self.lastEntry.setDisabled(True)
-        elif where == offenseEntryDlg.LAST:
+        elif where == Constants.LAST:
             self.nextEntry.setDisabled(True)
             self.lastEntry.setDisabled(True)
             if not self.prevEntry.isEnabled():
@@ -1388,7 +1387,7 @@ class subsEntryDlg(QDialog, ui_subsentry.Ui_subsEntryDlg):
     
     This dialog accepts data on substitution events during a match. 
    """
-    FIRST,  PREV,  NEXT,  LAST = range(4)
+   
     ID, TIME, STIME = range(3)
     
     def __init__(self, parent=None):
@@ -1540,10 +1539,10 @@ class subsEntryDlg(QDialog, ui_subsentry.Ui_subsEntryDlg):
         # Signals/Slots configuration
         #
 
-        self.connect(self.firstEntry, SIGNAL("clicked()"), lambda: self.saveRecord(subsEntryDlg.FIRST))
-        self.connect(self.prevEntry, SIGNAL("clicked()"), lambda: self.saveRecord(subsEntryDlg.PREV))
-        self.connect(self.nextEntry, SIGNAL("clicked()"), lambda: self.saveRecord(subsEntryDlg.NEXT))
-        self.connect(self.lastEntry, SIGNAL("clicked()"), lambda: self.saveRecord(subsEntryDlg.LAST))
+        self.connect(self.firstEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.FIRST))
+        self.connect(self.prevEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.PREV))
+        self.connect(self.nextEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.NEXT))
+        self.connect(self.lastEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.LAST))
         self.connect(self.addEntry, SIGNAL("clicked()"), self.addRecord)
         self.connect(self.deleteEntry, SIGNAL("clicked()"), self.deleteRecord)           
         self.connect(self.closeButton, SIGNAL("clicked()"), self.accept)
@@ -1568,14 +1567,14 @@ class subsEntryDlg(QDialog, ui_subsentry.Ui_subsEntryDlg):
         row = self.mapper.currentIndex()
         self.mapper.submit()
         
-        if where == subsEntryDlg.FIRST:
+        if where == Constants.FIRST:
             self.firstEntry.setDisabled(True)
             self.prevEntry.setDisabled(True)
             if not self.nextEntry.isEnabled():
                 self.nextEntry.setEnabled(True)
                 self.lastEntry.setEnabled(True)
             row = 0
-        elif where == subsEntryDlg.PREV:
+        elif where == Constants.PREV:
             row -= 1
             if not self.nextEntry.isEnabled():
                     self.nextEntry.setEnabled(True)
@@ -1583,7 +1582,7 @@ class subsEntryDlg(QDialog, ui_subsentry.Ui_subsEntryDlg):
             if row == 0:
                 self.firstEntry.setDisabled(True)
                 self.prevEntry.setDisabled(True)                
-        elif where == subsEntryDlg.NEXT:
+        elif where == Constants.NEXT:
             row += 1
             if not self.prevEntry.isEnabled():
                 self.prevEntry.setEnabled(True)
@@ -1591,7 +1590,7 @@ class subsEntryDlg(QDialog, ui_subsentry.Ui_subsEntryDlg):
             if row == self.model.rowCount() - 1:
                 self.nextEntry.setDisabled(True)
                 self.lastEntry.setDisabled(True)
-        elif where == subsEntryDlg.LAST:
+        elif where == Constants.LAST:
             self.nextEntry.setDisabled(True)
             self.lastEntry.setDisabled(True)
             if not self.prevEntry.isEnabled():
