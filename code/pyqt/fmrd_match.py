@@ -43,7 +43,7 @@ class matchEntryDlg(QDialog, ui_matchentry.Ui_matchEntryDlg):
     environmental conditions of the match.
     
     """
-    FIRST,  PREV,  NEXT,  LAST = range(4)
+    
     ID,  DATE, HALF1, HALF2, COMP_ID, ROUND_ID, VENUE_ID, REF_ID = range(8)
     
     def __init__(self, parent=None):
@@ -213,10 +213,10 @@ class matchEntryDlg(QDialog, ui_matchentry.Ui_matchEntryDlg):
             self.lastEntry.setDisabled(True)
         
         # configure signal/slots
-        self.connect(self.firstEntry, SIGNAL("clicked()"), lambda: self.saveRecord(matchEntryDlg.FIRST))
-        self.connect(self.prevEntry, SIGNAL("clicked()"), lambda: self.saveRecord(matchEntryDlg.PREV))
-        self.connect(self.nextEntry, SIGNAL("clicked()"), lambda: self.saveRecord(matchEntryDlg.NEXT))
-        self.connect(self.lastEntry, SIGNAL("clicked()"), lambda: self.saveRecord(matchEntryDlg.LAST))
+        self.connect(self.firstEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.FIRST))
+        self.connect(self.prevEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.PREV))
+        self.connect(self.nextEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.NEXT))
+        self.connect(self.lastEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.LAST))
         self.connect(self.addEntry, SIGNAL("clicked()"), self.addRecord)
         self.connect(self.deleteEntry, SIGNAL("clicked()"), self.deleteRecord)           
         self.connect(self.closeButton, SIGNAL("clicked()"), self, SLOT("close()"))
@@ -255,14 +255,14 @@ class matchEntryDlg(QDialog, ui_matchentry.Ui_matchEntryDlg):
         row = self.mapper.currentIndex()
         self.mapper.submit()
         
-        if where == matchEntryDlg.FIRST:
+        if where == Constants.FIRST:
             self.firstEntry.setDisabled(True)
             self.prevEntry.setDisabled(True)
             if not self.nextEntry.isEnabled():
                 self.nextEntry.setEnabled(True)
                 self.lastEntry.setEnabled(True)
             row = 0
-        elif where == matchEntryDlg.PREV:
+        elif where == Constants.PREV:
             row -= 1
             if not self.nextEntry.isEnabled():
                     self.nextEntry.setEnabled(True)
@@ -270,7 +270,7 @@ class matchEntryDlg(QDialog, ui_matchentry.Ui_matchEntryDlg):
             if row == 0:
                 self.firstEntry.setDisabled(True)
                 self.prevEntry.setDisabled(True)                
-        elif where == matchEntryDlg.NEXT:
+        elif where == Constants.NEXT:
             row += 1
             if not self.prevEntry.isEnabled():
                 self.prevEntry.setEnabled(True)
@@ -278,7 +278,7 @@ class matchEntryDlg(QDialog, ui_matchentry.Ui_matchEntryDlg):
             if row == self.model.rowCount() - 1:
                 self.nextEntry.setDisabled(True)
                 self.lastEntry.setDisabled(True)
-        elif where == matchEntryDlg.LAST:
+        elif where == Constants.LAST:
             self.nextEntry.setDisabled(True)
             self.lastEntry.setDisabled(True)
             if not self.prevEntry.isEnabled():
