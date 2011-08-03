@@ -66,7 +66,7 @@ class AboutDlg(QDialog, ui_aboutwindow.Ui_AboutDlg):
 
 class cardSetupDlg(QDialog, ui_cardsetup.Ui_cardSetupDlg):
     """Implements card data entry dialog, and accesses and writes to Disciplinary Card table."""
-    FIRST,  PREV,  NEXT,  LAST = range(4)
+
     ID,  DESC = range(2)
     
     def __init__(self, parent=None):
@@ -95,10 +95,10 @@ class cardSetupDlg(QDialog, ui_cardsetup.Ui_cardSetupDlg):
         self.prevEntry.setDisabled(True)        
         
         # configure signal/slot
-        self.connect(self.firstEntry, SIGNAL("clicked()"), lambda: self.saveRecord(cardSetupDlg.FIRST))
-        self.connect(self.prevEntry, SIGNAL("clicked()"), lambda: self.saveRecord(cardSetupDlg.PREV))
-        self.connect(self.nextEntry, SIGNAL("clicked()"), lambda: self.saveRecord(cardSetupDlg.NEXT))
-        self.connect(self.lastEntry, SIGNAL("clicked()"), lambda: self.saveRecord(cardSetupDlg.LAST))
+        self.connect(self.firstEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.FIRST))
+        self.connect(self.prevEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.PREV))
+        self.connect(self.nextEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.NEXT))
+        self.connect(self.lastEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.LAST))
         self.connect(self.addEntry, SIGNAL("clicked()"), self.addRecord)
         self.connect(self.deleteEntry, SIGNAL("clicked()"), self.deleteRecord)        
         self.connect(self.closeButton, SIGNAL("clicked()"), self.accept)
@@ -112,14 +112,14 @@ class cardSetupDlg(QDialog, ui_cardsetup.Ui_cardSetupDlg):
         """Submits changes to database and navigates through form."""
         row = self.mapper.currentIndex()
         self.mapper.submit()
-        if where == cardSetupDlg.FIRST:
+        if where == Constants.FIRST:
             self.firstEntry.setDisabled(True)
             self.prevEntry.setDisabled(True)
             if not self.nextEntry.isEnabled():
                 self.nextEntry.setEnabled(True)
                 self.lastEntry.setEnabled(True)
             row = 0
-        elif where == cardSetupDlg.PREV:
+        elif where == Constants.PREV:
             if row <= 1:
                 self.firstEntry.setDisabled(True)
                 self.prevEntry.setDisabled(True)                
@@ -129,7 +129,7 @@ class cardSetupDlg(QDialog, ui_cardsetup.Ui_cardSetupDlg):
                     self.nextEntry.setEnabled(True)
                     self.lastEntry.setEnabled(True)                    
                 row -= 1
-        elif where == cardSetupDlg.NEXT:
+        elif where == Constants.NEXT:
             row += 1
             if not self.prevEntry.isEnabled():
                 self.prevEntry.setEnabled(True)
@@ -138,7 +138,7 @@ class cardSetupDlg(QDialog, ui_cardsetup.Ui_cardSetupDlg):
                 self.nextEntry.setDisabled(True)
                 self.lastEntry.setDisabled(True)
                 row = self.model.rowCount() - 1
-        elif where == cardSetupDlg.LAST:
+        elif where == Constants.LAST:
             self.nextEntry.setDisabled(True)
             self.lastEntry.setDisabled(True)
             if not self.prevEntry.isEnabled():
@@ -206,7 +206,6 @@ class cardSetupDlg(QDialog, ui_cardsetup.Ui_cardSetupDlg):
 class foulSetupDlg(QDialog, ui_foulsetup.Ui_foulSetupDlg):
     """ Implements fouls data entry dialog, and accesses and writes to Fouls table. """
 
-    FIRST,  PREV,  NEXT,  LAST = range(4)
     ID,  DESC = range(2)
  
     def __init__(self, parent=None):
@@ -235,10 +234,10 @@ class foulSetupDlg(QDialog, ui_foulsetup.Ui_foulSetupDlg):
         self.prevEntry.setDisabled(True)
         
         # configure signal/slot
-        self.connect(self.firstEntry, SIGNAL("clicked()"), lambda: self.saveRecord(foulSetupDlg.FIRST))
-        self.connect(self.prevEntry, SIGNAL("clicked()"), lambda: self.saveRecord(foulSetupDlg.PREV))
-        self.connect(self.nextEntry, SIGNAL("clicked()"), lambda: self.saveRecord(foulSetupDlg.NEXT))
-        self.connect(self.lastEntry, SIGNAL("clicked()"), lambda: self.saveRecord(foulSetupDlg.LAST))
+        self.connect(self.firstEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.FIRST))
+        self.connect(self.prevEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.PREV))
+        self.connect(self.nextEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.NEXT))
+        self.connect(self.lastEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.LAST))
         self.connect(self.addEntry, SIGNAL("clicked()"), self.addRecord)
         self.connect(self.deleteEntry, SIGNAL("clicked()"), self.deleteRecord)        
         self.connect(self.closeButton, SIGNAL("clicked()"), self.accept)
@@ -252,14 +251,14 @@ class foulSetupDlg(QDialog, ui_foulsetup.Ui_foulSetupDlg):
         """Submits changes to database and navigates through form."""
         row = self.mapper.currentIndex()
         self.mapper.submit()
-        if where == foulSetupDlg.FIRST:
+        if where == Constants.FIRST:
             self.firstEntry.setDisabled(True)
             self.prevEntry.setDisabled(True)
             if not self.nextEntry.isEnabled():
                 self.nextEntry.setEnabled(True)
                 self.lastEntry.setEnabled(True)
             row = 0
-        elif where == foulSetupDlg.PREV:
+        elif where == Constants.PREV:
             if row <= 1:
                 self.firstEntry.setDisabled(True)
                 self.prevEntry.setDisabled(True)                
@@ -269,7 +268,7 @@ class foulSetupDlg(QDialog, ui_foulsetup.Ui_foulSetupDlg):
                     self.nextEntry.setEnabled(True)
                     self.lastEntry.setEnabled(True)                    
                 row -= 1
-        elif where == foulSetupDlg.NEXT:
+        elif where == Constants.NEXT:
             row += 1
             if not self.prevEntry.isEnabled():
                 self.prevEntry.setEnabled(True)
@@ -278,7 +277,7 @@ class foulSetupDlg(QDialog, ui_foulsetup.Ui_foulSetupDlg):
                 self.nextEntry.setDisabled(True)
                 self.lastEntry.setDisabled(True)
                 row = self.model.rowCount() - 1
-        elif where == foulSetupDlg.LAST:
+        elif where == Constants.LAST:
             self.nextEntry.setDisabled(True)
             self.lastEntry.setDisabled(True)
             if not self.prevEntry.isEnabled():
@@ -347,7 +346,7 @@ class foulSetupDlg(QDialog, ui_foulsetup.Ui_foulSetupDlg):
         
 class penSetupDlg(QDialog, ui_penoutcomesetup.Ui_penSetupDlg):
     """ Implements penalty outcome data entry dialog, and accesses and writes to Penalty Outcomes table. """
-    FIRST,  PREV,  NEXT,  LAST = range(4)
+    
     ID,  DESC = range(2)
  
     def __init__(self, parent=None):
@@ -376,10 +375,10 @@ class penSetupDlg(QDialog, ui_penoutcomesetup.Ui_penSetupDlg):
         self.prevEntry.setDisabled(True)
         
         # configure signal/slot
-        self.connect(self.firstEntry, SIGNAL("clicked()"), lambda: self.saveRecord(penSetupDlg.FIRST))
-        self.connect(self.prevEntry, SIGNAL("clicked()"), lambda: self.saveRecord(penSetupDlg.PREV))
-        self.connect(self.nextEntry, SIGNAL("clicked()"), lambda: self.saveRecord(penSetupDlg.NEXT))
-        self.connect(self.lastEntry, SIGNAL("clicked()"), lambda: self.saveRecord(penSetupDlg.LAST))
+        self.connect(self.firstEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.FIRST))
+        self.connect(self.prevEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.PREV))
+        self.connect(self.nextEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.NEXT))
+        self.connect(self.lastEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.LAST))
         self.connect(self.addEntry, SIGNAL("clicked()"), self.addRecord)
         self.connect(self.deleteEntry, SIGNAL("clicked()"), self.deleteRecord)        
         self.connect(self.closeButton, SIGNAL("clicked()"), self.accept)
@@ -393,14 +392,14 @@ class penSetupDlg(QDialog, ui_penoutcomesetup.Ui_penSetupDlg):
         """Submits changes to database and navigates through form."""
         row = self.mapper.currentIndex()
         self.mapper.submit()
-        if where == penSetupDlg.FIRST:
+        if where == Constants.FIRST:
             self.firstEntry.setDisabled(True)
             self.prevEntry.setDisabled(True)
             if not self.nextEntry.isEnabled():
                 self.nextEntry.setEnabled(True)
                 self.lastEntry.setEnabled(True)
             row = 0
-        elif where == penSetupDlg.PREV:
+        elif where == Constants.PREV:
             if row <= 1:
                 self.firstEntry.setDisabled(True)
                 self.prevEntry.setDisabled(True)                
@@ -410,7 +409,7 @@ class penSetupDlg(QDialog, ui_penoutcomesetup.Ui_penSetupDlg):
                     self.nextEntry.setEnabled(True)
                     self.lastEntry.setEnabled(True)                    
                 row -= 1
-        elif where == penSetupDlg.NEXT:
+        elif where == Constants.NEXT:
             row += 1
             if not self.prevEntry.isEnabled():
                 self.prevEntry.setEnabled(True)
@@ -419,7 +418,7 @@ class penSetupDlg(QDialog, ui_penoutcomesetup.Ui_penSetupDlg):
                 self.nextEntry.setDisabled(True)
                 self.lastEntry.setDisabled(True)
                 row = self.model.rowCount() - 1
-        elif where == penSetupDlg.LAST:
+        elif where == Constants.LAST:
             self.nextEntry.setDisabled(True)
             self.lastEntry.setDisabled(True)
             if not self.prevEntry.isEnabled():
@@ -486,7 +485,7 @@ class penSetupDlg(QDialog, ui_penoutcomesetup.Ui_penSetupDlg):
 
 class goaleventSetupDlg(QDialog, ui_goaleventsetup.Ui_goaleventSetupDlg):
     """Implements goal data entry dialog, and accesses and writes to Goal Events table."""
-    FIRST,  PREV,  NEXT,  LAST = range(4)
+    
     ID,  DESC = range(2)
  
     def __init__(self, parent=None):
@@ -515,10 +514,10 @@ class goaleventSetupDlg(QDialog, ui_goaleventsetup.Ui_goaleventSetupDlg):
         self.prevEntry.setDisabled(True)
         
         # configure signal/slot
-        self.connect(self.firstEntry, SIGNAL("clicked()"), lambda: self.saveRecord(goaleventSetupDlg.FIRST))
-        self.connect(self.prevEntry, SIGNAL("clicked()"), lambda: self.saveRecord(goaleventSetupDlg.PREV))
-        self.connect(self.nextEntry, SIGNAL("clicked()"), lambda: self.saveRecord(goaleventSetupDlg.NEXT))
-        self.connect(self.lastEntry, SIGNAL("clicked()"), lambda: self.saveRecord(goaleventSetupDlg.LAST))
+        self.connect(self.firstEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.FIRST))
+        self.connect(self.prevEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.PREV))
+        self.connect(self.nextEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.NEXT))
+        self.connect(self.lastEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.LAST))
         self.connect(self.addEntry, SIGNAL("clicked()"), self.addRecord)
         self.connect(self.deleteEntry, SIGNAL("clicked()"), self.deleteRecord)        
         self.connect(self.closeButton, SIGNAL("clicked()"), self.accept)
@@ -625,7 +624,7 @@ class goaleventSetupDlg(QDialog, ui_goaleventsetup.Ui_goaleventSetupDlg):
 
 class goalstrikeSetupDlg(QDialog, ui_goalstrikesetup.Ui_goalstrikeSetupDlg):
     """Implements goal strike data entry dialog, and accesses and writes Goal Strikes table."""
-    FIRST,  PREV,  NEXT,  LAST = range(4)
+    
     ID,  DESC = range(2)
  
     def __init__(self, parent=None):
@@ -653,10 +652,10 @@ class goalstrikeSetupDlg(QDialog, ui_goalstrikesetup.Ui_goalstrikeSetupDlg):
         self.prevEntry.setDisabled(True)
         
         # configure signal/slot
-        self.connect(self.firstEntry, SIGNAL("clicked()"), lambda: self.saveRecord(goalstrikeSetupDlg.FIRST))
-        self.connect(self.prevEntry, SIGNAL("clicked()"), lambda: self.saveRecord(goalstrikeSetupDlg.PREV))
-        self.connect(self.nextEntry, SIGNAL("clicked()"), lambda: self.saveRecord(goalstrikeSetupDlg.NEXT))
-        self.connect(self.lastEntry, SIGNAL("clicked()"), lambda: self.saveRecord(goalstrikeSetupDlg.LAST))
+        self.connect(self.firstEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.FIRST))
+        self.connect(self.prevEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.PREV))
+        self.connect(self.nextEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.NEXT))
+        self.connect(self.lastEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.LAST))
         self.connect(self.addEntry, SIGNAL("clicked()"), self.addRecord)
         self.connect(self.deleteEntry, SIGNAL("clicked()"), self.deleteRecord)        
         self.connect(self.closeButton, SIGNAL("clicked()"), self.accept)
@@ -670,14 +669,14 @@ class goalstrikeSetupDlg(QDialog, ui_goalstrikesetup.Ui_goalstrikeSetupDlg):
         """Submits changes to database and navigates through form."""
         row = self.mapper.currentIndex()
         self.mapper.submit()
-        if where == goalstrikeSetupDlg.FIRST:
+        if where == Constants.FIRST:
             self.firstEntry.setDisabled(True)
             self.prevEntry.setDisabled(True)
             if not self.nextEntry.isEnabled():
                 self.nextEntry.setEnabled(True)
                 self.lastEntry.setEnabled(True)
             row = 0
-        elif where == goalstrikeSetupDlg.PREV:
+        elif where == Constants.PREV:
             if row <= 1:
                 self.firstEntry.setDisabled(True)
                 self.prevEntry.setDisabled(True)                
@@ -687,7 +686,7 @@ class goalstrikeSetupDlg(QDialog, ui_goalstrikesetup.Ui_goalstrikeSetupDlg):
                     self.nextEntry.setEnabled(True)
                     self.lastEntry.setEnabled(True)                    
                 row -= 1
-        elif where == goalstrikeSetupDlg.NEXT:
+        elif where == Constants.NEXT:
             row += 1
             if not self.prevEntry.isEnabled():
                 self.prevEntry.setEnabled(True)
@@ -696,7 +695,7 @@ class goalstrikeSetupDlg(QDialog, ui_goalstrikesetup.Ui_goalstrikeSetupDlg):
                 self.nextEntry.setDisabled(True)
                 self.lastEntry.setDisabled(True)
                 row = self.model.rowCount() - 1
-        elif where == goalstrikeSetupDlg.LAST:
+        elif where == Constants.LAST:
             self.nextEntry.setDisabled(True)
             self.lastEntry.setDisabled(True)
             if not self.prevEntry.isEnabled():
@@ -763,7 +762,7 @@ class goalstrikeSetupDlg(QDialog, ui_goalstrikesetup.Ui_goalstrikeSetupDlg):
 
 class fieldposSetupDlg(QDialog, ui_fieldpossetup.Ui_fieldposSetupDlg):
     """Implements field position data entry dialog, and accesses and writes to Field Names table."""
-    FIRST,  PREV,  NEXT,  LAST = range(4)
+    
     ID,  DESC = range(2)
  
     def __init__(self, parent=None):
@@ -792,10 +791,10 @@ class fieldposSetupDlg(QDialog, ui_fieldpossetup.Ui_fieldposSetupDlg):
         self.prevEntry.setDisabled(True)
         
         # configure signal/slot
-        self.connect(self.firstEntry, SIGNAL("clicked()"), lambda: self.saveRecord(fieldposSetupDlg.FIRST))
-        self.connect(self.prevEntry, SIGNAL("clicked()"), lambda: self.saveRecord(fieldposSetupDlg.PREV))
-        self.connect(self.nextEntry, SIGNAL("clicked()"), lambda: self.saveRecord(fieldposSetupDlg.NEXT))
-        self.connect(self.lastEntry, SIGNAL("clicked()"), lambda: self.saveRecord(fieldposSetupDlg.LAST))
+        self.connect(self.firstEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.FIRST))
+        self.connect(self.prevEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.PREV))
+        self.connect(self.nextEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.NEXT))
+        self.connect(self.lastEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.LAST))
         self.connect(self.addEntry, SIGNAL("clicked()"), self.addRecord)
         self.connect(self.deleteEntry, SIGNAL("clicked()"), self.deleteRecord)        
         self.connect(self.closeButton, SIGNAL("clicked()"), self.accept)
@@ -809,14 +808,14 @@ class fieldposSetupDlg(QDialog, ui_fieldpossetup.Ui_fieldposSetupDlg):
         """Submits changes to database and navigates through form."""
         row = self.mapper.currentIndex()
         self.mapper.submit()
-        if where == fieldposSetupDlg.FIRST:
+        if where == Constants.FIRST:
             self.firstEntry.setDisabled(True)
             self.prevEntry.setDisabled(True)
             if not self.nextEntry.isEnabled():
                 self.nextEntry.setEnabled(True)
                 self.lastEntry.setEnabled(True)
             row = 0
-        elif where == fieldposSetupDlg.PREV:
+        elif where == Constants.PREV:
             if row <= 1:
                 self.firstEntry.setDisabled(True)
                 self.prevEntry.setDisabled(True)                
@@ -826,7 +825,7 @@ class fieldposSetupDlg(QDialog, ui_fieldpossetup.Ui_fieldposSetupDlg):
                     self.nextEntry.setEnabled(True)
                     self.lastEntry.setEnabled(True)                    
                 row -= 1
-        elif where == fieldposSetupDlg.NEXT:
+        elif where == Constants.NEXT:
             row += 1
             if not self.prevEntry.isEnabled():
                 self.prevEntry.setEnabled(True)
@@ -835,7 +834,7 @@ class fieldposSetupDlg(QDialog, ui_fieldpossetup.Ui_fieldposSetupDlg):
                 self.nextEntry.setDisabled(True)
                 self.lastEntry.setDisabled(True)
                 row = self.model.rowCount() - 1
-        elif where == fieldposSetupDlg.LAST:
+        elif where == Constants.LAST:
             self.nextEntry.setDisabled(True)
             self.lastEntry.setDisabled(True)
             if not self.prevEntry.isEnabled():
@@ -902,7 +901,7 @@ class fieldposSetupDlg(QDialog, ui_fieldpossetup.Ui_fieldposSetupDlg):
         
 class flankposSetupDlg(QDialog, ui_flankpossetup.Ui_flankposSetupDlg):
     """Implements flank position data entry dialog, and accesses and writes to Flank Names table."""
-    FIRST,  PREV,  NEXT,  LAST = range(4)
+    
     ID,  DESC = range(2)
  
     def __init__(self, parent=None):
@@ -934,10 +933,10 @@ class flankposSetupDlg(QDialog, ui_flankpossetup.Ui_flankposSetupDlg):
         self.prevEntry.setDisabled(True)
         
         # configure signal/slot
-        self.connect(self.firstEntry, SIGNAL("clicked()"), lambda: self.saveRecord(flankposSetupDlg.FIRST))
-        self.connect(self.prevEntry, SIGNAL("clicked()"), lambda: self.saveRecord(flankposSetupDlg.PREV))
-        self.connect(self.nextEntry, SIGNAL("clicked()"), lambda: self.saveRecord(flankposSetupDlg.NEXT))
-        self.connect(self.lastEntry, SIGNAL("clicked()"), lambda: self.saveRecord(flankposSetupDlg.LAST))
+        self.connect(self.firstEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.FIRST))
+        self.connect(self.prevEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.PREV))
+        self.connect(self.nextEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.NEXT))
+        self.connect(self.lastEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.LAST))
         self.connect(self.addEntry, SIGNAL("clicked()"), self.addRecord)
         self.connect(self.deleteEntry, SIGNAL("clicked()"), self.deleteRecord)        
         self.connect(self.closeButton, SIGNAL("clicked()"), self.accept)
@@ -951,14 +950,14 @@ class flankposSetupDlg(QDialog, ui_flankpossetup.Ui_flankposSetupDlg):
         """Submits changes to database and navigates through form."""
         row = self.mapper.currentIndex()
         self.mapper.submit()
-        if where == flankposSetupDlg.FIRST:
+        if where == Constants.FIRST:
             self.firstEntry.setDisabled(True)
             self.prevEntry.setDisabled(True)
             if not self.nextEntry.isEnabled():
                 self.nextEntry.setEnabled(True)
                 self.lastEntry.setEnabled(True)
             row = 0
-        elif where == flankposSetupDlg.PREV:
+        elif where == Constants.PREV:
             if row <= 1:
                 self.firstEntry.setDisabled(True)
                 self.prevEntry.setDisabled(True)                
@@ -968,7 +967,7 @@ class flankposSetupDlg(QDialog, ui_flankpossetup.Ui_flankposSetupDlg):
                     self.nextEntry.setEnabled(True)
                     self.lastEntry.setEnabled(True)                    
                 row -= 1
-        elif where == flankposSetupDlg.NEXT:
+        elif where == Constants.NEXT:
             row += 1
             if not self.prevEntry.isEnabled():
                 self.prevEntry.setEnabled(True)
@@ -977,7 +976,7 @@ class flankposSetupDlg(QDialog, ui_flankpossetup.Ui_flankposSetupDlg):
                 self.nextEntry.setDisabled(True)
                 self.lastEntry.setDisabled(True)
                 row = self.model.rowCount() - 1
-        elif where == flankposSetupDlg.LAST:
+        elif where == Constants.LAST:
             self.nextEntry.setDisabled(True)
             self.lastEntry.setDisabled(True)
             if not self.prevEntry.isEnabled():
@@ -1050,7 +1049,7 @@ class posSetupDlg(QDialog, ui_positionsetup.Ui_posSetupDlg):
     not have a field descriptor (goalkeeper), so the flank descriptor can be left blank.
     
     """
-    FIRST,  PREV,  NEXT,  LAST = range(4)
+    
     POS_ID,  FIELD_ID,  FLANK_ID = range(3)    
 
     def __init__(self, parent=None):
@@ -1091,10 +1090,10 @@ class posSetupDlg(QDialog, ui_positionsetup.Ui_posSetupDlg):
         self.prevEntry.setDisabled(True)
         
         # configure signal/slot
-        self.connect(self.firstEntry, SIGNAL("clicked()"), lambda: self.saveRecord(posSetupDlg.FIRST))
-        self.connect(self.prevEntry, SIGNAL("clicked()"), lambda: self.saveRecord(posSetupDlg.PREV))
-        self.connect(self.nextEntry, SIGNAL("clicked()"), lambda: self.saveRecord(posSetupDlg.NEXT))
-        self.connect(self.lastEntry, SIGNAL("clicked()"), lambda: self.saveRecord(posSetupDlg.LAST))
+        self.connect(self.firstEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.FIRST))
+        self.connect(self.prevEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.PREV))
+        self.connect(self.nextEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.NEXT))
+        self.connect(self.lastEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.LAST))
         self.connect(self.addEntry, SIGNAL("clicked()"), self.addRecord)
         self.connect(self.deleteEntry, SIGNAL("clicked()"), self.deleteRecord)        
         self.connect(self.closeButton, SIGNAL("clicked()"), self.accept)
@@ -1108,14 +1107,14 @@ class posSetupDlg(QDialog, ui_positionsetup.Ui_posSetupDlg):
         """Submits changes to database and navigates through form."""
         row = self.mapper.currentIndex()
         self.mapper.submit()
-        if where == posSetupDlg.FIRST:
+        if where == Constants.FIRST:
             self.firstEntry.setDisabled(True)
             self.prevEntry.setDisabled(True)
             if not self.nextEntry.isEnabled():
                 self.nextEntry.setEnabled(True)
                 self.lastEntry.setEnabled(True)
             row = 0
-        elif where == posSetupDlg.PREV:
+        elif where == Constants.PREV:
             if row <= 1:
                 self.firstEntry.setDisabled(True)
                 self.prevEntry.setDisabled(True)                
@@ -1125,7 +1124,7 @@ class posSetupDlg(QDialog, ui_positionsetup.Ui_posSetupDlg):
                     self.nextEntry.setEnabled(True)
                     self.lastEntry.setEnabled(True)                    
                 row -= 1
-        elif where == posSetupDlg.NEXT:
+        elif where == Constants.NEXT:
             row += 1
             if not self.prevEntry.isEnabled():
                 self.prevEntry.setEnabled(True)
@@ -1134,7 +1133,7 @@ class posSetupDlg(QDialog, ui_positionsetup.Ui_posSetupDlg):
                 self.nextEntry.setDisabled(True)
                 self.lastEntry.setDisabled(True)
                 row = self.model.rowCount() - 1
-        elif where == posSetupDlg.LAST:
+        elif where == Constants.LAST:
             self.nextEntry.setDisabled(True)
             self.lastEntry.setDisabled(True)
             if not self.prevEntry.isEnabled():
@@ -1207,7 +1206,7 @@ class countrySetupDlg(QDialog, ui_countrysetup.Ui_countrySetupDlg):
     The country is linked with the confederation of which it is a member.
     
     """
-    FIRST,  PREV,  NEXT,  LAST = range(4)
+    
     ID,  REGION_ID,  NAME = range(3)    
     
     def __init__(self, parent=None):
@@ -1243,10 +1242,10 @@ class countrySetupDlg(QDialog, ui_countrysetup.Ui_countrySetupDlg):
         self.prevEntry.setDisabled(True)
 
         # configure signal/slot
-        self.connect(self.firstEntry, SIGNAL("clicked()"), lambda: self.saveRecord(countrySetupDlg.FIRST))
-        self.connect(self.prevEntry, SIGNAL("clicked()"), lambda: self.saveRecord(countrySetupDlg.PREV))
-        self.connect(self.nextEntry, SIGNAL("clicked()"), lambda: self.saveRecord(countrySetupDlg.NEXT))
-        self.connect(self.lastEntry, SIGNAL("clicked()"), lambda: self.saveRecord(countrySetupDlg.LAST))
+        self.connect(self.firstEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.FIRST))
+        self.connect(self.prevEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.PREV))
+        self.connect(self.nextEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.NEXT))
+        self.connect(self.lastEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.LAST))
         self.connect(self.addEntry, SIGNAL("clicked()"), self.addRecord)
         self.connect(self.deleteEntry, SIGNAL("clicked()"), self.deleteRecord)        
         self.connect(self.closeButton, SIGNAL("clicked()"), self.accept)
@@ -1260,14 +1259,14 @@ class countrySetupDlg(QDialog, ui_countrysetup.Ui_countrySetupDlg):
         """Submits changes to database and navigates through form."""
         row = self.mapper.currentIndex()
         self.mapper.submit()
-        if where == countrySetupDlg.FIRST:
+        if where == Constants.FIRST:
             self.firstEntry.setDisabled(True)
             self.prevEntry.setDisabled(True)
             if not self.nextEntry.isEnabled():
                 self.nextEntry.setEnabled(True)
                 self.lastEntry.setEnabled(True)
             row = 0
-        elif where == countrySetupDlg.PREV:
+        elif where == Constants.PREV:
             if row <= 1:
                 self.firstEntry.setDisabled(True)
                 self.prevEntry.setDisabled(True)                
@@ -1277,7 +1276,7 @@ class countrySetupDlg(QDialog, ui_countrysetup.Ui_countrySetupDlg):
                     self.nextEntry.setEnabled(True)
                     self.lastEntry.setEnabled(True)                    
                 row -= 1
-        elif where == countrySetupDlg.NEXT:
+        elif where == Constants.NEXT:
             row += 1
             if not self.prevEntry.isEnabled():
                 self.prevEntry.setEnabled(True)
@@ -1286,7 +1285,7 @@ class countrySetupDlg(QDialog, ui_countrysetup.Ui_countrySetupDlg):
                 self.nextEntry.setDisabled(True)
                 self.lastEntry.setDisabled(True)
                 row = self.model.rowCount() - 1
-        elif where == countrySetupDlg.LAST:
+        elif where == Constants.LAST:
             self.nextEntry.setDisabled(True)
             self.lastEntry.setDisabled(True)
             if not self.prevEntry.isEnabled():
@@ -1358,7 +1357,7 @@ class countrySetupDlg(QDialog, ui_countrysetup.Ui_countrySetupDlg):
 
 class confedSetupDlg(QDialog, ui_confederationsetup.Ui_confedSetupDlg):
     """Implements confederation data entry dialog, which accesses and writes to Confederations table."""
-    FIRST,  PREV,  NEXT,  LAST = range(4)
+
     ID,  NAME = range(2)
     
     def __init__(self, parent=None):
@@ -1387,10 +1386,10 @@ class confedSetupDlg(QDialog, ui_confederationsetup.Ui_confedSetupDlg):
         self.prevEntry.setDisabled(True)
         
         # configure signal/slot
-        self.connect(self.firstEntry, SIGNAL("clicked()"), lambda: self.saveRecord(confedSetupDlg.FIRST))
-        self.connect(self.prevEntry, SIGNAL("clicked()"), lambda: self.saveRecord(confedSetupDlg.PREV))
-        self.connect(self.nextEntry, SIGNAL("clicked()"), lambda: self.saveRecord(confedSetupDlg.NEXT))
-        self.connect(self.lastEntry, SIGNAL("clicked()"), lambda: self.saveRecord(confedSetupDlg.LAST))
+        self.connect(self.firstEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.FIRST))
+        self.connect(self.prevEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.PREV))
+        self.connect(self.nextEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.NEXT))
+        self.connect(self.lastEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.LAST))
         self.connect(self.addEntry, SIGNAL("clicked()"), self.addRecord)
         self.connect(self.deleteEntry, SIGNAL("clicked()"), self.deleteRecord)
         self.connect(self.closeButton, SIGNAL("clicked()"), self.accept)
@@ -1404,14 +1403,14 @@ class confedSetupDlg(QDialog, ui_confederationsetup.Ui_confedSetupDlg):
         """Submits changes to database and navigates through form."""
         row = self.mapper.currentIndex()
         self.mapper.submit()
-        if where == confedSetupDlg.FIRST:
+        if where == Constants.FIRST:
             self.firstEntry.setDisabled(True)
             self.prevEntry.setDisabled(True)
             if not self.nextEntry.isEnabled():
                 self.nextEntry.setEnabled(True)
                 self.lastEntry.setEnabled(True)
             row = 0
-        elif where == confedSetupDlg.PREV:
+        elif where == Constants.PREV:
             if row <= 1:
                 self.firstEntry.setDisabled(True)
                 self.prevEntry.setDisabled(True)                
@@ -1421,7 +1420,7 @@ class confedSetupDlg(QDialog, ui_confederationsetup.Ui_confedSetupDlg):
                     self.nextEntry.setEnabled(True)
                     self.lastEntry.setEnabled(True)                    
                 row -= 1
-        elif where == confedSetupDlg.NEXT:
+        elif where == Constants.NEXT:
             row += 1
             if not self.prevEntry.isEnabled():
                 self.prevEntry.setEnabled(True)
@@ -1430,7 +1429,7 @@ class confedSetupDlg(QDialog, ui_confederationsetup.Ui_confedSetupDlg):
                 self.nextEntry.setDisabled(True)
                 self.lastEntry.setDisabled(True)
                 row = self.model.rowCount() - 1
-        elif where == confedSetupDlg.LAST:
+        elif where == Constants.LAST:
             self.nextEntry.setDisabled(True)
             self.lastEntry.setDisabled(True)
             if not self.prevEntry.isEnabled():
@@ -1498,7 +1497,7 @@ class confedSetupDlg(QDialog, ui_confederationsetup.Ui_confedSetupDlg):
 
 class roundSetupDlg(QDialog, ui_roundsetup.Ui_roundSetupDlg):
     """Implements matchday data entry dialog, and accesses and writes to Rounds table."""
-    FIRST,  PREV,  NEXT,  LAST = range(4)
+    
     ID,  DESC = range(2)
     
     def __init__(self, parent=None):
@@ -1527,10 +1526,10 @@ class roundSetupDlg(QDialog, ui_roundsetup.Ui_roundSetupDlg):
         self.prevEntry.setDisabled(True)
         
         # configure signal/slot
-        self.connect(self.firstEntry, SIGNAL("clicked()"), lambda: self.saveRecord(roundSetupDlg.FIRST))
-        self.connect(self.prevEntry, SIGNAL("clicked()"), lambda: self.saveRecord(roundSetupDlg.PREV))
-        self.connect(self.nextEntry, SIGNAL("clicked()"), lambda: self.saveRecord(roundSetupDlg.NEXT))
-        self.connect(self.lastEntry, SIGNAL("clicked()"), lambda: self.saveRecord(roundSetupDlg.LAST))
+        self.connect(self.firstEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.FIRST))
+        self.connect(self.prevEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.PREV))
+        self.connect(self.nextEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.NEXT))
+        self.connect(self.lastEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.LAST))
         self.connect(self.addEntry, SIGNAL("clicked()"), self.addRecord)
         self.connect(self.deleteEntry, SIGNAL("clicked()"), self.deleteRecord)        
         self.connect(self.closeButton, SIGNAL("clicked()"), self.accept)
@@ -1544,14 +1543,14 @@ class roundSetupDlg(QDialog, ui_roundsetup.Ui_roundSetupDlg):
         """Submits changes to database and navigates through form."""
         row = self.mapper.currentIndex()
         self.mapper.submit()
-        if where == roundSetupDlg.FIRST:
+        if where == Constants.FIRST:
             self.firstEntry.setDisabled(True)
             self.prevEntry.setDisabled(True)
             if not self.nextEntry.isEnabled():
                 self.nextEntry.setEnabled(True)
                 self.lastEntry.setEnabled(True)
             row = 0
-        elif where == roundSetupDlg.PREV:
+        elif where == Constants.PREV:
             if row <= 1:
                 self.firstEntry.setDisabled(True)
                 self.prevEntry.setDisabled(True)                
@@ -1561,7 +1560,7 @@ class roundSetupDlg(QDialog, ui_roundsetup.Ui_roundSetupDlg):
                     self.nextEntry.setEnabled(True)
                     self.lastEntry.setEnabled(True)                    
                 row -= 1
-        elif where == roundSetupDlg.NEXT:
+        elif where == Constants.NEXT:
             row += 1
             if not self.prevEntry.isEnabled():
                 self.prevEntry.setEnabled(True)
@@ -1570,7 +1569,7 @@ class roundSetupDlg(QDialog, ui_roundsetup.Ui_roundSetupDlg):
                 self.nextEntry.setDisabled(True)
                 self.lastEntry.setDisabled(True)
                 row = self.model.rowCount() - 1
-        elif where == roundSetupDlg.LAST:
+        elif where == Constants.LAST:
             self.nextEntry.setDisabled(True)
             self.lastEntry.setDisabled(True)
             if not self.prevEntry.isEnabled():
@@ -1637,7 +1636,7 @@ class roundSetupDlg(QDialog, ui_roundsetup.Ui_roundSetupDlg):
             
 class wxcondSetupDlg(QDialog, ui_weathersetup.Ui_wxcondSetupDlg):
     """Implements weather condition data entry dialog, accesses and writes to WeatherConditions table."""
-    FIRST,  PREV,  NEXT,  LAST = range(4)
+    
     ID,  DESC = range(2)
     
     def __init__(self, parent=None):
@@ -1666,10 +1665,10 @@ class wxcondSetupDlg(QDialog, ui_weathersetup.Ui_wxcondSetupDlg):
         self.prevEntry.setDisabled(True)
         
         # configure signal/slot
-        self.connect(self.firstEntry, SIGNAL("clicked()"), lambda: self.saveRecord(wxcondSetupDlg.FIRST))
-        self.connect(self.prevEntry, SIGNAL("clicked()"), lambda: self.saveRecord(wxcondSetupDlg.PREV))
-        self.connect(self.nextEntry, SIGNAL("clicked()"), lambda: self.saveRecord(wxcondSetupDlg.NEXT))
-        self.connect(self.lastEntry, SIGNAL("clicked()"), lambda: self.saveRecord(wxcondSetupDlg.LAST))
+        self.connect(self.firstEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.FIRST))
+        self.connect(self.prevEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.PREV))
+        self.connect(self.nextEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.NEXT))
+        self.connect(self.lastEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.LAST))
         self.connect(self.addEntry, SIGNAL("clicked()"), self.addRecord)
         self.connect(self.deleteEntry, SIGNAL("clicked()"), self.deleteRecord)        
         self.connect(self.closeButton, SIGNAL("clicked()"), self.accept)
@@ -1683,14 +1682,14 @@ class wxcondSetupDlg(QDialog, ui_weathersetup.Ui_wxcondSetupDlg):
         """Submits changes to database and navigates through form."""
         row = self.mapper.currentIndex()
         self.mapper.submit()
-        if where == wxcondSetupDlg.FIRST:
+        if where == Constants.FIRST:
             self.firstEntry.setDisabled(True)
             self.prevEntry.setDisabled(True)
             if not self.nextEntry.isEnabled():
                 self.nextEntry.setEnabled(True)
                 self.lastEntry.setEnabled(True)
             row = 0
-        elif where == wxcondSetupDlg.PREV:
+        elif where == Constants.PREV:
             if row <= 1:
                 self.firstEntry.setDisabled(True)
                 self.prevEntry.setDisabled(True)                
@@ -1700,7 +1699,7 @@ class wxcondSetupDlg(QDialog, ui_weathersetup.Ui_wxcondSetupDlg):
                     self.nextEntry.setEnabled(True)
                     self.lastEntry.setEnabled(True)                    
                 row -= 1
-        elif where == wxcondSetupDlg.NEXT:
+        elif where == Constants.NEXT:
             row += 1
             if not self.prevEntry.isEnabled():
                 self.prevEntry.setEnabled(True)
@@ -1709,7 +1708,7 @@ class wxcondSetupDlg(QDialog, ui_weathersetup.Ui_wxcondSetupDlg):
                 self.nextEntry.setDisabled(True)
                 self.lastEntry.setDisabled(True)
                 row = self.model.rowCount() - 1
-        elif where == wxcondSetupDlg.LAST:
+        elif where == Constants.LAST:
             self.nextEntry.setDisabled(True)
             self.lastEntry.setDisabled(True)
             if not self.prevEntry.isEnabled():
