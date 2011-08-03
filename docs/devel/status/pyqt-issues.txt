@@ -1,0 +1,68 @@
+ISSUES LIST
+
+2011-06-06
+tbl_players (and other personnel tables, too):
+    when confederations switched, writes NULL value to country_id  --> breaks data entry form
+    But country_id is correct one!  (Verified it through print statements!)
+    SQL definition does not defend against null foreign key
+    
+    RESOLVED (2011-06-07): removed code in setEditorData() of CountryComboBoxDelegate() class 
+        that searched for country name -- it was unnecessary
+    country name is already provided when I make a parentModel.data(index).toString() call
+    
+    new code is: 
+    -------
+        # search for country in Country combobox, return its index in list
+        countryText = parentModel.data(index, Qt.DisplayRole).toString()        
+        countryIndex = editor.findText(countryText, Qt.MatchExactly)
+    -------
+    verified that country_id written into db correctly for all personnel tables
+
+2011-06-07
+default position in tbl_lineups
+    setDefaultIndex() not called when index is set in players combobox
+    tied setDefaultIndex() call to enableWidget() call for position combobox
+    used a currentIndexChanged(int) signal to make function calls work
+        --> resulted in 4 function calls
+    
+    RESOLVED (2011-06-08)
+        needed to block signals before first setFilter() call in Lineup Player delegate,
+          and after second setFilter() call in Lineup Player delegate
+        verified that when player is selected in combobox, position combobox goes to
+          his default position
+
+2011-06-07
+can't save current record and add new record
+    after adding new record, must click on navigational button to refresh mapper and 
+      then select add record
+
+2011-06-07
+include "Save" button
+    write record to database, but not navigate
+
+2011-06-07
+save/discard option when close button pressed
+
+2011-06-08
+cannot filter Lineups table using match and team IDs
+    team_id in setFilter() in tbl_lineups causes error
+
+    RESOLVED (2011-06-09)
+        Lineups model is a QSqlRelationalModel object
+        relational fields are mapped from model field to view field
+        must use view field in queries
+        --> need to use teamName, NOT team_id
+
+2011-06-09
+sort_name field in lineup_list
+    tbl_lineups was already populated, so I placed sort_name at end of lineup_list
+    sort_name should be placed after player field
+
+2011-07-07
+Segmentation fault when "cancel" button pressed on login dialog
+
+    RESOLVED (2011-07-21)
+    Created wrapper function in dbLoginDlg class that called exec_()
+      and returned tuple code (QDialog.returnvalue, self.status)
+    Used this tuple code to instantiate admin or user dashboard object
+      and place in event queue

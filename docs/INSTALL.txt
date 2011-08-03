@@ -1,0 +1,34 @@
+INSTALLATION
+------------
+
+FMRD-Desktop is run from the command line.
+
+Requirements:
+    - Python 2.6 (3.0 not supported)
+    - Nokia Qt 4.6 toolkit
+    - PyQt 4
+    - Perl (DBI and Term packages)
+    - PostgreSQL 8.x
+    
+(1) Install local Postgres server. Consult system administrator
+for assistance.  Obtain a username and password.
+
+(2) Go to sql/ directory and enter the following command:
+    
+    > installdb-fmrd.sh db_name
+
+    The database tables and views will be created, after which
+    you will be challenged to enter your username and password:
+    
+    Enter username: user
+    Enter password: ******
+    Database authentication confirmed.
+    Enter number of rounds: ##
+
+    The validation tables will then be populated.
+
+(3) Go to code/pyqt/ directory and run the data-entry application:
+
+    > ./fmrd-main.pyw
+
+
