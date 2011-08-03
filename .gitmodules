@@ -1,3 +1,6 @@
 [submodule "sql"]
 	path = sql
 	url = git@github.com:hhamilton-src/fmrd-sql.git
+[submodule "docs"]
+	path = docs
+	url = git@github.com:hhamilton-src/fmrd-desktop.git
