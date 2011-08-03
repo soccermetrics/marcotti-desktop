@@ -1,0 +1,55 @@
+FMRD Implementation Notes
+-------------------------
+
+Populate these tables first (won't change):
+* Cards
+* Penalty Outcomes
+* Weather conditions
+* Field positions
+* Flank positions
+* Rounds
+
+These tables may be amended in future by user,
+but very seldom:
+* Fouls
+* Goal strikes
+* Goal events
+* Confederations
+* Countries
+
+This table defined with other pre-defined tables:
+* Positions 
+
+Tables to populate pre-competition:
+--------------
+* Competitions
+* Teams
+* Venues
+-----------
+* Players
+* Managers
+* Referees
+-----------
+
+Tables to populate pre-match:
+(Pre-competition tables must be populated)
+* Matches
+	* Home/away teams
+	* Home/away managers
+* Environments
+	* Kickoff/Halftime/Fulltime weather 
+
+Tables to populate in-match:
+* Lineups
+----------
+* Goals
+* Offenses
+* Penalties
+* Substitutions
+	* InSubstitutions
+	* OutSubstitutions
+* SwitchPositions
+
+Notes:
+- database builds on itself
+- data in some tables must be completed first
