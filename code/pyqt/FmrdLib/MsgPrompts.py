@@ -22,6 +22,16 @@ from PyQt4.QtGui import *
 
 """Contains functions that produce Message Box popups to alert user to errors."""
 
+def SaveDiscardOptionPrompt(parent):
+    """Displays pop-up question box to ask user to save or discard current data record upon dialog closure."""
+    reply = QMessageBox.question(parent, "Unsaved Record", 
+                                 """Would you like to <b>save</b> or <b>discard</b> the current record?""", 
+                                 QMessageBox.Save|QMessageBox.Discard)
+    if reply == QMessageBox.Save:
+        return True
+    else:
+        return False    
+
 def VenueErrorPrompt(parent):
     """Displays pop-up message box to alert user of insufficient number of teams in Venues table."""
     QMessageBox.critical(parent, "Insufficient Teams Table", 
