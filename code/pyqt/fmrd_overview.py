@@ -79,8 +79,10 @@ class compEntryDlg(QDialog, ui_competitionentry.Ui_compEntryDlg):
         self.connect(self.closeButton, SIGNAL("clicked()"), self.accept)
         
     def accept(self):
-        """Submits changes to database and closes window."""
-        self.mapper.submit()
+        """Submits changes to database and closes window upon confirmation from user."""
+        confirm = MsgPrompts.SaveDiscardOptionPrompt(self)
+        if confirm:
+            self.mapper.submit()
         QDialog.accept(self)
     
     def saveRecord(self, where):
@@ -221,8 +223,10 @@ class teamEntryDlg(QDialog, ui_teamentry.Ui_teamEntryDlg):
         self.connect(self.closeButton, SIGNAL("clicked()"), self.accept)
         
     def accept(self):
-        """Submits changes to database and closes window."""
-        self.mapper.submit()
+        """Submits changes to database and closes window upon confirmation from user."""
+        confirm = MsgPrompts.SaveDiscardOptionPrompt(self)
+        if confirm:
+            self.mapper.submit()
         QDialog.accept(self)
     
     def saveRecord(self, where):
@@ -416,8 +420,10 @@ class venueEntryDlg(QDialog, ui_venueentry.Ui_venueEntryDlg):
         self.connect(self.venueConfedSelect, SIGNAL("activated(int)"), self.filterCountryBox)
      
     def accept(self):
-        """Submits changes to database and closes window."""
-        self.mapper.submit()
+        """Submits changes to database and closes window upon confirmation from user."""
+        confirm = MsgPrompts.SaveDiscardOptionPrompt(self)
+        if confirm:
+            self.mapper.submit()
         QDialog.accept(self)
     
     def saveRecord(self, where):
