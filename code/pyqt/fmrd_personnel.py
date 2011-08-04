@@ -185,7 +185,6 @@ class managerEntryDlg(QDialog, ui_managerentry.Ui_managerEntryDlg):
             if not maxManagerID:
                 manager_id = Constants.MinManagerID
             else:
-                self.mapper.submit()
                 manager_id= QString()
                 manager_id.setNum(maxManagerID+1)  
         self.model.insertRow(row)
@@ -421,7 +420,6 @@ class refereeEntryDlg(QDialog, ui_refereeentry.Ui_refereeEntryDlg):
             if not maxRefereeID:
                 referee_id = Constants.MinRefereeID
             else:
-                self.mapper.submit()
                 referee_id= QString()
                 referee_id.setNum(maxRefereeID+1)    
         self.model.insertRow(row)
@@ -668,7 +666,6 @@ class playerEntryDlg(QDialog, ui_playerentry.Ui_playerEntryDlg):
             if not maxPlayerID:
                 player_id = Constants.MinPlayerID
             else:
-                self.mapper.submit()
                 player_id= QString()
                 player_id.setNum(maxPlayerID+1)
     
@@ -880,7 +877,6 @@ class lineupEntryDlg(QDialog, ui_lineupentry.Ui_lineupEntryDlg):
             if not maxLineupID:
                 lineup_id = Constants.MinLineupID
             else:
-                self.mapper.submit()
                 lineup_id= QString()
                 lineup_id.setNum(maxLineupID+1)
     

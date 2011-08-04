@@ -139,7 +139,6 @@ class compEntryDlg(QDialog, ui_competitionentry.Ui_compEntryDlg):
             if not maxCompetitionID:
                 competition_id = Constants.MinCompetitionID
             else:
-                self.mapper.submit()
                 competition_id= QString()
                 competition_id.setNum(maxCompetitionID+1)          
         self.model.insertRow(row)
@@ -283,7 +282,6 @@ class teamEntryDlg(QDialog, ui_teamentry.Ui_teamEntryDlg):
             if not maxTeamID:
                 team_id = Constants.MinTeamID
             else:
-                self.mapper.submit()
                 team_id= QString()
                 team_id.setNum(maxTeamID+1)          
         self.model.insertRow(row)
@@ -481,7 +479,6 @@ class venueEntryDlg(QDialog, ui_venueentry.Ui_venueEntryDlg):
             if not maxVenueID:
                 venue_id = Constants.MinVenueID
             else:
-                self.mapper.submit()
                 venue_id= QString()
                 venue_id.setNum(maxVenueID+1)          
         self.model.insertRow(row)
