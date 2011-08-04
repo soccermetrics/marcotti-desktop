@@ -71,3 +71,8 @@ def DeletionErrorPrompt(parent):
     QMessageBox.critical(parent, "Cannot Delete Record", 
                          """There are records in child tables dependent on this record.<br>
                          Please delete child records that refer to this record first.""", QMessageBox.Close)
+
+def DatabaseCommitErrorPrompt(parent, error):
+    """Displays pop-up message box to alert user of database record commit error."""
+    QMessageBox.critical(parent, "Database Commit Error", 
+                         """Error Code %d: %s""" % (error.number(), error.text()), QMessageBox.Close)
