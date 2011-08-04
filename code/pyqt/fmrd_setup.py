@@ -158,6 +158,7 @@ class cardSetupDlg(QDialog, ui_cardsetup.Ui_cardSetupDlg):
         if row != -1:
             if not self.mapper.submit():
                 MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+                return
         
         row = self.model.rowCount()
         query = QSqlQuery()
@@ -201,6 +202,7 @@ class cardSetupDlg(QDialog, ui_cardsetup.Ui_cardSetupDlg):
                 self.model.removeRow(row)
                 if not self.model.submitAll():
                     MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+                    return
                 if row + 1 >= self.model.rowCount():
                     row = self.model.rowCount() - 1
                 self.mapper.setCurrentIndex(row) 
@@ -302,6 +304,7 @@ class foulSetupDlg(QDialog, ui_foulsetup.Ui_foulSetupDlg):
         if row != -1:
             if not self.mapper.submit():
                 MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+                return
         
         row = self.model.rowCount()
         query = QSqlQuery()
@@ -347,6 +350,7 @@ class foulSetupDlg(QDialog, ui_foulsetup.Ui_foulSetupDlg):
                 self.model.removeRow(row)
                 if not self.model.submitAll():
                     MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+                    return
                 if row + 1 >= self.model.rowCount():
                     row = self.model.rowCount() - 1
                 self.mapper.setCurrentIndex(row) 
@@ -448,6 +452,7 @@ class penSetupDlg(QDialog, ui_penoutcomesetup.Ui_penSetupDlg):
         if row != -1:
             if not self.mapper.submit():
                 MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+                return
         
         row = self.model.rowCount()
         query = QSqlQuery()
@@ -491,6 +496,7 @@ class penSetupDlg(QDialog, ui_penoutcomesetup.Ui_penSetupDlg):
                 self.model.removeRow(row)
                 if not self.model.submitAll():
                     MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+                    return
                 if row + 1 >= self.model.rowCount():
                     row = self.model.rowCount() - 1
                 self.mapper.setCurrentIndex(row) 
@@ -592,6 +598,7 @@ class goaleventSetupDlg(QDialog, ui_goaleventsetup.Ui_goaleventSetupDlg):
         if row != -1:
             if not self.mapper.submit():
                 MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+                return
         
         row = self.model.rowCount()
         query = QSqlQuery()
@@ -635,6 +642,7 @@ class goaleventSetupDlg(QDialog, ui_goaleventsetup.Ui_goaleventSetupDlg):
                 self.model.removeRow(row)
                 if not self.model.submitAll():
                     MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+                    return
                 if row + 1 >= self.model.rowCount():
                     row = self.model.rowCount() - 1
                 self.mapper.setCurrentIndex(row) 
@@ -735,6 +743,7 @@ class goalstrikeSetupDlg(QDialog, ui_goalstrikesetup.Ui_goalstrikeSetupDlg):
         if row != -1:
             if not self.mapper.submit():
                 MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+                return
         
         row = self.model.rowCount()
         query = QSqlQuery()
@@ -778,6 +787,7 @@ class goalstrikeSetupDlg(QDialog, ui_goalstrikesetup.Ui_goalstrikeSetupDlg):
                 self.model.removeRow(row)
                 if not self.model.submitAll():
                     MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+                    return
                 if row + 1 >= self.model.rowCount():
                     row = self.model.rowCount() - 1
                 self.mapper.setCurrentIndex(row) 
@@ -879,6 +889,7 @@ class fieldposSetupDlg(QDialog, ui_fieldpossetup.Ui_fieldposSetupDlg):
         if row != -1:
             if not self.mapper.submit():
                 MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+                return
         
         row = self.model.rowCount()
         query = QSqlQuery()
@@ -922,6 +933,7 @@ class fieldposSetupDlg(QDialog, ui_fieldpossetup.Ui_fieldposSetupDlg):
                 self.model.removeRow(row)
                 if not self.model.submitAll():
                     MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+                    return
                 if row + 1 >= self.model.rowCount():
                     row = self.model.rowCount() - 1
                 self.mapper.setCurrentIndex(row) 
@@ -1026,6 +1038,7 @@ class flankposSetupDlg(QDialog, ui_flankpossetup.Ui_flankposSetupDlg):
         if row != -1:
             if not self.mapper.submit():
                 MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+                return
         
         row = self.model.rowCount()
         query = QSqlQuery()
@@ -1069,6 +1082,7 @@ class flankposSetupDlg(QDialog, ui_flankpossetup.Ui_flankposSetupDlg):
                 self.model.removeRow(row)
                 if not self.model.submitAll():
                     MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+                    return
                 if row + 1 >= self.model.rowCount():
                     row = self.model.rowCount() - 1
                 self.mapper.setCurrentIndex(row) 
@@ -1188,6 +1202,7 @@ class posSetupDlg(QDialog, ui_positionsetup.Ui_posSetupDlg):
         if row != -1:
             if not self.mapper.submit():
                 MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+                return
         
         row = self.model.rowCount()
         query = QSqlQuery()
@@ -1234,6 +1249,7 @@ class posSetupDlg(QDialog, ui_positionsetup.Ui_posSetupDlg):
                 self.model.removeRow(row)
                 if not self.model.submitAll():
                     MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+                    return
                 if row + 1 >= self.model.rowCount():
                     row = self.model.rowCount() - 1
                 self.mapper.setCurrentIndex(row) 
@@ -1345,6 +1361,7 @@ class countrySetupDlg(QDialog, ui_countrysetup.Ui_countrySetupDlg):
         if row != -1:
             if not self.mapper.submit():
                 MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+                return
         
         row = self.model.rowCount()
         query = QSqlQuery()
@@ -1393,6 +1410,7 @@ class countrySetupDlg(QDialog, ui_countrysetup.Ui_countrySetupDlg):
                 self.model.removeRow(row)
                 if not self.model.submitAll():
                     MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+                    return
                 if row + 1 >= self.model.rowCount():
                     row = self.model.rowCount() - 1
                 self.mapper.setCurrentIndex(row) 
@@ -1494,6 +1512,7 @@ class confedSetupDlg(QDialog, ui_confederationsetup.Ui_confedSetupDlg):
         if row != -1:
             if not self.mapper.submit():
                 MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+                return
         
         # move to end of table and insert new record
         row = self.model.rowCount()
@@ -1538,6 +1557,7 @@ class confedSetupDlg(QDialog, ui_confederationsetup.Ui_confedSetupDlg):
                 self.model.removeRow(row)
                 if not self.model.submitAll():
                     MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+                    return
                 if row + 1 >= self.model.rowCount():
                     row = self.model.rowCount() - 1
                 self.mapper.setCurrentIndex(row) 
@@ -1639,6 +1659,7 @@ class roundSetupDlg(QDialog, ui_roundsetup.Ui_roundSetupDlg):
         if row != -1:
             if not self.mapper.submit():
                 MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+                return
         
         row = self.model.rowCount()
         query = QSqlQuery()
@@ -1682,6 +1703,7 @@ class roundSetupDlg(QDialog, ui_roundsetup.Ui_roundSetupDlg):
                 self.model.removeRow(row)
                 if not self.model.submitAll():
                     MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+                    return
                 if row + 1 >= self.model.rowCount():
                     row = self.model.rowCount() - 1
                 self.mapper.setCurrentIndex(row) 
@@ -1783,6 +1805,7 @@ class wxcondSetupDlg(QDialog, ui_weathersetup.Ui_wxcondSetupDlg):
         if row != -1:
             if not self.mapper.submit():
                 MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+                return
         
         row = self.model.rowCount()
         query = QSqlQuery()
@@ -1829,6 +1852,7 @@ class wxcondSetupDlg(QDialog, ui_weathersetup.Ui_wxcondSetupDlg):
                 self.model.removeRow(row)
                 if not self.model.submitAll():
                     MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+                    return
                 if row + 1 >= self.model.rowCount():
                     row = self.model.rowCount() - 1
                 self.mapper.setCurrentIndex(row) 
