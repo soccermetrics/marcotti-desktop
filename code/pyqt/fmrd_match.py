@@ -249,13 +249,15 @@ class matchEntryDlg(QDialog, ui_matchentry.Ui_matchEntryDlg):
         """Submits changes to database and closes window upon confirmation from user."""
         confirm = MsgPrompts.SaveDiscardOptionPrompt(self)
         if confirm:
-            self.mapper.submit()
+            if not self.mapper.submit():
+                MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
         QDialog.accept(self)
     
     def saveRecord(self, where):
         """"Submits changes to database, navigates through form, and resets subforms."""
         row = self.mapper.currentIndex()
-        self.mapper.submit()
+        if not self.mapper.submit():
+            MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
         
         if where == Constants.FIRST:
             self.firstEntry.setDisabled(True)
@@ -320,7 +322,9 @@ class matchEntryDlg(QDialog, ui_matchentry.Ui_matchEntryDlg):
         # save current index if valid
         row = self.mapper.currentIndex()
         if row != -1:
-            self.mapper.submit()
+            if not self.mapper.submit():
+                MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+                return
         
         row = self.model.rowCount()
         query = QSqlQuery()
@@ -403,7 +407,9 @@ class matchEntryDlg(QDialog, ui_matchentry.Ui_matchEntryDlg):
                 # delete record in Match table
                 row = self.mapper.currentIndex()
                 self.model.removeRow(row)
-                self.model.submitAll()
+                if not self.model.submitAll():
+                    MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+                    return
                 if row + 1 >= self.model.rowCount():
                     row = self.model.rowCount() - 1
                 self.mapper.setCurrentIndex(row) 
@@ -461,7 +467,10 @@ class matchEntryDlg(QDialog, ui_matchentry.Ui_matchEntryDlg):
         match_id -- primary key of current record in Matches table
         
         """
-        self.mapper.submit()
+        if not self.mapper.submit():
+            MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+            return
+            
         subdialog = enviroEntryDlg(match_id, self)
         subdialog.exec_()
         
@@ -478,7 +487,10 @@ class matchEntryDlg(QDialog, ui_matchentry.Ui_matchEntryDlg):
         and manager fields have been populated with non-NULL values.
         
         """
-        self.mapper.submit()
+        if not self.mapper.submit():
+            MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+            return
+            
         subdialog = lineupEntryDlg(match_id, teamName, self)
 #        print "Match ID: %s" % match_id
 #        print "Team Name: %s" % teamName
@@ -615,7 +627,8 @@ class enviroEntryDlg(QDialog, ui_enviroentry.Ui_enviroEntryDlg):
         """Submits changes to database and closes window upon confirmation from user."""
         confirm = MsgPrompts.SaveDiscardOptionPrompt(self)
         if confirm:
-            self.mapper.submit()
+            if not self.mapper.submit():
+                MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
         QDialog.accept(self)
         
     def updateLinkingTable(self, mapper, editor):
