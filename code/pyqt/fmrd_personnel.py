@@ -128,13 +128,15 @@ class managerEntryDlg(QDialog, ui_managerentry.Ui_managerEntryDlg):
         """Submits changes to database and closes window upon confirmation from user."""
         confirm = MsgPrompts.SaveDiscardOptionPrompt(self)
         if confirm:
-            self.mapper.submit()
+            if not self.mapper.submit():
+                MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
         QDialog.accept(self)
     
     def saveRecord(self, where):
         """Submits changes to database and navigates through form."""
         row = self.mapper.currentIndex()
-        self.mapper.submit()
+        if not self.mapper.submit():
+            MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
         if where == Constants.FIRST:
             self.firstEntry.setDisabled(True)
             self.prevEntry.setDisabled(True)
@@ -175,7 +177,9 @@ class managerEntryDlg(QDialog, ui_managerentry.Ui_managerEntryDlg):
         # save current index if valid
         row = self.mapper.currentIndex()
         if row != -1:
-            self.mapper.submit()
+            if not self.mapper.submit():
+                MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+                return
         
         row = self.model.rowCount()
         query = QSqlQuery()
@@ -224,7 +228,9 @@ class managerEntryDlg(QDialog, ui_managerentry.Ui_managerEntryDlg):
             else:
                 row = self.mapper.currentIndex()
                 self.model.removeRow(row)
-                self.model.submitAll()
+                if not self.model.submitAll():
+                    MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+                    return
                 if row + 1 >= self.model.rowCount():
                     row = self.model.rowCount() - 1
                 self.mapper.setCurrentIndex(row) 
@@ -361,13 +367,15 @@ class refereeEntryDlg(QDialog, ui_refereeentry.Ui_refereeEntryDlg):
         """Submits changes to database and closes window upon confirmation from user."""
         confirm = MsgPrompts.SaveDiscardOptionPrompt(self)
         if confirm:
-            self.mapper.submit()
+            if not self.mapper.submit():
+                MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
         QDialog.accept(self)
     
     def saveRecord(self, where):
         """Submits changes to database and navigates through form."""
         row = self.mapper.currentIndex()
-        self.mapper.submit()
+        if not self.mapper.submit():
+            MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
 
         if where == Constants.FIRST:
             self.firstEntry.setDisabled(True)
@@ -409,7 +417,9 @@ class refereeEntryDlg(QDialog, ui_refereeentry.Ui_refereeEntryDlg):
         # save current index if valid
         row = self.mapper.currentIndex()
         if row != -1:
-            self.mapper.submit()
+            if not self.mapper.submit():
+                MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+                return
         
         row = self.model.rowCount()
         
@@ -457,7 +467,9 @@ class refereeEntryDlg(QDialog, ui_refereeentry.Ui_refereeEntryDlg):
             else:
                 row = self.mapper.currentIndex()
                 self.model.removeRow(row)
-                self.model.submitAll()
+                if not self.model.submitAll():
+                    MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+                    return
                 if row + 1 >= self.model.rowCount():
                     row = self.model.rowCount() - 1
                 self.mapper.setCurrentIndex(row) 
@@ -608,13 +620,15 @@ class playerEntryDlg(QDialog, ui_playerentry.Ui_playerEntryDlg):
         """Submits changes to database and closes window upon confirmation from user."""
         confirm = MsgPrompts.SaveDiscardOptionPrompt(self)
         if confirm:
-            self.mapper.submit()
+            if not self.mapper.submit():
+                MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
         QDialog.accept(self)
     
     def saveRecord(self, where):
         """Submits changes to database and navigates through form."""
         row = self.mapper.currentIndex()
-        self.mapper.submit()
+        if not self.mapper.submit():
+            MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
         
         if where == Constants.FIRST:
             self.firstEntry.setDisabled(True)
@@ -655,7 +669,9 @@ class playerEntryDlg(QDialog, ui_playerentry.Ui_playerEntryDlg):
         # save current index if valid
         row = self.mapper.currentIndex()
         if row != -1:
-            self.mapper.submit()
+            if not self.mapper.submit():
+                MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+                return
         
         row = self.model.rowCount()
         
@@ -704,7 +720,9 @@ class playerEntryDlg(QDialog, ui_playerentry.Ui_playerEntryDlg):
             else:
                 row = self.mapper.currentIndex()
                 self.model.removeRow(row)
-                self.model.submitAll()
+                if not self.model.submitAll():
+                    MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+                    return
                 if row + 1 >= self.model.rowCount():
                     row = self.model.rowCount() - 1
                 self.mapper.setCurrentIndex(row) 
@@ -858,7 +876,8 @@ class lineupEntryDlg(QDialog, ui_lineupentry.Ui_lineupEntryDlg):
         """Submits changes to database and closes window upon confirmation from user."""
         confirm = MsgPrompts.SaveDiscardOptionPrompt(self)
         if confirm:
-            self.mapper.submit()
+            if not self.mapper.submit():
+                MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
         QDialog.accept(self)
     
     def addRecord(self):
@@ -866,7 +885,9 @@ class lineupEntryDlg(QDialog, ui_lineupentry.Ui_lineupEntryDlg):
         # save current index if valid
         row = self.mapper.currentIndex()
         if row != -1:
-            self.mapper.submit()
+            if not self.mapper.submit():
+                MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+                return
         
         row = self.model.rowCount()
         
@@ -925,7 +946,9 @@ class lineupEntryDlg(QDialog, ui_lineupentry.Ui_lineupEntryDlg):
             else:
                 row = self.mapper.currentIndex()
                 self.model.removeRow(row)
-                self.model.submitAll()
+                if not self.model.submitAll():
+                    MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+                    return
                 if row + 1 >= self.model.rowCount():
                     row = self.model.rowCount() - 1
                 self.mapper.setCurrentIndex(row) 
@@ -938,7 +961,8 @@ class lineupEntryDlg(QDialog, ui_lineupentry.Ui_lineupEntryDlg):
 #        print "Calling saveRecord()"
 #        print "Current Row: %d" % row
         # make checks
-        self.mapper.submit()
+        if not self.mapper.submit():
+            MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
         
         if where == Constants.FIRST:
             self.firstEntry.setDisabled(True)
