@@ -196,8 +196,10 @@ class goalEntryDlg(QDialog, ui_goalentry.Ui_goalEntryDlg):
    
    
     def accept(self):
-        """Submits changes to database and closes window."""
-        self.mapper.submit()
+        """Submits changes to database and closes window upon confirmation from user."""
+        confirm = MsgPrompts.SaveDiscardOptionPrompt(self)
+        if confirm:
+            self.mapper.submit()
         QDialog.accept(self)
    
     def saveRecord(self, where):
@@ -590,8 +592,10 @@ class penaltyEntryDlg(QDialog, ui_penaltyentry.Ui_penaltyEntryDlg):
         self.connect(self.pentimeEdit, SIGNAL("textChanged()"),  lambda: self.enableStoppageTime(self.stoppageEdit))
 
     def accept(self):
-        """Submits changes to database and closes window."""
-        ok = self.mapper.submit()
+        """Submits changes to database and closes window upon confirmation from user."""
+        confirm = MsgPrompts.SaveDiscardOptionPrompt(self)
+        if confirm:
+            self.mapper.submit()
         QDialog.accept(self)
    
     def saveRecord(self, where):
@@ -1065,8 +1069,10 @@ class offenseEntryDlg(QDialog, ui_offenseentry.Ui_offenseEntryDlg):
         self.connect(self.foultimeEdit, SIGNAL("textChanged()"),  lambda: self.enableStoppageTime(self.stoppageEdit))
 
     def accept(self):
-        """Submits changes to database and closes window."""
-        ok = self.mapper.submit()
+        """Submits changes to database and closes window upon confirmation from user."""
+        confirm = MsgPrompts.SaveDiscardOptionPrompt(self)
+        if confirm:
+            self.mapper.submit()
         QDialog.accept(self)
    
     def saveRecord(self, where):
@@ -1558,8 +1564,10 @@ class subsEntryDlg(QDialog, ui_subsentry.Ui_subsEntryDlg):
         self.connect(self.subtimeEdit, SIGNAL("textChanged()"),  lambda: self.enableStoppageTime(self.stoppageEdit))
  
     def accept(self):
-        """Submits changes to database and closes window."""
-        ok = self.mapper.submit()
+        """Submits changes to database and closes window upon confirmation from user."""
+        confirm = MsgPrompts.SaveDiscardOptionPrompt(self)
+        if confirm:
+            self.mapper.submit()
         QDialog.accept(self)
    
     def saveRecord(self, where):
@@ -2202,8 +2210,10 @@ class switchEntryDlg(QDialog, ui_switchentry.Ui_switchEntryDlg):
         self.connect(self.switchtimeEdit, SIGNAL("textChanged()"),  lambda: self.enableStoppageTime(self.stoppageEdit))        
         
     def accept(self):
-        """Submits changes to database and closes window."""
-        ok = self.mapper.submit()
+        """Submits changes to database and closes window upon confirmation from user."""
+        confirm = MsgPrompts.SaveDiscardOptionPrompt(self)
+        if confirm:
+            self.mapper.submit()
         QDialog.accept(self)
    
     def saveRecord(self, where):
