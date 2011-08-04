@@ -167,7 +167,6 @@ class cardSetupDlg(QDialog, ui_cardsetup.Ui_cardSetupDlg):
             if not maxCardID:
                 card_id = Constants.MinCardID
             else:
-                self.mapper.submit()
                 card_id = QString()
                 card_id.setNum(maxCardID+1)          
         self.model.insertRow(row)
@@ -311,7 +310,6 @@ class foulSetupDlg(QDialog, ui_foulsetup.Ui_foulSetupDlg):
             if not maxFoulID:
                 foul_id = Constants.MinFoulID
             else:
-                self.mapper.submit()
                 foul_id = QString()
                 foul_id.setNum(maxFoulID+1)          
         self.model.insertRow(row)
@@ -454,7 +452,6 @@ class penSetupDlg(QDialog, ui_penoutcomesetup.Ui_penSetupDlg):
             if not maxPenOutcomeID:
                 outcome_id = Constants.MinPenOutcomeID
             else:
-                self.mapper.submit()
                 outcome_id = QString()
                 outcome_id.setNum(maxPenOutcomeID+1)          
         self.model.insertRow(row)
@@ -595,7 +592,6 @@ class goaleventSetupDlg(QDialog, ui_goaleventsetup.Ui_goaleventSetupDlg):
             if not maxGoalEventID:
                 event_id = Constants.MinGoalEventID
             else:
-                self.mapper.submit()
                 event_id = QString()
                 event_id.setNum(maxGoalEventID+1)          
         self.model.insertRow(row)
@@ -735,7 +731,6 @@ class goalstrikeSetupDlg(QDialog, ui_goalstrikesetup.Ui_goalstrikeSetupDlg):
             if not maxGoalStrikeID:
                 strike_id = Constants.MinGoalStrikeID
             else:
-                self.mapper.submit()
                 strike_id = QString()
                 strike_id.setNum(maxGoalStrikeID+1)          
         self.model.insertRow(row)
@@ -876,7 +871,6 @@ class fieldposSetupDlg(QDialog, ui_fieldpossetup.Ui_fieldposSetupDlg):
             if not maxFieldID:
                 field_id = Constants.MinFieldID
             else:
-                self.mapper.submit()
                 field_id = QString()
                 field_id.setNum(maxFieldID+1)          
         self.model.insertRow(row)
@@ -1020,7 +1014,6 @@ class flankposSetupDlg(QDialog, ui_flankpossetup.Ui_flankposSetupDlg):
             if not maxFlankID:
                 flank_id = Constants.MinFlankID
             else:
-                self.mapper.submit()
                 flank_id = QString()
                 flank_id.setNum(maxFlankID+1)          
         self.model.insertRow(row)
@@ -1179,7 +1172,6 @@ class posSetupDlg(QDialog, ui_positionsetup.Ui_posSetupDlg):
             if not maxPositionID:
                 position_id = Constants.MinPositionID
             else:
-                self.mapper.submit()
                 position_id = QString()
                 position_id.setNum(maxPositionID+1)          
         self.model.insertRow(row)
@@ -1333,7 +1325,6 @@ class countrySetupDlg(QDialog, ui_countrysetup.Ui_countrySetupDlg):
             if not maxCountryID:
                 country_id = Constants.MinCountryID
             else:
-                self.mapper.submit()
                 country_id = QString()
                 country_id.setNum(maxCountryID+1)          
         self.model.insertRow(row)
@@ -1480,7 +1471,6 @@ class confedSetupDlg(QDialog, ui_confederationsetup.Ui_confedSetupDlg):
             if not maxConfedID:
                 confed_id = Constants.MinConfedID
             else:
-                self.mapper.submit()
                 confed_id = QString()
                 confed_id.setNum(maxConfedID+1)          
         self.model.insertRow(row)
@@ -1621,7 +1611,6 @@ class roundSetupDlg(QDialog, ui_roundsetup.Ui_roundSetupDlg):
             if not maxRoundID:
                 round_id = Constants.MinRoundID
             else:
-                self.mapper.submit()
                 round_id = QString()
                 round_id.setNum(maxRoundID+1)          
         self.model.insertRow(row)
@@ -1762,7 +1751,6 @@ class wxcondSetupDlg(QDialog, ui_weathersetup.Ui_wxcondSetupDlg):
             if not maxWeatherID:
                 weather_id = Constants.MinWeatherID
             else:
-                self.mapper.submit()
                 weather_id = QString()
                 weather_id.setNum(maxWeatherID+1)          
         self.model.insertRow(row)
