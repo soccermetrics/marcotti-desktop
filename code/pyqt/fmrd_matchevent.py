@@ -269,7 +269,6 @@ class goalEntryDlg(QDialog, ui_goalentry.Ui_goalEntryDlg):
             if not maxGoalID:
                 goal_id = Constants.MinGoalID
             else:
-                self.mapper.submit()
                 goal_id= QString()
                 goal_id.setNum(maxGoalID+1)                  
         self.model.insertRow(row)
@@ -667,7 +666,6 @@ class penaltyEntryDlg(QDialog, ui_penaltyentry.Ui_penaltyEntryDlg):
             if not maxPenaltyID:
                 penalty_id = Constants.MinPenaltyID
             else:
-                self.mapper.submit()
                 penalty_id = QString()
                 penalty_id.setNum(maxPenaltyID+1)                  
         self.model.insertRow(row)
@@ -1147,7 +1145,6 @@ class offenseEntryDlg(QDialog, ui_offenseentry.Ui_offenseEntryDlg):
             if not maxOffenseID:
                 offense_id = Constants.MinOffenseID
             else:
-                self.mapper.submit()
                 offense_id = QString()
                 offense_id.setNum(maxOffenseID+1)       
         self.model.insertRow(row)
@@ -1658,7 +1655,6 @@ class subsEntryDlg(QDialog, ui_subsentry.Ui_subsEntryDlg):
             if not maxSubsID:
                 subs_id = Constants.MinSubstitutionID
             else:
-                self.mapper.submit()
                 subs_id = QString()
                 subs_id.setNum(maxSubsID+1)                  
         self.model.insertRow(row)
@@ -2287,7 +2283,6 @@ class switchEntryDlg(QDialog, ui_switchentry.Ui_switchEntryDlg):
             if not maxSwitchID:
                 switch_id = Constants.MinSwitchID
             else:
-                self.mapper.submit()
                 switch_id = QString()
                 switch_id.setNum(maxSwitchID+1)                  
         self.model.insertRow(row)

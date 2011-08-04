@@ -330,7 +330,6 @@ class matchEntryDlg(QDialog, ui_matchentry.Ui_matchEntryDlg):
             if not maxMatchID:
                 match_id = Constants.MinMatchID
             else:
-                self.mapper.submit()
                 match_id= QString()
                 match_id.setNum(maxMatchID+1)                  
         self.model.insertRow(row)
