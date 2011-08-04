@@ -125,8 +125,10 @@ class managerEntryDlg(QDialog, ui_managerentry.Ui_managerEntryDlg):
         self.connect(self.mgrConfedSelect, SIGNAL("activated(int)"), self.filterCountryBox)
      
     def accept(self):
-        """Submits changes to database and closes window."""
-        self.mapper.submit()
+        """Submits changes to database and closes window upon confirmation from user."""
+        confirm = MsgPrompts.SaveDiscardOptionPrompt(self)
+        if confirm:
+            self.mapper.submit()
         QDialog.accept(self)
     
     def saveRecord(self, where):
@@ -357,8 +359,10 @@ class refereeEntryDlg(QDialog, ui_refereeentry.Ui_refereeEntryDlg):
         self.connect(self.refConfedSelect, SIGNAL("activated(int)"), self.filterCountryBox)
      
     def accept(self):
-        """Submits changes to database and closes window."""
-        self.mapper.submit()
+        """Submits changes to database and closes window upon confirmation from user."""
+        confirm = MsgPrompts.SaveDiscardOptionPrompt(self)
+        if confirm:
+            self.mapper.submit()
         QDialog.accept(self)
     
     def saveRecord(self, where):
@@ -603,8 +607,10 @@ class playerEntryDlg(QDialog, ui_playerentry.Ui_playerEntryDlg):
         self.connect(self.plyrConfedSelect, SIGNAL("currentIndexChanged(int)"), self.filterCountryBox)
      
     def accept(self):
-        """Submits changes to database and closes window."""
-        self.mapper.submit()
+        """Submits changes to database and closes window upon confirmation from user."""
+        confirm = MsgPrompts.SaveDiscardOptionPrompt(self)
+        if confirm:
+            self.mapper.submit()
         QDialog.accept(self)
     
     def saveRecord(self, where):
@@ -851,13 +857,12 @@ class lineupEntryDlg(QDialog, ui_lineupentry.Ui_lineupEntryDlg):
         
         self.connect(self.playerSelect, SIGNAL("currentIndexChanged(int)"), self.enableWidget)
         
-    def accept(self, match_id):
-        """Submits changes to database and closes window."""
-        #if self.checkPersonnelRecords(match_id, teamName):
+    def accept(self):
+        """Submits changes to database and closes window upon confirmation from user."""
+        confirm = MsgPrompts.SaveDiscardOptionPrompt(self)
+        if confirm:
+            self.mapper.submit()
         QDialog.accept(self)
-        #else:
-            # open dialog window  -- option to correct or close
-        #    MsgPrompts.LineupErrorPrompt(self)
     
     def addRecord(self):
         """Adds new record at end of entry list and updates status bar."""                
