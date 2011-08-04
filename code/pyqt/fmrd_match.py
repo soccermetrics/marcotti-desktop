@@ -246,8 +246,10 @@ class matchEntryDlg(QDialog, ui_matchentry.Ui_matchEntryDlg):
                                                                lambda: self.openLineups(self.matchID_display.text(), self.awayteamSelect.currentText()))
 
     def accept(self):
-        """Submits changes to database and closes window."""
-        self.mapper.submit()
+        """Submits changes to database and closes window upon confirmation from user."""
+        confirm = MsgPrompts.SaveDiscardOptionPrompt(self)
+        if confirm:
+            self.mapper.submit()
         QDialog.accept(self)
     
     def saveRecord(self, where):
@@ -611,8 +613,10 @@ class enviroEntryDlg(QDialog, ui_enviroentry.Ui_enviroEntryDlg):
                                                                       lambda: self.updateLinkingTable(self.fulltimeWeatherMapper, self.envFTWxSelect))
         
     def accept(self):
-        """Submits changes to database and closes window."""
-        self.mapper.submit()
+        """Submits changes to database and closes window upon confirmation from user."""
+        confirm = MsgPrompts.SaveDiscardOptionPrompt(self)
+        if confirm:
+            self.mapper.submit()
         QDialog.accept(self)
         
     def updateLinkingTable(self, mapper, editor):
