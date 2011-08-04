@@ -22,7 +22,7 @@ from PyQt4.QtGui import *
 from PyQt4.QtSql import *
 
 from FmrdAdmin import *
-from FmrdLib import Constants
+from FmrdLib import (Constants, MsgPrompts)
 from FmrdLib.CustomDelegates import *
 
 """ 
@@ -104,8 +104,10 @@ class cardSetupDlg(QDialog, ui_cardsetup.Ui_cardSetupDlg):
         self.connect(self.closeButton, SIGNAL("clicked()"), self.accept)
 
     def accept(self):
-        """Submits changes to database and closes window."""
-        self.mapper.submit()
+        """Submits changes to database and closes window upon confirmation from user."""
+        confirm = MsgPrompts.SaveDiscardOptionPrompt(self)
+        if confirm:
+            self.mapper.submit()
         QDialog.accept(self)
     
     def saveRecord(self, where):
@@ -243,8 +245,10 @@ class foulSetupDlg(QDialog, ui_foulsetup.Ui_foulSetupDlg):
         self.connect(self.closeButton, SIGNAL("clicked()"), self.accept)
 
     def accept(self):
-        """Submits changes to database and closes window."""
-        self.mapper.submit()
+        """Submits changes to database and closes window upon confirmation from user."""
+        confirm = MsgPrompts.SaveDiscardOptionPrompt(self)
+        if confirm:
+            self.mapper.submit()
         QDialog.accept(self)
     
     def saveRecord(self, where):
@@ -384,8 +388,10 @@ class penSetupDlg(QDialog, ui_penoutcomesetup.Ui_penSetupDlg):
         self.connect(self.closeButton, SIGNAL("clicked()"), self.accept)
 
     def accept(self):
-        """Submits changes to database and closes window."""
-        self.mapper.submit()
+        """Submits changes to database and closes window upon confirmation from user."""
+        confirm = MsgPrompts.SaveDiscardOptionPrompt(self)
+        if confirm:
+            self.mapper.submit()
         QDialog.accept(self)
     
     def saveRecord(self, where):
@@ -523,8 +529,10 @@ class goaleventSetupDlg(QDialog, ui_goaleventsetup.Ui_goaleventSetupDlg):
         self.connect(self.closeButton, SIGNAL("clicked()"), self.accept)
 
     def accept(self):
-        """Submits changes to database and closes window."""
-        self.mapper.submit()
+        """Submits changes to database and closes window upon confirmation from user."""
+        confirm = MsgPrompts.SaveDiscardOptionPrompt(self)
+        if confirm:
+            self.mapper.submit()
         QDialog.accept(self)
     
     def saveRecord(self, where):
@@ -661,8 +669,10 @@ class goalstrikeSetupDlg(QDialog, ui_goalstrikesetup.Ui_goalstrikeSetupDlg):
         self.connect(self.closeButton, SIGNAL("clicked()"), self.accept)
 
     def accept(self):
-        """Submits changes to database and closes window."""
-        self.mapper.submit()
+        """Submits changes to database and closes window upon confirmation from user."""
+        confirm = MsgPrompts.SaveDiscardOptionPrompt(self)
+        if confirm:
+            self.mapper.submit()
         QDialog.accept(self)
     
     def saveRecord(self, where):
@@ -800,8 +810,10 @@ class fieldposSetupDlg(QDialog, ui_fieldpossetup.Ui_fieldposSetupDlg):
         self.connect(self.closeButton, SIGNAL("clicked()"), self.accept)
 
     def accept(self):
-        """Submits changes to database and closes window."""
-        self.mapper.submit()
+        """Submits changes to database and closes window upon confirmation from user."""
+        confirm = MsgPrompts.SaveDiscardOptionPrompt(self)
+        if confirm:
+            self.mapper.submit()
         QDialog.accept(self)
     
     def saveRecord(self, where):
@@ -942,8 +954,10 @@ class flankposSetupDlg(QDialog, ui_flankpossetup.Ui_flankposSetupDlg):
         self.connect(self.closeButton, SIGNAL("clicked()"), self.accept)
 
     def accept(self):
-        """Submits changes to database and closes window."""
-        self.mapper.submit()
+        """Submits changes to database and closes window upon confirmation from user."""
+        confirm = MsgPrompts.SaveDiscardOptionPrompt(self)
+        if confirm:
+            self.mapper.submit()
         QDialog.accept(self)
     
     def saveRecord(self, where):
@@ -1098,9 +1112,11 @@ class posSetupDlg(QDialog, ui_positionsetup.Ui_posSetupDlg):
         self.connect(self.deleteEntry, SIGNAL("clicked()"), self.deleteRecord)        
         self.connect(self.closeButton, SIGNAL("clicked()"), self.accept)
         
-    def accept(self):        
-        """Submits changes to database and closes window."""
-        self.mapper.submit()
+    def accept(self):
+        """Submits changes to database and closes window upon confirmation from user."""
+        confirm = MsgPrompts.SaveDiscardOptionPrompt(self)
+        if confirm:
+            self.mapper.submit()
         QDialog.accept(self)
         
     def saveRecord(self, where):
@@ -1251,8 +1267,10 @@ class countrySetupDlg(QDialog, ui_countrysetup.Ui_countrySetupDlg):
         self.connect(self.closeButton, SIGNAL("clicked()"), self.accept)
         
     def accept(self):
-        """Submits changes to database and closes window."""
-        self.mapper.submit()
+        """Submits changes to database and closes window upon confirmation from user."""
+        confirm = MsgPrompts.SaveDiscardOptionPrompt(self)
+        if confirm:
+            self.mapper.submit()
         QDialog.accept(self)
         
     def saveRecord(self, where):
@@ -1395,8 +1413,10 @@ class confedSetupDlg(QDialog, ui_confederationsetup.Ui_confedSetupDlg):
         self.connect(self.closeButton, SIGNAL("clicked()"), self.accept)
 
     def accept(self):
-        """Submits changes to database and closes window."""
-        self.mapper.submit()
+        """Submits changes to database and closes window upon confirmation from user."""
+        confirm = MsgPrompts.SaveDiscardOptionPrompt(self)
+        if confirm:
+            self.mapper.submit()
         QDialog.accept(self)
         
     def saveRecord(self, where):
@@ -1535,8 +1555,10 @@ class roundSetupDlg(QDialog, ui_roundsetup.Ui_roundSetupDlg):
         self.connect(self.closeButton, SIGNAL("clicked()"), self.accept)
     
     def accept(self):
-        """Submits changes to database and closes window."""
-        self.mapper.submit()
+        """Submits changes to database and closes window upon confirmation from user."""
+        confirm = MsgPrompts.SaveDiscardOptionPrompt(self)
+        if confirm:
+            self.mapper.submit()
         QDialog.accept(self)
     
     def saveRecord(self, where):
@@ -1674,8 +1696,10 @@ class wxcondSetupDlg(QDialog, ui_weathersetup.Ui_wxcondSetupDlg):
         self.connect(self.closeButton, SIGNAL("clicked()"), self.accept)
 
     def accept(self):
-        """Submits changes to database and closes window."""
-        self.mapper.submit()
+        """Submits changes to database and closes window upon confirmation from user."""
+        confirm = MsgPrompts.SaveDiscardOptionPrompt(self)
+        if confirm:
+            self.mapper.submit()
         QDialog.accept(self)
     
     def saveRecord(self, where):
