@@ -105,15 +105,17 @@ class cardSetupDlg(QDialog, ui_cardsetup.Ui_cardSetupDlg):
 
     def accept(self):
         """Submits changes to database and closes window upon confirmation from user."""
-        confirm = MsgPrompts.SaveDiscardOptionPrompt(self)
-        if confirm:
-            self.mapper.submit()
+        if MsgPrompts.SaveDiscardOptionPrompt(self):
+            if not self.mapper.submit():
+                MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
         QDialog.accept(self)
     
     def saveRecord(self, where):
         """Submits changes to database and navigates through form."""
         row = self.mapper.currentIndex()
-        self.mapper.submit()
+        if not self.mapper.submit():
+            MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+        
         if where == Constants.FIRST:
             self.firstEntry.setDisabled(True)
             self.prevEntry.setDisabled(True)
@@ -154,7 +156,8 @@ class cardSetupDlg(QDialog, ui_cardsetup.Ui_cardSetupDlg):
         # save current index if valid
         row = self.mapper.currentIndex()
         if row != -1:
-            self.mapper.submit()
+            if not self.mapper.submit():
+                MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
         
         row = self.model.rowCount()
         query = QSqlQuery()
@@ -197,7 +200,8 @@ class cardSetupDlg(QDialog, ui_cardsetup.Ui_cardSetupDlg):
             else:
                 row = self.mapper.currentIndex()
                 self.model.removeRow(row)
-                self.model.submitAll()
+                if not self.model.submitAll():
+                    MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
                 if row + 1 >= self.model.rowCount():
                     row = self.model.rowCount() - 1
                 self.mapper.setCurrentIndex(row) 
@@ -246,15 +250,17 @@ class foulSetupDlg(QDialog, ui_foulsetup.Ui_foulSetupDlg):
 
     def accept(self):
         """Submits changes to database and closes window upon confirmation from user."""
-        confirm = MsgPrompts.SaveDiscardOptionPrompt(self)
-        if confirm:
-            self.mapper.submit()
+        if MsgPrompts.SaveDiscardOptionPrompt(self):
+            if not self.mapper.submit():
+                MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
         QDialog.accept(self)
     
     def saveRecord(self, where):
         """Submits changes to database and navigates through form."""
         row = self.mapper.currentIndex()
-        self.mapper.submit()
+        if not self.mapper.submit():
+            MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+
         if where == Constants.FIRST:
             self.firstEntry.setDisabled(True)
             self.prevEntry.setDisabled(True)
