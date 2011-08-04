@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>subsEntryDlg</class>
- <widget class="QDialog" name="subsEntryDlg">
+ <class>SubsEntryDlg</class>
+ <widget class="QDialog" name="SubsEntryDlg">
   <property name="geometry">
    <rect>
     <x>0</x>

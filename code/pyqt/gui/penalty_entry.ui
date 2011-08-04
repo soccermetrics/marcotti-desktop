@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>penaltyEntryDlg</class>
- <widget class="QDialog" name="penaltyEntryDlg">
+ <class>PenaltyEntryDlg</class>
+ <widget class="QDialog" name="PenaltyEntryDlg">
   <property name="geometry">
    <rect>
     <x>0</x>

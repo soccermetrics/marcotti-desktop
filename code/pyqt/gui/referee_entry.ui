@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>refereeEntryDlg</class>
- <widget class="QDialog" name="refereeEntryDlg">
+ <class>RefereeEntryDlg</class>
+ <widget class="QDialog" name="RefereeEntryDlg">
   <property name="geometry">
    <rect>
     <x>0</x>

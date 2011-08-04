@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>managerEntryDlg</class>
- <widget class="QDialog" name="managerEntryDlg">
+ <class>ManagerEntryDlg</class>
+ <widget class="QDialog" name="ManagerEntryDlg">
   <property name="geometry">
    <rect>
     <x>0</x>

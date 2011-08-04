@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>cardSetupDlg</class>
- <widget class="QDialog" name="cardSetupDlg">
+ <class>CardSetupDlg</class>
+ <widget class="QDialog" name="CardSetupDlg">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -256,6 +256,8 @@ p, li { white-space: pre-wrap; }
    </layout>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="fmrd_resources.qrc"/>
+ </resources>
  <connections/>
 </ui>

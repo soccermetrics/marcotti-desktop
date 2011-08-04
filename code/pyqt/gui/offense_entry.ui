@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>offenseEntryDlg</class>
- <widget class="QDialog" name="offenseEntryDlg">
+ <class>OffenseEntryDlg</class>
+ <widget class="QDialog" name="OffenseEntryDlg">
   <property name="geometry">
    <rect>
     <x>0</x>

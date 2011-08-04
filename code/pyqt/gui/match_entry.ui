@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>matchEntryDlg</class>
- <widget class="QDialog" name="matchEntryDlg">
+ <class>MatchEntryDlg</class>
+ <widget class="QDialog" name="MatchEntryDlg">
   <property name="geometry">
    <rect>
     <x>0</x>

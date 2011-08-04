@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>lineupEntryDlg</class>
- <widget class="QDialog" name="lineupEntryDlg">
+ <class>LineupEntryDlg</class>
+ <widget class="QDialog" name="LineupEntryDlg">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -571,12 +571,12 @@ p, li { white-space: pre-wrap; }
     </item>
    </layout>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>10</x>
      <y>321</y>
-     <width>481</width>
+     <width>487</width>
      <height>41</height>
     </rect>
    </property>

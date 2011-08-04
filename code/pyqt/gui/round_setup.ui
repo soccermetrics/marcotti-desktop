@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>roundSetupDlg</class>
- <widget class="QDialog" name="roundSetupDlg">
+ <class>RoundSetupDlg</class>
+ <widget class="QDialog" name="RoundSetupDlg">
   <property name="geometry">
    <rect>
     <x>0</x>

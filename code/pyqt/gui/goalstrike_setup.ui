@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>goalstrikeSetupDlg</class>
- <widget class="QDialog" name="goalstrikeSetupDlg">
+ <class>GoalStrikeSetupDlg</class>
+ <widget class="QDialog" name="GoalStrikeSetupDlg">
   <property name="geometry">
    <rect>
     <x>0</x>

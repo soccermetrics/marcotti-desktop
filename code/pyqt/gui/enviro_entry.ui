@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>enviroEntryDlg</class>
- <widget class="QDialog" name="enviroEntryDlg">
+ <class>EnviroEntryDlg</class>
+ <widget class="QDialog" name="EnviroEntryDlg">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -130,7 +130,7 @@ p, li { white-space: pre-wrap; }
     </item>
    </layout>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>8</x>
@@ -292,7 +292,7 @@ p, li { white-space: pre-wrap; }
     </item>
    </layout>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>10</x>
