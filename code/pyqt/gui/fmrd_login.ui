@@ -311,6 +311,10 @@ p, li { white-space: pre-wrap; }
   <slot>authenticate()</slot>
  </slots>
  <buttongroups>
-  <buttongroup name="switchboardGroup"/>
+  <buttongroup name="switchboardGroup">
+   <property name="exclusive">
+    <bool>false</bool>
+   </property>
+  </buttongroup>
  </buttongroups>
 </ui>

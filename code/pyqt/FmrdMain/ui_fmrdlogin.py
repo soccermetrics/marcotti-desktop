@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'gui/fmrd_login.ui'
 #
-# Created: Fri Aug  5 15:10:52 2011
+# Created: Fri Aug  5 15:22:11 2011
 #      by: PyQt4 UI code generator 4.7.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -79,17 +79,15 @@ class Ui_DBLoginDlg(object):
         self.userButton.setMaximumSize(QtCore.QSize(60, 30))
         self.userButton.setChecked(True)
         self.userButton.setObjectName("userButton")
-        self.QtGui.QApplication.translate("DBLoginDlg", "switchboardGroup", None, QtGui.QApplication.UnicodeUTF8) = QtGui.QButtonGroup(DBLoginDlg)
-        self.QtGui.QApplication.translate("DBLoginDlg", "switchboardGroup", None, QtGui.QApplication.UnicodeUTF8).setObjectName("QtGui.QApplication.translate(\"DBLoginDlg\", \"switchboardGroup\", None, QtGui.QApplication.UnicodeUTF8)")
-        self.QtGui.QApplication.translate("DBLoginDlg", "switchboardGroup", None, QtGui.QApplication.UnicodeUTF8).addButton(self.userButton)
         self.adminButton = QtGui.QRadioButton(DBLoginDlg)
         self.adminButton.setGeometry(QtCore.QRect(131, 1, 75, 30))
         self.adminButton.setMinimumSize(QtCore.QSize(75, 30))
         self.adminButton.setMaximumSize(QtCore.QSize(75, 30))
         self.adminButton.setObjectName("adminButton")
-        self.QtGui.QApplication.translate("DBLoginDlg", "switchboardGroup", None, QtGui.QApplication.UnicodeUTF8) = QtGui.QButtonGroup(DBLoginDlg)
-        self.QtGui.QApplication.translate("DBLoginDlg", "switchboardGroup", None, QtGui.QApplication.UnicodeUTF8).setObjectName("QtGui.QApplication.translate(\"DBLoginDlg\", \"switchboardGroup\", None, QtGui.QApplication.UnicodeUTF8)")
-        self.QtGui.QApplication.translate("DBLoginDlg", "switchboardGroup", None, QtGui.QApplication.UnicodeUTF8).addButton(self.adminButton)
+        self.switchboardGroup = QtGui.QButtonGroup(DBLoginDlg)
+        self.switchboardGroup.setObjectName("switchboardGroup")
+        self.switchboardGroup.addButton(self.userButton)
+        self.switchboardGroup.addButton(self.adminButton)
 
         self.retranslateUi(DBLoginDlg)
         QtCore.QObject.connect(self.buttonBox, QtCore.SIGNAL("accepted()"), DBLoginDlg.authenticate)
