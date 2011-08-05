@@ -26,16 +26,16 @@ from FmrdLib import (Constants, MsgPrompts)
 from FmrdLib.CustomDelegates import *
 from FmrdLib.CustomModels import *
 
-from fmrd_personnel import lineupEntryDlg
+from fmrd_personnel import LineupEntryDlg
 
 """Contains classes that implement entry forms to match tables of FMRD.
 
 Classes:
-enviroEntryDlg - data entry to Environments table
-matchEntryDlg - data entry to Matches table
+EnviroEntryDlg - data entry to Environments table
+MatchEntryDlg - data entry to Matches table
 """
 
-class matchEntryDlg(QDialog, ui_matchentry.Ui_matchEntryDlg):
+class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
     """Implements match entry dialog, and accesses and writes to Matches table.
     
     This dialog is one of the central dialogs of the database entry form. It accepts
@@ -47,8 +47,8 @@ class matchEntryDlg(QDialog, ui_matchentry.Ui_matchEntryDlg):
     ID,  DATE, HALF1, HALF2, COMP_ID, ROUND_ID, VENUE_ID, REF_ID = range(8)
     
     def __init__(self, parent=None):
-        """Constructor for matchEntryDlg class."""
-        super(matchEntryDlg, self).__init__(parent)
+        """Constructor for MatchEntryDlg class."""
+        super(MatchEntryDlg, self).__init__(parent)
         self.setupUi(self)
         
         # define local parameters
@@ -64,11 +64,11 @@ class matchEntryDlg(QDialog, ui_matchentry.Ui_matchEntryDlg):
         # because of foreign keys, instantiate QSqlRelationalTableModel and define relations to it
         self.model = QSqlRelationalTableModel(self)
         self.model.setTable("tbl_matches")
-        self.model.setRelation(matchEntryDlg.COMP_ID, QSqlRelation("tbl_competitions", "competition_id", "comp_name"))
-        self.model.setRelation(matchEntryDlg.ROUND_ID, QSqlRelation("tbl_rounds", "round_id", "round_desc"))
-        self.model.setRelation(matchEntryDlg.VENUE_ID, QSqlRelation("tbl_venues", "venue_id", "ven_name"))
-        self.model.setRelation(matchEntryDlg.REF_ID, QSqlRelation("referees_list", "referee_id", "full_name"))
-        self.model.setSort(matchEntryDlg.ID, Qt.AscendingOrder)
+        self.model.setRelation(MatchEntryDlg.COMP_ID, QSqlRelation("tbl_competitions", "competition_id", "comp_name"))
+        self.model.setRelation(MatchEntryDlg.ROUND_ID, QSqlRelation("tbl_rounds", "round_id", "round_desc"))
+        self.model.setRelation(MatchEntryDlg.VENUE_ID, QSqlRelation("tbl_venues", "venue_id", "ven_name"))
+        self.model.setRelation(MatchEntryDlg.REF_ID, QSqlRelation("referees_list", "referee_id", "full_name"))
+        self.model.setSort(MatchEntryDlg.ID, Qt.AscendingOrder)
         self.model.select()
         
         # define mapper
@@ -79,38 +79,38 @@ class matchEntryDlg(QDialog, ui_matchentry.Ui_matchEntryDlg):
         self.mapper.setItemDelegate(QSqlRelationalDelegate(self))        
 
         # relation model for Competitions combobox
-        self.compModel = self.model.relationModel(matchEntryDlg.COMP_ID)
+        self.compModel = self.model.relationModel(MatchEntryDlg.COMP_ID)
         self.compModel.setSort(CMP_ID, Qt.AscendingOrder)
         self.matchCompSelect.setModel(self.compModel)
         self.matchCompSelect.setModelColumn(self.compModel.fieldIndex("comp_name"))
-        self.mapper.addMapping(self.matchCompSelect, matchEntryDlg.COMP_ID)
+        self.mapper.addMapping(self.matchCompSelect, MatchEntryDlg.COMP_ID)
         
         # relation model for Rounds combobox
-        self.roundModel = self.model.relationModel(matchEntryDlg.ROUND_ID)
+        self.roundModel = self.model.relationModel(MatchEntryDlg.ROUND_ID)
         self.roundModel.setSort(RND_ID, Qt.AscendingOrder)
         self.matchRoundSelect.setModel(self.roundModel)
         self.matchRoundSelect.setModelColumn(self.roundModel.fieldIndex("round_desc"))
-        self.mapper.addMapping(self.matchRoundSelect, matchEntryDlg.ROUND_ID)
+        self.mapper.addMapping(self.matchRoundSelect, MatchEntryDlg.ROUND_ID)
         
         # relation model for Venues combobox
-        self.venueModel = self.model.relationModel(matchEntryDlg.VENUE_ID)
+        self.venueModel = self.model.relationModel(MatchEntryDlg.VENUE_ID)
         self.venueModel.setSort(VEN_ID, Qt.AscendingOrder)
         self.matchVenueSelect.setModel(self.venueModel)
         self.matchVenueSelect.setModelColumn(self.venueModel.fieldIndex("ven_name"))
-        self.mapper.addMapping(self.matchVenueSelect, matchEntryDlg.VENUE_ID)
+        self.mapper.addMapping(self.matchVenueSelect, MatchEntryDlg.VENUE_ID)
         
         # relation model for Referees combobox
-        self.refereeModel = self.model.relationModel(matchEntryDlg.REF_ID)
+        self.refereeModel = self.model.relationModel(MatchEntryDlg.REF_ID)
         self.refereeModel.setSort(REF_SORT, Qt.AscendingOrder)
         self.matchRefSelect.setModel(self.refereeModel)
         self.matchRefSelect.setModelColumn(self.refereeModel.fieldIndex("full_name"))
-        self.mapper.addMapping(self.matchRefSelect, matchEntryDlg.REF_ID)        
+        self.mapper.addMapping(self.matchRefSelect, MatchEntryDlg.REF_ID)        
 
         # map other widgets on form
-        self.mapper.addMapping(self.matchID_display, matchEntryDlg.ID)
-        self.mapper.addMapping(self.matchDateEdit, matchEntryDlg.DATE)
-        self.mapper.addMapping(self.firstHalfLengthEdit, matchEntryDlg.HALF1)
-        self.mapper.addMapping(self.secondHalfLengthEdit, matchEntryDlg.HALF2)
+        self.mapper.addMapping(self.matchID_display, MatchEntryDlg.ID)
+        self.mapper.addMapping(self.matchDateEdit, MatchEntryDlg.DATE)
+        self.mapper.addMapping(self.firstHalfLengthEdit, MatchEntryDlg.HALF1)
+        self.mapper.addMapping(self.secondHalfLengthEdit, MatchEntryDlg.HALF2)
         self.mapper.toFirst()
         
         # define models used in Team and Manager comboboxes
@@ -462,7 +462,7 @@ class matchEntryDlg(QDialog, ui_matchentry.Ui_matchEntryDlg):
     def openEnviros(self, match_id):
         """Opens Environment subdialog for a specific match from Match dialog.
         
-        Saves current match record and instantiates enviroEntryDlg object and opens window.
+        Saves current match record and instantiates EnviroEntryDlg object and opens window.
         Argument: 
         match_id -- primary key of current record in Matches table
         
@@ -471,13 +471,13 @@ class matchEntryDlg(QDialog, ui_matchentry.Ui_matchEntryDlg):
             MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
             return
             
-        subdialog = enviroEntryDlg(match_id, self)
+        subdialog = EnviroEntryDlg(match_id, self)
         subdialog.exec_()
         
     def openLineups(self, match_id, teamName):
         """Opens Lineups subdialog for one of the teams in a specific match from Match dialog.
         
-        Saves current match record, instantiates lineupEntryDlg object and opens window.
+        Saves current match record, instantiates LineupEntryDlg object and opens window.
         Arguments: 
         match_id -- primary key of current record in Matches table
         teamName -- team name corresponding to one of the two participants in 
@@ -491,12 +491,12 @@ class matchEntryDlg(QDialog, ui_matchentry.Ui_matchEntryDlg):
             MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
             return
             
-        subdialog = lineupEntryDlg(match_id, teamName, self)
+        subdialog = LineupEntryDlg(match_id, teamName, self)
 #        print "Match ID: %s" % match_id
 #        print "Team Name: %s" % teamName
         subdialog.exec_()
     
-class enviroEntryDlg(QDialog, ui_enviroentry.Ui_enviroEntryDlg):
+class EnviroEntryDlg(QDialog, ui_enviroentry.Ui_EnviroEntryDlg):
     """Implements environmental conditions data entry dialog, and accesses and writes to Environments table.
     
     This is a subdialog of the environmental conditions of the match -- kickoff time, ambient temperature, 
@@ -510,10 +510,10 @@ class enviroEntryDlg(QDialog, ui_enviroentry.Ui_enviroEntryDlg):
     ENVIRO_ID,  MATCH_ID,  KICKOFF,  TEMP = range(4)
     
     def __init__(self, match_id, parent=None):
-        """Constructor for enviroEntryDlg class"""
-        super(enviroEntryDlg, self).__init__(parent)
+        """Constructor for EnviroEntryDlg class"""
+        super(EnviroEntryDlg, self).__init__(parent)
         self.setupUi(self)
-#        print "Calling init() in enviroEntryDlg"
+#        print "Calling init() in EnviroEntryDlg"
         
         # define local parameters
         WX_COND = KICKOFF_WX = HALFTIME_WX = FULLTIME_WX = 1
@@ -551,10 +551,10 @@ class enviroEntryDlg(QDialog, ui_enviroentry.Ui_enviroEntryDlg):
         self.mapper = QDataWidgetMapper(self)
         self.mapper.setSubmitPolicy(QDataWidgetMapper.AutoSubmit)
         self.mapper.setModel(self.model)
-        self.mapper.addMapping(self.enviroID_display, enviroEntryDlg.ENVIRO_ID)
-        self.mapper.addMapping(self.matchID_display, enviroEntryDlg.MATCH_ID)
-        self.mapper.addMapping(self.envKOTimeEdit, enviroEntryDlg.KICKOFF)
-        self.mapper.addMapping(self.envKOTempEdit, enviroEntryDlg.TEMP)
+        self.mapper.addMapping(self.enviroID_display, EnviroEntryDlg.ENVIRO_ID)
+        self.mapper.addMapping(self.matchID_display, EnviroEntryDlg.MATCH_ID)
+        self.mapper.addMapping(self.envKOTimeEdit, EnviroEntryDlg.KICKOFF)
+        self.mapper.addMapping(self.envKOTempEdit, EnviroEntryDlg.TEMP)
         self.mapper.toFirst()
 
         # define Weather Conditions table

@@ -108,89 +108,89 @@ class MainSwitchboard(QMainWindow, ui_mainswitchboard.Ui_MainSwitchboard):
         
     def OpenCards(self):
         """Opens Disciplinary Cards window."""
-        dialog = cardSetupDlg(self)
+        dialog = CardSetupDlg(self)
         dialog.exec_()
         
     def OpenFouls(self):
         """Opens Fouls window."""
-        dialog = foulSetupDlg(self)
+        dialog = FoulSetupDlg(self)
         dialog.exec_()
         
     def OpenPenOutcomes(self):
         """Opens Penalty Outcomes window."""
-        dialog = penSetupDlg(self)
+        dialog = PenSetupDlg(self)
         dialog.exec_()
         
     def OpenGoalEvents(self):
         """Opens Goal Events window."""
-        dialog = goaleventSetupDlg(self)
+        dialog = GoalEventSetupDlg(self)
         dialog.exec_()
         
     def OpenGoalStrikes(self):
         """Opens Goal Strikes window."""
-        dialog = goalstrikeSetupDlg(self)
+        dialog = GoalStrikeSetupDlg(self)
         dialog.exec_()
         
     def OpenFieldPositions(self):
         """Opens Field Position Name window."""
-        dialog = fieldposSetupDlg(self)
+        dialog = FieldPosSetupDlg(self)
         dialog.exec_()
         
     def OpenFlankPositions(self):
         """Opens Flank Name window."""
-        dialog = flankposSetupDlg(self)
+        dialog = FlankPosSetupDlg(self)
         dialog.exec_()
         
     def OpenPositions(self):
         """Opens composite Position Name window."""
-        dialog = posSetupDlg(self)
+        dialog = PosSetupDlg(self)
         dialog.exec_()
         
     def OpenCountries(self):
         """Opens Country window."""
-        dialog = countrySetupDlg(self)
+        dialog = CountrySetupDlg(self)
         dialog.exec_()
         
     def OpenConfederations(self):
         """Opens Confederation window."""
-        dialog = confedSetupDlg(self)
+        dialog = ConfedSetupDlg(self)
         dialog.exec_()
         
     def OpenRounds(self):
         """Opens Matchday (Rounds) window."""
-        dialog = roundSetupDlg(self)
+        dialog = RoundSetupDlg(self)
         dialog.exec_()
         
     def OpenWeatherConditions(self):
         """Opens Weather Conditions window."""
-        dialog = wxcondSetupDlg(self)
+        dialog = WxCondSetupDlg(self)
         dialog.exec_()
         
     # routines for opening main dialogs (access by pushbuttons)
     
     def OpenCompetitions(self):
         """Opens Competitions window."""
-        dialog = compEntryDlg(self)
+        dialog = CompEntryDlg(self)
         dialog.exec_()
                 
     def OpenTeams(self):
         """Opens Teams window."""
-        dialog = teamEntryDlg(self)
+        dialog = TeamEntryDlg(self)
         dialog.exec_()
         
     def OpenPlayers(self):
         """Opens Players window."""
-        dialog = playerEntryDlg(self)
+        dialog = PlayerEntryDlg(self)
         dialog.exec_()
         
     def OpenManagers(self):
         """Opens Managers window."""
-        dialog = managerEntryDlg(self)
+        dialog = ManagerEntryDlg(self)
         dialog.exec_()
         
     def OpenReferees(self):
         """Opens Referees window."""
-        dialog = refereeEntryDlg(self)
+        dialog = RefereeEntryDlg(self)
         dialog.exec_()
 
     def OpenVenues(self):
@@ -202,7 +202,7 @@ class MainSwitchboard(QMainWindow, ui_mainswitchboard.Ui_MainSwitchboard):
         if not CheckMinimumVenueHosts():
             VenueErrorPrompt(self)
         else:
-            dialog = venueEntryDlg(self)
+            dialog = VenueEntryDlg(self)
             dialog.exec_()
         
     def OpenMatches(self):
@@ -219,7 +219,7 @@ class MainSwitchboard(QMainWindow, ui_mainswitchboard.Ui_MainSwitchboard):
         if not CheckMinimumMatchCriteria():
             MatchErrorPrompt(self)
         else:
-            dialog = matchEntryDlg(self)
+            dialog = MatchEntryDlg(self)
             dialog.exec_()
 
     def OpenGoals(self):
@@ -234,7 +234,7 @@ class MainSwitchboard(QMainWindow, ui_mainswitchboard.Ui_MainSwitchboard):
         if not CheckMinimumLineups():
             MatchDetailErrorPrompt(self)
         else:
-            dialog = goalEntryDlg(self)
+            dialog = GoalEntryDlg(self)
             dialog.exec_()
         
     def OpenPenalties(self):
@@ -249,7 +249,7 @@ class MainSwitchboard(QMainWindow, ui_mainswitchboard.Ui_MainSwitchboard):
         if not CheckMinimumLineups():
             MatchDetailErrorPrompt(self)
         else:
-            dialog = penaltyEntryDlg(self)
+            dialog = PenaltyEntryDlg(self)
             dialog.exec_()
         
     def OpenOffenses(self):
@@ -264,7 +264,7 @@ class MainSwitchboard(QMainWindow, ui_mainswitchboard.Ui_MainSwitchboard):
         if not CheckMinimumLineups():
             MatchDetailErrorPrompt(self)
         else:      
-            dialog = offenseEntryDlg(self)
+            dialog = OffenseEntryDlg(self)
             dialog.exec_()
         
     def OpenSubstitutions(self):
@@ -276,7 +276,7 @@ class MainSwitchboard(QMainWindow, ui_mainswitchboard.Ui_MainSwitchboard):
         if not CheckMinimumSubstitutes():
             SubstitutesErrorPrompt(self)
         else:
-            dialog = subsEntryDlg(self)
+            dialog = SubsEntryDlg(self)
             dialog.exec_()
         
     def OpenPosSwitches(self):
@@ -291,7 +291,7 @@ class MainSwitchboard(QMainWindow, ui_mainswitchboard.Ui_MainSwitchboard):
         if not CheckMinimumLineups():
             MatchDetailErrorPrompt(self)
         else:        
-            dialog = switchEntryDlg(self)
+            dialog = SwitchEntryDlg(self)
             dialog.exec_()
         
     def close(self):

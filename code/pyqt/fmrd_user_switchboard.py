@@ -95,27 +95,27 @@ class UserMainSwitchboard(QMainWindow, ui_usermainswitchboard.Ui_UserMainSwitchb
     
     def OpenCompetitions(self):
         """Opens Competitions window."""
-        dialog = compEntryDlg(self)
+        dialog = CompEntryDlg(self)
         dialog.exec_()
                 
     def OpenTeams(self):
         """Opens Teams window."""
-        dialog = teamEntryDlg(self)
+        dialog = TeamEntryDlg(self)
         dialog.exec_()
         
     def OpenPlayers(self):
         """Opens Players window."""
-        dialog = playerEntryDlg(self)
+        dialog = PlayerEntryDlg(self)
         dialog.exec_()
         
     def OpenManagers(self):
         """Opens Managers window."""
-        dialog = managerEntryDlg(self)
+        dialog = ManagerEntryDlg(self)
         dialog.exec_()
         
     def OpenReferees(self):
         """Opens Referees window."""
-        dialog = refereeEntryDlg(self)
+        dialog = RefereeEntryDlg(self)
         dialog.exec_()
 
     def OpenVenues(self):
@@ -127,7 +127,7 @@ class UserMainSwitchboard(QMainWindow, ui_usermainswitchboard.Ui_UserMainSwitchb
         if not CheckMinimumVenueHosts():
             VenueErrorPrompt(self)
         else:
-            dialog = venueEntryDlg(self)
+            dialog = VenueEntryDlg(self)
             dialog.exec_()
         
     def OpenMatches(self):
@@ -144,7 +144,7 @@ class UserMainSwitchboard(QMainWindow, ui_usermainswitchboard.Ui_UserMainSwitchb
         if not CheckMinimumMatchCriteria():
             MatchErrorPrompt(self)
         else:
-            dialog = matchEntryDlg(self)
+            dialog = MatchEntryDlg(self)
             dialog.exec_()
 
     def OpenGoals(self):
@@ -159,7 +159,7 @@ class UserMainSwitchboard(QMainWindow, ui_usermainswitchboard.Ui_UserMainSwitchb
         if not CheckMinimumLineups():
             MatchDetailErrorPrompt(self)
         else:
-            dialog = goalEntryDlg(self)
+            dialog = GoalEntryDlg(self)
             dialog.exec_()
         
     def OpenPenalties(self):
@@ -174,7 +174,7 @@ class UserMainSwitchboard(QMainWindow, ui_usermainswitchboard.Ui_UserMainSwitchb
         if not CheckMinimumLineups():
             MatchDetailErrorPrompt(self)
         else:
-            dialog = penaltyEntryDlg(self)
+            dialog = PenaltyEntryDlg(self)
             dialog.exec_()
         
     def OpenOffenses(self):
@@ -189,7 +189,7 @@ class UserMainSwitchboard(QMainWindow, ui_usermainswitchboard.Ui_UserMainSwitchb
         if not CheckMinimumLineups():
             MatchDetailErrorPrompt(self)
         else:      
-            dialog = offenseEntryDlg(self)
+            dialog = OffenseEntryDlg(self)
             dialog.exec_()
         
     def OpenSubstitutions(self):
@@ -201,7 +201,7 @@ class UserMainSwitchboard(QMainWindow, ui_usermainswitchboard.Ui_UserMainSwitchb
         if not CheckMinimumSubstitutes():
             SubstitutesErrorPrompt(self)
         else:
-            dialog = subsEntryDlg(self)
+            dialog = SubsEntryDlg(self)
             dialog.exec_()
         
     def OpenPosSwitches(self):
@@ -216,7 +216,7 @@ class UserMainSwitchboard(QMainWindow, ui_usermainswitchboard.Ui_UserMainSwitchb
         if not CheckMinimumLineups():
             MatchDetailErrorPrompt(self)
         else:        
-            dialog = switchEntryDlg(self)
+            dialog = SwitchEntryDlg(self)
             dialog.exec_()
         
     def close(self):

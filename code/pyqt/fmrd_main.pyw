@@ -43,7 +43,7 @@ def main():
         
     # create app and login objects
     app = QApplication(sys.argv)
-    login = dbLoginDlg() 
+    login = DBLoginDlg() 
         
     # open login window with wrapper function so that tuple is returned
     # status = (QDialog.DialogCode, ButtonState)

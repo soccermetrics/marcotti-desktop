@@ -27,19 +27,19 @@ from FmrdLib import Constants
 """
 Contains implementation of login dialog for access to FMRD.
 
-Only class: dbLoginDlg
+Only class: DBLoginDlg
 """
 
 
-class dbLoginDlg(QDialog, ui_fmrdlogin.Ui_dbLoginDlg):
+class DBLoginDlg(QDialog, ui_fmrdlogin.Ui_DBLoginDlg):
     """Implements login dialog for access to database application.
     
-    Inherits Ui_dbLoginDlg (ui_fmrdlogin)
+    Inherits Ui_DBLoginDlg (ui_fmrdlogin)
     """
         
     def __init__(self):
-        """ Constructor for dbLoginDlg class."""
-        super(dbLoginDlg, self).__init__()
+        """ Constructor for DBLoginDlg class."""
+        super(DBLoginDlg, self).__init__()
         self.setupUi(self)
 
         self.attempts = 0
