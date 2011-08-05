@@ -2083,7 +2083,7 @@ class SwitchEntryDlg(QDialog, ui_switchentry.Ui_SwitchEntryDlg):
     tracking forced changes of in-field players due to an expulsion of a goalkeeper, but it can
     track tactical position changes as well.
    """
-    FIRST,  PREV,  NEXT,  LAST = range(4)
+   
     ID, LINEUP_ID, POS_ID, TIME, STIME = range(5)
     
     def __init__(self, parent=None):
@@ -2213,10 +2213,10 @@ class SwitchEntryDlg(QDialog, ui_switchentry.Ui_SwitchEntryDlg):
         # Signals/Slots configuration
         #
 
-        self.connect(self.firstEntry, SIGNAL("clicked()"), lambda: self.saveRecord(SwitchEntryDlg.FIRST))
-        self.connect(self.prevEntry, SIGNAL("clicked()"), lambda: self.saveRecord(SwitchEntryDlg.PREV))
-        self.connect(self.nextEntry, SIGNAL("clicked()"), lambda: self.saveRecord(SwitchEntryDlg.NEXT))
-        self.connect(self.lastEntry, SIGNAL("clicked()"), lambda: self.saveRecord(SwitchEntryDlg.LAST))
+        self.connect(self.firstEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.FIRST))
+        self.connect(self.prevEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.PREV))
+        self.connect(self.nextEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.NEXT))
+        self.connect(self.lastEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.LAST))
         self.connect(self.addEntry, SIGNAL("clicked()"), self.addRecord)
         self.connect(self.deleteEntry, SIGNAL("clicked()"), self.deleteRecord)           
         self.connect(self.closeButton, SIGNAL("clicked()"), self.accept)
@@ -2241,14 +2241,14 @@ class SwitchEntryDlg(QDialog, ui_switchentry.Ui_SwitchEntryDlg):
         if not self.mapper.submit():
             MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
         
-        if where == SwitchEntryDlg.FIRST:
+        if where == Constants.FIRST:
             self.firstEntry.setDisabled(True)
             self.prevEntry.setDisabled(True)
             if not self.nextEntry.isEnabled():
                 self.nextEntry.setEnabled(True)
                 self.lastEntry.setEnabled(True)
             row = 0
-        elif where == SwitchEntryDlg.PREV:
+        elif where == Constants.PREV:
             row -= 1
             if not self.nextEntry.isEnabled():
                     self.nextEntry.setEnabled(True)
@@ -2256,7 +2256,7 @@ class SwitchEntryDlg(QDialog, ui_switchentry.Ui_SwitchEntryDlg):
             if row == 0:
                 self.firstEntry.setDisabled(True)
                 self.prevEntry.setDisabled(True)                
-        elif where == SwitchEntryDlg.NEXT:
+        elif where == Constants.NEXT:
             row += 1
             if not self.prevEntry.isEnabled():
                 self.prevEntry.setEnabled(True)
@@ -2264,7 +2264,7 @@ class SwitchEntryDlg(QDialog, ui_switchentry.Ui_SwitchEntryDlg):
             if row == self.model.rowCount() - 1:
                 self.nextEntry.setDisabled(True)
                 self.lastEntry.setDisabled(True)
-        elif where == SwitchEntryDlg.LAST:
+        elif where == Constants.LAST:
             self.nextEntry.setDisabled(True)
             self.lastEntry.setDisabled(True)
             if not self.prevEntry.isEnabled():
