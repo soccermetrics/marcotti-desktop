@@ -1,21 +1,21 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'penalty_entry.ui'
+# Form implementation generated from reading ui file 'gui/penalty_entry.ui'
 #
-# Created: Fri Jan 28 01:00:49 2011
+# Created: Fri Aug  5 15:10:57 2011
 #      by: PyQt4 UI code generator 4.7.2
 #
 # WARNING! All changes made in this file will be lost!
 
 from PyQt4 import QtCore, QtGui
 
-class Ui_penaltyEntryDlg(object):
-    def setupUi(self, penaltyEntryDlg):
-        penaltyEntryDlg.setObjectName("penaltyEntryDlg")
-        penaltyEntryDlg.resize(560, 450)
-        penaltyEntryDlg.setMinimumSize(QtCore.QSize(560, 450))
-        penaltyEntryDlg.setMaximumSize(QtCore.QSize(560, 450))
-        self.layoutWidget_2 = QtGui.QWidget(penaltyEntryDlg)
+class Ui_PenaltyEntryDlg(object):
+    def setupUi(self, PenaltyEntryDlg):
+        PenaltyEntryDlg.setObjectName("PenaltyEntryDlg")
+        PenaltyEntryDlg.resize(560, 450)
+        PenaltyEntryDlg.setMinimumSize(QtCore.QSize(560, 450))
+        PenaltyEntryDlg.setMaximumSize(QtCore.QSize(560, 450))
+        self.layoutWidget_2 = QtGui.QWidget(PenaltyEntryDlg)
         self.layoutWidget_2.setGeometry(QtCore.QRect(10, 151, 421, 241))
         self.layoutWidget_2.setObjectName("layoutWidget_2")
         self.gridLayout_2 = QtGui.QGridLayout(self.layoutWidget_2)
@@ -96,7 +96,7 @@ class Ui_penaltyEntryDlg(object):
         self.gridLayout_2.addLayout(self.horizontalLayout, 5, 1, 1, 1)
         spacerItem = QtGui.QSpacerItem(138, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
         self.gridLayout_2.addItem(spacerItem, 5, 2, 1, 1)
-        self.layoutWidget_3 = QtGui.QWidget(penaltyEntryDlg)
+        self.layoutWidget_3 = QtGui.QWidget(PenaltyEntryDlg)
         self.layoutWidget_3.setGeometry(QtCore.QRect(40, 400, 351, 41))
         self.layoutWidget_3.setObjectName("layoutWidget_3")
         self.horizontalLayout_2 = QtGui.QHBoxLayout(self.layoutWidget_3)
@@ -137,7 +137,7 @@ class Ui_penaltyEntryDlg(object):
         self.lastEntry.setIcon(icon3)
         self.lastEntry.setObjectName("lastEntry")
         self.horizontalLayout_2.addWidget(self.lastEntry)
-        self.layoutWidget_4 = QtGui.QWidget(penaltyEntryDlg)
+        self.layoutWidget_4 = QtGui.QWidget(PenaltyEntryDlg)
         self.layoutWidget_4.setGeometry(QtCore.QRect(10, 6, 421, 121))
         self.layoutWidget_4.setObjectName("layoutWidget_4")
         self.gridLayout = QtGui.QGridLayout(self.layoutWidget_4)
@@ -172,17 +172,17 @@ class Ui_penaltyEntryDlg(object):
         self.matchSelect.setMaximumSize(QtCore.QSize(271, 31))
         self.matchSelect.setObjectName("matchSelect")
         self.gridLayout.addWidget(self.matchSelect, 2, 1, 1, 1)
-        self.line = QtGui.QFrame(penaltyEntryDlg)
+        self.line = QtGui.QFrame(PenaltyEntryDlg)
         self.line.setGeometry(QtCore.QRect(10, 130, 431, 16))
         self.line.setFrameShape(QtGui.QFrame.HLine)
         self.line.setFrameShadow(QtGui.QFrame.Sunken)
         self.line.setObjectName("line")
-        self.line_2 = QtGui.QFrame(penaltyEntryDlg)
+        self.line_2 = QtGui.QFrame(PenaltyEntryDlg)
         self.line_2.setGeometry(QtCore.QRect(430, 0, 20, 391))
         self.line_2.setFrameShape(QtGui.QFrame.VLine)
         self.line_2.setFrameShadow(QtGui.QFrame.Sunken)
         self.line_2.setObjectName("line_2")
-        self.layoutWidget = QtGui.QWidget(penaltyEntryDlg)
+        self.layoutWidget = QtGui.QWidget(PenaltyEntryDlg)
         self.layoutWidget.setGeometry(QtCore.QRect(450, 150, 101, 241))
         self.layoutWidget.setObjectName("layoutWidget")
         self.verticalLayout = QtGui.QVBoxLayout(self.layoutWidget)
@@ -214,78 +214,78 @@ class Ui_penaltyEntryDlg(object):
         self.closeButton.setObjectName("closeButton")
         self.verticalLayout.addWidget(self.closeButton)
 
-        self.retranslateUi(penaltyEntryDlg)
-        QtCore.QMetaObject.connectSlotsByName(penaltyEntryDlg)
+        self.retranslateUi(PenaltyEntryDlg)
+        QtCore.QMetaObject.connectSlotsByName(PenaltyEntryDlg)
 
-    def retranslateUi(self, penaltyEntryDlg):
-        penaltyEntryDlg.setWindowTitle(QtGui.QApplication.translate("penaltyEntryDlg", "Penalty Kick Entry", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_4.setText(QtGui.QApplication.translate("penaltyEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+    def retranslateUi(self, PenaltyEntryDlg):
+        PenaltyEntryDlg.setWindowTitle(QtGui.QApplication.translate("PenaltyEntryDlg", "Penalty Kick Entry", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_4.setText(QtGui.QApplication.translate("PenaltyEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Penalty ID</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_5.setText(QtGui.QApplication.translate("penaltyEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.label_5.setText(QtGui.QApplication.translate("PenaltyEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Team</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.teamSelect.setToolTip(QtGui.QApplication.translate("penaltyEntryDlg", "Team of penalty kick taker", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_10.setText(QtGui.QApplication.translate("penaltyEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.teamSelect.setToolTip(QtGui.QApplication.translate("PenaltyEntryDlg", "Team of penalty kick taker", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_10.setText(QtGui.QApplication.translate("PenaltyEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Player</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.playerSelect.setToolTip(QtGui.QApplication.translate("penaltyEntryDlg", "Penalty kick taker", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_7.setText(QtGui.QApplication.translate("penaltyEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.playerSelect.setToolTip(QtGui.QApplication.translate("PenaltyEntryDlg", "Penalty kick taker", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_7.setText(QtGui.QApplication.translate("PenaltyEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Foul</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.foulSelect.setToolTip(QtGui.QApplication.translate("penaltyEntryDlg", "Foul that resulted in penalty", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_6.setText(QtGui.QApplication.translate("penaltyEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.foulSelect.setToolTip(QtGui.QApplication.translate("PenaltyEntryDlg", "Foul that resulted in penalty", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_6.setText(QtGui.QApplication.translate("PenaltyEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Penalty Outcome</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.penoutcomeSelect.setToolTip(QtGui.QApplication.translate("penaltyEntryDlg", "Penalty kick outcome", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_8.setText(QtGui.QApplication.translate("penaltyEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.penoutcomeSelect.setToolTip(QtGui.QApplication.translate("PenaltyEntryDlg", "Penalty kick outcome", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_8.setText(QtGui.QApplication.translate("PenaltyEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Time of Penalty</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.pentimeEdit.setToolTip(QtGui.QApplication.translate("penaltyEntryDlg", "Match time", None, QtGui.QApplication.UnicodeUTF8))
-        self.pentimeEdit.setInputMask(QtGui.QApplication.translate("penaltyEntryDlg", "00; ", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_9.setText(QtGui.QApplication.translate("penaltyEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.pentimeEdit.setToolTip(QtGui.QApplication.translate("PenaltyEntryDlg", "Match time", None, QtGui.QApplication.UnicodeUTF8))
+        self.pentimeEdit.setInputMask(QtGui.QApplication.translate("PenaltyEntryDlg", "00; ", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_9.setText(QtGui.QApplication.translate("PenaltyEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:14pt; font-weight:600;\">+</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.stoppageEdit.setToolTip(QtGui.QApplication.translate("penaltyEntryDlg", "Stoppage time", None, QtGui.QApplication.UnicodeUTF8))
-        self.stoppageEdit.setInputMask(QtGui.QApplication.translate("penaltyEntryDlg", "00; ", None, QtGui.QApplication.UnicodeUTF8))
-        self.firstEntry.setToolTip(QtGui.QApplication.translate("penaltyEntryDlg", "First Entry", None, QtGui.QApplication.UnicodeUTF8))
-        self.prevEntry.setToolTip(QtGui.QApplication.translate("penaltyEntryDlg", "Previous Entry", None, QtGui.QApplication.UnicodeUTF8))
-        self.nextEntry.setToolTip(QtGui.QApplication.translate("penaltyEntryDlg", "Next Entry", None, QtGui.QApplication.UnicodeUTF8))
-        self.lastEntry.setToolTip(QtGui.QApplication.translate("penaltyEntryDlg", "Last Entry", None, QtGui.QApplication.UnicodeUTF8))
-        self.label.setText(QtGui.QApplication.translate("penaltyEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.stoppageEdit.setToolTip(QtGui.QApplication.translate("PenaltyEntryDlg", "Stoppage time", None, QtGui.QApplication.UnicodeUTF8))
+        self.stoppageEdit.setInputMask(QtGui.QApplication.translate("PenaltyEntryDlg", "00; ", None, QtGui.QApplication.UnicodeUTF8))
+        self.firstEntry.setToolTip(QtGui.QApplication.translate("PenaltyEntryDlg", "First Entry", None, QtGui.QApplication.UnicodeUTF8))
+        self.prevEntry.setToolTip(QtGui.QApplication.translate("PenaltyEntryDlg", "Previous Entry", None, QtGui.QApplication.UnicodeUTF8))
+        self.nextEntry.setToolTip(QtGui.QApplication.translate("PenaltyEntryDlg", "Next Entry", None, QtGui.QApplication.UnicodeUTF8))
+        self.lastEntry.setToolTip(QtGui.QApplication.translate("PenaltyEntryDlg", "Last Entry", None, QtGui.QApplication.UnicodeUTF8))
+        self.label.setText(QtGui.QApplication.translate("PenaltyEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Competition</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_2.setText(QtGui.QApplication.translate("penaltyEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.label_2.setText(QtGui.QApplication.translate("PenaltyEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Round</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_3.setText(QtGui.QApplication.translate("penaltyEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.label_3.setText(QtGui.QApplication.translate("PenaltyEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Match</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.addEntry.setToolTip(QtGui.QApplication.translate("penaltyEntryDlg", "Add Entry", None, QtGui.QApplication.UnicodeUTF8))
-        self.addEntry.setText(QtGui.QApplication.translate("penaltyEntryDlg", "&Add", None, QtGui.QApplication.UnicodeUTF8))
-        self.deleteEntry.setToolTip(QtGui.QApplication.translate("penaltyEntryDlg", "Delete Entry", None, QtGui.QApplication.UnicodeUTF8))
-        self.deleteEntry.setText(QtGui.QApplication.translate("penaltyEntryDlg", "&Delete", None, QtGui.QApplication.UnicodeUTF8))
-        self.closeButton.setToolTip(QtGui.QApplication.translate("penaltyEntryDlg", "Close Window", None, QtGui.QApplication.UnicodeUTF8))
-        self.closeButton.setText(QtGui.QApplication.translate("penaltyEntryDlg", "&Close", None, QtGui.QApplication.UnicodeUTF8))
+        self.addEntry.setToolTip(QtGui.QApplication.translate("PenaltyEntryDlg", "Add Entry", None, QtGui.QApplication.UnicodeUTF8))
+        self.addEntry.setText(QtGui.QApplication.translate("PenaltyEntryDlg", "&Add", None, QtGui.QApplication.UnicodeUTF8))
+        self.deleteEntry.setToolTip(QtGui.QApplication.translate("PenaltyEntryDlg", "Delete Entry", None, QtGui.QApplication.UnicodeUTF8))
+        self.deleteEntry.setText(QtGui.QApplication.translate("PenaltyEntryDlg", "&Delete", None, QtGui.QApplication.UnicodeUTF8))
+        self.closeButton.setToolTip(QtGui.QApplication.translate("PenaltyEntryDlg", "Close Window", None, QtGui.QApplication.UnicodeUTF8))
+        self.closeButton.setText(QtGui.QApplication.translate("PenaltyEntryDlg", "&Close", None, QtGui.QApplication.UnicodeUTF8))
 
 import fmrd_resources_rc

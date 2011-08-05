@@ -1,21 +1,21 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'flankpos_setup.ui'
+# Form implementation generated from reading ui file 'gui/flankpos_setup.ui'
 #
-# Created: Tue Jan 25 22:03:17 2011
+# Created: Fri Aug  5 15:11:04 2011
 #      by: PyQt4 UI code generator 4.7.2
 #
 # WARNING! All changes made in this file will be lost!
 
 from PyQt4 import QtCore, QtGui
 
-class Ui_flankposSetupDlg(object):
-    def setupUi(self, flankposSetupDlg):
-        flankposSetupDlg.setObjectName("flankposSetupDlg")
-        flankposSetupDlg.resize(600, 140)
-        flankposSetupDlg.setMinimumSize(QtCore.QSize(600, 140))
-        flankposSetupDlg.setMaximumSize(QtCore.QSize(640, 180))
-        self.layoutWidget = QtGui.QWidget(flankposSetupDlg)
+class Ui_FlankPosSetupDlg(object):
+    def setupUi(self, FlankPosSetupDlg):
+        FlankPosSetupDlg.setObjectName("FlankPosSetupDlg")
+        FlankPosSetupDlg.resize(600, 140)
+        FlankPosSetupDlg.setMinimumSize(QtCore.QSize(600, 140))
+        FlankPosSetupDlg.setMaximumSize(QtCore.QSize(640, 180))
+        self.layoutWidget = QtGui.QWidget(FlankPosSetupDlg)
         self.layoutWidget.setGeometry(QtCore.QRect(12, 20, 552, 51))
         self.layoutWidget.setObjectName("layoutWidget")
         self.horizontalLayout = QtGui.QHBoxLayout(self.layoutWidget)
@@ -38,7 +38,7 @@ class Ui_flankposSetupDlg(object):
         self.flankposEdit.setMinimumSize(QtCore.QSize(271, 27))
         self.flankposEdit.setObjectName("flankposEdit")
         self.horizontalLayout.addWidget(self.flankposEdit)
-        self.layoutWidget1 = QtGui.QWidget(flankposSetupDlg)
+        self.layoutWidget1 = QtGui.QWidget(FlankPosSetupDlg)
         self.layoutWidget1.setGeometry(QtCore.QRect(10, 70, 261, 51))
         self.layoutWidget1.setObjectName("layoutWidget1")
         self.horizontalLayout_2 = QtGui.QHBoxLayout(self.layoutWidget1)
@@ -73,7 +73,7 @@ class Ui_flankposSetupDlg(object):
         self.horizontalLayout_2.addWidget(self.lastEntry)
         spacerItem1 = QtGui.QSpacerItem(18, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
         self.horizontalLayout_2.addItem(spacerItem1)
-        self.layoutWidget2 = QtGui.QWidget(flankposSetupDlg)
+        self.layoutWidget2 = QtGui.QWidget(FlankPosSetupDlg)
         self.layoutWidget2.setGeometry(QtCore.QRect(290, 70, 275, 51))
         self.layoutWidget2.setObjectName("layoutWidget2")
         self.horizontalLayout_3 = QtGui.QHBoxLayout(self.layoutWidget2)
@@ -101,31 +101,31 @@ class Ui_flankposSetupDlg(object):
         self.label.setBuddy(self.flankposID_display)
         self.label_2.setBuddy(self.flankposEdit)
 
-        self.retranslateUi(flankposSetupDlg)
-        QtCore.QMetaObject.connectSlotsByName(flankposSetupDlg)
+        self.retranslateUi(FlankPosSetupDlg)
+        QtCore.QMetaObject.connectSlotsByName(FlankPosSetupDlg)
 
-    def retranslateUi(self, flankposSetupDlg):
-        flankposSetupDlg.setWindowTitle(QtGui.QApplication.translate("flankposSetupDlg", "Flank Position Setup", None, QtGui.QApplication.UnicodeUTF8))
-        self.label.setText(QtGui.QApplication.translate("flankposSetupDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+    def retranslateUi(self, FlankPosSetupDlg):
+        FlankPosSetupDlg.setWindowTitle(QtGui.QApplication.translate("FlankPosSetupDlg", "Flank Position Setup", None, QtGui.QApplication.UnicodeUTF8))
+        self.label.setText(QtGui.QApplication.translate("FlankPosSetupDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans Serif\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">&amp;ID</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_2.setText(QtGui.QApplication.translate("flankposSetupDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.label_2.setText(QtGui.QApplication.translate("FlankPosSetupDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'Sans Serif\'; font-weight:600;\">&amp;Flank Position</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.flankposEdit.setToolTip(QtGui.QApplication.translate("flankposSetupDlg", "Description of flank area", None, QtGui.QApplication.UnicodeUTF8))
-        self.firstEntry.setToolTip(QtGui.QApplication.translate("flankposSetupDlg", "First Entry", None, QtGui.QApplication.UnicodeUTF8))
-        self.prevEntry.setToolTip(QtGui.QApplication.translate("flankposSetupDlg", "Previous Entry", None, QtGui.QApplication.UnicodeUTF8))
-        self.nextEntry.setToolTip(QtGui.QApplication.translate("flankposSetupDlg", "Next Entry", None, QtGui.QApplication.UnicodeUTF8))
-        self.lastEntry.setToolTip(QtGui.QApplication.translate("flankposSetupDlg", "Last Entry", None, QtGui.QApplication.UnicodeUTF8))
-        self.addEntry.setToolTip(QtGui.QApplication.translate("flankposSetupDlg", "Add Entry", None, QtGui.QApplication.UnicodeUTF8))
-        self.addEntry.setText(QtGui.QApplication.translate("flankposSetupDlg", "&Add", None, QtGui.QApplication.UnicodeUTF8))
-        self.deleteEntry.setToolTip(QtGui.QApplication.translate("flankposSetupDlg", "Delete Entry", None, QtGui.QApplication.UnicodeUTF8))
-        self.deleteEntry.setText(QtGui.QApplication.translate("flankposSetupDlg", "&Delete", None, QtGui.QApplication.UnicodeUTF8))
-        self.closeButton.setToolTip(QtGui.QApplication.translate("flankposSetupDlg", "Close Window", None, QtGui.QApplication.UnicodeUTF8))
-        self.closeButton.setText(QtGui.QApplication.translate("flankposSetupDlg", "&Close", None, QtGui.QApplication.UnicodeUTF8))
+        self.flankposEdit.setToolTip(QtGui.QApplication.translate("FlankPosSetupDlg", "Description of flank area", None, QtGui.QApplication.UnicodeUTF8))
+        self.firstEntry.setToolTip(QtGui.QApplication.translate("FlankPosSetupDlg", "First Entry", None, QtGui.QApplication.UnicodeUTF8))
+        self.prevEntry.setToolTip(QtGui.QApplication.translate("FlankPosSetupDlg", "Previous Entry", None, QtGui.QApplication.UnicodeUTF8))
+        self.nextEntry.setToolTip(QtGui.QApplication.translate("FlankPosSetupDlg", "Next Entry", None, QtGui.QApplication.UnicodeUTF8))
+        self.lastEntry.setToolTip(QtGui.QApplication.translate("FlankPosSetupDlg", "Last Entry", None, QtGui.QApplication.UnicodeUTF8))
+        self.addEntry.setToolTip(QtGui.QApplication.translate("FlankPosSetupDlg", "Add Entry", None, QtGui.QApplication.UnicodeUTF8))
+        self.addEntry.setText(QtGui.QApplication.translate("FlankPosSetupDlg", "&Add", None, QtGui.QApplication.UnicodeUTF8))
+        self.deleteEntry.setToolTip(QtGui.QApplication.translate("FlankPosSetupDlg", "Delete Entry", None, QtGui.QApplication.UnicodeUTF8))
+        self.deleteEntry.setText(QtGui.QApplication.translate("FlankPosSetupDlg", "&Delete", None, QtGui.QApplication.UnicodeUTF8))
+        self.closeButton.setToolTip(QtGui.QApplication.translate("FlankPosSetupDlg", "Close Window", None, QtGui.QApplication.UnicodeUTF8))
+        self.closeButton.setText(QtGui.QApplication.translate("FlankPosSetupDlg", "&Close", None, QtGui.QApplication.UnicodeUTF8))
 
 import fmrd_resources_rc

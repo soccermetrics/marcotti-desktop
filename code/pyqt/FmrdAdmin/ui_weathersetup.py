@@ -1,21 +1,21 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'weather_setup.ui'
+# Form implementation generated from reading ui file 'gui/weather_setup.ui'
 #
-# Created: Tue Jan 25 22:03:13 2011
+# Created: Fri Aug  5 15:11:08 2011
 #      by: PyQt4 UI code generator 4.7.2
 #
 # WARNING! All changes made in this file will be lost!
 
 from PyQt4 import QtCore, QtGui
 
-class Ui_wxcondSetupDlg(object):
-    def setupUi(self, wxcondSetupDlg):
-        wxcondSetupDlg.setObjectName("wxcondSetupDlg")
-        wxcondSetupDlg.resize(600, 140)
-        wxcondSetupDlg.setMinimumSize(QtCore.QSize(600, 140))
-        wxcondSetupDlg.setMaximumSize(QtCore.QSize(640, 180))
-        self.layoutWidget = QtGui.QWidget(wxcondSetupDlg)
+class Ui_WxCondSetupDlg(object):
+    def setupUi(self, WxCondSetupDlg):
+        WxCondSetupDlg.setObjectName("WxCondSetupDlg")
+        WxCondSetupDlg.resize(600, 140)
+        WxCondSetupDlg.setMinimumSize(QtCore.QSize(600, 140))
+        WxCondSetupDlg.setMaximumSize(QtCore.QSize(640, 180))
+        self.layoutWidget = QtGui.QWidget(WxCondSetupDlg)
         self.layoutWidget.setGeometry(QtCore.QRect(12, 20, 552, 51))
         self.layoutWidget.setObjectName("layoutWidget")
         self.horizontalLayout = QtGui.QHBoxLayout(self.layoutWidget)
@@ -39,7 +39,7 @@ class Ui_wxcondSetupDlg(object):
         self.wxcondEdit.setMaximumSize(QtCore.QSize(231, 27))
         self.wxcondEdit.setObjectName("wxcondEdit")
         self.horizontalLayout.addWidget(self.wxcondEdit)
-        self.layoutWidget1 = QtGui.QWidget(wxcondSetupDlg)
+        self.layoutWidget1 = QtGui.QWidget(WxCondSetupDlg)
         self.layoutWidget1.setGeometry(QtCore.QRect(10, 70, 261, 51))
         self.layoutWidget1.setObjectName("layoutWidget1")
         self.horizontalLayout_2 = QtGui.QHBoxLayout(self.layoutWidget1)
@@ -74,7 +74,7 @@ class Ui_wxcondSetupDlg(object):
         self.horizontalLayout_2.addWidget(self.lastEntry)
         spacerItem1 = QtGui.QSpacerItem(18, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
         self.horizontalLayout_2.addItem(spacerItem1)
-        self.layoutWidget2 = QtGui.QWidget(wxcondSetupDlg)
+        self.layoutWidget2 = QtGui.QWidget(WxCondSetupDlg)
         self.layoutWidget2.setGeometry(QtCore.QRect(290, 70, 275, 51))
         self.layoutWidget2.setObjectName("layoutWidget2")
         self.horizontalLayout_3 = QtGui.QHBoxLayout(self.layoutWidget2)
@@ -102,31 +102,31 @@ class Ui_wxcondSetupDlg(object):
         self.label.setBuddy(self.weatherID_display)
         self.label_2.setBuddy(self.wxcondEdit)
 
-        self.retranslateUi(wxcondSetupDlg)
-        QtCore.QMetaObject.connectSlotsByName(wxcondSetupDlg)
+        self.retranslateUi(WxCondSetupDlg)
+        QtCore.QMetaObject.connectSlotsByName(WxCondSetupDlg)
 
-    def retranslateUi(self, wxcondSetupDlg):
-        wxcondSetupDlg.setWindowTitle(QtGui.QApplication.translate("wxcondSetupDlg", "Weather Conditions Setup", None, QtGui.QApplication.UnicodeUTF8))
-        self.label.setText(QtGui.QApplication.translate("wxcondSetupDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+    def retranslateUi(self, WxCondSetupDlg):
+        WxCondSetupDlg.setWindowTitle(QtGui.QApplication.translate("WxCondSetupDlg", "Weather Conditions Setup", None, QtGui.QApplication.UnicodeUTF8))
+        self.label.setText(QtGui.QApplication.translate("WxCondSetupDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans Serif\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">&amp;ID</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_2.setText(QtGui.QApplication.translate("wxcondSetupDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.label_2.setText(QtGui.QApplication.translate("WxCondSetupDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'Sans Serif\'; font-weight:600;\">&amp;Weather Conditions</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.wxcondEdit.setToolTip(QtGui.QApplication.translate("wxcondSetupDlg", "Predominate weather condition (NWS)", None, QtGui.QApplication.UnicodeUTF8))
-        self.firstEntry.setToolTip(QtGui.QApplication.translate("wxcondSetupDlg", "First Entry", None, QtGui.QApplication.UnicodeUTF8))
-        self.prevEntry.setToolTip(QtGui.QApplication.translate("wxcondSetupDlg", "Previous Entry", None, QtGui.QApplication.UnicodeUTF8))
-        self.nextEntry.setToolTip(QtGui.QApplication.translate("wxcondSetupDlg", "Next Entry", None, QtGui.QApplication.UnicodeUTF8))
-        self.lastEntry.setToolTip(QtGui.QApplication.translate("wxcondSetupDlg", "Last Entry", None, QtGui.QApplication.UnicodeUTF8))
-        self.addEntry.setToolTip(QtGui.QApplication.translate("wxcondSetupDlg", "Add Entry", None, QtGui.QApplication.UnicodeUTF8))
-        self.addEntry.setText(QtGui.QApplication.translate("wxcondSetupDlg", "&Add", None, QtGui.QApplication.UnicodeUTF8))
-        self.deleteEntry.setToolTip(QtGui.QApplication.translate("wxcondSetupDlg", "Delete Entry", None, QtGui.QApplication.UnicodeUTF8))
-        self.deleteEntry.setText(QtGui.QApplication.translate("wxcondSetupDlg", "&Delete", None, QtGui.QApplication.UnicodeUTF8))
-        self.closeButton.setToolTip(QtGui.QApplication.translate("wxcondSetupDlg", "Close Window", None, QtGui.QApplication.UnicodeUTF8))
-        self.closeButton.setText(QtGui.QApplication.translate("wxcondSetupDlg", "&Close", None, QtGui.QApplication.UnicodeUTF8))
+        self.wxcondEdit.setToolTip(QtGui.QApplication.translate("WxCondSetupDlg", "Predominate weather condition (NWS)", None, QtGui.QApplication.UnicodeUTF8))
+        self.firstEntry.setToolTip(QtGui.QApplication.translate("WxCondSetupDlg", "First Entry", None, QtGui.QApplication.UnicodeUTF8))
+        self.prevEntry.setToolTip(QtGui.QApplication.translate("WxCondSetupDlg", "Previous Entry", None, QtGui.QApplication.UnicodeUTF8))
+        self.nextEntry.setToolTip(QtGui.QApplication.translate("WxCondSetupDlg", "Next Entry", None, QtGui.QApplication.UnicodeUTF8))
+        self.lastEntry.setToolTip(QtGui.QApplication.translate("WxCondSetupDlg", "Last Entry", None, QtGui.QApplication.UnicodeUTF8))
+        self.addEntry.setToolTip(QtGui.QApplication.translate("WxCondSetupDlg", "Add Entry", None, QtGui.QApplication.UnicodeUTF8))
+        self.addEntry.setText(QtGui.QApplication.translate("WxCondSetupDlg", "&Add", None, QtGui.QApplication.UnicodeUTF8))
+        self.deleteEntry.setToolTip(QtGui.QApplication.translate("WxCondSetupDlg", "Delete Entry", None, QtGui.QApplication.UnicodeUTF8))
+        self.deleteEntry.setText(QtGui.QApplication.translate("WxCondSetupDlg", "&Delete", None, QtGui.QApplication.UnicodeUTF8))
+        self.closeButton.setToolTip(QtGui.QApplication.translate("WxCondSetupDlg", "Close Window", None, QtGui.QApplication.UnicodeUTF8))
+        self.closeButton.setText(QtGui.QApplication.translate("WxCondSetupDlg", "&Close", None, QtGui.QApplication.UnicodeUTF8))
 
 import fmrd_resources_rc

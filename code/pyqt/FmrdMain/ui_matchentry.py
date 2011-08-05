@@ -1,39 +1,39 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'match_entry.ui'
+# Form implementation generated from reading ui file 'gui/match_entry.ui'
 #
-# Created: Sun Feb 13 22:11:13 2011
+# Created: Fri Aug  5 15:10:55 2011
 #      by: PyQt4 UI code generator 4.7.2
 #
 # WARNING! All changes made in this file will be lost!
 
 from PyQt4 import QtCore, QtGui
 
-class Ui_matchEntryDlg(object):
-    def setupUi(self, matchEntryDlg):
-        matchEntryDlg.setObjectName("matchEntryDlg")
-        matchEntryDlg.resize(848, 424)
-        matchEntryDlg.setMinimumSize(QtCore.QSize(848, 424))
-        matchEntryDlg.setMaximumSize(QtCore.QSize(848, 424))
-        self.label_4 = QtGui.QLabel(matchEntryDlg)
+class Ui_MatchEntryDlg(object):
+    def setupUi(self, MatchEntryDlg):
+        MatchEntryDlg.setObjectName("MatchEntryDlg")
+        MatchEntryDlg.resize(848, 424)
+        MatchEntryDlg.setMinimumSize(QtCore.QSize(848, 424))
+        MatchEntryDlg.setMaximumSize(QtCore.QSize(848, 424))
+        self.label_4 = QtGui.QLabel(MatchEntryDlg)
         self.label_4.setGeometry(QtCore.QRect(208, 9, 36, 17))
         self.label_4.setObjectName("label_4")
-        self.matchDateEdit = QtGui.QLineEdit(matchEntryDlg)
+        self.matchDateEdit = QtGui.QLineEdit(MatchEntryDlg)
         self.matchDateEdit.setGeometry(QtCore.QRect(250, 9, 91, 27))
         self.matchDateEdit.setMinimumSize(QtCore.QSize(91, 27))
         self.matchDateEdit.setMaximumSize(QtCore.QSize(91, 27))
         self.matchDateEdit.setObjectName("matchDateEdit")
-        self.line = QtGui.QFrame(matchEntryDlg)
+        self.line = QtGui.QFrame(MatchEntryDlg)
         self.line.setGeometry(QtCore.QRect(9, 42, 831, 16))
         self.line.setFrameShape(QtGui.QFrame.HLine)
         self.line.setFrameShadow(QtGui.QFrame.Sunken)
         self.line.setObjectName("line")
-        self.line_2 = QtGui.QFrame(matchEntryDlg)
+        self.line_2 = QtGui.QFrame(MatchEntryDlg)
         self.line_2.setGeometry(QtCore.QRect(410, 60, 16, 281))
         self.line_2.setFrameShape(QtGui.QFrame.VLine)
         self.line_2.setFrameShadow(QtGui.QFrame.Sunken)
         self.line_2.setObjectName("line_2")
-        self.overviewBox = QtGui.QGroupBox(matchEntryDlg)
+        self.overviewBox = QtGui.QGroupBox(MatchEntryDlg)
         self.overviewBox.setGeometry(QtCore.QRect(10, 60, 391, 214))
         self.overviewBox.setObjectName("overviewBox")
         self.gridLayout_3 = QtGui.QGridLayout(self.overviewBox)
@@ -72,22 +72,22 @@ class Ui_matchEntryDlg(object):
         self.matchRefSelect.setMaximumSize(QtCore.QSize(271, 31))
         self.matchRefSelect.setObjectName("matchRefSelect")
         self.gridLayout_3.addWidget(self.matchRefSelect, 4, 1, 1, 1)
-        self.line_3 = QtGui.QFrame(matchEntryDlg)
+        self.line_3 = QtGui.QFrame(MatchEntryDlg)
         self.line_3.setGeometry(QtCore.QRect(0, 350, 841, 16))
         self.line_3.setFrameShape(QtGui.QFrame.HLine)
         self.line_3.setFrameShadow(QtGui.QFrame.Sunken)
         self.line_3.setObjectName("line_3")
-        self.matchID_display = QtGui.QLineEdit(matchEntryDlg)
+        self.matchID_display = QtGui.QLineEdit(MatchEntryDlg)
         self.matchID_display.setGeometry(QtCore.QRect(82, 9, 120, 27))
         self.matchID_display.setMaximumSize(QtCore.QSize(120, 27))
         self.matchID_display.setStyleSheet("background-color: rgb(194, 190, 186);")
         self.matchID_display.setMaxLength(7)
         self.matchID_display.setReadOnly(True)
         self.matchID_display.setObjectName("matchID_display")
-        self.label = QtGui.QLabel(matchEntryDlg)
+        self.label = QtGui.QLabel(MatchEntryDlg)
         self.label.setGeometry(QtCore.QRect(9, 9, 67, 17))
         self.label.setObjectName("label")
-        self.layoutWidget = QtGui.QWidget(matchEntryDlg)
+        self.layoutWidget = QtGui.QWidget(MatchEntryDlg)
         self.layoutWidget.setGeometry(QtCore.QRect(40, 280, 332, 65))
         self.layoutWidget.setObjectName("layoutWidget")
         self.horizontalLayout_5 = QtGui.QHBoxLayout(self.layoutWidget)
@@ -118,7 +118,7 @@ class Ui_matchEntryDlg(object):
         self.horizontalLayout_5.addWidget(self.timeBox)
         spacerItem1 = QtGui.QSpacerItem(98, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
         self.horizontalLayout_5.addItem(spacerItem1)
-        self.layoutWidget1 = QtGui.QWidget(matchEntryDlg)
+        self.layoutWidget1 = QtGui.QWidget(MatchEntryDlg)
         self.layoutWidget1.setGeometry(QtCore.QRect(420, 360, 391, 41))
         self.layoutWidget1.setObjectName("layoutWidget1")
         self.horizontalLayout_8 = QtGui.QHBoxLayout(self.layoutWidget1)
@@ -154,7 +154,7 @@ class Ui_matchEntryDlg(object):
         self.horizontalLayout_8.addLayout(self.horizontalLayout_3)
         spacerItem3 = QtGui.QSpacerItem(28, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
         self.horizontalLayout_8.addItem(spacerItem3)
-        self.layoutWidget2 = QtGui.QWidget(matchEntryDlg)
+        self.layoutWidget2 = QtGui.QWidget(MatchEntryDlg)
         self.layoutWidget2.setGeometry(QtCore.QRect(42, 360, 328, 41))
         self.layoutWidget2.setObjectName("layoutWidget2")
         self.horizontalLayout_2 = QtGui.QHBoxLayout(self.layoutWidget2)
@@ -195,7 +195,7 @@ class Ui_matchEntryDlg(object):
         self.lastEntry.setIcon(icon6)
         self.lastEntry.setObjectName("lastEntry")
         self.horizontalLayout_2.addWidget(self.lastEntry)
-        self.layoutWidget3 = QtGui.QWidget(matchEntryDlg)
+        self.layoutWidget3 = QtGui.QWidget(MatchEntryDlg)
         self.layoutWidget3.setGeometry(QtCore.QRect(431, 61, 381, 216))
         self.layoutWidget3.setObjectName("layoutWidget3")
         self.verticalLayout = QtGui.QVBoxLayout(self.layoutWidget3)
@@ -251,7 +251,7 @@ class Ui_matchEntryDlg(object):
         self.awaymgrSelect.setObjectName("awaymgrSelect")
         self.gridLayout.addWidget(self.awaymgrSelect, 1, 1, 1, 1)
         self.verticalLayout.addWidget(self.awayteamBox)
-        self.layoutWidget4 = QtGui.QWidget(matchEntryDlg)
+        self.layoutWidget4 = QtGui.QWidget(MatchEntryDlg)
         self.layoutWidget4.setGeometry(QtCore.QRect(430, 278, 381, 61))
         self.layoutWidget4.setObjectName("layoutWidget4")
         self.horizontalLayout_4 = QtGui.QHBoxLayout(self.layoutWidget4)
@@ -291,107 +291,107 @@ class Ui_matchEntryDlg(object):
         self.label_9.setBuddy(self.awayteamSelect)
         self.label_10.setBuddy(self.awaymgrSelect)
 
-        self.retranslateUi(matchEntryDlg)
-        QtCore.QMetaObject.connectSlotsByName(matchEntryDlg)
+        self.retranslateUi(MatchEntryDlg)
+        QtCore.QMetaObject.connectSlotsByName(MatchEntryDlg)
 
-    def retranslateUi(self, matchEntryDlg):
-        matchEntryDlg.setWindowTitle(QtGui.QApplication.translate("matchEntryDlg", "Match Entry", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_4.setText(QtGui.QApplication.translate("matchEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+    def retranslateUi(self, MatchEntryDlg):
+        MatchEntryDlg.setWindowTitle(QtGui.QApplication.translate("MatchEntryDlg", "Match Entry", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_4.setText(QtGui.QApplication.translate("MatchEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Date</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.matchDateEdit.setToolTip(QtGui.QApplication.translate("matchEntryDlg", "Match date (YYYY-MM-DD)", None, QtGui.QApplication.UnicodeUTF8))
-        self.matchDateEdit.setInputMask(QtGui.QApplication.translate("matchEntryDlg", "9999-99-99; ", None, QtGui.QApplication.UnicodeUTF8))
-        self.matchDateEdit.setText(QtGui.QApplication.translate("matchEntryDlg", "1901-01-01", None, QtGui.QApplication.UnicodeUTF8))
-        self.overviewBox.setTitle(QtGui.QApplication.translate("matchEntryDlg", "Match Overview", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_2.setText(QtGui.QApplication.translate("matchEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.matchDateEdit.setToolTip(QtGui.QApplication.translate("MatchEntryDlg", "Match date (YYYY-MM-DD)", None, QtGui.QApplication.UnicodeUTF8))
+        self.matchDateEdit.setInputMask(QtGui.QApplication.translate("MatchEntryDlg", "9999-99-99; ", None, QtGui.QApplication.UnicodeUTF8))
+        self.matchDateEdit.setText(QtGui.QApplication.translate("MatchEntryDlg", "1901-01-01", None, QtGui.QApplication.UnicodeUTF8))
+        self.overviewBox.setTitle(QtGui.QApplication.translate("MatchEntryDlg", "Match Overview", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_2.setText(QtGui.QApplication.translate("MatchEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Competition</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.matchCompSelect.setToolTip(QtGui.QApplication.translate("matchEntryDlg", "Football competition", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_3.setText(QtGui.QApplication.translate("matchEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.matchCompSelect.setToolTip(QtGui.QApplication.translate("MatchEntryDlg", "Football competition", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_3.setText(QtGui.QApplication.translate("MatchEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Round</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.matchRoundSelect.setToolTip(QtGui.QApplication.translate("matchEntryDlg", "Competition phase", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_5.setText(QtGui.QApplication.translate("matchEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.matchRoundSelect.setToolTip(QtGui.QApplication.translate("MatchEntryDlg", "Competition phase", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_5.setText(QtGui.QApplication.translate("MatchEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Venue</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.matchVenueSelect.setToolTip(QtGui.QApplication.translate("matchEntryDlg", "Match venue", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_6.setText(QtGui.QApplication.translate("matchEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.matchVenueSelect.setToolTip(QtGui.QApplication.translate("MatchEntryDlg", "Match venue", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_6.setText(QtGui.QApplication.translate("MatchEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Referee</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.matchRefSelect.setToolTip(QtGui.QApplication.translate("matchEntryDlg", "Match referee", None, QtGui.QApplication.UnicodeUTF8))
-        self.label.setText(QtGui.QApplication.translate("matchEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.matchRefSelect.setToolTip(QtGui.QApplication.translate("MatchEntryDlg", "Match referee", None, QtGui.QApplication.UnicodeUTF8))
+        self.label.setText(QtGui.QApplication.translate("MatchEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'Sans Serif\'; font-weight:600;\">Match &amp;ID</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.timeBox.setTitle(QtGui.QApplication.translate("matchEntryDlg", "Match Time", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_11.setText(QtGui.QApplication.translate("matchEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.timeBox.setTitle(QtGui.QApplication.translate("MatchEntryDlg", "Match Time", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_11.setText(QtGui.QApplication.translate("MatchEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">1st half</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.firstHalfLengthEdit.setToolTip(QtGui.QApplication.translate("matchEntryDlg", "Total playing time of first half", None, QtGui.QApplication.UnicodeUTF8))
-        self.firstHalfLengthEdit.setInputMask(QtGui.QApplication.translate("matchEntryDlg", "99; ", None, QtGui.QApplication.UnicodeUTF8))
-        self.firstHalfLengthEdit.setText(QtGui.QApplication.translate("matchEntryDlg", "45", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_12.setText(QtGui.QApplication.translate("matchEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.firstHalfLengthEdit.setToolTip(QtGui.QApplication.translate("MatchEntryDlg", "Total playing time of first half", None, QtGui.QApplication.UnicodeUTF8))
+        self.firstHalfLengthEdit.setInputMask(QtGui.QApplication.translate("MatchEntryDlg", "99; ", None, QtGui.QApplication.UnicodeUTF8))
+        self.firstHalfLengthEdit.setText(QtGui.QApplication.translate("MatchEntryDlg", "45", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_12.setText(QtGui.QApplication.translate("MatchEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">2nd half</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.secondHalfLengthEdit.setToolTip(QtGui.QApplication.translate("matchEntryDlg", "Total playing time of second half", None, QtGui.QApplication.UnicodeUTF8))
-        self.secondHalfLengthEdit.setInputMask(QtGui.QApplication.translate("matchEntryDlg", "99; ", None, QtGui.QApplication.UnicodeUTF8))
-        self.secondHalfLengthEdit.setText(QtGui.QApplication.translate("matchEntryDlg", "45", None, QtGui.QApplication.UnicodeUTF8))
-        self.addEntry.setToolTip(QtGui.QApplication.translate("matchEntryDlg", "Add Entry", None, QtGui.QApplication.UnicodeUTF8))
-        self.addEntry.setText(QtGui.QApplication.translate("matchEntryDlg", "&Add", None, QtGui.QApplication.UnicodeUTF8))
-        self.deleteEntry.setToolTip(QtGui.QApplication.translate("matchEntryDlg", "Delete Entry", None, QtGui.QApplication.UnicodeUTF8))
-        self.deleteEntry.setText(QtGui.QApplication.translate("matchEntryDlg", "&Delete", None, QtGui.QApplication.UnicodeUTF8))
-        self.closeButton.setToolTip(QtGui.QApplication.translate("matchEntryDlg", "Close Window", None, QtGui.QApplication.UnicodeUTF8))
-        self.closeButton.setText(QtGui.QApplication.translate("matchEntryDlg", "&Close", None, QtGui.QApplication.UnicodeUTF8))
-        self.firstEntry.setToolTip(QtGui.QApplication.translate("matchEntryDlg", "First Entry", None, QtGui.QApplication.UnicodeUTF8))
-        self.prevEntry.setToolTip(QtGui.QApplication.translate("matchEntryDlg", "Previous Entry", None, QtGui.QApplication.UnicodeUTF8))
-        self.nextEntry.setToolTip(QtGui.QApplication.translate("matchEntryDlg", "Next Entry", None, QtGui.QApplication.UnicodeUTF8))
-        self.lastEntry.setToolTip(QtGui.QApplication.translate("matchEntryDlg", "Last Entry", None, QtGui.QApplication.UnicodeUTF8))
-        self.hometeamBox.setTitle(QtGui.QApplication.translate("matchEntryDlg", "Home Team", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_8.setText(QtGui.QApplication.translate("matchEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.secondHalfLengthEdit.setToolTip(QtGui.QApplication.translate("MatchEntryDlg", "Total playing time of second half", None, QtGui.QApplication.UnicodeUTF8))
+        self.secondHalfLengthEdit.setInputMask(QtGui.QApplication.translate("MatchEntryDlg", "99; ", None, QtGui.QApplication.UnicodeUTF8))
+        self.secondHalfLengthEdit.setText(QtGui.QApplication.translate("MatchEntryDlg", "45", None, QtGui.QApplication.UnicodeUTF8))
+        self.addEntry.setToolTip(QtGui.QApplication.translate("MatchEntryDlg", "Add Entry", None, QtGui.QApplication.UnicodeUTF8))
+        self.addEntry.setText(QtGui.QApplication.translate("MatchEntryDlg", "&Add", None, QtGui.QApplication.UnicodeUTF8))
+        self.deleteEntry.setToolTip(QtGui.QApplication.translate("MatchEntryDlg", "Delete Entry", None, QtGui.QApplication.UnicodeUTF8))
+        self.deleteEntry.setText(QtGui.QApplication.translate("MatchEntryDlg", "&Delete", None, QtGui.QApplication.UnicodeUTF8))
+        self.closeButton.setToolTip(QtGui.QApplication.translate("MatchEntryDlg", "Close Window", None, QtGui.QApplication.UnicodeUTF8))
+        self.closeButton.setText(QtGui.QApplication.translate("MatchEntryDlg", "&Close", None, QtGui.QApplication.UnicodeUTF8))
+        self.firstEntry.setToolTip(QtGui.QApplication.translate("MatchEntryDlg", "First Entry", None, QtGui.QApplication.UnicodeUTF8))
+        self.prevEntry.setToolTip(QtGui.QApplication.translate("MatchEntryDlg", "Previous Entry", None, QtGui.QApplication.UnicodeUTF8))
+        self.nextEntry.setToolTip(QtGui.QApplication.translate("MatchEntryDlg", "Next Entry", None, QtGui.QApplication.UnicodeUTF8))
+        self.lastEntry.setToolTip(QtGui.QApplication.translate("MatchEntryDlg", "Last Entry", None, QtGui.QApplication.UnicodeUTF8))
+        self.hometeamBox.setTitle(QtGui.QApplication.translate("MatchEntryDlg", "Home Team", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_8.setText(QtGui.QApplication.translate("MatchEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Manager</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.homemgrSelect.setToolTip(QtGui.QApplication.translate("matchEntryDlg", "Home team manager", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_7.setText(QtGui.QApplication.translate("matchEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.homemgrSelect.setToolTip(QtGui.QApplication.translate("MatchEntryDlg", "Home team manager", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_7.setText(QtGui.QApplication.translate("MatchEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Team</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.hometeamSelect.setToolTip(QtGui.QApplication.translate("matchEntryDlg", "Home team name", None, QtGui.QApplication.UnicodeUTF8))
-        self.awayteamBox.setTitle(QtGui.QApplication.translate("matchEntryDlg", "Away Team", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_9.setText(QtGui.QApplication.translate("matchEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.hometeamSelect.setToolTip(QtGui.QApplication.translate("MatchEntryDlg", "Home team name", None, QtGui.QApplication.UnicodeUTF8))
+        self.awayteamBox.setTitle(QtGui.QApplication.translate("MatchEntryDlg", "Away Team", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_9.setText(QtGui.QApplication.translate("MatchEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Team</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.awayteamSelect.setToolTip(QtGui.QApplication.translate("matchEntryDlg", "Away team name", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_10.setText(QtGui.QApplication.translate("matchEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.awayteamSelect.setToolTip(QtGui.QApplication.translate("MatchEntryDlg", "Away team name", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_10.setText(QtGui.QApplication.translate("MatchEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Manager</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.awaymgrSelect.setToolTip(QtGui.QApplication.translate("matchEntryDlg", "Away team manager", None, QtGui.QApplication.UnicodeUTF8))
-        self.homeLineupButton.setToolTip(QtGui.QApplication.translate("matchEntryDlg", "Home team match lineups", None, QtGui.QApplication.UnicodeUTF8))
-        self.homeLineupButton.setText(QtGui.QApplication.translate("matchEntryDlg", "&Home Lineup", None, QtGui.QApplication.UnicodeUTF8))
-        self.awayLineupButton.setToolTip(QtGui.QApplication.translate("matchEntryDlg", "Away team match lineups", None, QtGui.QApplication.UnicodeUTF8))
-        self.awayLineupButton.setText(QtGui.QApplication.translate("matchEntryDlg", "A&way Lineup", None, QtGui.QApplication.UnicodeUTF8))
-        self.enviroButton.setToolTip(QtGui.QApplication.translate("matchEntryDlg", "Environmental conditions", None, QtGui.QApplication.UnicodeUTF8))
-        self.enviroButton.setText(QtGui.QApplication.translate("matchEntryDlg", "&Environments", None, QtGui.QApplication.UnicodeUTF8))
+        self.awaymgrSelect.setToolTip(QtGui.QApplication.translate("MatchEntryDlg", "Away team manager", None, QtGui.QApplication.UnicodeUTF8))
+        self.homeLineupButton.setToolTip(QtGui.QApplication.translate("MatchEntryDlg", "Home team match lineups", None, QtGui.QApplication.UnicodeUTF8))
+        self.homeLineupButton.setText(QtGui.QApplication.translate("MatchEntryDlg", "&Home Lineup", None, QtGui.QApplication.UnicodeUTF8))
+        self.awayLineupButton.setToolTip(QtGui.QApplication.translate("MatchEntryDlg", "Away team match lineups", None, QtGui.QApplication.UnicodeUTF8))
+        self.awayLineupButton.setText(QtGui.QApplication.translate("MatchEntryDlg", "A&way Lineup", None, QtGui.QApplication.UnicodeUTF8))
+        self.enviroButton.setToolTip(QtGui.QApplication.translate("MatchEntryDlg", "Environmental conditions", None, QtGui.QApplication.UnicodeUTF8))
+        self.enviroButton.setText(QtGui.QApplication.translate("MatchEntryDlg", "&Environments", None, QtGui.QApplication.UnicodeUTF8))
 
 import fmrd_resources_rc

@@ -1,31 +1,31 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'switchpos_entry.ui'
+# Form implementation generated from reading ui file 'gui/switchpos_entry.ui'
 #
-# Created: Tue Jun 14 19:50:38 2011
+# Created: Fri Aug  5 15:10:59 2011
 #      by: PyQt4 UI code generator 4.7.2
 #
 # WARNING! All changes made in this file will be lost!
 
 from PyQt4 import QtCore, QtGui
 
-class Ui_switchEntryDlg(object):
-    def setupUi(self, switchEntryDlg):
-        switchEntryDlg.setObjectName("switchEntryDlg")
-        switchEntryDlg.resize(535, 450)
-        switchEntryDlg.setMinimumSize(QtCore.QSize(535, 450))
-        switchEntryDlg.setMaximumSize(QtCore.QSize(535, 450))
-        self.line = QtGui.QFrame(switchEntryDlg)
+class Ui_SwitchEntryDlg(object):
+    def setupUi(self, SwitchEntryDlg):
+        SwitchEntryDlg.setObjectName("SwitchEntryDlg")
+        SwitchEntryDlg.resize(535, 450)
+        SwitchEntryDlg.setMinimumSize(QtCore.QSize(535, 450))
+        SwitchEntryDlg.setMaximumSize(QtCore.QSize(535, 450))
+        self.line = QtGui.QFrame(SwitchEntryDlg)
         self.line.setGeometry(QtCore.QRect(10, 130, 401, 16))
         self.line.setFrameShape(QtGui.QFrame.HLine)
         self.line.setFrameShadow(QtGui.QFrame.Sunken)
         self.line.setObjectName("line")
-        self.line_2 = QtGui.QFrame(switchEntryDlg)
+        self.line_2 = QtGui.QFrame(SwitchEntryDlg)
         self.line_2.setGeometry(QtCore.QRect(400, 10, 20, 381))
         self.line_2.setFrameShape(QtGui.QFrame.VLine)
         self.line_2.setFrameShadow(QtGui.QFrame.Sunken)
         self.line_2.setObjectName("line_2")
-        self.layoutWidget = QtGui.QWidget(switchEntryDlg)
+        self.layoutWidget = QtGui.QWidget(SwitchEntryDlg)
         self.layoutWidget.setGeometry(QtCore.QRect(30, 400, 371, 41))
         self.layoutWidget.setObjectName("layoutWidget")
         self.horizontalLayout_2 = QtGui.QHBoxLayout(self.layoutWidget)
@@ -66,7 +66,7 @@ class Ui_switchEntryDlg(object):
         self.lastEntry.setIcon(icon3)
         self.lastEntry.setObjectName("lastEntry")
         self.horizontalLayout_2.addWidget(self.lastEntry)
-        self.layoutWidget1 = QtGui.QWidget(switchEntryDlg)
+        self.layoutWidget1 = QtGui.QWidget(SwitchEntryDlg)
         self.layoutWidget1.setGeometry(QtCore.QRect(10, 10, 391, 121))
         self.layoutWidget1.setObjectName("layoutWidget1")
         self.gridLayout = QtGui.QGridLayout(self.layoutWidget1)
@@ -101,7 +101,7 @@ class Ui_switchEntryDlg(object):
         self.matchSelect.setMaximumSize(QtCore.QSize(271, 31))
         self.matchSelect.setObjectName("matchSelect")
         self.gridLayout.addWidget(self.matchSelect, 2, 1, 1, 1)
-        self.layoutWidget2 = QtGui.QWidget(switchEntryDlg)
+        self.layoutWidget2 = QtGui.QWidget(SwitchEntryDlg)
         self.layoutWidget2.setGeometry(QtCore.QRect(420, 150, 91, 241))
         self.layoutWidget2.setObjectName("layoutWidget2")
         self.verticalLayout = QtGui.QVBoxLayout(self.layoutWidget2)
@@ -132,7 +132,7 @@ class Ui_switchEntryDlg(object):
         self.closeButton.setIcon(icon6)
         self.closeButton.setObjectName("closeButton")
         self.verticalLayout.addWidget(self.closeButton)
-        self.layoutWidget3 = QtGui.QWidget(switchEntryDlg)
+        self.layoutWidget3 = QtGui.QWidget(SwitchEntryDlg)
         self.layoutWidget3.setGeometry(QtCore.QRect(10, 150, 391, 241))
         self.layoutWidget3.setObjectName("layoutWidget3")
         self.gridLayout_2 = QtGui.QGridLayout(self.layoutWidget3)
@@ -205,72 +205,72 @@ class Ui_switchEntryDlg(object):
         spacerItem1 = QtGui.QSpacerItem(138, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
         self.gridLayout_2.addItem(spacerItem1, 4, 2, 1, 1)
 
-        self.retranslateUi(switchEntryDlg)
-        QtCore.QMetaObject.connectSlotsByName(switchEntryDlg)
+        self.retranslateUi(SwitchEntryDlg)
+        QtCore.QMetaObject.connectSlotsByName(SwitchEntryDlg)
 
-    def retranslateUi(self, switchEntryDlg):
-        switchEntryDlg.setWindowTitle(QtGui.QApplication.translate("switchEntryDlg", "Switch Position Entry", None, QtGui.QApplication.UnicodeUTF8))
-        self.firstEntry.setToolTip(QtGui.QApplication.translate("switchEntryDlg", "First Entry", None, QtGui.QApplication.UnicodeUTF8))
-        self.prevEntry.setToolTip(QtGui.QApplication.translate("switchEntryDlg", "Previous Entry", None, QtGui.QApplication.UnicodeUTF8))
-        self.nextEntry.setToolTip(QtGui.QApplication.translate("switchEntryDlg", "Next Entry", None, QtGui.QApplication.UnicodeUTF8))
-        self.lastEntry.setToolTip(QtGui.QApplication.translate("switchEntryDlg", "Last Entry", None, QtGui.QApplication.UnicodeUTF8))
-        self.label.setText(QtGui.QApplication.translate("switchEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+    def retranslateUi(self, SwitchEntryDlg):
+        SwitchEntryDlg.setWindowTitle(QtGui.QApplication.translate("SwitchEntryDlg", "Switch Position Entry", None, QtGui.QApplication.UnicodeUTF8))
+        self.firstEntry.setToolTip(QtGui.QApplication.translate("SwitchEntryDlg", "First Entry", None, QtGui.QApplication.UnicodeUTF8))
+        self.prevEntry.setToolTip(QtGui.QApplication.translate("SwitchEntryDlg", "Previous Entry", None, QtGui.QApplication.UnicodeUTF8))
+        self.nextEntry.setToolTip(QtGui.QApplication.translate("SwitchEntryDlg", "Next Entry", None, QtGui.QApplication.UnicodeUTF8))
+        self.lastEntry.setToolTip(QtGui.QApplication.translate("SwitchEntryDlg", "Last Entry", None, QtGui.QApplication.UnicodeUTF8))
+        self.label.setText(QtGui.QApplication.translate("SwitchEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Competition</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_2.setText(QtGui.QApplication.translate("switchEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.label_2.setText(QtGui.QApplication.translate("SwitchEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Round</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_3.setText(QtGui.QApplication.translate("switchEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.label_3.setText(QtGui.QApplication.translate("SwitchEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Match</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.addEntry.setToolTip(QtGui.QApplication.translate("switchEntryDlg", "Add Entry", None, QtGui.QApplication.UnicodeUTF8))
-        self.addEntry.setText(QtGui.QApplication.translate("switchEntryDlg", "&Add", None, QtGui.QApplication.UnicodeUTF8))
-        self.deleteEntry.setToolTip(QtGui.QApplication.translate("switchEntryDlg", "Delete Entry", None, QtGui.QApplication.UnicodeUTF8))
-        self.deleteEntry.setText(QtGui.QApplication.translate("switchEntryDlg", "&Delete", None, QtGui.QApplication.UnicodeUTF8))
-        self.closeButton.setToolTip(QtGui.QApplication.translate("switchEntryDlg", "Close Window", None, QtGui.QApplication.UnicodeUTF8))
-        self.closeButton.setText(QtGui.QApplication.translate("switchEntryDlg", "&Close", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_4.setText(QtGui.QApplication.translate("switchEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.addEntry.setToolTip(QtGui.QApplication.translate("SwitchEntryDlg", "Add Entry", None, QtGui.QApplication.UnicodeUTF8))
+        self.addEntry.setText(QtGui.QApplication.translate("SwitchEntryDlg", "&Add", None, QtGui.QApplication.UnicodeUTF8))
+        self.deleteEntry.setToolTip(QtGui.QApplication.translate("SwitchEntryDlg", "Delete Entry", None, QtGui.QApplication.UnicodeUTF8))
+        self.deleteEntry.setText(QtGui.QApplication.translate("SwitchEntryDlg", "&Delete", None, QtGui.QApplication.UnicodeUTF8))
+        self.closeButton.setToolTip(QtGui.QApplication.translate("SwitchEntryDlg", "Close Window", None, QtGui.QApplication.UnicodeUTF8))
+        self.closeButton.setText(QtGui.QApplication.translate("SwitchEntryDlg", "&Close", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_4.setText(QtGui.QApplication.translate("SwitchEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Switch ID</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_5.setText(QtGui.QApplication.translate("switchEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.label_5.setText(QtGui.QApplication.translate("SwitchEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Team</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.teamSelect.setToolTip(QtGui.QApplication.translate("switchEntryDlg", "Team of player", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_10.setText(QtGui.QApplication.translate("switchEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.teamSelect.setToolTip(QtGui.QApplication.translate("SwitchEntryDlg", "Team of player", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_10.setText(QtGui.QApplication.translate("SwitchEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Player</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.playerSelect.setToolTip(QtGui.QApplication.translate("switchEntryDlg", "Player", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_7.setText(QtGui.QApplication.translate("switchEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.playerSelect.setToolTip(QtGui.QApplication.translate("SwitchEntryDlg", "Player", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_7.setText(QtGui.QApplication.translate("SwitchEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">New Position</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.newPositionSelect.setToolTip(QtGui.QApplication.translate("switchEntryDlg", "New position of player", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_8.setText(QtGui.QApplication.translate("switchEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.newPositionSelect.setToolTip(QtGui.QApplication.translate("SwitchEntryDlg", "New position of player", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_8.setText(QtGui.QApplication.translate("SwitchEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Match Time</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.switchtimeEdit.setToolTip(QtGui.QApplication.translate("switchEntryDlg", "Match time", None, QtGui.QApplication.UnicodeUTF8))
-        self.switchtimeEdit.setInputMask(QtGui.QApplication.translate("switchEntryDlg", "00; ", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_9.setText(QtGui.QApplication.translate("switchEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.switchtimeEdit.setToolTip(QtGui.QApplication.translate("SwitchEntryDlg", "Match time", None, QtGui.QApplication.UnicodeUTF8))
+        self.switchtimeEdit.setInputMask(QtGui.QApplication.translate("SwitchEntryDlg", "00; ", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_9.setText(QtGui.QApplication.translate("SwitchEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:14pt; font-weight:600;\">+</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.stoppageEdit.setToolTip(QtGui.QApplication.translate("switchEntryDlg", "Stoppage time", None, QtGui.QApplication.UnicodeUTF8))
-        self.stoppageEdit.setInputMask(QtGui.QApplication.translate("switchEntryDlg", "00; ", None, QtGui.QApplication.UnicodeUTF8))
+        self.stoppageEdit.setToolTip(QtGui.QApplication.translate("SwitchEntryDlg", "Stoppage time", None, QtGui.QApplication.UnicodeUTF8))
+        self.stoppageEdit.setInputMask(QtGui.QApplication.translate("SwitchEntryDlg", "00; ", None, QtGui.QApplication.UnicodeUTF8))
 
 import fmrd_resources_rc

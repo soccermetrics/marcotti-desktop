@@ -1,21 +1,21 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'subs_entry.ui'
+# Form implementation generated from reading ui file 'gui/subs_entry.ui'
 #
-# Created: Mon Jun 13 01:24:33 2011
+# Created: Fri Aug  5 15:10:58 2011
 #      by: PyQt4 UI code generator 4.7.2
 #
 # WARNING! All changes made in this file will be lost!
 
 from PyQt4 import QtCore, QtGui
 
-class Ui_subsEntryDlg(object):
-    def setupUi(self, subsEntryDlg):
-        subsEntryDlg.setObjectName("subsEntryDlg")
-        subsEntryDlg.resize(535, 450)
-        subsEntryDlg.setMinimumSize(QtCore.QSize(535, 450))
-        subsEntryDlg.setMaximumSize(QtCore.QSize(535, 450))
-        self.layoutWidget_3 = QtGui.QWidget(subsEntryDlg)
+class Ui_SubsEntryDlg(object):
+    def setupUi(self, SubsEntryDlg):
+        SubsEntryDlg.setObjectName("SubsEntryDlg")
+        SubsEntryDlg.resize(535, 450)
+        SubsEntryDlg.setMinimumSize(QtCore.QSize(535, 450))
+        SubsEntryDlg.setMaximumSize(QtCore.QSize(535, 450))
+        self.layoutWidget_3 = QtGui.QWidget(SubsEntryDlg)
         self.layoutWidget_3.setGeometry(QtCore.QRect(20, 400, 361, 41))
         self.layoutWidget_3.setObjectName("layoutWidget_3")
         self.horizontalLayout_2 = QtGui.QHBoxLayout(self.layoutWidget_3)
@@ -56,7 +56,7 @@ class Ui_subsEntryDlg(object):
         self.lastEntry.setIcon(icon3)
         self.lastEntry.setObjectName("lastEntry")
         self.horizontalLayout_2.addWidget(self.lastEntry)
-        self.layoutWidget_4 = QtGui.QWidget(subsEntryDlg)
+        self.layoutWidget_4 = QtGui.QWidget(SubsEntryDlg)
         self.layoutWidget_4.setGeometry(QtCore.QRect(10, 6, 391, 121))
         self.layoutWidget_4.setObjectName("layoutWidget_4")
         self.gridLayout = QtGui.QGridLayout(self.layoutWidget_4)
@@ -91,17 +91,17 @@ class Ui_subsEntryDlg(object):
         self.matchSelect.setMaximumSize(QtCore.QSize(271, 31))
         self.matchSelect.setObjectName("matchSelect")
         self.gridLayout.addWidget(self.matchSelect, 2, 1, 1, 1)
-        self.line = QtGui.QFrame(subsEntryDlg)
+        self.line = QtGui.QFrame(SubsEntryDlg)
         self.line.setGeometry(QtCore.QRect(20, 130, 391, 16))
         self.line.setFrameShape(QtGui.QFrame.HLine)
         self.line.setFrameShadow(QtGui.QFrame.Sunken)
         self.line.setObjectName("line")
-        self.line_2 = QtGui.QFrame(subsEntryDlg)
+        self.line_2 = QtGui.QFrame(SubsEntryDlg)
         self.line_2.setGeometry(QtCore.QRect(400, 10, 20, 381))
         self.line_2.setFrameShape(QtGui.QFrame.VLine)
         self.line_2.setFrameShadow(QtGui.QFrame.Sunken)
         self.line_2.setObjectName("line_2")
-        self.layoutWidget = QtGui.QWidget(subsEntryDlg)
+        self.layoutWidget = QtGui.QWidget(SubsEntryDlg)
         self.layoutWidget.setGeometry(QtCore.QRect(10, 150, 391, 241))
         self.layoutWidget.setObjectName("layoutWidget")
         self.gridLayout_2 = QtGui.QGridLayout(self.layoutWidget)
@@ -173,7 +173,7 @@ class Ui_subsEntryDlg(object):
         self.gridLayout_2.addLayout(self.horizontalLayout, 4, 1, 1, 1)
         spacerItem = QtGui.QSpacerItem(138, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
         self.gridLayout_2.addItem(spacerItem, 4, 2, 1, 1)
-        self.layoutWidget1 = QtGui.QWidget(subsEntryDlg)
+        self.layoutWidget1 = QtGui.QWidget(SubsEntryDlg)
         self.layoutWidget1.setGeometry(QtCore.QRect(420, 150, 101, 241))
         self.layoutWidget1.setObjectName("layoutWidget1")
         self.verticalLayout = QtGui.QVBoxLayout(self.layoutWidget1)
@@ -205,71 +205,71 @@ class Ui_subsEntryDlg(object):
         self.closeButton.setObjectName("closeButton")
         self.verticalLayout.addWidget(self.closeButton)
 
-        self.retranslateUi(subsEntryDlg)
-        QtCore.QMetaObject.connectSlotsByName(subsEntryDlg)
+        self.retranslateUi(SubsEntryDlg)
+        QtCore.QMetaObject.connectSlotsByName(SubsEntryDlg)
 
-    def retranslateUi(self, subsEntryDlg):
-        subsEntryDlg.setWindowTitle(QtGui.QApplication.translate("subsEntryDlg", "Substitution Entry", None, QtGui.QApplication.UnicodeUTF8))
-        self.firstEntry.setToolTip(QtGui.QApplication.translate("subsEntryDlg", "First Entry", None, QtGui.QApplication.UnicodeUTF8))
-        self.prevEntry.setToolTip(QtGui.QApplication.translate("subsEntryDlg", "Previous Entry", None, QtGui.QApplication.UnicodeUTF8))
-        self.nextEntry.setToolTip(QtGui.QApplication.translate("subsEntryDlg", "Next Entry", None, QtGui.QApplication.UnicodeUTF8))
-        self.lastEntry.setToolTip(QtGui.QApplication.translate("subsEntryDlg", "Last Entry", None, QtGui.QApplication.UnicodeUTF8))
-        self.label.setText(QtGui.QApplication.translate("subsEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+    def retranslateUi(self, SubsEntryDlg):
+        SubsEntryDlg.setWindowTitle(QtGui.QApplication.translate("SubsEntryDlg", "Substitution Entry", None, QtGui.QApplication.UnicodeUTF8))
+        self.firstEntry.setToolTip(QtGui.QApplication.translate("SubsEntryDlg", "First Entry", None, QtGui.QApplication.UnicodeUTF8))
+        self.prevEntry.setToolTip(QtGui.QApplication.translate("SubsEntryDlg", "Previous Entry", None, QtGui.QApplication.UnicodeUTF8))
+        self.nextEntry.setToolTip(QtGui.QApplication.translate("SubsEntryDlg", "Next Entry", None, QtGui.QApplication.UnicodeUTF8))
+        self.lastEntry.setToolTip(QtGui.QApplication.translate("SubsEntryDlg", "Last Entry", None, QtGui.QApplication.UnicodeUTF8))
+        self.label.setText(QtGui.QApplication.translate("SubsEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Competition</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_2.setText(QtGui.QApplication.translate("subsEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.label_2.setText(QtGui.QApplication.translate("SubsEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Round</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_3.setText(QtGui.QApplication.translate("subsEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.label_3.setText(QtGui.QApplication.translate("SubsEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Match</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_4.setText(QtGui.QApplication.translate("subsEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.label_4.setText(QtGui.QApplication.translate("SubsEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Subs ID</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_5.setText(QtGui.QApplication.translate("subsEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.label_5.setText(QtGui.QApplication.translate("SubsEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Team</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.teamSelect.setToolTip(QtGui.QApplication.translate("subsEntryDlg", "Team to which goal is credited", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_10.setText(QtGui.QApplication.translate("subsEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.teamSelect.setToolTip(QtGui.QApplication.translate("SubsEntryDlg", "Team to which goal is credited", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_10.setText(QtGui.QApplication.translate("SubsEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Player Out</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_7.setText(QtGui.QApplication.translate("subsEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.label_7.setText(QtGui.QApplication.translate("SubsEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Player In</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.inplayerSelect.setToolTip(QtGui.QApplication.translate("subsEntryDlg", "Field event from which goal is scored", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_8.setText(QtGui.QApplication.translate("subsEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.inplayerSelect.setToolTip(QtGui.QApplication.translate("SubsEntryDlg", "Field event from which goal is scored", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_8.setText(QtGui.QApplication.translate("SubsEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Match Time</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.subtimeEdit.setToolTip(QtGui.QApplication.translate("subsEntryDlg", "Match time", None, QtGui.QApplication.UnicodeUTF8))
-        self.subtimeEdit.setInputMask(QtGui.QApplication.translate("subsEntryDlg", "00; ", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_9.setText(QtGui.QApplication.translate("subsEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.subtimeEdit.setToolTip(QtGui.QApplication.translate("SubsEntryDlg", "Match time", None, QtGui.QApplication.UnicodeUTF8))
+        self.subtimeEdit.setInputMask(QtGui.QApplication.translate("SubsEntryDlg", "00; ", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_9.setText(QtGui.QApplication.translate("SubsEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:14pt; font-weight:600;\">+</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.stoppageEdit.setToolTip(QtGui.QApplication.translate("subsEntryDlg", "Stoppage time", None, QtGui.QApplication.UnicodeUTF8))
-        self.stoppageEdit.setInputMask(QtGui.QApplication.translate("subsEntryDlg", "00; ", None, QtGui.QApplication.UnicodeUTF8))
-        self.addEntry.setToolTip(QtGui.QApplication.translate("subsEntryDlg", "Add Entry", None, QtGui.QApplication.UnicodeUTF8))
-        self.addEntry.setText(QtGui.QApplication.translate("subsEntryDlg", "&Add", None, QtGui.QApplication.UnicodeUTF8))
-        self.deleteEntry.setToolTip(QtGui.QApplication.translate("subsEntryDlg", "Delete Entry", None, QtGui.QApplication.UnicodeUTF8))
-        self.deleteEntry.setText(QtGui.QApplication.translate("subsEntryDlg", "&Delete", None, QtGui.QApplication.UnicodeUTF8))
-        self.closeButton.setToolTip(QtGui.QApplication.translate("subsEntryDlg", "Close Window", None, QtGui.QApplication.UnicodeUTF8))
-        self.closeButton.setText(QtGui.QApplication.translate("subsEntryDlg", "&Close", None, QtGui.QApplication.UnicodeUTF8))
+        self.stoppageEdit.setToolTip(QtGui.QApplication.translate("SubsEntryDlg", "Stoppage time", None, QtGui.QApplication.UnicodeUTF8))
+        self.stoppageEdit.setInputMask(QtGui.QApplication.translate("SubsEntryDlg", "00; ", None, QtGui.QApplication.UnicodeUTF8))
+        self.addEntry.setToolTip(QtGui.QApplication.translate("SubsEntryDlg", "Add Entry", None, QtGui.QApplication.UnicodeUTF8))
+        self.addEntry.setText(QtGui.QApplication.translate("SubsEntryDlg", "&Add", None, QtGui.QApplication.UnicodeUTF8))
+        self.deleteEntry.setToolTip(QtGui.QApplication.translate("SubsEntryDlg", "Delete Entry", None, QtGui.QApplication.UnicodeUTF8))
+        self.deleteEntry.setText(QtGui.QApplication.translate("SubsEntryDlg", "&Delete", None, QtGui.QApplication.UnicodeUTF8))
+        self.closeButton.setToolTip(QtGui.QApplication.translate("SubsEntryDlg", "Close Window", None, QtGui.QApplication.UnicodeUTF8))
+        self.closeButton.setText(QtGui.QApplication.translate("SubsEntryDlg", "&Close", None, QtGui.QApplication.UnicodeUTF8))
 
 import fmrd_resources_rc

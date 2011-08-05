@@ -1,26 +1,26 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'position_setup.ui'
+# Form implementation generated from reading ui file 'gui/position_setup.ui'
 #
-# Created: Tue Feb  1 00:42:24 2011
+# Created: Fri Aug  5 15:11:07 2011
 #      by: PyQt4 UI code generator 4.7.2
 #
 # WARNING! All changes made in this file will be lost!
 
 from PyQt4 import QtCore, QtGui
 
-class Ui_posSetupDlg(object):
-    def setupUi(self, posSetupDlg):
-        posSetupDlg.setObjectName("posSetupDlg")
-        posSetupDlg.resize(500, 250)
-        posSetupDlg.setMinimumSize(QtCore.QSize(500, 250))
-        posSetupDlg.setMaximumSize(QtCore.QSize(500, 250))
-        self.line = QtGui.QFrame(posSetupDlg)
+class Ui_PosSetupDlg(object):
+    def setupUi(self, PosSetupDlg):
+        PosSetupDlg.setObjectName("PosSetupDlg")
+        PosSetupDlg.resize(500, 250)
+        PosSetupDlg.setMinimumSize(QtCore.QSize(500, 250))
+        PosSetupDlg.setMaximumSize(QtCore.QSize(500, 250))
+        self.line = QtGui.QFrame(PosSetupDlg)
         self.line.setGeometry(QtCore.QRect(363, 10, 20, 181))
         self.line.setFrameShape(QtGui.QFrame.VLine)
         self.line.setFrameShadow(QtGui.QFrame.Sunken)
         self.line.setObjectName("line")
-        self.layoutWidget = QtGui.QWidget(posSetupDlg)
+        self.layoutWidget = QtGui.QWidget(PosSetupDlg)
         self.layoutWidget.setGeometry(QtCore.QRect(390, 30, 87, 141))
         self.layoutWidget.setObjectName("layoutWidget")
         self.verticalLayout = QtGui.QVBoxLayout(self.layoutWidget)
@@ -43,7 +43,7 @@ class Ui_posSetupDlg(object):
         self.closeButton.setIcon(icon2)
         self.closeButton.setObjectName("closeButton")
         self.verticalLayout.addWidget(self.closeButton)
-        self.layoutWidget1 = QtGui.QWidget(posSetupDlg)
+        self.layoutWidget1 = QtGui.QWidget(PosSetupDlg)
         self.layoutWidget1.setGeometry(QtCore.QRect(10, 31, 342, 181))
         self.layoutWidget1.setObjectName("layoutWidget1")
         self.verticalLayout_2 = QtGui.QVBoxLayout(self.layoutWidget1)
@@ -126,37 +126,37 @@ class Ui_posSetupDlg(object):
         self.label_2.setBuddy(self.flankposSelect)
         self.label_3.setBuddy(self.fieldposSelect)
 
-        self.retranslateUi(posSetupDlg)
-        QtCore.QMetaObject.connectSlotsByName(posSetupDlg)
+        self.retranslateUi(PosSetupDlg)
+        QtCore.QMetaObject.connectSlotsByName(PosSetupDlg)
 
-    def retranslateUi(self, posSetupDlg):
-        posSetupDlg.setWindowTitle(QtGui.QApplication.translate("posSetupDlg", "Position Setup", None, QtGui.QApplication.UnicodeUTF8))
-        self.addEntry.setToolTip(QtGui.QApplication.translate("posSetupDlg", "Add Entry", None, QtGui.QApplication.UnicodeUTF8))
-        self.addEntry.setText(QtGui.QApplication.translate("posSetupDlg", "&Add", None, QtGui.QApplication.UnicodeUTF8))
-        self.deleteEntry.setToolTip(QtGui.QApplication.translate("posSetupDlg", "Delete Entry", None, QtGui.QApplication.UnicodeUTF8))
-        self.deleteEntry.setText(QtGui.QApplication.translate("posSetupDlg", "&Delete", None, QtGui.QApplication.UnicodeUTF8))
-        self.closeButton.setToolTip(QtGui.QApplication.translate("posSetupDlg", "Close Window", None, QtGui.QApplication.UnicodeUTF8))
-        self.closeButton.setText(QtGui.QApplication.translate("posSetupDlg", "&Close", None, QtGui.QApplication.UnicodeUTF8))
-        self.label.setText(QtGui.QApplication.translate("posSetupDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+    def retranslateUi(self, PosSetupDlg):
+        PosSetupDlg.setWindowTitle(QtGui.QApplication.translate("PosSetupDlg", "Position Setup", None, QtGui.QApplication.UnicodeUTF8))
+        self.addEntry.setToolTip(QtGui.QApplication.translate("PosSetupDlg", "Add Entry", None, QtGui.QApplication.UnicodeUTF8))
+        self.addEntry.setText(QtGui.QApplication.translate("PosSetupDlg", "&Add", None, QtGui.QApplication.UnicodeUTF8))
+        self.deleteEntry.setToolTip(QtGui.QApplication.translate("PosSetupDlg", "Delete Entry", None, QtGui.QApplication.UnicodeUTF8))
+        self.deleteEntry.setText(QtGui.QApplication.translate("PosSetupDlg", "&Delete", None, QtGui.QApplication.UnicodeUTF8))
+        self.closeButton.setToolTip(QtGui.QApplication.translate("PosSetupDlg", "Close Window", None, QtGui.QApplication.UnicodeUTF8))
+        self.closeButton.setText(QtGui.QApplication.translate("PosSetupDlg", "&Close", None, QtGui.QApplication.UnicodeUTF8))
+        self.label.setText(QtGui.QApplication.translate("PosSetupDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans Serif\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">&amp;ID</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_2.setText(QtGui.QApplication.translate("posSetupDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.label_2.setText(QtGui.QApplication.translate("PosSetupDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Flan&amp;k Position</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.flankposSelect.setToolTip(QtGui.QApplication.translate("posSetupDlg", "Flank position (blank for generic position)", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_3.setText(QtGui.QApplication.translate("posSetupDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.flankposSelect.setToolTip(QtGui.QApplication.translate("PosSetupDlg", "Flank position (blank for generic position)", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_3.setText(QtGui.QApplication.translate("PosSetupDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">&amp;Field Position</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.fieldposSelect.setToolTip(QtGui.QApplication.translate("posSetupDlg", "Field position", None, QtGui.QApplication.UnicodeUTF8))
-        self.firstEntry.setToolTip(QtGui.QApplication.translate("posSetupDlg", "First Entry", None, QtGui.QApplication.UnicodeUTF8))
-        self.prevEntry.setToolTip(QtGui.QApplication.translate("posSetupDlg", "Previous Entry", None, QtGui.QApplication.UnicodeUTF8))
-        self.nextEntry.setToolTip(QtGui.QApplication.translate("posSetupDlg", "Next Entry", None, QtGui.QApplication.UnicodeUTF8))
-        self.lastEntry.setToolTip(QtGui.QApplication.translate("posSetupDlg", "Last Entry", None, QtGui.QApplication.UnicodeUTF8))
+        self.fieldposSelect.setToolTip(QtGui.QApplication.translate("PosSetupDlg", "Field position", None, QtGui.QApplication.UnicodeUTF8))
+        self.firstEntry.setToolTip(QtGui.QApplication.translate("PosSetupDlg", "First Entry", None, QtGui.QApplication.UnicodeUTF8))
+        self.prevEntry.setToolTip(QtGui.QApplication.translate("PosSetupDlg", "Previous Entry", None, QtGui.QApplication.UnicodeUTF8))
+        self.nextEntry.setToolTip(QtGui.QApplication.translate("PosSetupDlg", "Next Entry", None, QtGui.QApplication.UnicodeUTF8))
+        self.lastEntry.setToolTip(QtGui.QApplication.translate("PosSetupDlg", "Last Entry", None, QtGui.QApplication.UnicodeUTF8))
 
 import fmrd_resources_rc

@@ -1,31 +1,31 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'goal_entry.ui'
+# Form implementation generated from reading ui file 'gui/goal_entry.ui'
 #
-# Created: Fri Jan 28 01:00:52 2011
+# Created: Fri Aug  5 15:10:53 2011
 #      by: PyQt4 UI code generator 4.7.2
 #
 # WARNING! All changes made in this file will be lost!
 
 from PyQt4 import QtCore, QtGui
 
-class Ui_goalEntryDlg(object):
-    def setupUi(self, goalEntryDlg):
-        goalEntryDlg.setObjectName("goalEntryDlg")
-        goalEntryDlg.resize(520, 460)
-        goalEntryDlg.setMinimumSize(QtCore.QSize(520, 460))
-        goalEntryDlg.setMaximumSize(QtCore.QSize(520, 460))
-        self.line = QtGui.QFrame(goalEntryDlg)
+class Ui_GoalEntryDlg(object):
+    def setupUi(self, GoalEntryDlg):
+        GoalEntryDlg.setObjectName("GoalEntryDlg")
+        GoalEntryDlg.resize(520, 460)
+        GoalEntryDlg.setMinimumSize(QtCore.QSize(520, 460))
+        GoalEntryDlg.setMaximumSize(QtCore.QSize(520, 460))
+        self.line = QtGui.QFrame(GoalEntryDlg)
         self.line.setGeometry(QtCore.QRect(10, 140, 401, 16))
         self.line.setFrameShape(QtGui.QFrame.HLine)
         self.line.setFrameShadow(QtGui.QFrame.Sunken)
         self.line.setObjectName("line")
-        self.line_2 = QtGui.QFrame(goalEntryDlg)
+        self.line_2 = QtGui.QFrame(GoalEntryDlg)
         self.line_2.setGeometry(QtCore.QRect(400, 10, 20, 391))
         self.line_2.setFrameShape(QtGui.QFrame.VLine)
         self.line_2.setFrameShadow(QtGui.QFrame.Sunken)
         self.line_2.setObjectName("line_2")
-        self.layoutWidget = QtGui.QWidget(goalEntryDlg)
+        self.layoutWidget = QtGui.QWidget(GoalEntryDlg)
         self.layoutWidget.setGeometry(QtCore.QRect(10, 410, 391, 41))
         self.layoutWidget.setObjectName("layoutWidget")
         self.horizontalLayout_2 = QtGui.QHBoxLayout(self.layoutWidget)
@@ -66,7 +66,7 @@ class Ui_goalEntryDlg(object):
         self.lastEntry.setIcon(icon3)
         self.lastEntry.setObjectName("lastEntry")
         self.horizontalLayout_2.addWidget(self.lastEntry)
-        self.layoutWidget1 = QtGui.QWidget(goalEntryDlg)
+        self.layoutWidget1 = QtGui.QWidget(GoalEntryDlg)
         self.layoutWidget1.setGeometry(QtCore.QRect(10, 10, 391, 131))
         self.layoutWidget1.setObjectName("layoutWidget1")
         self.gridLayout = QtGui.QGridLayout(self.layoutWidget1)
@@ -101,7 +101,7 @@ class Ui_goalEntryDlg(object):
         self.matchSelect.setMaximumSize(QtCore.QSize(271, 31))
         self.matchSelect.setObjectName("matchSelect")
         self.gridLayout.addWidget(self.matchSelect, 2, 1, 1, 1)
-        self.layoutWidget2 = QtGui.QWidget(goalEntryDlg)
+        self.layoutWidget2 = QtGui.QWidget(GoalEntryDlg)
         self.layoutWidget2.setGeometry(QtCore.QRect(10, 160, 391, 241))
         self.layoutWidget2.setObjectName("layoutWidget2")
         self.gridLayout_2 = QtGui.QGridLayout(self.layoutWidget2)
@@ -184,7 +184,7 @@ class Ui_goalEntryDlg(object):
         self.gridLayout_2.addLayout(self.horizontalLayout, 5, 1, 1, 1)
         spacerItem = QtGui.QSpacerItem(138, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
         self.gridLayout_2.addItem(spacerItem, 5, 2, 1, 1)
-        self.layoutWidget3 = QtGui.QWidget(goalEntryDlg)
+        self.layoutWidget3 = QtGui.QWidget(GoalEntryDlg)
         self.layoutWidget3.setGeometry(QtCore.QRect(420, 168, 91, 231))
         self.layoutWidget3.setObjectName("layoutWidget3")
         self.verticalLayout = QtGui.QVBoxLayout(self.layoutWidget3)
@@ -216,78 +216,78 @@ class Ui_goalEntryDlg(object):
         self.closeButton.setObjectName("closeButton")
         self.verticalLayout.addWidget(self.closeButton)
 
-        self.retranslateUi(goalEntryDlg)
-        QtCore.QMetaObject.connectSlotsByName(goalEntryDlg)
+        self.retranslateUi(GoalEntryDlg)
+        QtCore.QMetaObject.connectSlotsByName(GoalEntryDlg)
 
-    def retranslateUi(self, goalEntryDlg):
-        goalEntryDlg.setWindowTitle(QtGui.QApplication.translate("goalEntryDlg", "Goal Entry", None, QtGui.QApplication.UnicodeUTF8))
-        self.firstEntry.setToolTip(QtGui.QApplication.translate("goalEntryDlg", "First Entry", None, QtGui.QApplication.UnicodeUTF8))
-        self.prevEntry.setToolTip(QtGui.QApplication.translate("goalEntryDlg", "Previous Entry", None, QtGui.QApplication.UnicodeUTF8))
-        self.nextEntry.setToolTip(QtGui.QApplication.translate("goalEntryDlg", "Next Entry", None, QtGui.QApplication.UnicodeUTF8))
-        self.lastEntry.setToolTip(QtGui.QApplication.translate("goalEntryDlg", "Last Entry", None, QtGui.QApplication.UnicodeUTF8))
-        self.label.setText(QtGui.QApplication.translate("goalEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+    def retranslateUi(self, GoalEntryDlg):
+        GoalEntryDlg.setWindowTitle(QtGui.QApplication.translate("GoalEntryDlg", "Goal Entry", None, QtGui.QApplication.UnicodeUTF8))
+        self.firstEntry.setToolTip(QtGui.QApplication.translate("GoalEntryDlg", "First Entry", None, QtGui.QApplication.UnicodeUTF8))
+        self.prevEntry.setToolTip(QtGui.QApplication.translate("GoalEntryDlg", "Previous Entry", None, QtGui.QApplication.UnicodeUTF8))
+        self.nextEntry.setToolTip(QtGui.QApplication.translate("GoalEntryDlg", "Next Entry", None, QtGui.QApplication.UnicodeUTF8))
+        self.lastEntry.setToolTip(QtGui.QApplication.translate("GoalEntryDlg", "Last Entry", None, QtGui.QApplication.UnicodeUTF8))
+        self.label.setText(QtGui.QApplication.translate("GoalEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Competition</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_2.setText(QtGui.QApplication.translate("goalEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.label_2.setText(QtGui.QApplication.translate("GoalEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Round</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_3.setText(QtGui.QApplication.translate("goalEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.label_3.setText(QtGui.QApplication.translate("GoalEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Match</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_4.setText(QtGui.QApplication.translate("goalEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.label_4.setText(QtGui.QApplication.translate("GoalEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Goal ID</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_5.setText(QtGui.QApplication.translate("goalEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.label_5.setText(QtGui.QApplication.translate("GoalEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Team</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.teamSelect.setToolTip(QtGui.QApplication.translate("goalEntryDlg", "Team to which goal is credited", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_10.setText(QtGui.QApplication.translate("goalEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.teamSelect.setToolTip(QtGui.QApplication.translate("GoalEntryDlg", "Team to which goal is credited", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_10.setText(QtGui.QApplication.translate("GoalEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Player</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.playerSelect.setToolTip(QtGui.QApplication.translate("goalEntryDlg", "Goal scorer", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_7.setText(QtGui.QApplication.translate("goalEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.playerSelect.setToolTip(QtGui.QApplication.translate("GoalEntryDlg", "Goal scorer", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_7.setText(QtGui.QApplication.translate("GoalEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Match Event</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.goaleventSelect.setToolTip(QtGui.QApplication.translate("goalEntryDlg", "Field event from which goal is scored", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_6.setText(QtGui.QApplication.translate("goalEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.goaleventSelect.setToolTip(QtGui.QApplication.translate("GoalEntryDlg", "Field event from which goal is scored", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_6.setText(QtGui.QApplication.translate("GoalEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">How Scored</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.goaltypeSelect.setToolTip(QtGui.QApplication.translate("goalEntryDlg", "Body part used to score open play goals", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_8.setText(QtGui.QApplication.translate("goalEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.goaltypeSelect.setToolTip(QtGui.QApplication.translate("GoalEntryDlg", "Body part used to score open play goals", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_8.setText(QtGui.QApplication.translate("GoalEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Match Time</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.goaltimeEdit.setToolTip(QtGui.QApplication.translate("goalEntryDlg", "Match time", None, QtGui.QApplication.UnicodeUTF8))
-        self.goaltimeEdit.setInputMask(QtGui.QApplication.translate("goalEntryDlg", "00; ", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_9.setText(QtGui.QApplication.translate("goalEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.goaltimeEdit.setToolTip(QtGui.QApplication.translate("GoalEntryDlg", "Match time", None, QtGui.QApplication.UnicodeUTF8))
+        self.goaltimeEdit.setInputMask(QtGui.QApplication.translate("GoalEntryDlg", "00; ", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_9.setText(QtGui.QApplication.translate("GoalEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:14pt; font-weight:600;\">+</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.stoppageEdit.setToolTip(QtGui.QApplication.translate("goalEntryDlg", "Stoppage time", None, QtGui.QApplication.UnicodeUTF8))
-        self.stoppageEdit.setInputMask(QtGui.QApplication.translate("goalEntryDlg", "00; ", None, QtGui.QApplication.UnicodeUTF8))
-        self.addEntry.setToolTip(QtGui.QApplication.translate("goalEntryDlg", "Add Entry", None, QtGui.QApplication.UnicodeUTF8))
-        self.addEntry.setText(QtGui.QApplication.translate("goalEntryDlg", "&Add", None, QtGui.QApplication.UnicodeUTF8))
-        self.deleteEntry.setToolTip(QtGui.QApplication.translate("goalEntryDlg", "Delete Entry", None, QtGui.QApplication.UnicodeUTF8))
-        self.deleteEntry.setText(QtGui.QApplication.translate("goalEntryDlg", "&Delete", None, QtGui.QApplication.UnicodeUTF8))
-        self.closeButton.setToolTip(QtGui.QApplication.translate("goalEntryDlg", "Close Window", None, QtGui.QApplication.UnicodeUTF8))
-        self.closeButton.setText(QtGui.QApplication.translate("goalEntryDlg", "&Close", None, QtGui.QApplication.UnicodeUTF8))
+        self.stoppageEdit.setToolTip(QtGui.QApplication.translate("GoalEntryDlg", "Stoppage time", None, QtGui.QApplication.UnicodeUTF8))
+        self.stoppageEdit.setInputMask(QtGui.QApplication.translate("GoalEntryDlg", "00; ", None, QtGui.QApplication.UnicodeUTF8))
+        self.addEntry.setToolTip(QtGui.QApplication.translate("GoalEntryDlg", "Add Entry", None, QtGui.QApplication.UnicodeUTF8))
+        self.addEntry.setText(QtGui.QApplication.translate("GoalEntryDlg", "&Add", None, QtGui.QApplication.UnicodeUTF8))
+        self.deleteEntry.setToolTip(QtGui.QApplication.translate("GoalEntryDlg", "Delete Entry", None, QtGui.QApplication.UnicodeUTF8))
+        self.deleteEntry.setText(QtGui.QApplication.translate("GoalEntryDlg", "&Delete", None, QtGui.QApplication.UnicodeUTF8))
+        self.closeButton.setToolTip(QtGui.QApplication.translate("GoalEntryDlg", "Close Window", None, QtGui.QApplication.UnicodeUTF8))
+        self.closeButton.setText(QtGui.QApplication.translate("GoalEntryDlg", "&Close", None, QtGui.QApplication.UnicodeUTF8))
 
 import fmrd_resources_rc

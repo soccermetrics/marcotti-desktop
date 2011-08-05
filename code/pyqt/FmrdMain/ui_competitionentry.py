@@ -1,21 +1,21 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'competition_entry.ui'
+# Form implementation generated from reading ui file 'gui/competition_entry.ui'
 #
-# Created: Tue Jan 25 23:11:34 2011
+# Created: Fri Aug  5 15:10:51 2011
 #      by: PyQt4 UI code generator 4.7.2
 #
 # WARNING! All changes made in this file will be lost!
 
 from PyQt4 import QtCore, QtGui
 
-class Ui_compEntryDlg(object):
-    def setupUi(self, compEntryDlg):
-        compEntryDlg.setObjectName("compEntryDlg")
-        compEntryDlg.resize(600, 140)
-        compEntryDlg.setMinimumSize(QtCore.QSize(600, 140))
-        compEntryDlg.setMaximumSize(QtCore.QSize(640, 180))
-        self.layoutWidget = QtGui.QWidget(compEntryDlg)
+class Ui_CompEntryDlg(object):
+    def setupUi(self, CompEntryDlg):
+        CompEntryDlg.setObjectName("CompEntryDlg")
+        CompEntryDlg.resize(600, 140)
+        CompEntryDlg.setMinimumSize(QtCore.QSize(600, 140))
+        CompEntryDlg.setMaximumSize(QtCore.QSize(640, 180))
+        self.layoutWidget = QtGui.QWidget(CompEntryDlg)
         self.layoutWidget.setGeometry(QtCore.QRect(12, 20, 552, 51))
         self.layoutWidget.setObjectName("layoutWidget")
         self.horizontalLayout = QtGui.QHBoxLayout(self.layoutWidget)
@@ -38,7 +38,7 @@ class Ui_compEntryDlg(object):
         self.competitionEdit.setMinimumSize(QtCore.QSize(271, 27))
         self.competitionEdit.setObjectName("competitionEdit")
         self.horizontalLayout.addWidget(self.competitionEdit)
-        self.layoutWidget1 = QtGui.QWidget(compEntryDlg)
+        self.layoutWidget1 = QtGui.QWidget(CompEntryDlg)
         self.layoutWidget1.setGeometry(QtCore.QRect(10, 70, 261, 51))
         self.layoutWidget1.setObjectName("layoutWidget1")
         self.horizontalLayout_2 = QtGui.QHBoxLayout(self.layoutWidget1)
@@ -73,7 +73,7 @@ class Ui_compEntryDlg(object):
         self.horizontalLayout_2.addWidget(self.lastEntry)
         spacerItem1 = QtGui.QSpacerItem(18, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
         self.horizontalLayout_2.addItem(spacerItem1)
-        self.layoutWidget2 = QtGui.QWidget(compEntryDlg)
+        self.layoutWidget2 = QtGui.QWidget(CompEntryDlg)
         self.layoutWidget2.setGeometry(QtCore.QRect(290, 70, 275, 51))
         self.layoutWidget2.setObjectName("layoutWidget2")
         self.horizontalLayout_3 = QtGui.QHBoxLayout(self.layoutWidget2)
@@ -101,31 +101,31 @@ class Ui_compEntryDlg(object):
         self.label.setBuddy(self.compID_display)
         self.label_2.setBuddy(self.competitionEdit)
 
-        self.retranslateUi(compEntryDlg)
-        QtCore.QMetaObject.connectSlotsByName(compEntryDlg)
+        self.retranslateUi(CompEntryDlg)
+        QtCore.QMetaObject.connectSlotsByName(CompEntryDlg)
 
-    def retranslateUi(self, compEntryDlg):
-        compEntryDlg.setWindowTitle(QtGui.QApplication.translate("compEntryDlg", "Competition Entry", None, QtGui.QApplication.UnicodeUTF8))
-        self.label.setText(QtGui.QApplication.translate("compEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+    def retranslateUi(self, CompEntryDlg):
+        CompEntryDlg.setWindowTitle(QtGui.QApplication.translate("CompEntryDlg", "Competition Entry", None, QtGui.QApplication.UnicodeUTF8))
+        self.label.setText(QtGui.QApplication.translate("CompEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans Serif\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">&amp;ID</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_2.setText(QtGui.QApplication.translate("compEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.label_2.setText(QtGui.QApplication.translate("CompEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans Serif\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Competitio&amp;n</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.competitionEdit.setToolTip(QtGui.QApplication.translate("compEntryDlg", "Name of football competition", None, QtGui.QApplication.UnicodeUTF8))
-        self.firstEntry.setToolTip(QtGui.QApplication.translate("compEntryDlg", "First Entry", None, QtGui.QApplication.UnicodeUTF8))
-        self.prevEntry.setToolTip(QtGui.QApplication.translate("compEntryDlg", "Previous Entry", None, QtGui.QApplication.UnicodeUTF8))
-        self.nextEntry.setToolTip(QtGui.QApplication.translate("compEntryDlg", "Next Entry", None, QtGui.QApplication.UnicodeUTF8))
-        self.lastEntry.setToolTip(QtGui.QApplication.translate("compEntryDlg", "Last Entry", None, QtGui.QApplication.UnicodeUTF8))
-        self.addEntry.setToolTip(QtGui.QApplication.translate("compEntryDlg", "Add Entry", None, QtGui.QApplication.UnicodeUTF8))
-        self.addEntry.setText(QtGui.QApplication.translate("compEntryDlg", "&Add", None, QtGui.QApplication.UnicodeUTF8))
-        self.deleteEntry.setToolTip(QtGui.QApplication.translate("compEntryDlg", "Delete Entry", None, QtGui.QApplication.UnicodeUTF8))
-        self.deleteEntry.setText(QtGui.QApplication.translate("compEntryDlg", "&Delete", None, QtGui.QApplication.UnicodeUTF8))
-        self.closeButton.setToolTip(QtGui.QApplication.translate("compEntryDlg", "Close Window", None, QtGui.QApplication.UnicodeUTF8))
-        self.closeButton.setText(QtGui.QApplication.translate("compEntryDlg", "&Close", None, QtGui.QApplication.UnicodeUTF8))
+        self.competitionEdit.setToolTip(QtGui.QApplication.translate("CompEntryDlg", "Name of football competition", None, QtGui.QApplication.UnicodeUTF8))
+        self.firstEntry.setToolTip(QtGui.QApplication.translate("CompEntryDlg", "First Entry", None, QtGui.QApplication.UnicodeUTF8))
+        self.prevEntry.setToolTip(QtGui.QApplication.translate("CompEntryDlg", "Previous Entry", None, QtGui.QApplication.UnicodeUTF8))
+        self.nextEntry.setToolTip(QtGui.QApplication.translate("CompEntryDlg", "Next Entry", None, QtGui.QApplication.UnicodeUTF8))
+        self.lastEntry.setToolTip(QtGui.QApplication.translate("CompEntryDlg", "Last Entry", None, QtGui.QApplication.UnicodeUTF8))
+        self.addEntry.setToolTip(QtGui.QApplication.translate("CompEntryDlg", "Add Entry", None, QtGui.QApplication.UnicodeUTF8))
+        self.addEntry.setText(QtGui.QApplication.translate("CompEntryDlg", "&Add", None, QtGui.QApplication.UnicodeUTF8))
+        self.deleteEntry.setToolTip(QtGui.QApplication.translate("CompEntryDlg", "Delete Entry", None, QtGui.QApplication.UnicodeUTF8))
+        self.deleteEntry.setText(QtGui.QApplication.translate("CompEntryDlg", "&Delete", None, QtGui.QApplication.UnicodeUTF8))
+        self.closeButton.setToolTip(QtGui.QApplication.translate("CompEntryDlg", "Close Window", None, QtGui.QApplication.UnicodeUTF8))
+        self.closeButton.setText(QtGui.QApplication.translate("CompEntryDlg", "&Close", None, QtGui.QApplication.UnicodeUTF8))
 
 import fmrd_resources_rc

@@ -1,21 +1,21 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'offense_entry.ui'
+# Form implementation generated from reading ui file 'gui/offense_entry.ui'
 #
-# Created: Sat Jun 11 20:15:35 2011
+# Created: Fri Aug  5 15:10:56 2011
 #      by: PyQt4 UI code generator 4.7.2
 #
 # WARNING! All changes made in this file will be lost!
 
 from PyQt4 import QtCore, QtGui
 
-class Ui_offenseEntryDlg(object):
-    def setupUi(self, offenseEntryDlg):
-        offenseEntryDlg.setObjectName("offenseEntryDlg")
-        offenseEntryDlg.resize(560, 450)
-        offenseEntryDlg.setMinimumSize(QtCore.QSize(560, 450))
-        offenseEntryDlg.setMaximumSize(QtCore.QSize(560, 450))
-        self.layoutWidget = QtGui.QWidget(offenseEntryDlg)
+class Ui_OffenseEntryDlg(object):
+    def setupUi(self, OffenseEntryDlg):
+        OffenseEntryDlg.setObjectName("OffenseEntryDlg")
+        OffenseEntryDlg.resize(560, 450)
+        OffenseEntryDlg.setMinimumSize(QtCore.QSize(560, 450))
+        OffenseEntryDlg.setMaximumSize(QtCore.QSize(560, 450))
+        self.layoutWidget = QtGui.QWidget(OffenseEntryDlg)
         self.layoutWidget.setGeometry(QtCore.QRect(450, 150, 101, 241))
         self.layoutWidget.setObjectName("layoutWidget")
         self.verticalLayout = QtGui.QVBoxLayout(self.layoutWidget)
@@ -46,7 +46,7 @@ class Ui_offenseEntryDlg(object):
         self.closeButton.setIcon(icon2)
         self.closeButton.setObjectName("closeButton")
         self.verticalLayout.addWidget(self.closeButton)
-        self.layoutWidget_2 = QtGui.QWidget(offenseEntryDlg)
+        self.layoutWidget_2 = QtGui.QWidget(OffenseEntryDlg)
         self.layoutWidget_2.setGeometry(QtCore.QRect(10, 150, 421, 241))
         self.layoutWidget_2.setObjectName("layoutWidget_2")
         self.gridLayout_2 = QtGui.QGridLayout(self.layoutWidget_2)
@@ -128,7 +128,7 @@ class Ui_offenseEntryDlg(object):
         self.gridLayout_2.addLayout(self.horizontalLayout, 5, 1, 1, 1)
         spacerItem1 = QtGui.QSpacerItem(138, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
         self.gridLayout_2.addItem(spacerItem1, 5, 2, 1, 1)
-        self.layoutWidget_3 = QtGui.QWidget(offenseEntryDlg)
+        self.layoutWidget_3 = QtGui.QWidget(OffenseEntryDlg)
         self.layoutWidget_3.setGeometry(QtCore.QRect(40, 398, 341, 41))
         self.layoutWidget_3.setObjectName("layoutWidget_3")
         self.horizontalLayout_2 = QtGui.QHBoxLayout(self.layoutWidget_3)
@@ -169,7 +169,7 @@ class Ui_offenseEntryDlg(object):
         self.lastEntry.setIcon(icon6)
         self.lastEntry.setObjectName("lastEntry")
         self.horizontalLayout_2.addWidget(self.lastEntry)
-        self.layoutWidget_4 = QtGui.QWidget(offenseEntryDlg)
+        self.layoutWidget_4 = QtGui.QWidget(OffenseEntryDlg)
         self.layoutWidget_4.setGeometry(QtCore.QRect(10, 10, 421, 121))
         self.layoutWidget_4.setObjectName("layoutWidget_4")
         self.gridLayout = QtGui.QGridLayout(self.layoutWidget_4)
@@ -204,86 +204,86 @@ class Ui_offenseEntryDlg(object):
         self.matchSelect.setMaximumSize(QtCore.QSize(271, 31))
         self.matchSelect.setObjectName("matchSelect")
         self.gridLayout.addWidget(self.matchSelect, 2, 1, 1, 1)
-        self.line = QtGui.QFrame(offenseEntryDlg)
+        self.line = QtGui.QFrame(OffenseEntryDlg)
         self.line.setGeometry(QtCore.QRect(10, 130, 431, 16))
         self.line.setFrameShape(QtGui.QFrame.HLine)
         self.line.setFrameShadow(QtGui.QFrame.Sunken)
         self.line.setObjectName("line")
-        self.line_2 = QtGui.QFrame(offenseEntryDlg)
+        self.line_2 = QtGui.QFrame(OffenseEntryDlg)
         self.line_2.setGeometry(QtCore.QRect(430, 10, 20, 381))
         self.line_2.setFrameShape(QtGui.QFrame.VLine)
         self.line_2.setFrameShadow(QtGui.QFrame.Sunken)
         self.line_2.setObjectName("line_2")
 
-        self.retranslateUi(offenseEntryDlg)
-        QtCore.QMetaObject.connectSlotsByName(offenseEntryDlg)
+        self.retranslateUi(OffenseEntryDlg)
+        QtCore.QMetaObject.connectSlotsByName(OffenseEntryDlg)
 
-    def retranslateUi(self, offenseEntryDlg):
-        offenseEntryDlg.setWindowTitle(QtGui.QApplication.translate("offenseEntryDlg", "Offense Entry", None, QtGui.QApplication.UnicodeUTF8))
-        self.addEntry.setToolTip(QtGui.QApplication.translate("offenseEntryDlg", "Add Entry", None, QtGui.QApplication.UnicodeUTF8))
-        self.addEntry.setText(QtGui.QApplication.translate("offenseEntryDlg", "&Add", None, QtGui.QApplication.UnicodeUTF8))
-        self.deleteEntry.setToolTip(QtGui.QApplication.translate("offenseEntryDlg", "Delete Entry", None, QtGui.QApplication.UnicodeUTF8))
-        self.deleteEntry.setText(QtGui.QApplication.translate("offenseEntryDlg", "&Delete", None, QtGui.QApplication.UnicodeUTF8))
-        self.closeButton.setToolTip(QtGui.QApplication.translate("offenseEntryDlg", "Close Window", None, QtGui.QApplication.UnicodeUTF8))
-        self.closeButton.setText(QtGui.QApplication.translate("offenseEntryDlg", "&Close", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_4.setText(QtGui.QApplication.translate("offenseEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+    def retranslateUi(self, OffenseEntryDlg):
+        OffenseEntryDlg.setWindowTitle(QtGui.QApplication.translate("OffenseEntryDlg", "Offense Entry", None, QtGui.QApplication.UnicodeUTF8))
+        self.addEntry.setToolTip(QtGui.QApplication.translate("OffenseEntryDlg", "Add Entry", None, QtGui.QApplication.UnicodeUTF8))
+        self.addEntry.setText(QtGui.QApplication.translate("OffenseEntryDlg", "&Add", None, QtGui.QApplication.UnicodeUTF8))
+        self.deleteEntry.setToolTip(QtGui.QApplication.translate("OffenseEntryDlg", "Delete Entry", None, QtGui.QApplication.UnicodeUTF8))
+        self.deleteEntry.setText(QtGui.QApplication.translate("OffenseEntryDlg", "&Delete", None, QtGui.QApplication.UnicodeUTF8))
+        self.closeButton.setToolTip(QtGui.QApplication.translate("OffenseEntryDlg", "Close Window", None, QtGui.QApplication.UnicodeUTF8))
+        self.closeButton.setText(QtGui.QApplication.translate("OffenseEntryDlg", "&Close", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_4.setText(QtGui.QApplication.translate("OffenseEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Offense ID</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_5.setText(QtGui.QApplication.translate("offenseEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.label_5.setText(QtGui.QApplication.translate("OffenseEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Team</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.teamSelect.setToolTip(QtGui.QApplication.translate("offenseEntryDlg", "Team of booked player", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_10.setText(QtGui.QApplication.translate("offenseEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.teamSelect.setToolTip(QtGui.QApplication.translate("OffenseEntryDlg", "Team of booked player", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_10.setText(QtGui.QApplication.translate("OffenseEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Player</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.playerSelect.setToolTip(QtGui.QApplication.translate("offenseEntryDlg", "Player booked", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_7.setText(QtGui.QApplication.translate("offenseEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.playerSelect.setToolTip(QtGui.QApplication.translate("OffenseEntryDlg", "Player booked", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_7.setText(QtGui.QApplication.translate("OffenseEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Booking Foul</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.foulSelect.setToolTip(QtGui.QApplication.translate("offenseEntryDlg", "Foul that resulted in a booking", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_6.setText(QtGui.QApplication.translate("offenseEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.foulSelect.setToolTip(QtGui.QApplication.translate("OffenseEntryDlg", "Foul that resulted in a booking", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_6.setText(QtGui.QApplication.translate("OffenseEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Card Given</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.cardSelect.setToolTip(QtGui.QApplication.translate("offenseEntryDlg", "Card type shown", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_8.setText(QtGui.QApplication.translate("offenseEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.cardSelect.setToolTip(QtGui.QApplication.translate("OffenseEntryDlg", "Card type shown", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_8.setText(QtGui.QApplication.translate("OffenseEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Time of Booking</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.foultimeEdit.setToolTip(QtGui.QApplication.translate("offenseEntryDlg", "Match time", None, QtGui.QApplication.UnicodeUTF8))
-        self.foultimeEdit.setInputMask(QtGui.QApplication.translate("offenseEntryDlg", "00; ", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_9.setText(QtGui.QApplication.translate("offenseEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.foultimeEdit.setToolTip(QtGui.QApplication.translate("OffenseEntryDlg", "Match time", None, QtGui.QApplication.UnicodeUTF8))
+        self.foultimeEdit.setInputMask(QtGui.QApplication.translate("OffenseEntryDlg", "00; ", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_9.setText(QtGui.QApplication.translate("OffenseEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:14pt; font-weight:600;\">+</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.stoppageEdit.setToolTip(QtGui.QApplication.translate("offenseEntryDlg", "Stoppage time", None, QtGui.QApplication.UnicodeUTF8))
-        self.stoppageEdit.setInputMask(QtGui.QApplication.translate("offenseEntryDlg", "00; ", None, QtGui.QApplication.UnicodeUTF8))
-        self.firstEntry.setToolTip(QtGui.QApplication.translate("offenseEntryDlg", "First Entry", None, QtGui.QApplication.UnicodeUTF8))
-        self.prevEntry.setToolTip(QtGui.QApplication.translate("offenseEntryDlg", "Previous Entry", None, QtGui.QApplication.UnicodeUTF8))
-        self.nextEntry.setToolTip(QtGui.QApplication.translate("offenseEntryDlg", "Next Entry", None, QtGui.QApplication.UnicodeUTF8))
-        self.lastEntry.setToolTip(QtGui.QApplication.translate("offenseEntryDlg", "Last Entry", None, QtGui.QApplication.UnicodeUTF8))
-        self.label.setText(QtGui.QApplication.translate("offenseEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.stoppageEdit.setToolTip(QtGui.QApplication.translate("OffenseEntryDlg", "Stoppage time", None, QtGui.QApplication.UnicodeUTF8))
+        self.stoppageEdit.setInputMask(QtGui.QApplication.translate("OffenseEntryDlg", "00; ", None, QtGui.QApplication.UnicodeUTF8))
+        self.firstEntry.setToolTip(QtGui.QApplication.translate("OffenseEntryDlg", "First Entry", None, QtGui.QApplication.UnicodeUTF8))
+        self.prevEntry.setToolTip(QtGui.QApplication.translate("OffenseEntryDlg", "Previous Entry", None, QtGui.QApplication.UnicodeUTF8))
+        self.nextEntry.setToolTip(QtGui.QApplication.translate("OffenseEntryDlg", "Next Entry", None, QtGui.QApplication.UnicodeUTF8))
+        self.lastEntry.setToolTip(QtGui.QApplication.translate("OffenseEntryDlg", "Last Entry", None, QtGui.QApplication.UnicodeUTF8))
+        self.label.setText(QtGui.QApplication.translate("OffenseEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Competition</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_2.setText(QtGui.QApplication.translate("offenseEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.label_2.setText(QtGui.QApplication.translate("OffenseEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Round</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_3.setText(QtGui.QApplication.translate("offenseEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.label_3.setText(QtGui.QApplication.translate("OffenseEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"

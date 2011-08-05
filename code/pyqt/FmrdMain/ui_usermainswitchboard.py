@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'main_userswitchboard.ui'
+# Form implementation generated from reading ui file 'gui/main_userswitchboard.ui'
 #
-# Created: Fri Apr  1 21:10:58 2011
+# Created: Fri Aug  5 15:11:00 2011
 #      by: PyQt4 UI code generator 4.7.2
 #
 # WARNING! All changes made in this file will be lost!

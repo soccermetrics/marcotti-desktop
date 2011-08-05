@@ -1,21 +1,21 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'lineup_select.ui'
+# Form implementation generated from reading ui file 'gui/lineup_select.ui'
 #
-# Created: Sun Feb 13 15:51:38 2011
+# Created: Fri Aug  5 15:10:53 2011
 #      by: PyQt4 UI code generator 4.7.2
 #
 # WARNING! All changes made in this file will be lost!
 
 from PyQt4 import QtCore, QtGui
 
-class Ui_lineupEntryDlg(object):
-    def setupUi(self, lineupEntryDlg):
-        lineupEntryDlg.setObjectName("lineupEntryDlg")
-        lineupEntryDlg.resize(500, 375)
-        lineupEntryDlg.setMinimumSize(QtCore.QSize(500, 375))
-        lineupEntryDlg.setMaximumSize(QtCore.QSize(500, 375))
-        self.layoutWidget = QtGui.QWidget(lineupEntryDlg)
+class Ui_LineupEntryDlg(object):
+    def setupUi(self, LineupEntryDlg):
+        LineupEntryDlg.setObjectName("LineupEntryDlg")
+        LineupEntryDlg.resize(500, 375)
+        LineupEntryDlg.setMinimumSize(QtCore.QSize(500, 375))
+        LineupEntryDlg.setMaximumSize(QtCore.QSize(500, 375))
+        self.layoutWidget = QtGui.QWidget(LineupEntryDlg)
         self.layoutWidget.setGeometry(QtCore.QRect(10, 280, 361, 41))
         self.layoutWidget.setObjectName("layoutWidget")
         self.horizontalLayout_2 = QtGui.QHBoxLayout(self.layoutWidget)
@@ -56,12 +56,12 @@ class Ui_lineupEntryDlg(object):
         self.lastEntry.setIcon(icon3)
         self.lastEntry.setObjectName("lastEntry")
         self.horizontalLayout_2.addWidget(self.lastEntry)
-        self.line = QtGui.QFrame(lineupEntryDlg)
+        self.line = QtGui.QFrame(LineupEntryDlg)
         self.line.setGeometry(QtCore.QRect(360, 10, 20, 311))
         self.line.setFrameShape(QtGui.QFrame.VLine)
         self.line.setFrameShadow(QtGui.QFrame.Sunken)
         self.line.setObjectName("line")
-        self.layoutWidget1 = QtGui.QWidget(lineupEntryDlg)
+        self.layoutWidget1 = QtGui.QWidget(LineupEntryDlg)
         self.layoutWidget1.setGeometry(QtCore.QRect(10, 10, 351, 221))
         self.layoutWidget1.setObjectName("layoutWidget1")
         self.gridLayout = QtGui.QGridLayout(self.layoutWidget1)
@@ -142,7 +142,7 @@ class Ui_lineupEntryDlg(object):
         self.positionSelect.setMaximumSize(QtCore.QSize(231, 31))
         self.positionSelect.setObjectName("positionSelect")
         self.gridLayout.addWidget(self.positionSelect, 4, 1, 1, 1)
-        self.layoutWidget2 = QtGui.QWidget(lineupEntryDlg)
+        self.layoutWidget2 = QtGui.QWidget(LineupEntryDlg)
         self.layoutWidget2.setGeometry(QtCore.QRect(40, 230, 291, 51))
         self.layoutWidget2.setObjectName("layoutWidget2")
         self.horizontalLayout = QtGui.QHBoxLayout(self.layoutWidget2)
@@ -155,7 +155,7 @@ class Ui_lineupEntryDlg(object):
         self.captButton = QtGui.QCheckBox(self.layoutWidget2)
         self.captButton.setObjectName("captButton")
         self.horizontalLayout.addWidget(self.captButton)
-        self.layoutWidget3 = QtGui.QWidget(lineupEntryDlg)
+        self.layoutWidget3 = QtGui.QWidget(LineupEntryDlg)
         self.layoutWidget3.setGeometry(QtCore.QRect(383, 63, 101, 161))
         self.layoutWidget3.setObjectName("layoutWidget3")
         self.verticalLayout = QtGui.QVBoxLayout(self.layoutWidget3)
@@ -188,53 +188,53 @@ class Ui_lineupEntryDlg(object):
         self.closeButton.setIcon(icon6)
         self.closeButton.setObjectName("closeButton")
         self.verticalLayout.addWidget(self.closeButton)
-        self.widget = QtGui.QWidget(lineupEntryDlg)
-        self.widget.setGeometry(QtCore.QRect(10, 321, 481, 41))
-        self.widget.setObjectName("widget")
-        self.horizontalLayout_3 = QtGui.QHBoxLayout(self.widget)
+        self.layoutWidget4 = QtGui.QWidget(LineupEntryDlg)
+        self.layoutWidget4.setGeometry(QtCore.QRect(10, 321, 487, 41))
+        self.layoutWidget4.setObjectName("layoutWidget4")
+        self.horizontalLayout_3 = QtGui.QHBoxLayout(self.layoutWidget4)
         self.horizontalLayout_3.setObjectName("horizontalLayout_3")
-        self.label_6 = QtGui.QLabel(self.widget)
+        self.label_6 = QtGui.QLabel(self.layoutWidget4)
         self.label_6.setMinimumSize(QtCore.QSize(71, 17))
         self.label_6.setMaximumSize(QtCore.QSize(71, 17))
         self.label_6.setObjectName("label_6")
         self.horizontalLayout_3.addWidget(self.label_6)
-        self.NumStarter_display = QtGui.QLineEdit(self.widget)
+        self.NumStarter_display = QtGui.QLineEdit(self.layoutWidget4)
         self.NumStarter_display.setMinimumSize(QtCore.QSize(30, 30))
         self.NumStarter_display.setMaximumSize(QtCore.QSize(30, 30))
         self.NumStarter_display.setMaxLength(2)
         self.NumStarter_display.setReadOnly(True)
         self.NumStarter_display.setObjectName("NumStarter_display")
         self.horizontalLayout_3.addWidget(self.NumStarter_display)
-        self.label_7 = QtGui.QLabel(self.widget)
+        self.label_7 = QtGui.QLabel(self.layoutWidget4)
         self.label_7.setMinimumSize(QtCore.QSize(91, 17))
         self.label_7.setMaximumSize(QtCore.QSize(91, 17))
         self.label_7.setObjectName("label_7")
         self.horizontalLayout_3.addWidget(self.label_7)
-        self.NumSubs_display = QtGui.QLineEdit(self.widget)
+        self.NumSubs_display = QtGui.QLineEdit(self.layoutWidget4)
         self.NumSubs_display.setMinimumSize(QtCore.QSize(30, 30))
         self.NumSubs_display.setMaximumSize(QtCore.QSize(30, 30))
         self.NumSubs_display.setMaxLength(2)
         self.NumSubs_display.setReadOnly(True)
         self.NumSubs_display.setObjectName("NumSubs_display")
         self.horizontalLayout_3.addWidget(self.NumSubs_display)
-        self.captStatus = QtGui.QLabel(self.widget)
+        self.captStatus = QtGui.QLabel(self.layoutWidget4)
         self.captStatus.setMinimumSize(QtCore.QSize(71, 17))
         self.captStatus.setMaximumSize(QtCore.QSize(71, 17))
         self.captStatus.setObjectName("captStatus")
         self.horizontalLayout_3.addWidget(self.captStatus)
-        self.NumCapt_display = QtGui.QLineEdit(self.widget)
+        self.NumCapt_display = QtGui.QLineEdit(self.layoutWidget4)
         self.NumCapt_display.setMinimumSize(QtCore.QSize(30, 30))
         self.NumCapt_display.setMaximumSize(QtCore.QSize(30, 30))
         self.NumCapt_display.setMaxLength(2)
         self.NumCapt_display.setReadOnly(True)
         self.NumCapt_display.setObjectName("NumCapt_display")
         self.horizontalLayout_3.addWidget(self.NumCapt_display)
-        self.captStatus_2 = QtGui.QLabel(self.widget)
+        self.captStatus_2 = QtGui.QLabel(self.layoutWidget4)
         self.captStatus_2.setMinimumSize(QtCore.QSize(90, 17))
         self.captStatus_2.setMaximumSize(QtCore.QSize(90, 17))
         self.captStatus_2.setObjectName("captStatus_2")
         self.horizontalLayout_3.addWidget(self.captStatus_2)
-        self.NumGK_display = QtGui.QLineEdit(self.widget)
+        self.NumGK_display = QtGui.QLineEdit(self.layoutWidget4)
         self.NumGK_display.setMinimumSize(QtCore.QSize(30, 30))
         self.NumGK_display.setMaximumSize(QtCore.QSize(30, 30))
         self.NumGK_display.setMaxLength(2)
@@ -243,71 +243,71 @@ class Ui_lineupEntryDlg(object):
         self.horizontalLayout_3.addWidget(self.NumGK_display)
         self.label.setBuddy(self.matchID_display)
 
-        self.retranslateUi(lineupEntryDlg)
-        QtCore.QMetaObject.connectSlotsByName(lineupEntryDlg)
+        self.retranslateUi(LineupEntryDlg)
+        QtCore.QMetaObject.connectSlotsByName(LineupEntryDlg)
 
-    def retranslateUi(self, lineupEntryDlg):
-        lineupEntryDlg.setWindowTitle(QtGui.QApplication.translate("lineupEntryDlg", "Player Lineup Entry", None, QtGui.QApplication.UnicodeUTF8))
-        self.firstEntry.setToolTip(QtGui.QApplication.translate("lineupEntryDlg", "First Entry", None, QtGui.QApplication.UnicodeUTF8))
-        self.prevEntry.setToolTip(QtGui.QApplication.translate("lineupEntryDlg", "Previous Entry", None, QtGui.QApplication.UnicodeUTF8))
-        self.nextEntry.setToolTip(QtGui.QApplication.translate("lineupEntryDlg", "Next Entry", None, QtGui.QApplication.UnicodeUTF8))
-        self.lastEntry.setToolTip(QtGui.QApplication.translate("lineupEntryDlg", "Last Entry", None, QtGui.QApplication.UnicodeUTF8))
-        self.label.setText(QtGui.QApplication.translate("lineupEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+    def retranslateUi(self, LineupEntryDlg):
+        LineupEntryDlg.setWindowTitle(QtGui.QApplication.translate("LineupEntryDlg", "Player Lineup Entry", None, QtGui.QApplication.UnicodeUTF8))
+        self.firstEntry.setToolTip(QtGui.QApplication.translate("LineupEntryDlg", "First Entry", None, QtGui.QApplication.UnicodeUTF8))
+        self.prevEntry.setToolTip(QtGui.QApplication.translate("LineupEntryDlg", "Previous Entry", None, QtGui.QApplication.UnicodeUTF8))
+        self.nextEntry.setToolTip(QtGui.QApplication.translate("LineupEntryDlg", "Next Entry", None, QtGui.QApplication.UnicodeUTF8))
+        self.lastEntry.setToolTip(QtGui.QApplication.translate("LineupEntryDlg", "Last Entry", None, QtGui.QApplication.UnicodeUTF8))
+        self.label.setText(QtGui.QApplication.translate("LineupEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'Sans Serif\'; font-weight:600;\">Match &amp;ID</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_2.setText(QtGui.QApplication.translate("lineupEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.label_2.setText(QtGui.QApplication.translate("LineupEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Team</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_3.setText(QtGui.QApplication.translate("lineupEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.label_3.setText(QtGui.QApplication.translate("LineupEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Lineup ID</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_4.setText(QtGui.QApplication.translate("lineupEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.label_4.setText(QtGui.QApplication.translate("LineupEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Player</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_5.setText(QtGui.QApplication.translate("lineupEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.label_5.setText(QtGui.QApplication.translate("LineupEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Position</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.startingButton.setText(QtGui.QApplication.translate("lineupEntryDlg", "Starting Player", None, QtGui.QApplication.UnicodeUTF8))
-        self.captButton.setText(QtGui.QApplication.translate("lineupEntryDlg", "Captain", None, QtGui.QApplication.UnicodeUTF8))
-        self.addEntry.setToolTip(QtGui.QApplication.translate("lineupEntryDlg", "Add Entry", None, QtGui.QApplication.UnicodeUTF8))
-        self.addEntry.setText(QtGui.QApplication.translate("lineupEntryDlg", "&Add", None, QtGui.QApplication.UnicodeUTF8))
-        self.deleteEntry.setToolTip(QtGui.QApplication.translate("lineupEntryDlg", "Delete Entry", None, QtGui.QApplication.UnicodeUTF8))
-        self.deleteEntry.setText(QtGui.QApplication.translate("lineupEntryDlg", "&Delete", None, QtGui.QApplication.UnicodeUTF8))
-        self.closeButton.setToolTip(QtGui.QApplication.translate("lineupEntryDlg", "Close Window", None, QtGui.QApplication.UnicodeUTF8))
-        self.closeButton.setText(QtGui.QApplication.translate("lineupEntryDlg", "&Close", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_6.setText(QtGui.QApplication.translate("lineupEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.startingButton.setText(QtGui.QApplication.translate("LineupEntryDlg", "Starting Player", None, QtGui.QApplication.UnicodeUTF8))
+        self.captButton.setText(QtGui.QApplication.translate("LineupEntryDlg", "Captain", None, QtGui.QApplication.UnicodeUTF8))
+        self.addEntry.setToolTip(QtGui.QApplication.translate("LineupEntryDlg", "Add Entry", None, QtGui.QApplication.UnicodeUTF8))
+        self.addEntry.setText(QtGui.QApplication.translate("LineupEntryDlg", "&Add", None, QtGui.QApplication.UnicodeUTF8))
+        self.deleteEntry.setToolTip(QtGui.QApplication.translate("LineupEntryDlg", "Delete Entry", None, QtGui.QApplication.UnicodeUTF8))
+        self.deleteEntry.setText(QtGui.QApplication.translate("LineupEntryDlg", "&Delete", None, QtGui.QApplication.UnicodeUTF8))
+        self.closeButton.setToolTip(QtGui.QApplication.translate("LineupEntryDlg", "Close Window", None, QtGui.QApplication.UnicodeUTF8))
+        self.closeButton.setText(QtGui.QApplication.translate("LineupEntryDlg", "&Close", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_6.setText(QtGui.QApplication.translate("LineupEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Starters</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.NumStarter_display.setToolTip(QtGui.QApplication.translate("lineupEntryDlg", "Number of starters", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_7.setText(QtGui.QApplication.translate("lineupEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.NumStarter_display.setToolTip(QtGui.QApplication.translate("LineupEntryDlg", "Number of starters", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_7.setText(QtGui.QApplication.translate("LineupEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Substitutes</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.NumSubs_display.setToolTip(QtGui.QApplication.translate("lineupEntryDlg", "Number of starters", None, QtGui.QApplication.UnicodeUTF8))
-        self.captStatus.setText(QtGui.QApplication.translate("lineupEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.NumSubs_display.setToolTip(QtGui.QApplication.translate("LineupEntryDlg", "Number of starters", None, QtGui.QApplication.UnicodeUTF8))
+        self.captStatus.setText(QtGui.QApplication.translate("LineupEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Captain</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.NumCapt_display.setToolTip(QtGui.QApplication.translate("lineupEntryDlg", "Number of starters", None, QtGui.QApplication.UnicodeUTF8))
-        self.captStatus_2.setText(QtGui.QApplication.translate("lineupEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.NumCapt_display.setToolTip(QtGui.QApplication.translate("LineupEntryDlg", "Number of starters", None, QtGui.QApplication.UnicodeUTF8))
+        self.captStatus_2.setText(QtGui.QApplication.translate("LineupEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Goalkeeper</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.NumGK_display.setToolTip(QtGui.QApplication.translate("lineupEntryDlg", "Number of starters", None, QtGui.QApplication.UnicodeUTF8))
+        self.NumGK_display.setToolTip(QtGui.QApplication.translate("LineupEntryDlg", "Number of starters", None, QtGui.QApplication.UnicodeUTF8))
 
 import fmrd_resources_rc
