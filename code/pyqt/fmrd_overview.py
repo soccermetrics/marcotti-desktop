@@ -29,13 +29,13 @@ from FmrdLib.CustomDelegates import *
 """Contains classes that implement match overview entry forms to main tables of FMRD.
 
 Classes:
-compEntryDlg -- data entry to Competitions table
-teamEntryDlg -- data entry to Teams table
-venueEntryDlg -- data entry to Venues table
+CompEntryDlg -- data entry to Competitions table
+TeamEntryDlg -- data entry to Teams table
+VenueEntryDlg -- data entry to Venues table
 
 """
 
-class compEntryDlg(QDialog, ui_competitionentry.Ui_compEntryDlg):
+class CompEntryDlg(QDialog, ui_competitionentry.Ui_CompEntryDlg):
     """Implements competition data entry dialog, and accesses and writes to Competitions table.
     
     This dialog accepts data on the name of the football competition.
@@ -45,15 +45,15 @@ class compEntryDlg(QDialog, ui_competitionentry.Ui_compEntryDlg):
     ID,  DESC = range(2)
     
     def __init__(self, parent=None):
-        """Constructor for compEntryDlg class."""
-        super(compEntryDlg, self).__init__(parent)
+        """Constructor for CompEntryDlg class."""
+        super(CompEntryDlg, self).__init__(parent)
         self.setupUi(self)
         
         # define model
         # underlying database model
         self.model = QSqlTableModel(self)
         self.model.setTable("tbl_competitions")
-        self.model.setSort(compEntryDlg.ID, Qt.AscendingOrder)
+        self.model.setSort(CompEntryDlg.ID, Qt.AscendingOrder)
         self.model.select()
         
         # define mapper
@@ -61,8 +61,8 @@ class compEntryDlg(QDialog, ui_competitionentry.Ui_compEntryDlg):
         self.mapper = QDataWidgetMapper(self)
         self.mapper.setSubmitPolicy(QDataWidgetMapper.ManualSubmit)
         self.mapper.setModel(self.model)
-        self.mapper.addMapping(self.compID_display, compEntryDlg.ID)
-        self.mapper.addMapping(self.competitionEdit, compEntryDlg.DESC)
+        self.mapper.addMapping(self.compID_display, CompEntryDlg.ID)
+        self.mapper.addMapping(self.competitionEdit, CompEntryDlg.DESC)
         self.mapper.toFirst()
         
         # disable First and Previous Entry buttons
@@ -184,7 +184,7 @@ class compEntryDlg(QDialog, ui_competitionentry.Ui_compEntryDlg):
         else:
                 DeletionErrorPrompt(self)
                 
-class teamEntryDlg(QDialog, ui_teamentry.Ui_teamEntryDlg):
+class TeamEntryDlg(QDialog, ui_teamentry.Ui_TeamEntryDlg):
     """Implements Teams data entry dialog, and accesses and writes to Teams table.
     
     This dialog accepts data on the names of the teams participating in the football competition.
@@ -194,15 +194,15 @@ class teamEntryDlg(QDialog, ui_teamentry.Ui_teamEntryDlg):
     ID,  NAME = range(2)
     
     def __init__(self, parent=None):
-        """Constructor for teamEntryDlg class."""
-        super(teamEntryDlg, self).__init__(parent)
+        """Constructor for TeamEntryDlg class."""
+        super(TeamEntryDlg, self).__init__(parent)
         self.setupUi(self)
 
         # define model
         # underlying database model
         self.model = QSqlTableModel(self)
         self.model.setTable("tbl_teams")
-        self.model.setSort(teamEntryDlg.ID, Qt.AscendingOrder)
+        self.model.setSort(TeamEntryDlg.ID, Qt.AscendingOrder)
         self.model.select()
         
         # define mapper
@@ -210,8 +210,8 @@ class teamEntryDlg(QDialog, ui_teamentry.Ui_teamEntryDlg):
         self.mapper = QDataWidgetMapper(self)
         self.mapper.setSubmitPolicy(QDataWidgetMapper.ManualSubmit)
         self.mapper.setModel(self.model)
-        self.mapper.addMapping(self.teamID_display, teamEntryDlg.ID)
-        self.mapper.addMapping(self.teamNameEdit, teamEntryDlg.NAME)
+        self.mapper.addMapping(self.teamID_display, TeamEntryDlg.ID)
+        self.mapper.addMapping(self.teamNameEdit, TeamEntryDlg.NAME)
         self.mapper.toFirst()
         
         # disable First and Previous Entry buttons
@@ -338,7 +338,7 @@ class teamEntryDlg(QDialog, ui_teamentry.Ui_teamEntryDlg):
         else:
                 DeletionErrorPrompt(self)
                 
-class venueEntryDlg(QDialog, ui_venueentry.Ui_venueEntryDlg):
+class VenueEntryDlg(QDialog, ui_venueentry.Ui_VenueEntryDlg):
     """Implements Venues data entry dialog, and accesses and writes to Venues table.
     
     This dialog accepts data on the match venues used in the football competition.
@@ -348,7 +348,7 @@ class venueEntryDlg(QDialog, ui_venueentry.Ui_venueEntryDlg):
     ID,  TEAM_ID,  CTRY_ID, CITY, NAME, ALT, LAT, LONG = range(8)
 
     def __init__(self, parent=None):
-        super(venueEntryDlg, self).__init__(parent)
+        super(VenueEntryDlg, self).__init__(parent)
         self.setupUi(self)
         
         # define local parameters
@@ -361,9 +361,9 @@ class venueEntryDlg(QDialog, ui_venueentry.Ui_venueEntryDlg):
         # define relations to it
         self.model = QSqlRelationalTableModel(self)
         self.model.setTable("tbl_venues")
-        self.model.setRelation(venueEntryDlg.TEAM_ID, QSqlRelation("tbl_teams", "team_id", "tm_name"))
-        self.model.setRelation(venueEntryDlg.CTRY_ID, QSqlRelation("tbl_countries", "country_id", "cty_name"))   
-        self.model.setSort(venueEntryDlg.ID, Qt.AscendingOrder)
+        self.model.setRelation(VenueEntryDlg.TEAM_ID, QSqlRelation("tbl_teams", "team_id", "tm_name"))
+        self.model.setRelation(VenueEntryDlg.CTRY_ID, QSqlRelation("tbl_countries", "country_id", "cty_name"))   
+        self.model.setSort(VenueEntryDlg.ID, Qt.AscendingOrder)
         self.model.select()
         
         # define mapper
@@ -372,30 +372,30 @@ class venueEntryDlg(QDialog, ui_venueentry.Ui_venueEntryDlg):
         self.mapper.setSubmitPolicy(QDataWidgetMapper.ManualSubmit)
         self.mapper.setModel(self.model)
         localDelegate = GenericDelegate(self)
-        localDelegate.insertColumnDelegate(venueEntryDlg.CTRY_ID, CountryComboBoxDelegate(self))
+        localDelegate.insertColumnDelegate(VenueEntryDlg.CTRY_ID, CountryComboBoxDelegate(self))
         self.mapper.setItemDelegate(localDelegate)
-        self.mapper.addMapping(self.venueID_display, venueEntryDlg.ID)
+        self.mapper.addMapping(self.venueID_display, VenueEntryDlg.ID)
         
         # relation model for Country combobox
-        self.countryModel = self.model.relationModel(venueEntryDlg.CTRY_ID)
+        self.countryModel = self.model.relationModel(VenueEntryDlg.CTRY_ID)
         self.countryModel.setSort(COUNTRY_ID, Qt.AscendingOrder)
         self.venueCountrySelect.setModel(self.countryModel)
         self.venueCountrySelect.setModelColumn(self.countryModel.fieldIndex("cty_name"))
-        self.mapper.addMapping(self.venueCountrySelect, venueEntryDlg.CTRY_ID)
+        self.mapper.addMapping(self.venueCountrySelect, VenueEntryDlg.CTRY_ID)
         
         # relation model for Home Team combobox
-        self.teamModel = self.model.relationModel(venueEntryDlg.TEAM_ID)
+        self.teamModel = self.model.relationModel(VenueEntryDlg.TEAM_ID)
         self.teamModel.setSort(HOST_ID, Qt.AscendingOrder)
         self.venueTeamSelect.setModel(self.teamModel)
         self.venueTeamSelect.setModelColumn(self.teamModel.fieldIndex("tm_name"))
-        self.mapper.addMapping(self.venueTeamSelect, venueEntryDlg.TEAM_ID)        
+        self.mapper.addMapping(self.venueTeamSelect, VenueEntryDlg.TEAM_ID)        
         
         # map other widgets on form
-        self.mapper.addMapping(self.venueCityEdit, venueEntryDlg.CITY)
-        self.mapper.addMapping(self.venueNameEdit, venueEntryDlg.NAME)
-        self.mapper.addMapping(self.venueAltEdit, venueEntryDlg.ALT)
-        self.mapper.addMapping(self.venueLatitudeEdit, venueEntryDlg.LAT)
-        self.mapper.addMapping(self.venueLongitudeEdit, venueEntryDlg.LONG)
+        self.mapper.addMapping(self.venueCityEdit, VenueEntryDlg.CITY)
+        self.mapper.addMapping(self.venueNameEdit, VenueEntryDlg.NAME)
+        self.mapper.addMapping(self.venueAltEdit, VenueEntryDlg.ALT)
+        self.mapper.addMapping(self.venueLatitudeEdit, VenueEntryDlg.LAT)
+        self.mapper.addMapping(self.venueLongitudeEdit, VenueEntryDlg.LONG)
         self.mapper.toFirst()        
                 
         # set up Confederation combobox that links to tbl_confederations

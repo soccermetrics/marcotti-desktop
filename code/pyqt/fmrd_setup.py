@@ -34,18 +34,18 @@ modules would be incorporated only into an administration version of the tool.
 
 Classes:
 AboutDlg -- display About window
-cardSetupDlg -- data entry to Disciplinary Card table
-confedSetupDlg -- data entry to Confederations table
-countrySetupDlg -- data entry to Countries table
-fieldposSetupDlg -- data entry to Field Positions table
-flankposSetupDlg -- data entry to Flank Positions table
-foulSetupDlg -- data entry to Fouls table
-goaleventSetupDlg -- data entry to Goal Events table
-goalstrikeSetupDlg -- data entry to Goal Strikes table
-penSetupDlg -- data entry to Penalty Outcomes table
-posSetupDlg -- data entry to Positions table
-roundSetupDlg -- data entry to Rounds table
-wxcondSetupDlg -- data entry to Weather Conditions table
+CardSetupDlg -- data entry to Disciplinary Card table
+ConfedSetupDlg -- data entry to Confederations table
+CountrySetupDlg -- data entry to Countries table
+FieldPosSetupDlg -- data entry to Field Positions table
+FlankPosSetupDlg -- data entry to Flank Positions table
+FoulSetupDlg -- data entry to Fouls table
+GoalEventSetupDlg -- data entry to Goal Events table
+GoalStrikeSetupDlg -- data entry to Goal Strikes table
+PenSetupDlg -- data entry to Penalty Outcomes table
+PosSetupDlg -- data entry to Positions table
+RoundSetupDlg -- data entry to Rounds table
+WxCondSetupDlg -- data entry to Weather Conditions table
 
 """
 
@@ -64,21 +64,21 @@ class AboutDlg(QDialog, ui_aboutwindow.Ui_AboutDlg):
         QObject.connect(self.pushButton, SIGNAL("clicked()"), self, SLOT("close()"))
 
 
-class cardSetupDlg(QDialog, ui_cardsetup.Ui_cardSetupDlg):
+class CardSetupDlg(QDialog, ui_cardsetup.Ui_CardSetupDlg):
     """Implements card data entry dialog, and accesses and writes to Disciplinary Card table."""
 
     ID,  DESC = range(2)
     
     def __init__(self, parent=None):
-        """Constructor for cardSetupDlg class."""
-        super(cardSetupDlg, self).__init__(parent)
+        """Constructor for CardSetupDlg class."""
+        super(CardSetupDlg, self).__init__(parent)
         self.setupUi(self)
         
         # define model
         # underlying database model
         self.model = QSqlTableModel(self)
         self.model.setTable("tbl_cards")
-        self.model.setSort(cardSetupDlg.ID, Qt.AscendingOrder)
+        self.model.setSort(CardSetupDlg.ID, Qt.AscendingOrder)
         self.model.select()
         
         # define mapper
@@ -86,8 +86,8 @@ class cardSetupDlg(QDialog, ui_cardsetup.Ui_cardSetupDlg):
         self.mapper = QDataWidgetMapper(self)
         self.mapper.setSubmitPolicy(QDataWidgetMapper.ManualSubmit)
         self.mapper.setModel(self.model)
-        self.mapper.addMapping(self.cardID_display, cardSetupDlg.ID)
-        self.mapper.addMapping(self.cardtypeEdit, cardSetupDlg.DESC)
+        self.mapper.addMapping(self.cardID_display, CardSetupDlg.ID)
+        self.mapper.addMapping(self.cardtypeEdit, CardSetupDlg.DESC)
         self.mapper.toFirst()
         
         # disable First and Previous Entry buttons
@@ -210,21 +210,21 @@ class cardSetupDlg(QDialog, ui_cardsetup.Ui_cardSetupDlg):
                 DeletionErrorPrompt(self)
 
 
-class foulSetupDlg(QDialog, ui_foulsetup.Ui_foulSetupDlg):
+class FoulSetupDlg(QDialog, ui_foulsetup.Ui_FoulSetupDlg):
     """ Implements fouls data entry dialog, and accesses and writes to Fouls table. """
 
     ID,  DESC = range(2)
  
     def __init__(self, parent=None):
-        """Constructor for foulSetupDlg class."""
-        super(foulSetupDlg, self).__init__(parent)
+        """Constructor for FoulSetupDlg class."""
+        super(FoulSetupDlg, self).__init__(parent)
         self.setupUi(self)
  
         # define model
         # underlying database model
         self.model = QSqlTableModel(self)
         self.model.setTable("tbl_fouls")
-        self.model.setSort(foulSetupDlg.ID, Qt.AscendingOrder)
+        self.model.setSort(FoulSetupDlg.ID, Qt.AscendingOrder)
         self.model.select()
         
         # define mapper
@@ -232,8 +232,8 @@ class foulSetupDlg(QDialog, ui_foulsetup.Ui_foulSetupDlg):
         self.mapper = QDataWidgetMapper(self)
         self.mapper.setSubmitPolicy(QDataWidgetMapper.ManualSubmit)
         self.mapper.setModel(self.model)
-        self.mapper.addMapping(self.foulID_display, foulSetupDlg.ID)
-        self.mapper.addMapping(self.foulDescEdit, foulSetupDlg.DESC)
+        self.mapper.addMapping(self.foulID_display, FoulSetupDlg.ID)
+        self.mapper.addMapping(self.foulDescEdit, FoulSetupDlg.DESC)
         self.mapper.toFirst()
         
         # disable First and Previous Entry buttons
@@ -358,21 +358,21 @@ class foulSetupDlg(QDialog, ui_foulsetup.Ui_foulSetupDlg):
                 DeletionErrorPrompt(self)
         
         
-class penSetupDlg(QDialog, ui_penoutcomesetup.Ui_penSetupDlg):
+class PenSetupDlg(QDialog, ui_penoutcomesetup.Ui_PenSetupDlg):
     """ Implements penalty outcome data entry dialog, and accesses and writes to Penalty Outcomes table. """
     
     ID,  DESC = range(2)
  
     def __init__(self, parent=None):
-        """Constructor for penSetupDlg class."""
-        super(penSetupDlg, self).__init__(parent)
+        """Constructor for PenSetupDlg class."""
+        super(PenSetupDlg, self).__init__(parent)
         self.setupUi(self)
         
         # define model
         # underlying database model
         self.model = QSqlTableModel(self)
         self.model.setTable("tbl_penoutcomes")
-        self.model.setSort(penSetupDlg.ID, Qt.AscendingOrder)
+        self.model.setSort(PenSetupDlg.ID, Qt.AscendingOrder)
         self.model.select()
         
         # define mapper
@@ -380,8 +380,8 @@ class penSetupDlg(QDialog, ui_penoutcomesetup.Ui_penSetupDlg):
         self.mapper = QDataWidgetMapper(self)
         self.mapper.setSubmitPolicy(QDataWidgetMapper.ManualSubmit)
         self.mapper.setModel(self.model)
-        self.mapper.addMapping(self.penoutcomeID_display, penSetupDlg.ID)
-        self.mapper.addMapping(self.penOutcomeEdit, penSetupDlg.DESC)
+        self.mapper.addMapping(self.penoutcomeID_display, PenSetupDlg.ID)
+        self.mapper.addMapping(self.penOutcomeEdit, PenSetupDlg.DESC)
         self.mapper.toFirst()
         
         # disable First and Previous Entry buttons
@@ -504,21 +504,21 @@ class penSetupDlg(QDialog, ui_penoutcomesetup.Ui_penSetupDlg):
                 DeletionErrorPrompt(self)
 
 
-class goaleventSetupDlg(QDialog, ui_goaleventsetup.Ui_goaleventSetupDlg):
+class GoalEventSetupDlg(QDialog, ui_goaleventsetup.Ui_GoalEventSetupDlg):
     """Implements goal data entry dialog, and accesses and writes to Goal Events table."""
     
     ID,  DESC = range(2)
  
     def __init__(self, parent=None):
-        """Constructor for goaleventSetupDlg class."""
-        super(goaleventSetupDlg, self).__init__(parent)
+        """Constructor for GoalEventSetupDlg class."""
+        super(GoalEventSetupDlg, self).__init__(parent)
         self.setupUi(self)
         
         # define model
         # underlying database model
         self.model = QSqlTableModel(self)
         self.model.setTable("tbl_goalevents")
-        self.model.setSort(goaleventSetupDlg.ID, Qt.AscendingOrder)
+        self.model.setSort(GoalEventSetupDlg.ID, Qt.AscendingOrder)
         self.model.select()
         
         # define mapper
@@ -526,8 +526,8 @@ class goaleventSetupDlg(QDialog, ui_goaleventsetup.Ui_goaleventSetupDlg):
         self.mapper = QDataWidgetMapper(self)
         self.mapper.setSubmitPolicy(QDataWidgetMapper.ManualSubmit)
         self.mapper.setModel(self.model)
-        self.mapper.addMapping(self.goaleventID_display, goaleventSetupDlg.ID)
-        self.mapper.addMapping(self.goaleventEdit, goaleventSetupDlg.DESC)
+        self.mapper.addMapping(self.goaleventID_display, GoalEventSetupDlg.ID)
+        self.mapper.addMapping(self.goaleventEdit, GoalEventSetupDlg.DESC)
         self.mapper.toFirst()
         
         # disable First and Previous Entry buttons
@@ -556,14 +556,14 @@ class goaleventSetupDlg(QDialog, ui_goaleventsetup.Ui_goaleventSetupDlg):
         row = self.mapper.currentIndex()
         if not self.mapper.submit():
             MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
-        if where == goaleventSetupDlg.FIRST:
+        if where == GoalEventSetupDlg.FIRST:
             self.firstEntry.setDisabled(True)
             self.prevEntry.setDisabled(True)
             if not self.nextEntry.isEnabled():
                 self.nextEntry.setEnabled(True)
                 self.lastEntry.setEnabled(True)
             row = 0
-        elif where == goaleventSetupDlg.PREV:
+        elif where == GoalEventSetupDlg.PREV:
             if row <= 1:
                 self.firstEntry.setDisabled(True)
                 self.prevEntry.setDisabled(True)                
@@ -573,7 +573,7 @@ class goaleventSetupDlg(QDialog, ui_goaleventsetup.Ui_goaleventSetupDlg):
                     self.nextEntry.setEnabled(True)
                     self.lastEntry.setEnabled(True)                    
                 row -= 1
-        elif where == goaleventSetupDlg.NEXT:
+        elif where == GoalEventSetupDlg.NEXT:
             row += 1
             if not self.prevEntry.isEnabled():
                 self.prevEntry.setEnabled(True)
@@ -582,7 +582,7 @@ class goaleventSetupDlg(QDialog, ui_goaleventsetup.Ui_goaleventSetupDlg):
                 self.nextEntry.setDisabled(True)
                 self.lastEntry.setDisabled(True)
                 row = self.model.rowCount() - 1
-        elif where == goaleventSetupDlg.LAST:
+        elif where == GoalEventSetupDlg.LAST:
             self.nextEntry.setDisabled(True)
             self.lastEntry.setDisabled(True)
             if not self.prevEntry.isEnabled():
@@ -650,20 +650,20 @@ class goaleventSetupDlg(QDialog, ui_goaleventsetup.Ui_goaleventSetupDlg):
                 DeletionErrorPrompt(self)
 
 
-class goalstrikeSetupDlg(QDialog, ui_goalstrikesetup.Ui_goalstrikeSetupDlg):
+class GoalStrikeSetupDlg(QDialog, ui_goalstrikesetup.Ui_GoalStrikeSetupDlg):
     """Implements goal strike data entry dialog, and accesses and writes Goal Strikes table."""
     
     ID,  DESC = range(2)
  
     def __init__(self, parent=None):
-        super(goalstrikeSetupDlg, self).__init__(parent)
+        super(GoalStrikeSetupDlg, self).__init__(parent)
         self.setupUi(self)
         
         # define model
         # underlying database model
         self.model = QSqlTableModel(self)
         self.model.setTable("tbl_goalstrikes")
-        self.model.setSort(goalstrikeSetupDlg.ID, Qt.AscendingOrder)
+        self.model.setSort(GoalStrikeSetupDlg.ID, Qt.AscendingOrder)
         self.model.select()
         
         # define mapper
@@ -671,8 +671,8 @@ class goalstrikeSetupDlg(QDialog, ui_goalstrikesetup.Ui_goalstrikeSetupDlg):
         self.mapper = QDataWidgetMapper(self)
         self.mapper.setSubmitPolicy(QDataWidgetMapper.ManualSubmit)
         self.mapper.setModel(self.model)
-        self.mapper.addMapping(self.goalstrikeID_display, goalstrikeSetupDlg.ID)
-        self.mapper.addMapping(self.goalstrikeEdit, goalstrikeSetupDlg.DESC)
+        self.mapper.addMapping(self.goalstrikeID_display, GoalStrikeSetupDlg.ID)
+        self.mapper.addMapping(self.goalstrikeEdit, GoalStrikeSetupDlg.DESC)
         self.mapper.toFirst()
         
         # disable First and Previous Entry buttons
@@ -795,21 +795,21 @@ class goalstrikeSetupDlg(QDialog, ui_goalstrikesetup.Ui_goalstrikeSetupDlg):
                 DeletionErrorPrompt(self)
         
 
-class fieldposSetupDlg(QDialog, ui_fieldpossetup.Ui_fieldposSetupDlg):
+class FieldPosSetupDlg(QDialog, ui_fieldpossetup.Ui_FieldPosSetupDlg):
     """Implements field position data entry dialog, and accesses and writes to Field Names table."""
     
     ID,  DESC = range(2)
  
     def __init__(self, parent=None):
-        """Constructor for fieldposSetupDlg class."""
-        super(fieldposSetupDlg, self).__init__(parent)
+        """Constructor for FieldPosSetupDlg class."""
+        super(FieldPosSetupDlg, self).__init__(parent)
         self.setupUi(self)
 
         # define model
         # underlying database model
         self.model = QSqlTableModel(self)
         self.model.setTable("tbl_fieldnames")
-        self.model.setSort(fieldposSetupDlg.ID, Qt.AscendingOrder)
+        self.model.setSort(FieldPosSetupDlg.ID, Qt.AscendingOrder)
         self.model.select()
         
         # define mapper
@@ -817,8 +817,8 @@ class fieldposSetupDlg(QDialog, ui_fieldpossetup.Ui_fieldposSetupDlg):
         self.mapper = QDataWidgetMapper(self)
         self.mapper.setSubmitPolicy(QDataWidgetMapper.ManualSubmit)
         self.mapper.setModel(self.model)
-        self.mapper.addMapping(self.fieldposID_display, fieldposSetupDlg.ID)
-        self.mapper.addMapping(self.fieldposEdit, fieldposSetupDlg.DESC)
+        self.mapper.addMapping(self.fieldposID_display, FieldPosSetupDlg.ID)
+        self.mapper.addMapping(self.fieldposEdit, FieldPosSetupDlg.DESC)
         self.mapper.toFirst()
         
         # disable First and Previous Entry buttons
@@ -941,21 +941,21 @@ class fieldposSetupDlg(QDialog, ui_fieldpossetup.Ui_fieldposSetupDlg):
                 DeletionErrorPrompt(self)
         
         
-class flankposSetupDlg(QDialog, ui_flankpossetup.Ui_flankposSetupDlg):
+class FlankPosSetupDlg(QDialog, ui_flankpossetup.Ui_FlankPosSetupDlg):
     """Implements flank position data entry dialog, and accesses and writes to Flank Names table."""
     
     ID,  DESC = range(2)
  
     def __init__(self, parent=None):
-        """Constructor of flankposSetupDlg class."""
-        super(flankposSetupDlg, self).__init__(parent)
+        """Constructor of FlankPosSetupDlg class."""
+        super(FlankPosSetupDlg, self).__init__(parent)
         self.setupUi(self)
 
         # define model
         # underlying database model
         self.model = QSqlTableModel(self)
         self.model.setTable("tbl_flanknames")
-        self.model.setSort(flankposSetupDlg.ID, Qt.AscendingOrder)
+        self.model.setSort(FlankPosSetupDlg.ID, Qt.AscendingOrder)
         self.model.select()
         
         # define mapper
@@ -964,10 +964,10 @@ class flankposSetupDlg(QDialog, ui_flankpossetup.Ui_flankposSetupDlg):
         self.mapper.setSubmitPolicy(QDataWidgetMapper.ManualSubmit)
         self.mapper.setModel(self.model)
         localDelegate = GenericDelegate(self)
-        localDelegate.insertColumnDelegate(flankposSetupDlg.DESC, NullLineEditDelegate())
+        localDelegate.insertColumnDelegate(FlankPosSetupDlg.DESC, NullLineEditDelegate())
         self.mapper.setItemDelegate(localDelegate)        
-        self.mapper.addMapping(self.flankposID_display, flankposSetupDlg.ID)
-        self.mapper.addMapping(self.flankposEdit, flankposSetupDlg.DESC)
+        self.mapper.addMapping(self.flankposID_display, FlankPosSetupDlg.ID)
+        self.mapper.addMapping(self.flankposEdit, FlankPosSetupDlg.DESC)
         self.mapper.toFirst()
         
         # disable First and Previous Entry buttons
@@ -1091,7 +1091,7 @@ class flankposSetupDlg(QDialog, ui_flankpossetup.Ui_flankposSetupDlg):
 
         
 # Implements user interface to Position table, which links to Flank Position and Field Position tables.
-class posSetupDlg(QDialog, ui_positionsetup.Ui_posSetupDlg):
+class PosSetupDlg(QDialog, ui_positionsetup.Ui_PosSetupDlg):
     """Implements position data entry dialog, which accesses and writes to the Positions table.
     
     The player position is a composite of the flank descriptor and the field position.  Some positions do
@@ -1102,17 +1102,17 @@ class posSetupDlg(QDialog, ui_positionsetup.Ui_posSetupDlg):
     POS_ID,  FIELD_ID,  FLANK_ID = range(3)    
 
     def __init__(self, parent=None):
-        """Constructor to posSetupDlg class."""
-        super(posSetupDlg, self).__init__(parent)
+        """Constructor to PosSetupDlg class."""
+        super(PosSetupDlg, self).__init__(parent)
         self.setupUi(self)
         
         # define model
         # underlying database model
         self.model = QSqlRelationalTableModel(self)
         self.model.setTable("tbl_positions")
-        self.model.setRelation(posSetupDlg.FIELD_ID, QSqlRelation("tbl_fieldnames", "posfield_id", "posfield_name"))
-        self.model.setRelation(posSetupDlg.FLANK_ID, QSqlRelation("tbl_flanknames", "posflank_id", "posflank_name"))        
-        self.model.setSort(posSetupDlg.POS_ID, Qt.AscendingOrder)
+        self.model.setRelation(PosSetupDlg.FIELD_ID, QSqlRelation("tbl_fieldnames", "posfield_id", "posfield_name"))
+        self.model.setRelation(PosSetupDlg.FLANK_ID, QSqlRelation("tbl_flanknames", "posflank_id", "posflank_name"))        
+        self.model.setSort(PosSetupDlg.POS_ID, Qt.AscendingOrder)
         self.model.select()
         
         # define mapper
@@ -1121,17 +1121,17 @@ class posSetupDlg(QDialog, ui_positionsetup.Ui_posSetupDlg):
         self.mapper.setSubmitPolicy(QDataWidgetMapper.ManualSubmit)
         self.mapper.setModel(self.model)
         self.mapper.setItemDelegate(QSqlRelationalDelegate(self))
-        self.mapper.addMapping(self.positionID_display, posSetupDlg.POS_ID)
+        self.mapper.addMapping(self.positionID_display, PosSetupDlg.POS_ID)
         # set up Field Position combobox that links to tbl_fieldnames
-        fieldrelationModel = self.model.relationModel(posSetupDlg.FIELD_ID)
+        fieldrelationModel = self.model.relationModel(PosSetupDlg.FIELD_ID)
         self.fieldposSelect.setModel(fieldrelationModel)
         self.fieldposSelect.setModelColumn(fieldrelationModel.fieldIndex("posfield_name"))        
-        self.mapper.addMapping(self.fieldposSelect, posSetupDlg.FIELD_ID)        
+        self.mapper.addMapping(self.fieldposSelect, PosSetupDlg.FIELD_ID)        
          # set up Flank Position combobox that links to tbl_flanknames
-        flankrelationModel = self.model.relationModel(posSetupDlg.FLANK_ID)
+        flankrelationModel = self.model.relationModel(PosSetupDlg.FLANK_ID)
         self.flankposSelect.setModel(flankrelationModel)
         self.flankposSelect.setModelColumn(flankrelationModel.fieldIndex("posflank_name"))
-        self.mapper.addMapping(self.flankposSelect, posSetupDlg.FLANK_ID)        
+        self.mapper.addMapping(self.flankposSelect, PosSetupDlg.FLANK_ID)        
         self.mapper.toFirst()         
         
         # disable First and Previous Entry buttons
@@ -1256,7 +1256,7 @@ class posSetupDlg(QDialog, ui_positionsetup.Ui_posSetupDlg):
         else:
                 DeletionErrorPrompt(self)
 
-class countrySetupDlg(QDialog, ui_countrysetup.Ui_countrySetupDlg):
+class CountrySetupDlg(QDialog, ui_countrysetup.Ui_CountrySetupDlg):
     """Implements country data entry dialog, which accesses and writes to Countries table.
     
     The country is linked with the confederation of which it is a member.
@@ -1266,16 +1266,16 @@ class countrySetupDlg(QDialog, ui_countrysetup.Ui_countrySetupDlg):
     ID,  REGION_ID,  NAME = range(3)    
     
     def __init__(self, parent=None):
-        """Constructor for countrySetupDlg class."""
-        super(countrySetupDlg, self).__init__(parent)
+        """Constructor for CountrySetupDlg class."""
+        super(CountrySetupDlg, self).__init__(parent)
         self.setupUi(self)         
         
         # define model
         # underlying database model
         self.model = QSqlRelationalTableModel(self)
         self.model.setTable("tbl_countries")
-        self.model.setRelation(countrySetupDlg.REGION_ID, QSqlRelation("tbl_confederations", "confed_id", "confed_name"))
-        self.model.setSort(countrySetupDlg.ID, Qt.AscendingOrder)
+        self.model.setRelation(CountrySetupDlg.REGION_ID, QSqlRelation("tbl_confederations", "confed_id", "confed_name"))
+        self.model.setSort(CountrySetupDlg.ID, Qt.AscendingOrder)
         self.model.select()
         
         # define mapper
@@ -1284,13 +1284,13 @@ class countrySetupDlg(QDialog, ui_countrysetup.Ui_countrySetupDlg):
         self.mapper.setSubmitPolicy(QDataWidgetMapper.ManualSubmit)
         self.mapper.setModel(self.model)
         self.mapper.setItemDelegate(QSqlRelationalDelegate(self))
-        self.mapper.addMapping(self.countryID_display, countrySetupDlg.ID)
-        self.mapper.addMapping(self.countryEdit, countrySetupDlg.NAME)        
+        self.mapper.addMapping(self.countryID_display, CountrySetupDlg.ID)
+        self.mapper.addMapping(self.countryEdit, CountrySetupDlg.NAME)        
          # set up combobox that links to foreign table
-        relationModel = self.model.relationModel(countrySetupDlg.REGION_ID)
+        relationModel = self.model.relationModel(CountrySetupDlg.REGION_ID)
         self.confedSelect.setModel(relationModel)
         self.confedSelect.setModelColumn(relationModel.fieldIndex("confed_name"))
-        self.mapper.addMapping(self.confedSelect, countrySetupDlg.REGION_ID)        
+        self.mapper.addMapping(self.confedSelect, CountrySetupDlg.REGION_ID)        
         self.mapper.toFirst()        
        
         # disable First and Previous Entry buttons
@@ -1418,21 +1418,21 @@ class countrySetupDlg(QDialog, ui_countrysetup.Ui_countrySetupDlg):
                 DeletionErrorPrompt(self)
         
 
-class confedSetupDlg(QDialog, ui_confederationsetup.Ui_confedSetupDlg):
+class ConfedSetupDlg(QDialog, ui_confederationsetup.Ui_ConfedSetupDlg):
     """Implements confederation data entry dialog, which accesses and writes to Confederations table."""
 
     ID,  NAME = range(2)
     
     def __init__(self, parent=None):
-        """Constructor for confedSetupDlg class."""
-        super(confedSetupDlg, self).__init__(parent)
+        """Constructor for ConfedSetupDlg class."""
+        super(ConfedSetupDlg, self).__init__(parent)
         self.setupUi(self)
         
         # define model
         # underlying database model
         self.model = QSqlTableModel(self)
         self.model.setTable("tbl_confederations")
-        self.model.setSort(confedSetupDlg.ID, Qt.AscendingOrder)
+        self.model.setSort(ConfedSetupDlg.ID, Qt.AscendingOrder)
         self.model.select()
         
         # define mapper
@@ -1440,8 +1440,8 @@ class confedSetupDlg(QDialog, ui_confederationsetup.Ui_confedSetupDlg):
         self.mapper = QDataWidgetMapper(self)
         self.mapper.setSubmitPolicy(QDataWidgetMapper.ManualSubmit)
         self.mapper.setModel(self.model)
-        self.mapper.addMapping(self.confedID_display, confedSetupDlg.ID)
-        self.mapper.addMapping(self.confederationEdit, confedSetupDlg.NAME)
+        self.mapper.addMapping(self.confedID_display, ConfedSetupDlg.ID)
+        self.mapper.addMapping(self.confederationEdit, ConfedSetupDlg.NAME)
         self.mapper.toFirst()
         
         # disable First and Previous Entry buttons
@@ -1565,21 +1565,21 @@ class confedSetupDlg(QDialog, ui_confederationsetup.Ui_confedSetupDlg):
                 DeletionErrorPrompt(self)
 
 
-class roundSetupDlg(QDialog, ui_roundsetup.Ui_roundSetupDlg):
+class RoundSetupDlg(QDialog, ui_roundsetup.Ui_RoundSetupDlg):
     """Implements matchday data entry dialog, and accesses and writes to Rounds table."""
     
     ID,  DESC = range(2)
     
     def __init__(self, parent=None):
-        """Constructor for roundSetupDlg class."""
-        super(roundSetupDlg, self).__init__(parent)
+        """Constructor for RoundSetupDlg class."""
+        super(RoundSetupDlg, self).__init__(parent)
         self.setupUi(self)
         
         # define model
         # underlying database model
         self.model = QSqlTableModel(self)
         self.model.setTable("tbl_rounds")
-        self.model.setSort(roundSetupDlg.ID, Qt.AscendingOrder)
+        self.model.setSort(RoundSetupDlg.ID, Qt.AscendingOrder)
         self.model.select()
         
         # define mapper
@@ -1587,8 +1587,8 @@ class roundSetupDlg(QDialog, ui_roundsetup.Ui_roundSetupDlg):
         self.mapper = QDataWidgetMapper(self)
         self.mapper.setSubmitPolicy(QDataWidgetMapper.ManualSubmit)
         self.mapper.setModel(self.model)
-        self.mapper.addMapping(self.roundID_display, roundSetupDlg.ID)
-        self.mapper.addMapping(self.rounddescEdit, roundSetupDlg.DESC)
+        self.mapper.addMapping(self.roundID_display, RoundSetupDlg.ID)
+        self.mapper.addMapping(self.rounddescEdit, RoundSetupDlg.DESC)
         self.mapper.toFirst()
         
         # disable First and Previous Entry buttons
@@ -1711,21 +1711,21 @@ class roundSetupDlg(QDialog, ui_roundsetup.Ui_roundSetupDlg):
                 DeletionErrorPrompt(self)
             
             
-class wxcondSetupDlg(QDialog, ui_weathersetup.Ui_wxcondSetupDlg):
+class WxCondSetupDlg(QDialog, ui_weathersetup.Ui_WxCondSetupDlg):
     """Implements weather condition data entry dialog, accesses and writes to WeatherConditions table."""
     
     ID,  DESC = range(2)
     
     def __init__(self, parent=None):
-        """Constructor for wxcondSetupDlg class."""
-        super(wxcondSetupDlg, self).__init__(parent)
+        """Constructor for WxCondSetupDlg class."""
+        super(WxCondSetupDlg, self).__init__(parent)
         self.setupUi(self)
  
         # define model
         # underlying database model
         self.model = QSqlTableModel(self)
         self.model.setTable("tbl_weather")
-        self.model.setSort(wxcondSetupDlg.ID, Qt.AscendingOrder)
+        self.model.setSort(WxCondSetupDlg.ID, Qt.AscendingOrder)
         self.model.select()
         
         # define mapper
@@ -1733,8 +1733,8 @@ class wxcondSetupDlg(QDialog, ui_weathersetup.Ui_wxcondSetupDlg):
         self.mapper = QDataWidgetMapper(self)
         self.mapper.setSubmitPolicy(QDataWidgetMapper.ManualSubmit)
         self.mapper.setModel(self.model)
-        self.mapper.addMapping(self.weatherID_display, wxcondSetupDlg.ID)
-        self.mapper.addMapping(self.wxcondEdit, wxcondSetupDlg.DESC)
+        self.mapper.addMapping(self.weatherID_display, WxCondSetupDlg.ID)
+        self.mapper.addMapping(self.wxcondEdit, WxCondSetupDlg.DESC)
         self.mapper.toFirst()
         
         # disable First and Previous Entry buttons

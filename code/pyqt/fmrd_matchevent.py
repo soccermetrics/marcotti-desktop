@@ -29,18 +29,18 @@ from FmrdLib.CustomModels import *
 """Contains classes that implement match event entry forms to main tables of FMRD. 
 
 Classes:
-goalEntryDlg -- data entry to Goals table
-penaltyEntryDlg -- data entry to Penalties table
-offenseEntryDlg -- data entry to Offenses table
-subsEntryDlg -- data entry to Substitutions table
-switchEntryDlg -- data entry to Switch Positions table
+GoalEntryDlg -- data entry to Goals table
+PenaltyEntryDlg -- data entry to Penalties table
+OffenseEntryDlg -- data entry to Offenses table
+SubsEntryDlg -- data entry to Substitutions table
+SwitchEntryDlg -- data entry to Switch Positions table
 """
 
-class goalEntryDlg(QDialog, ui_goalentry.Ui_goalEntryDlg):
+class GoalEntryDlg(QDialog, ui_goalentry.Ui_GoalEntryDlg):
     """Implements goal data entry dialog, and accesses and writes to Goals table.
     
     This dialog accepts data on goals scored in the run of play. Penalty kick events
-    are handled in the penaltyEntryDlg class.  Goals are attributed to a team but can
+    are handled in the PenaltyEntryDlg class.  Goals are attributed to a team but can
     be scored by any player in the match lineup, thus own goals can be recorded.
     
     """
@@ -48,8 +48,8 @@ class goalEntryDlg(QDialog, ui_goalentry.Ui_goalEntryDlg):
     ID, TEAM_ID, LINEUP_ID, BODY_ID, PLAY_ID, TIME, STIME = range(7)
 
     def __init__(self, parent=None):
-        """Constructor for goalEntryDlg class."""
-        super(goalEntryDlg, self).__init__(parent)
+        """Constructor for GoalEntryDlg class."""
+        super(GoalEntryDlg, self).__init__(parent)
         self.setupUi(self)
         
         MCH_ID = CMP_ID = RND_ID = 0
@@ -97,11 +97,11 @@ class goalEntryDlg(QDialog, ui_goalentry.Ui_goalEntryDlg):
         # because of foreign keys, instantiate QSqlRelationalTableModel and define relations to it        
         self.model = QSqlRelationalTableModel(self)
         self.model.setTable("tbl_goals")
-        self.model.setRelation(goalEntryDlg.TEAM_ID, QSqlRelation("tbl_teams", "team_id", "tm_name"))
-        self.model.setRelation(goalEntryDlg.LINEUP_ID, QSqlRelation("lineup_list", "lineup_id", "player"))
-        self.model.setRelation(goalEntryDlg.BODY_ID, QSqlRelation("tbl_goalstrikes", "gtstype_id", "gts_desc"))
-        self.model.setRelation(goalEntryDlg.PLAY_ID, QSqlRelation("tbl_goalevents", "gtetype_id", "gte_desc"))
-        self.model.setSort(goalEntryDlg.ID, Qt.AscendingOrder)
+        self.model.setRelation(GoalEntryDlg.TEAM_ID, QSqlRelation("tbl_teams", "team_id", "tm_name"))
+        self.model.setRelation(GoalEntryDlg.LINEUP_ID, QSqlRelation("lineup_list", "lineup_id", "player"))
+        self.model.setRelation(GoalEntryDlg.BODY_ID, QSqlRelation("tbl_goalstrikes", "gtstype_id", "gts_desc"))
+        self.model.setRelation(GoalEntryDlg.PLAY_ID, QSqlRelation("tbl_goalevents", "gtetype_id", "gte_desc"))
+        self.model.setSort(GoalEntryDlg.ID, Qt.AscendingOrder)
         self.model.select()
         
         # define mapper
@@ -110,46 +110,46 @@ class goalEntryDlg(QDialog, ui_goalentry.Ui_goalEntryDlg):
         self.mapper.setSubmitPolicy(QDataWidgetMapper.ManualSubmit)
         self.mapper.setModel(self.model)
         goalDelegate = GenericDelegate(self)
-        goalDelegate.insertColumnDelegate(goalEntryDlg.TEAM_ID, EventTeamComboBoxDelegate(self))
-        goalDelegate.insertColumnDelegate(goalEntryDlg.LINEUP_ID, GoalPlayerComboBoxDelegate(self))
+        goalDelegate.insertColumnDelegate(GoalEntryDlg.TEAM_ID, EventTeamComboBoxDelegate(self))
+        goalDelegate.insertColumnDelegate(GoalEntryDlg.LINEUP_ID, GoalPlayerComboBoxDelegate(self))
         self.mapper.setItemDelegate(goalDelegate)        
 
         # set up Team combobox
-        self.teamModel = self.model.relationModel(goalEntryDlg.TEAM_ID)
+        self.teamModel = self.model.relationModel(GoalEntryDlg.TEAM_ID)
         self.teamModel.setSort(TEAM, Qt.AscendingOrder)
         self.teamSelect.setModel(self.teamModel)
         self.teamSelect.setModelColumn(self.teamModel.fieldIndex("tm_name"))
         self.teamSelect.setCurrentIndex(-1)
-        self.mapper.addMapping(self.teamSelect, goalEntryDlg.TEAM_ID)
+        self.mapper.addMapping(self.teamSelect, GoalEntryDlg.TEAM_ID)
         
         # set up Player combobox
-        self.playerModel = self.model.relationModel(goalEntryDlg.LINEUP_ID)
+        self.playerModel = self.model.relationModel(GoalEntryDlg.LINEUP_ID)
         self.playerModel.setSort(SORT_NAME,  Qt.AscendingOrder)
         self.playerSelect.setModel(self.playerModel)
         self.playerSelect.setModelColumn(self.playerModel.fieldIndex("player"))
         self.playerSelect.setCurrentIndex(-1)
-        self.mapper.addMapping(self.playerSelect, goalEntryDlg.LINEUP_ID)
+        self.mapper.addMapping(self.playerSelect, GoalEntryDlg.LINEUP_ID)
 
         # relation model for Goal Type combobox
-        self.goaltypeModel = self.model.relationModel(goalEntryDlg.BODY_ID)
+        self.goaltypeModel = self.model.relationModel(GoalEntryDlg.BODY_ID)
         self.goaltypeModel.setSort(BODY, Qt.AscendingOrder)
         self.goaltypeSelect.setModel(self.goaltypeModel)
         self.goaltypeSelect.setModelColumn(self.goaltypeModel.fieldIndex("gts_desc"))
         self.goaltypeSelect.setCurrentIndex(-1)
-        self.mapper.addMapping(self.goaltypeSelect, goalEntryDlg.BODY_ID)        
+        self.mapper.addMapping(self.goaltypeSelect, GoalEntryDlg.BODY_ID)        
         
         # relation model for Goal Event combobox
-        self.goaleventModel = self.model.relationModel(goalEntryDlg.PLAY_ID)
+        self.goaleventModel = self.model.relationModel(GoalEntryDlg.PLAY_ID)
         self.goaleventModel.setSort(PLAY, Qt.AscendingOrder)
         self.goaleventSelect.setModel(self.goaleventModel)
         self.goaleventSelect.setModelColumn(self.goaleventModel.fieldIndex("gte_desc"))
         self.goaleventSelect.setCurrentIndex(-1)
-        self.mapper.addMapping(self.goaleventSelect, goalEntryDlg.PLAY_ID)        
+        self.mapper.addMapping(self.goaleventSelect, GoalEntryDlg.PLAY_ID)        
 
         # map other widgets on form
-        self.mapper.addMapping(self.goalID_display, goalEntryDlg.ID)
-        self.mapper.addMapping(self.goaltimeEdit, goalEntryDlg.TIME)
-        self.mapper.addMapping(self.stoppageEdit, goalEntryDlg.STIME)
+        self.mapper.addMapping(self.goalID_display, GoalEntryDlg.ID)
+        self.mapper.addMapping(self.goaltimeEdit, GoalEntryDlg.TIME)
+        self.mapper.addMapping(self.stoppageEdit, GoalEntryDlg.STIME)
         
         #
         # Disable data entry boxes
@@ -436,7 +436,7 @@ class goalEntryDlg(QDialog, ui_goalentry.Ui_goalEntryDlg):
             widget.setDisabled(True)
 
 
-class penaltyEntryDlg(QDialog, ui_penaltyentry.Ui_penaltyEntryDlg):
+class PenaltyEntryDlg(QDialog, ui_penaltyentry.Ui_PenaltyEntryDlg):
     """Implements penalty kick data entry dialog, and accesses and writes to Penalties table.
     
     This dialog accepts data on penalty kick events during a match.
@@ -445,8 +445,8 @@ class penaltyEntryDlg(QDialog, ui_penaltyentry.Ui_penaltyEntryDlg):
     ID, LINEUP_ID, FOUL_ID, OUTCOME_ID, TIME, STIME = range(6)
     
     def __init__(self, parent=None):
-        """Constructor for penaltyEntryDlg class."""
-        super(penaltyEntryDlg, self).__init__(parent)
+        """Constructor for PenaltyEntryDlg class."""
+        super(PenaltyEntryDlg, self).__init__(parent)
         self.setupUi(self)
         
         CMP_ID = RND_ID = MCH_ID = TM_ID = 0
@@ -508,10 +508,10 @@ class penaltyEntryDlg(QDialog, ui_penaltyentry.Ui_penaltyEntryDlg):
         # because of foreign keys, instantiate QSqlRelationalTableModel and define relations to it        
         self.model = QSqlRelationalTableModel(self)
         self.model.setTable("tbl_penalties")
-        self.model.setRelation(penaltyEntryDlg.LINEUP_ID, QSqlRelation("lineup_list", "lineup_id", "player"))
-        self.model.setRelation(penaltyEntryDlg.FOUL_ID, QSqlRelation("tbl_fouls", "foul_id", "foul_desc"))
-        self.model.setRelation(penaltyEntryDlg.OUTCOME_ID, QSqlRelation("tbl_penoutcomes", "penoutcome_id", "po_desc"))
-        self.model.setSort(penaltyEntryDlg.ID, Qt.AscendingOrder)
+        self.model.setRelation(PenaltyEntryDlg.LINEUP_ID, QSqlRelation("lineup_list", "lineup_id", "player"))
+        self.model.setRelation(PenaltyEntryDlg.FOUL_ID, QSqlRelation("tbl_fouls", "foul_id", "foul_desc"))
+        self.model.setRelation(PenaltyEntryDlg.OUTCOME_ID, QSqlRelation("tbl_penoutcomes", "penoutcome_id", "po_desc"))
+        self.model.setSort(PenaltyEntryDlg.ID, Qt.AscendingOrder)
         self.model.select()
         
         # define mapper
@@ -520,37 +520,37 @@ class penaltyEntryDlg(QDialog, ui_penaltyentry.Ui_penaltyEntryDlg):
         self.mapper.setSubmitPolicy(QDataWidgetMapper.ManualSubmit)
         self.mapper.setModel(self.model)
         penaltyDelegate = GenericDelegate(self)
-        penaltyDelegate.insertColumnDelegate(penaltyEntryDlg.LINEUP_ID, EventPlayerComboBoxDelegate(self))
+        penaltyDelegate.insertColumnDelegate(PenaltyEntryDlg.LINEUP_ID, EventPlayerComboBoxDelegate(self))
         self.mapper.setItemDelegate(penaltyDelegate)        
 
         # set up Player combobox
-        self.playerModel = self.model.relationModel(penaltyEntryDlg.LINEUP_ID)
+        self.playerModel = self.model.relationModel(PenaltyEntryDlg.LINEUP_ID)
         self.playerModel.setSort(SORT_NAME,  Qt.AscendingOrder)
         self.playerSelect.setModel(self.playerModel)
         self.playerSelect.setModelColumn(self.playerModel.fieldIndex("player"))
         self.playerSelect.setCurrentIndex(-1)
-        self.mapper.addMapping(self.playerSelect, penaltyEntryDlg.LINEUP_ID)
+        self.mapper.addMapping(self.playerSelect, PenaltyEntryDlg.LINEUP_ID)
 
         # relation model for Foul combobox
-        self.foulModel = self.model.relationModel(penaltyEntryDlg.FOUL_ID)
+        self.foulModel = self.model.relationModel(PenaltyEntryDlg.FOUL_ID)
         self.foulModel.setSort(FOUL, Qt.AscendingOrder)
         self.foulSelect.setModel(self.foulModel)
         self.foulSelect.setModelColumn(self.foulModel.fieldIndex("foul_desc"))
         self.foulSelect.setCurrentIndex(-1)
-        self.mapper.addMapping(self.foulSelect, penaltyEntryDlg.FOUL_ID)        
+        self.mapper.addMapping(self.foulSelect, PenaltyEntryDlg.FOUL_ID)        
         
         # relation model for Penalty Outcome combobox
-        self.outcomeModel = self.model.relationModel(penaltyEntryDlg.OUTCOME_ID)
+        self.outcomeModel = self.model.relationModel(PenaltyEntryDlg.OUTCOME_ID)
         self.outcomeModel.setSort(OUTCOME, Qt.AscendingOrder)
         self.penoutcomeSelect.setModel(self.outcomeModel)
         self.penoutcomeSelect.setModelColumn(self.outcomeModel.fieldIndex("po_desc"))
         self.penoutcomeSelect.setCurrentIndex(-1)
-        self.mapper.addMapping(self.penoutcomeSelect, penaltyEntryDlg.OUTCOME_ID)        
+        self.mapper.addMapping(self.penoutcomeSelect, PenaltyEntryDlg.OUTCOME_ID)        
 
         # map other widgets on form
-        self.mapper.addMapping(self.penaltyID_display, penaltyEntryDlg.ID)
-        self.mapper.addMapping(self.pentimeEdit, penaltyEntryDlg.TIME)
-        self.mapper.addMapping(self.stoppageEdit, penaltyEntryDlg.STIME)
+        self.mapper.addMapping(self.penaltyID_display, PenaltyEntryDlg.ID)
+        self.mapper.addMapping(self.pentimeEdit, PenaltyEntryDlg.TIME)
+        self.mapper.addMapping(self.stoppageEdit, PenaltyEntryDlg.STIME)
         
         #
         # Disable data entry boxes
@@ -918,7 +918,7 @@ class penaltyEntryDlg(QDialog, ui_penaltyentry.Ui_penaltyEntryDlg):
         else:
             widget.setDisabled(True)
 
-class offenseEntryDlg(QDialog, ui_offenseentry.Ui_offenseEntryDlg):
+class OffenseEntryDlg(QDialog, ui_offenseentry.Ui_OffenseEntryDlg):
     """Implements bookable offense data entry dialog, and accesses and writes to Offenses table.
     
     This dialog accepts data on disciplinary incidents during a match.
@@ -927,8 +927,8 @@ class offenseEntryDlg(QDialog, ui_offenseentry.Ui_offenseEntryDlg):
     ID, LINEUP_ID, FOUL_ID, CARD_ID, TIME, STIME = range(6)
 
     def __init__(self, parent=None):
-        """Constructor for offenseEntryDlg class."""
-        super(offenseEntryDlg, self).__init__(parent)
+        """Constructor for OffenseEntryDlg class."""
+        super(OffenseEntryDlg, self).__init__(parent)
         self.setupUi(self)
         
         CMP_ID = RND_ID = MCH_ID = TM_ID = 0
@@ -990,10 +990,10 @@ class offenseEntryDlg(QDialog, ui_offenseentry.Ui_offenseEntryDlg):
         # because of foreign keys, instantiate QSqlRelationalTableModel and define relations to it        
         self.model = QSqlRelationalTableModel(self)
         self.model.setTable("tbl_offenses")
-        self.model.setRelation(offenseEntryDlg.LINEUP_ID, QSqlRelation("lineup_list", "lineup_id", "player"))
-        self.model.setRelation(offenseEntryDlg.FOUL_ID, QSqlRelation("tbl_fouls", "foul_id", "foul_desc"))
-        self.model.setRelation(offenseEntryDlg.CARD_ID, QSqlRelation("tbl_cards", "card_id", "card_type"))
-        self.model.setSort(offenseEntryDlg.ID, Qt.AscendingOrder)
+        self.model.setRelation(OffenseEntryDlg.LINEUP_ID, QSqlRelation("lineup_list", "lineup_id", "player"))
+        self.model.setRelation(OffenseEntryDlg.FOUL_ID, QSqlRelation("tbl_fouls", "foul_id", "foul_desc"))
+        self.model.setRelation(OffenseEntryDlg.CARD_ID, QSqlRelation("tbl_cards", "card_id", "card_type"))
+        self.model.setSort(OffenseEntryDlg.ID, Qt.AscendingOrder)
         self.model.select()
         
         # define mapper
@@ -1002,37 +1002,37 @@ class offenseEntryDlg(QDialog, ui_offenseentry.Ui_offenseEntryDlg):
         self.mapper.setSubmitPolicy(QDataWidgetMapper.ManualSubmit)
         self.mapper.setModel(self.model)
         foulDelegate = GenericDelegate(self)
-        foulDelegate.insertColumnDelegate(offenseEntryDlg.LINEUP_ID, EventPlayerComboBoxDelegate(self))
+        foulDelegate.insertColumnDelegate(OffenseEntryDlg.LINEUP_ID, EventPlayerComboBoxDelegate(self))
         self.mapper.setItemDelegate(foulDelegate)        
 
         # set up Player combobox
-        self.playerModel = self.model.relationModel(offenseEntryDlg.LINEUP_ID)
+        self.playerModel = self.model.relationModel(OffenseEntryDlg.LINEUP_ID)
         self.playerModel.setSort(SORT_NAME,  Qt.AscendingOrder)
         self.playerSelect.setModel(self.playerModel)
         self.playerSelect.setModelColumn(self.playerModel.fieldIndex("player"))
         self.playerSelect.setCurrentIndex(-1)
-        self.mapper.addMapping(self.playerSelect, offenseEntryDlg.LINEUP_ID)
+        self.mapper.addMapping(self.playerSelect, OffenseEntryDlg.LINEUP_ID)
 
         # relation model for Foul combobox
-        self.foulModel = self.model.relationModel(offenseEntryDlg.FOUL_ID)
+        self.foulModel = self.model.relationModel(OffenseEntryDlg.FOUL_ID)
         self.foulModel.setSort(FOUL, Qt.AscendingOrder)
         self.foulSelect.setModel(self.foulModel)
         self.foulSelect.setModelColumn(self.foulModel.fieldIndex("foul_desc"))
         self.foulSelect.setCurrentIndex(-1)
-        self.mapper.addMapping(self.foulSelect, offenseEntryDlg.FOUL_ID)        
+        self.mapper.addMapping(self.foulSelect, OffenseEntryDlg.FOUL_ID)        
         
         # relation model for Card combobox
-        self.cardModel = self.model.relationModel(offenseEntryDlg.CARD_ID)
+        self.cardModel = self.model.relationModel(OffenseEntryDlg.CARD_ID)
         self.cardModel.setSort(CARD, Qt.AscendingOrder)
         self.cardSelect.setModel(self.cardModel)
         self.cardSelect.setModelColumn(self.cardModel.fieldIndex("card_type"))
         self.cardSelect.setCurrentIndex(-1)
-        self.mapper.addMapping(self.cardSelect, offenseEntryDlg.CARD_ID)        
+        self.mapper.addMapping(self.cardSelect, OffenseEntryDlg.CARD_ID)        
 
         # map other widgets on form
-        self.mapper.addMapping(self.offenseID_display, offenseEntryDlg.ID)
-        self.mapper.addMapping(self.foultimeEdit, offenseEntryDlg.TIME)
-        self.mapper.addMapping(self.stoppageEdit, offenseEntryDlg.STIME)
+        self.mapper.addMapping(self.offenseID_display, OffenseEntryDlg.ID)
+        self.mapper.addMapping(self.foultimeEdit, OffenseEntryDlg.TIME)
+        self.mapper.addMapping(self.stoppageEdit, OffenseEntryDlg.STIME)
         
         #
         # Disable data entry boxes
@@ -1401,7 +1401,7 @@ class offenseEntryDlg(QDialog, ui_offenseentry.Ui_offenseEntryDlg):
         else:
             widget.setDisabled(True)
 
-class subsEntryDlg(QDialog, ui_subsentry.Ui_subsEntryDlg):
+class SubsEntryDlg(QDialog, ui_subsentry.Ui_SubsEntryDlg):
     """Implements substitutions data entry dialog, and accesses and writes to Substitutions table and In(Out)Substitutions linking tables.
     
     This dialog accepts data on substitution events during a match. 
@@ -1410,8 +1410,8 @@ class subsEntryDlg(QDialog, ui_subsentry.Ui_subsEntryDlg):
     ID, TIME, STIME = range(3)
     
     def __init__(self, parent=None):
-        """Constructor for subsEntryDlg class."""
-        super(subsEntryDlg, self).__init__(parent)
+        """Constructor for SubsEntryDlg class."""
+        super(SubsEntryDlg, self).__init__(parent)
         self.setupUi(self)
         
         # define local parameters
@@ -1472,7 +1472,7 @@ class subsEntryDlg(QDialog, ui_subsentry.Ui_subsEntryDlg):
         # define underlying database model (tbl_substitutions)
         self.model = QSqlTableModel(self)
         self.model.setTable("tbl_substitutions")
-        self.model.setSort(subsEntryDlg.ID, Qt.AscendingOrder)
+        self.model.setSort(SubsEntryDlg.ID, Qt.AscendingOrder)
         self.model.select()
         
         # define mapper
@@ -1480,9 +1480,9 @@ class subsEntryDlg(QDialog, ui_subsentry.Ui_subsEntryDlg):
         self.mapper = QDataWidgetMapper(self)
         self.mapper.setSubmitPolicy(QDataWidgetMapper.ManualSubmit)
         self.mapper.setModel(self.model)
-        self.mapper.addMapping(self.subsID_display, subsEntryDlg.ID)
-        self.mapper.addMapping(self.subtimeEdit, subsEntryDlg.TIME)
-        self.mapper.addMapping(self.stoppageEdit, subsEntryDlg.STIME)
+        self.mapper.addMapping(self.subsID_display, SubsEntryDlg.ID)
+        self.mapper.addMapping(self.subtimeEdit, SubsEntryDlg.TIME)
+        self.mapper.addMapping(self.stoppageEdit, SubsEntryDlg.STIME)
 
         # lineup models
         # need two copies of the same model so that
@@ -2076,7 +2076,7 @@ class subsEntryDlg(QDialog, ui_subsentry.Ui_subsEntryDlg):
         else:
             widget.setDisabled(True)
 
-class switchEntryDlg(QDialog, ui_switchentry.Ui_switchEntryDlg):
+class SwitchEntryDlg(QDialog, ui_switchentry.Ui_SwitchEntryDlg):
     """Implements position switch data entry dialog, and accesses and writes to SwitchPositions table.
     
     This dialog accepts data on position switch events during a match. It is primarily focused on
@@ -2087,7 +2087,7 @@ class switchEntryDlg(QDialog, ui_switchentry.Ui_switchEntryDlg):
     ID, LINEUP_ID, POS_ID, TIME, STIME = range(5)
     
     def __init__(self, parent=None):
-        super(switchEntryDlg, self).__init__(parent)
+        super(SwitchEntryDlg, self).__init__(parent)
         self.setupUi(self)
         
         # define local parameters
@@ -2149,9 +2149,9 @@ class switchEntryDlg(QDialog, ui_switchentry.Ui_switchEntryDlg):
         # because of foreign keys, instantiate QSqlRelationalTableModel and define relations to it        
         self.model = QSqlRelationalTableModel(self)
         self.model.setTable("tbl_switchpositions")
-        self.model.setRelation(switchEntryDlg.LINEUP_ID, QSqlRelation("lineup_list", "lineup_id", "player"))
-        self.model.setRelation(switchEntryDlg.POS_ID, QSqlRelation("positions_list", "position_id", "position_name"))
-        self.model.setSort(switchEntryDlg.ID, Qt.AscendingOrder)
+        self.model.setRelation(SwitchEntryDlg.LINEUP_ID, QSqlRelation("lineup_list", "lineup_id", "player"))
+        self.model.setRelation(SwitchEntryDlg.POS_ID, QSqlRelation("positions_list", "position_id", "position_name"))
+        self.model.setSort(SwitchEntryDlg.ID, Qt.AscendingOrder)
         self.model.select()
         
         # define mapper
@@ -2160,29 +2160,29 @@ class switchEntryDlg(QDialog, ui_switchentry.Ui_switchEntryDlg):
         self.mapper.setSubmitPolicy(QDataWidgetMapper.ManualSubmit)
         self.mapper.setModel(self.model)
         switchDelegate = GenericDelegate(self)
-        switchDelegate.insertColumnDelegate(switchEntryDlg.LINEUP_ID, SwitchPlayerComboBoxDelegate(self))
+        switchDelegate.insertColumnDelegate(SwitchEntryDlg.LINEUP_ID, SwitchPlayerComboBoxDelegate(self))
         self.mapper.setItemDelegate(switchDelegate)        
 
         # relation model for Player combobox
-        self.playerModel = self.model.relationModel(switchEntryDlg.LINEUP_ID)
+        self.playerModel = self.model.relationModel(SwitchEntryDlg.LINEUP_ID)
         self.playerModel.setSort(SORT_NAME,  Qt.AscendingOrder)
         self.playerSelect.setModel(self.playerModel)
         self.playerSelect.setModelColumn(self.playerModel.fieldIndex("player"))
         self.playerSelect.setCurrentIndex(-1)
-        self.mapper.addMapping(self.playerSelect, switchEntryDlg.LINEUP_ID)
+        self.mapper.addMapping(self.playerSelect, SwitchEntryDlg.LINEUP_ID)
 
         # relation model for Positions combobox
-        self.positionModel = self.model.relationModel(switchEntryDlg.POS_ID)
+        self.positionModel = self.model.relationModel(SwitchEntryDlg.POS_ID)
         self.positionModel.setSort(POS, Qt.AscendingOrder)
         self.newPositionSelect.setModel(self.positionModel)
         self.newPositionSelect.setModelColumn(self.positionModel.fieldIndex("position_name"))
         self.newPositionSelect.setCurrentIndex(-1)
-        self.mapper.addMapping(self.newPositionSelect, switchEntryDlg.POS_ID)        
+        self.mapper.addMapping(self.newPositionSelect, SwitchEntryDlg.POS_ID)        
         
         # map other widgets on form
-        self.mapper.addMapping(self.switchID_display, switchEntryDlg.ID)
-        self.mapper.addMapping(self.switchtimeEdit, switchEntryDlg.TIME)
-        self.mapper.addMapping(self.stoppageEdit, switchEntryDlg.STIME)
+        self.mapper.addMapping(self.switchID_display, SwitchEntryDlg.ID)
+        self.mapper.addMapping(self.switchtimeEdit, SwitchEntryDlg.TIME)
+        self.mapper.addMapping(self.stoppageEdit, SwitchEntryDlg.STIME)
 
         #
         # Disable data entry boxes
@@ -2213,10 +2213,10 @@ class switchEntryDlg(QDialog, ui_switchentry.Ui_switchEntryDlg):
         # Signals/Slots configuration
         #
 
-        self.connect(self.firstEntry, SIGNAL("clicked()"), lambda: self.saveRecord(switchEntryDlg.FIRST))
-        self.connect(self.prevEntry, SIGNAL("clicked()"), lambda: self.saveRecord(switchEntryDlg.PREV))
-        self.connect(self.nextEntry, SIGNAL("clicked()"), lambda: self.saveRecord(switchEntryDlg.NEXT))
-        self.connect(self.lastEntry, SIGNAL("clicked()"), lambda: self.saveRecord(switchEntryDlg.LAST))
+        self.connect(self.firstEntry, SIGNAL("clicked()"), lambda: self.saveRecord(SwitchEntryDlg.FIRST))
+        self.connect(self.prevEntry, SIGNAL("clicked()"), lambda: self.saveRecord(SwitchEntryDlg.PREV))
+        self.connect(self.nextEntry, SIGNAL("clicked()"), lambda: self.saveRecord(SwitchEntryDlg.NEXT))
+        self.connect(self.lastEntry, SIGNAL("clicked()"), lambda: self.saveRecord(SwitchEntryDlg.LAST))
         self.connect(self.addEntry, SIGNAL("clicked()"), self.addRecord)
         self.connect(self.deleteEntry, SIGNAL("clicked()"), self.deleteRecord)           
         self.connect(self.closeButton, SIGNAL("clicked()"), self.accept)
@@ -2241,14 +2241,14 @@ class switchEntryDlg(QDialog, ui_switchentry.Ui_switchEntryDlg):
         if not self.mapper.submit():
             MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
         
-        if where == switchEntryDlg.FIRST:
+        if where == SwitchEntryDlg.FIRST:
             self.firstEntry.setDisabled(True)
             self.prevEntry.setDisabled(True)
             if not self.nextEntry.isEnabled():
                 self.nextEntry.setEnabled(True)
                 self.lastEntry.setEnabled(True)
             row = 0
-        elif where == switchEntryDlg.PREV:
+        elif where == SwitchEntryDlg.PREV:
             row -= 1
             if not self.nextEntry.isEnabled():
                     self.nextEntry.setEnabled(True)
@@ -2256,7 +2256,7 @@ class switchEntryDlg(QDialog, ui_switchentry.Ui_switchEntryDlg):
             if row == 0:
                 self.firstEntry.setDisabled(True)
                 self.prevEntry.setDisabled(True)                
-        elif where == switchEntryDlg.NEXT:
+        elif where == SwitchEntryDlg.NEXT:
             row += 1
             if not self.prevEntry.isEnabled():
                 self.prevEntry.setEnabled(True)
@@ -2264,7 +2264,7 @@ class switchEntryDlg(QDialog, ui_switchentry.Ui_switchEntryDlg):
             if row == self.model.rowCount() - 1:
                 self.nextEntry.setDisabled(True)
                 self.lastEntry.setDisabled(True)
-        elif where == switchEntryDlg.LAST:
+        elif where == SwitchEntryDlg.LAST:
             self.nextEntry.setDisabled(True)
             self.lastEntry.setDisabled(True)
             if not self.prevEntry.isEnabled():

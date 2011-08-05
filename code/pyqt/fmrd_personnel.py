@@ -32,14 +32,13 @@ from FmrdLib.MsgPrompts import *
 """Contains classes that implement personnel entry forms to main tables of FMRD.
 
 Classes:
-managerEntryDlg -- data entry to Managers table
-playerEntryDlg -- data entry to Players table
-refereeEntryDlg -- data entry to Referees table
-lineupEntryDlg -- data entry to Lineups table
+ManagerEntryDlg -- data entry to Managers table
+PlayerEntryDlg -- data entry to Players table
+RefereeEntryDlg -- data entry to Referees table
+LineupEntryDlg -- data entry to Lineups table
 """
 
-# managerEntryDlg: Manager entry dialog
-class managerEntryDlg(QDialog, ui_managerentry.Ui_managerEntryDlg):
+class ManagerEntryDlg(QDialog, ui_managerentry.Ui_ManagerEntryDlg):
     """Implements manager data entry dialog, and accesses and writes to Managers table.
     
     This dialog accepts data on the managers who participate in a football competition. In
@@ -49,8 +48,8 @@ class managerEntryDlg(QDialog, ui_managerentry.Ui_managerEntryDlg):
     ID,  CTRY_ID, DOB, FNAME, LNAME, NNAME = range(6)
 
     def __init__(self, parent=None):
-        """Constructor for managerEntryDlg class."""
-        super(managerEntryDlg, self).__init__(parent)
+        """Constructor for ManagerEntryDlg class."""
+        super(ManagerEntryDlg, self).__init__(parent)
         self.setupUi(self)
 
         # define local parameters
@@ -62,8 +61,8 @@ class managerEntryDlg(QDialog, ui_managerentry.Ui_managerEntryDlg):
         # define relations to it
         self.model = QSqlRelationalTableModel(self)
         self.model.setTable("tbl_managers")
-        self.model.setRelation(managerEntryDlg.CTRY_ID, QSqlRelation("tbl_countries", "country_id", "cty_name"))                
-        self.model.setSort(managerEntryDlg.ID, Qt.AscendingOrder)
+        self.model.setRelation(ManagerEntryDlg.CTRY_ID, QSqlRelation("tbl_countries", "country_id", "cty_name"))                
+        self.model.setSort(ManagerEntryDlg.ID, Qt.AscendingOrder)
         self.model.select()
         
         # define mapper to Managers table
@@ -72,25 +71,25 @@ class managerEntryDlg(QDialog, ui_managerentry.Ui_managerEntryDlg):
         self.mapper.setSubmitPolicy(QDataWidgetMapper.ManualSubmit)
         self.mapper.setModel(self.model)
         localDelegate = GenericDelegate(self)
-        localDelegate.insertColumnDelegate(managerEntryDlg.FNAME, NullLineEditDelegate())
-        localDelegate.insertColumnDelegate(managerEntryDlg.LNAME, NullLineEditDelegate())        
-        localDelegate.insertColumnDelegate(managerEntryDlg.NNAME, NullLineEditDelegate())
-        localDelegate.insertColumnDelegate(managerEntryDlg.CTRY_ID, CountryComboBoxDelegate(self))
+        localDelegate.insertColumnDelegate(ManagerEntryDlg.FNAME, NullLineEditDelegate())
+        localDelegate.insertColumnDelegate(ManagerEntryDlg.LNAME, NullLineEditDelegate())        
+        localDelegate.insertColumnDelegate(ManagerEntryDlg.NNAME, NullLineEditDelegate())
+        localDelegate.insertColumnDelegate(ManagerEntryDlg.CTRY_ID, CountryComboBoxDelegate(self))
         self.mapper.setItemDelegate(localDelegate)
-        self.mapper.addMapping(self.mgrID_display, managerEntryDlg.ID)
+        self.mapper.addMapping(self.mgrID_display, ManagerEntryDlg.ID)
 
         # relation model for Country combobox
-        self.countryModel = self.model.relationModel(managerEntryDlg.CTRY_ID)
+        self.countryModel = self.model.relationModel(ManagerEntryDlg.CTRY_ID)
         self.countryModel.setSort(COUNTRY_ID, Qt.AscendingOrder)
         self.mgrCountrySelect.setModel(self.countryModel)
         self.mgrCountrySelect.setModelColumn(self.countryModel.fieldIndex("cty_name"))
-        self.mapper.addMapping(self.mgrCountrySelect, managerEntryDlg.CTRY_ID)
+        self.mapper.addMapping(self.mgrCountrySelect, ManagerEntryDlg.CTRY_ID)
         
         # map other widgets on form
-        self.mapper.addMapping(self.mgrDOBEdit, managerEntryDlg.DOB)
-        self.mapper.addMapping(self.mgrFirstNameEdit, managerEntryDlg.FNAME)
-        self.mapper.addMapping(self.mgrLastNameEdit, managerEntryDlg.LNAME)
-        self.mapper.addMapping(self.mgrNicknameEdit, managerEntryDlg.NNAME)
+        self.mapper.addMapping(self.mgrDOBEdit, ManagerEntryDlg.DOB)
+        self.mapper.addMapping(self.mgrFirstNameEdit, ManagerEntryDlg.FNAME)
+        self.mapper.addMapping(self.mgrLastNameEdit, ManagerEntryDlg.LNAME)
+        self.mapper.addMapping(self.mgrNicknameEdit, ManagerEntryDlg.NNAME)
         self.mapper.toFirst()
  
         # set up Confederation combobox that links to tbl_confederations
@@ -280,7 +279,7 @@ class managerEntryDlg(QDialog, ui_managerentry.Ui_managerEntryDlg):
         self.countryModel.select()
         
         
-class refereeEntryDlg(QDialog, ui_refereeentry.Ui_refereeEntryDlg):
+class RefereeEntryDlg(QDialog, ui_refereeentry.Ui_RefereeEntryDlg):
     """Implements referee data entry dialog, and accesses and writes to Referees table.
     
     This dialog accepts data on the referees who participate in a football competition. In
@@ -290,8 +289,8 @@ class refereeEntryDlg(QDialog, ui_refereeentry.Ui_refereeEntryDlg):
     ID,  CTRY_ID, DOB, FNAME, LNAME = range(5)
 
     def __init__(self, parent=None):
-        """Constructor of refereeEntryDlg class."""
-        super(refereeEntryDlg, self).__init__(parent)
+        """Constructor of RefereeEntryDlg class."""
+        super(RefereeEntryDlg, self).__init__(parent)
         self.setupUi(self)
         
         # define local parameters
@@ -303,8 +302,8 @@ class refereeEntryDlg(QDialog, ui_refereeentry.Ui_refereeEntryDlg):
         # define relations to it
         self.model = QSqlRelationalTableModel(self)
         self.model.setTable("tbl_referees")
-        self.model.setRelation(refereeEntryDlg.CTRY_ID, QSqlRelation("tbl_countries", "country_id", "cty_name"))                
-        self.model.setSort(refereeEntryDlg.ID, Qt.AscendingOrder)
+        self.model.setRelation(RefereeEntryDlg.CTRY_ID, QSqlRelation("tbl_countries", "country_id", "cty_name"))                
+        self.model.setSort(RefereeEntryDlg.ID, Qt.AscendingOrder)
         self.model.select()
         
         # define mapper
@@ -313,23 +312,23 @@ class refereeEntryDlg(QDialog, ui_refereeentry.Ui_refereeEntryDlg):
         self.mapper.setSubmitPolicy(QDataWidgetMapper.ManualSubmit)
         self.mapper.setModel(self.model)
         localDelegate = GenericDelegate(self)
-        localDelegate.insertColumnDelegate(refereeEntryDlg.CTRY_ID, CountryComboBoxDelegate(self))
-        localDelegate.insertColumnDelegate(refereeEntryDlg.FNAME, NullLineEditDelegate())
-        localDelegate.insertColumnDelegate(refereeEntryDlg.LNAME, NullLineEditDelegate())        
+        localDelegate.insertColumnDelegate(RefereeEntryDlg.CTRY_ID, CountryComboBoxDelegate(self))
+        localDelegate.insertColumnDelegate(RefereeEntryDlg.FNAME, NullLineEditDelegate())
+        localDelegate.insertColumnDelegate(RefereeEntryDlg.LNAME, NullLineEditDelegate())        
         self.mapper.setItemDelegate(localDelegate)        
-        self.mapper.addMapping(self.refID_display, refereeEntryDlg.ID)
+        self.mapper.addMapping(self.refID_display, RefereeEntryDlg.ID)
 
         # relation model for Country combobox
-        self.countryModel = self.model.relationModel(refereeEntryDlg.CTRY_ID)
+        self.countryModel = self.model.relationModel(RefereeEntryDlg.CTRY_ID)
         self.countryModel.setSort(COUNTRY_ID, Qt.AscendingOrder)
         self.refCountrySelect.setModel(self.countryModel)
         self.refCountrySelect.setModelColumn(self.countryModel.fieldIndex("cty_name"))
-        self.mapper.addMapping(self.refCountrySelect, refereeEntryDlg.CTRY_ID)
+        self.mapper.addMapping(self.refCountrySelect, RefereeEntryDlg.CTRY_ID)
 
         # map other widgets on form
-        self.mapper.addMapping(self.refDOBEdit, refereeEntryDlg.DOB)
-        self.mapper.addMapping(self.refFirstNameEdit, refereeEntryDlg.FNAME)
-        self.mapper.addMapping(self.refLastNameEdit, refereeEntryDlg.LNAME)
+        self.mapper.addMapping(self.refDOBEdit, RefereeEntryDlg.DOB)
+        self.mapper.addMapping(self.refFirstNameEdit, RefereeEntryDlg.FNAME)
+        self.mapper.addMapping(self.refLastNameEdit, RefereeEntryDlg.LNAME)
         self.mapper.toFirst()
         
         # set up Confederation combobox that links to tbl_confederations
@@ -519,7 +518,7 @@ class refereeEntryDlg(QDialog, ui_refereeentry.Ui_refereeEntryDlg):
         self.countryModel.select()
     
 
-class playerEntryDlg(QDialog, ui_playerentry.Ui_playerEntryDlg):
+class PlayerEntryDlg(QDialog, ui_playerentry.Ui_PlayerEntryDlg):
     """Implements player data entry dialog, and accesses and writes to Players table.
     
     This dialog accepts data on the players who participate in a football competition. In
@@ -529,8 +528,8 @@ class playerEntryDlg(QDialog, ui_playerentry.Ui_playerEntryDlg):
     ID,  CTRY_ID, DOB, FNAME, LNAME, NNAME, POS_ID = range(7)
  
     def __init__(self, parent=None):
-        """Constructor of playerEntryDlg class."""
-        super(playerEntryDlg, self).__init__(parent)
+        """Constructor of PlayerEntryDlg class."""
+        super(PlayerEntryDlg, self).__init__(parent)
         self.setupUi(self)
 
         # define local parameters
@@ -543,9 +542,9 @@ class playerEntryDlg(QDialog, ui_playerentry.Ui_playerEntryDlg):
         # define relations to it
         self.model = QSqlRelationalTableModel(self)
         self.model.setTable("tbl_players")
-        self.model.setRelation(playerEntryDlg.CTRY_ID, QSqlRelation("tbl_countries", "country_id", "cty_name"))   
-        self.model.setRelation(playerEntryDlg.POS_ID, QSqlRelation("positions_list", "position_id", "position_name"))
-        self.model.setSort(playerEntryDlg.ID, Qt.AscendingOrder)
+        self.model.setRelation(PlayerEntryDlg.CTRY_ID, QSqlRelation("tbl_countries", "country_id", "cty_name"))   
+        self.model.setRelation(PlayerEntryDlg.POS_ID, QSqlRelation("positions_list", "position_id", "position_name"))
+        self.model.setSort(PlayerEntryDlg.ID, Qt.AscendingOrder)
         self.model.select()
         
         # define mapper
@@ -554,32 +553,32 @@ class playerEntryDlg(QDialog, ui_playerentry.Ui_playerEntryDlg):
         self.mapper.setSubmitPolicy(QDataWidgetMapper.ManualSubmit)
         self.mapper.setModel(self.model)       
         localDelegate = GenericDelegate(self)
-        localDelegate.insertColumnDelegate(playerEntryDlg.FNAME, NullLineEditDelegate())
-        localDelegate.insertColumnDelegate(playerEntryDlg.LNAME, NullLineEditDelegate())
-        localDelegate.insertColumnDelegate(playerEntryDlg.NNAME, NullLineEditDelegate())
-        localDelegate.insertColumnDelegate(playerEntryDlg.CTRY_ID, CountryComboBoxDelegate(self))
+        localDelegate.insertColumnDelegate(PlayerEntryDlg.FNAME, NullLineEditDelegate())
+        localDelegate.insertColumnDelegate(PlayerEntryDlg.LNAME, NullLineEditDelegate())
+        localDelegate.insertColumnDelegate(PlayerEntryDlg.NNAME, NullLineEditDelegate())
+        localDelegate.insertColumnDelegate(PlayerEntryDlg.CTRY_ID, CountryComboBoxDelegate(self))
         self.mapper.setItemDelegate(localDelegate)
-        self.mapper.addMapping(self.plyrID_display, playerEntryDlg.ID)
+        self.mapper.addMapping(self.plyrID_display, PlayerEntryDlg.ID)
 
         # relation model for Country combobox
-        self.countryModel = self.model.relationModel(playerEntryDlg.CTRY_ID)
+        self.countryModel = self.model.relationModel(PlayerEntryDlg.CTRY_ID)
         self.countryModel.setSort(COUNTRY_NAME, Qt.AscendingOrder)
         self.plyrCountrySelect.setModel(self.countryModel)
         self.plyrCountrySelect.setModelColumn(self.countryModel.fieldIndex("cty_name"))
-        self.mapper.addMapping(self.plyrCountrySelect, playerEntryDlg.CTRY_ID)
+        self.mapper.addMapping(self.plyrCountrySelect, PlayerEntryDlg.CTRY_ID)
         
         # relation model for Position combobox
-        self.positionModel = self.model.relationModel(playerEntryDlg.POS_ID)
+        self.positionModel = self.model.relationModel(PlayerEntryDlg.POS_ID)
         self.positionModel.setSort(POSITION_NAME, Qt.AscendingOrder)
         self.plyrPositionSelect.setModel(self.positionModel)
         self.plyrPositionSelect.setModelColumn(self.positionModel.fieldIndex("position_name"))
-        self.mapper.addMapping(self.plyrPositionSelect, playerEntryDlg.POS_ID)
+        self.mapper.addMapping(self.plyrPositionSelect, PlayerEntryDlg.POS_ID)
 
         # map other widgets on form
-        self.mapper.addMapping(self.plyrDOBEdit, playerEntryDlg.DOB)
-        self.mapper.addMapping(self.plyrFirstNameEdit, playerEntryDlg.FNAME)
-        self.mapper.addMapping(self.plyrLastNameEdit, playerEntryDlg.LNAME)
-        self.mapper.addMapping(self.plyrNicknameEdit, playerEntryDlg.NNAME)
+        self.mapper.addMapping(self.plyrDOBEdit, PlayerEntryDlg.DOB)
+        self.mapper.addMapping(self.plyrFirstNameEdit, PlayerEntryDlg.FNAME)
+        self.mapper.addMapping(self.plyrLastNameEdit, PlayerEntryDlg.LNAME)
+        self.mapper.addMapping(self.plyrNicknameEdit, PlayerEntryDlg.NNAME)
         self.mapper.toFirst()
         
         # set up Confederation combobox that links to tbl_confederations
@@ -776,7 +775,7 @@ class playerEntryDlg(QDialog, ui_playerentry.Ui_playerEntryDlg):
         self.countryModel.select()
         
         
-class lineupEntryDlg(QDialog, ui_lineupentry.Ui_lineupEntryDlg):
+class LineupEntryDlg(QDialog, ui_lineupentry.Ui_LineupEntryDlg):
     """Implements lineup data entry dialog, and accesses and writes to Lineups table.
     
     This dialog accepts data on the players who participate in a specific football match,
@@ -789,8 +788,8 @@ class lineupEntryDlg(QDialog, ui_lineupentry.Ui_lineupEntryDlg):
     ID,  MATCH_ID, TEAM_ID, PLYR_ID, POS_ID, ST_FLAG, CAPT_FLAG = range(7)
     
     def __init__(self, match_id, teamName, parent=None):
-        """Constructor for lineupEntryDlg class."""
-        super(lineupEntryDlg, self).__init__(parent)
+        """Constructor for LineupEntryDlg class."""
+        super(LineupEntryDlg, self).__init__(parent)
         self.setupUi(self)
         self.teamName = teamName
         self.match_id = match_id
@@ -804,10 +803,10 @@ class lineupEntryDlg(QDialog, ui_lineupentry.Ui_lineupEntryDlg):
         # define relations to it
         self.model = QSqlRelationalTableModel(self)
         self.model.setTable("tbl_lineups")
-        self.model.setRelation(lineupEntryDlg.TEAM_ID, QSqlRelation("tbl_teams", "team_id", "tm_name"))
-        self.model.setRelation(lineupEntryDlg.PLYR_ID, QSqlRelation("players_list", "player_id", "full_name"))
-        self.model.setRelation(lineupEntryDlg.POS_ID, QSqlRelation("positions_list", "position_id", "position_name"))
-        self.model.setSort(lineupEntryDlg.ID, Qt.AscendingOrder)
+        self.model.setRelation(LineupEntryDlg.TEAM_ID, QSqlRelation("tbl_teams", "team_id", "tm_name"))
+        self.model.setRelation(LineupEntryDlg.PLYR_ID, QSqlRelation("players_list", "player_id", "full_name"))
+        self.model.setRelation(LineupEntryDlg.POS_ID, QSqlRelation("positions_list", "position_id", "position_name"))
+        self.model.setSort(LineupEntryDlg.ID, Qt.AscendingOrder)
         self.model.select()
                
         # define mapper
@@ -816,17 +815,17 @@ class lineupEntryDlg(QDialog, ui_lineupentry.Ui_lineupEntryDlg):
         self.mapper.setSubmitPolicy(QDataWidgetMapper.ManualSubmit)
         self.mapper.setModel(self.model)       
         localDelegate = GenericDelegate(self)
-        localDelegate.insertColumnDelegate(lineupEntryDlg.TEAM_ID, LineupTeamDisplayDelegate(self))
-        localDelegate.insertColumnDelegate(lineupEntryDlg.PLYR_ID, LineupPlayerComboBoxDelegate(self))
-        localDelegate.insertColumnDelegate(lineupEntryDlg.POS_ID, LineupPositionComboBoxDelegate(self))
-        localDelegate.insertColumnDelegate(lineupEntryDlg.ST_FLAG, CheckBoxDelegate(self))
-        localDelegate.insertColumnDelegate(lineupEntryDlg.CAPT_FLAG, CheckBoxDelegate(self))
+        localDelegate.insertColumnDelegate(LineupEntryDlg.TEAM_ID, LineupTeamDisplayDelegate(self))
+        localDelegate.insertColumnDelegate(LineupEntryDlg.PLYR_ID, LineupPlayerComboBoxDelegate(self))
+        localDelegate.insertColumnDelegate(LineupEntryDlg.POS_ID, LineupPositionComboBoxDelegate(self))
+        localDelegate.insertColumnDelegate(LineupEntryDlg.ST_FLAG, CheckBoxDelegate(self))
+        localDelegate.insertColumnDelegate(LineupEntryDlg.CAPT_FLAG, CheckBoxDelegate(self))
         self.mapper.setItemDelegate(localDelegate)
-        self.mapper.addMapping(self.lineupID_display, lineupEntryDlg.ID)
-        self.mapper.addMapping(self.matchID_display, lineupEntryDlg.MATCH_ID)
-        self.mapper.addMapping(self.team_display, lineupEntryDlg.TEAM_ID)
-        self.mapper.addMapping(self.startingButton, lineupEntryDlg.ST_FLAG)
-        self.mapper.addMapping(self.captButton, lineupEntryDlg.CAPT_FLAG)
+        self.mapper.addMapping(self.lineupID_display, LineupEntryDlg.ID)
+        self.mapper.addMapping(self.matchID_display, LineupEntryDlg.MATCH_ID)
+        self.mapper.addMapping(self.team_display, LineupEntryDlg.TEAM_ID)
+        self.mapper.addMapping(self.startingButton, LineupEntryDlg.ST_FLAG)
+        self.mapper.addMapping(self.captButton, LineupEntryDlg.CAPT_FLAG)
 
         # set up player and position comboboxes
         # - need a custom delegate for player so that 
@@ -835,17 +834,17 @@ class lineupEntryDlg(QDialog, ui_lineupentry.Ui_lineupEntryDlg):
         PLYR_SORT_NAME = 2
         POSITION_NAME = 1
         
-        self.playerModel = self.model.relationModel(lineupEntryDlg.PLYR_ID)
+        self.playerModel = self.model.relationModel(LineupEntryDlg.PLYR_ID)
         self.playerModel.setSort(PLYR_SORT_NAME, Qt.AscendingOrder)
         self.playerSelect.setModel(self.playerModel)
         self.playerSelect.setModelColumn(self.playerModel.fieldIndex("full_name"))
-        self.mapper.addMapping(self.playerSelect, lineupEntryDlg.PLYR_ID)
+        self.mapper.addMapping(self.playerSelect, LineupEntryDlg.PLYR_ID)
 
-        self.positionModel = self.model.relationModel(lineupEntryDlg.POS_ID)
+        self.positionModel = self.model.relationModel(LineupEntryDlg.POS_ID)
         self.positionModel.setSort(POSITION_NAME, Qt.AscendingOrder)
         self.positionSelect.setModel(self.positionModel)
         self.positionSelect.setModelColumn(self.positionModel.fieldIndex("position_name"))
-        self.mapper.addMapping(self.positionSelect, lineupEntryDlg.POS_ID)
+        self.mapper.addMapping(self.positionSelect, LineupEntryDlg.POS_ID)
         self.model.setFilter(QString("match_id = %1 AND tm_name = '%2'").arg(self.match_id).arg(teamName))         
         self.mapper.toFirst()
         
