@@ -278,7 +278,7 @@ p, li { white-space: pre-wrap; }
    <sender>buttonBox</sender>
    <signal>accepted()</signal>
    <receiver>DBLoginDlg</receiver>
-   <slot>accept()</slot>
+   <slot>authenticate()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>248</x>
@@ -307,6 +307,9 @@ p, li { white-space: pre-wrap; }
    </hints>
   </connection>
  </connections>
+ <slots>
+  <slot>authenticate()</slot>
+ </slots>
  <buttongroups>
   <buttongroup name="switchboardGroup"/>
  </buttongroups>
