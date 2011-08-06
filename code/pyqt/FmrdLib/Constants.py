@@ -20,6 +20,12 @@
 """Contains constants and initial table ID numbers for use in application source code."""
 
 # #############
+# Software version
+# #############
+
+VERSION = "1.0.2"
+
+# #############
 # Table IDs
 # #############
 
