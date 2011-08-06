@@ -17,10 +17,21 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+import platform
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 
-"""Contains functions that produce Message Box popups to alert user to errors."""
+"""Contains functions that produce Message Box popups to alert user to program events."""
+
+def DisplayAboutDialog(parent, version):
+    """Display information about the application and current version."""
+    QMessageBox.about(parent, "About FMRD-Desktop", 
+                      """<p align="center"> <b>FMRD-Desktop</b> %s <br>
+                    Copyright &copy; 2010-2011 by Howard Hamilton.  All rights reserved.<br>
+                    This is the desktop-based data entry tool for the<br>
+                    <b>Football Match Result Database</b><br>
+                    Python %s - Qt %s - PyQt %s on %s</p>""" % 
+                    (version, platform.python_version(), QT_VERSION_STR, PYQT_VERSION_STR, platform.system()))
 
 def SaveDiscardOptionPrompt(parent):
     """Displays pop-up question box to ask user to save or discard current data record upon dialog closure."""

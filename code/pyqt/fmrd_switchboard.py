@@ -26,6 +26,7 @@ from PyQt4.QtSql import *
 from FmrdMain import ui_mainswitchboard
 from FmrdLib.CheckTables import *
 from FmrdLib.MsgPrompts import *
+from FmrdLib.Constants import *
 
 from fmrd_setup import *
 from fmrd_match import *
@@ -103,8 +104,9 @@ class MainSwitchboard(QMainWindow, ui_mainswitchboard.Ui_MainSwitchboard):
      
     def OpenAbout(self):
         """Opens About window."""
-        dialog = AboutDlg(self)
-        dialog.exec_()
+#        dialog = AboutDlg(self)
+#        dialog.exec_()
+        DisplayAboutDialog(self, Constants.VERSION)
         
     def OpenCards(self):
         """Opens Disciplinary Cards window."""

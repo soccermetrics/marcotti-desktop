@@ -26,8 +26,8 @@ from PyQt4.QtSql import *
 from FmrdMain import ui_usermainswitchboard
 from FmrdLib.CheckTables import *
 from FmrdLib.MsgPrompts import *
+from FmrdLib.Constants import *
 
-from fmrd_setup import AboutDlg
 from fmrd_match import *
 from fmrd_matchevent import *
 from fmrd_overview import *
@@ -88,8 +88,9 @@ class UserMainSwitchboard(QMainWindow, ui_usermainswitchboard.Ui_UserMainSwitchb
      
     def OpenAbout(self):
         """Opens About window."""
-        dialog = AboutDlg(self)
-        dialog.exec_()
+#        dialog = AboutDlg(self)
+#        dialog.exec_()
+        DisplayAboutDialog(self, Constants.VERSION)
     
     # routines for opening main dialogs (access by pushbuttons)
     

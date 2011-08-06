@@ -1,5 +1,4 @@
-__all__ = ["ui_aboutwindow",
-"ui_cardsetup",
+__all__ = ["ui_cardsetup",
 "ui_foulsetup",
 "ui_penoutcomesetup",
 "ui_goalstrikesetup",
