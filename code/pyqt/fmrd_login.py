@@ -43,9 +43,11 @@ class DBLoginDlg(QDialog, ui_fmrdlogin.Ui_DBLoginDlg):
         self.setupUi(self)
 
         self.attempts = 0
+        self.conn = 0
 
         self.option = Constants.USER*self.userButton.isChecked() + Constants.ADMIN*self.adminButton.isChecked()
         
+        self.dbNameEdit.setFocus()
         # Define signals and slots
         self.connect(self.dbNameEdit, SIGNAL("textChanged()"), lambda: self.enableWidget(self.loginEdit))
         self.connect(self.loginEdit, SIGNAL("textChanged()"), lambda: self.enableWidget(self.passwordEdit))
@@ -69,8 +71,9 @@ class DBLoginDlg(QDialog, ui_fmrdlogin.Ui_DBLoginDlg):
         # attempt to open connection to database
         if self.attempts == 0:
             db = QSqlDatabase.addDatabase("QPSQL") 
+            self.conn = db.connectionName()
         else:
-            db = QSqlDatabase.database("QPSQL", False)
+            db = QSqlDatabase.database(self.conn, False)
         db.setDatabaseName(dbName)
         db.setUserName(login)
         db.setPassword(password)
@@ -88,9 +91,8 @@ class DBLoginDlg(QDialog, ui_fmrdlogin.Ui_DBLoginDlg):
             self.loginEdit.setText(QString())
             self.passwordEdit.setText(QString())
             
-            # Remove database connection
-            # This is done so that DB driver doesn't squawk about duplicate connections
-            db.removeDatabase("QPSQL")
+            # Set focus on dbNameEdit
+            self.dbNameEdit.setFocus()
             
             # Alert user and send rejection to exec_() if it's 3rd consecutive fail
             if self.attempts == Constants.MAXLOGINS:
