@@ -56,8 +56,8 @@
      <string/>
     </property>
     <property name="icon">
-     <iconset>
-      <normaloff>images/first.png</normaloff>images/first.png</iconset>
+     <iconset resource="fmrd_resources.qrc">
+      <normaloff>:/images/first.png</normaloff>:/images/first.png</iconset>
     </property>
    </widget>
    <widget class="QPushButton" name="prevEntry">
@@ -76,8 +76,8 @@
      <string/>
     </property>
     <property name="icon">
-     <iconset>
-      <normaloff>images/prev.png</normaloff>images/prev.png</iconset>
+     <iconset resource="fmrd_resources.qrc">
+      <normaloff>:/images/prev.png</normaloff>:/images/prev.png</iconset>
     </property>
    </widget>
    <widget class="QPushButton" name="nextEntry">
@@ -108,8 +108,8 @@
      <string/>
     </property>
     <property name="icon">
-     <iconset>
-      <normaloff>images/next.png</normaloff>images/next.png</iconset>
+     <iconset resource="fmrd_resources.qrc">
+      <normaloff>:/images/next.png</normaloff>:/images/next.png</iconset>
     </property>
    </widget>
    <widget class="QPushButton" name="lastEntry">
@@ -140,8 +140,8 @@
      <string/>
     </property>
     <property name="icon">
-     <iconset>
-      <normaloff>images/last.png</normaloff>images/last.png</iconset>
+     <iconset resource="fmrd_resources.qrc">
+      <normaloff>:/images/last.png</normaloff>:/images/last.png</iconset>
     </property>
    </widget>
   </widget>
@@ -176,8 +176,8 @@
      <string>&amp;Add</string>
     </property>
     <property name="icon">
-     <iconset>
-      <normaloff>images/add.png</normaloff>images/add.png</iconset>
+     <iconset resource="fmrd_resources.qrc">
+      <normaloff>:/images/add.png</normaloff>:/images/add.png</iconset>
     </property>
    </widget>
    <widget class="QPushButton" name="deleteEntry">
@@ -196,8 +196,8 @@
      <string>&amp;Delete</string>
     </property>
     <property name="icon">
-     <iconset>
-      <normaloff>images/delete.png</normaloff>images/delete.png</iconset>
+     <iconset resource="fmrd_resources.qrc">
+      <normaloff>:/images/delete.png</normaloff>:/images/delete.png</iconset>
     </property>
    </widget>
    <widget class="QPushButton" name="closeButton">
@@ -216,8 +216,8 @@
      <string>&amp;Close</string>
     </property>
     <property name="icon">
-     <iconset>
-      <normaloff>images/quit.png</normaloff>images/quit.png</iconset>
+     <iconset resource="fmrd_resources.qrc">
+      <normaloff>:/images/quit.png</normaloff>:/images/quit.png</iconset>
     </property>
    </widget>
   </widget>
