@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'gui/referee_entry.ui'
 #
-# Created: Sat Aug  6 01:32:15 2011
+# Created: Sat Aug  6 01:54:24 2011
 #      by: PyQt4 UI code generator 4.7.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -129,25 +129,25 @@ class Ui_RefereeEntryDlg(object):
         self.label_2 = QtGui.QLabel(self.layoutWidget1)
         self.label_2.setObjectName("label_2")
         self.gridLayout_2.addWidget(self.label_2, 1, 0, 1, 1)
-        self.refConfed = QtGui.QComboBox(self.layoutWidget1)
-        self.refConfed.setMinimumSize(QtCore.QSize(241, 31))
-        self.refConfed.setMaximumSize(QtCore.QSize(241, 31))
-        self.refConfed.setObjectName("refConfed")
-        self.gridLayout_2.addWidget(self.refConfed, 1, 1, 1, 1)
+        self.refConfedSelect = QtGui.QComboBox(self.layoutWidget1)
+        self.refConfedSelect.setMinimumSize(QtCore.QSize(241, 31))
+        self.refConfedSelect.setMaximumSize(QtCore.QSize(241, 31))
+        self.refConfedSelect.setObjectName("refConfedSelect")
+        self.gridLayout_2.addWidget(self.refConfedSelect, 1, 1, 1, 1)
         self.label_3 = QtGui.QLabel(self.layoutWidget1)
         self.label_3.setObjectName("label_3")
         self.gridLayout_2.addWidget(self.label_3, 2, 0, 1, 1)
-        self.refCountry = QtGui.QComboBox(self.layoutWidget1)
-        self.refCountry.setMinimumSize(QtCore.QSize(241, 31))
-        self.refCountry.setMaximumSize(QtCore.QSize(241, 31))
-        self.refCountry.setObjectName("refCountry")
-        self.gridLayout_2.addWidget(self.refCountry, 2, 1, 1, 1)
+        self.refCountrySelect = QtGui.QComboBox(self.layoutWidget1)
+        self.refCountrySelect.setMinimumSize(QtCore.QSize(241, 31))
+        self.refCountrySelect.setMaximumSize(QtCore.QSize(241, 31))
+        self.refCountrySelect.setObjectName("refCountrySelect")
+        self.gridLayout_2.addWidget(self.refCountrySelect, 2, 1, 1, 1)
         self.label.setBuddy(self.refID_display)
         self.label_4.setBuddy(self.refFirstNameEdit)
         self.label_5.setBuddy(self.refLastNameEdit)
         self.label_7.setBuddy(self.refDOBEdit)
-        self.label_2.setBuddy(self.refConfed)
-        self.label_3.setBuddy(self.refCountry)
+        self.label_2.setBuddy(self.refConfedSelect)
+        self.label_3.setBuddy(self.refCountrySelect)
 
         self.retranslateUi(RefereeEntryDlg)
         QtCore.QMetaObject.connectSlotsByName(RefereeEntryDlg)
@@ -191,12 +191,12 @@ class Ui_RefereeEntryDlg(object):
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans Serif\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">&amp;Region</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.refConfed.setToolTip(QtGui.QApplication.translate("RefereeEntryDlg", "Football confederation of referee\'s country", None, QtGui.QApplication.UnicodeUTF8))
+        self.refConfedSelect.setToolTip(QtGui.QApplication.translate("RefereeEntryDlg", "Football confederation of referee\'s country", None, QtGui.QApplication.UnicodeUTF8))
         self.label_3.setText(QtGui.QApplication.translate("RefereeEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans Serif\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Cou&amp;ntry</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.refCountry.setToolTip(QtGui.QApplication.translate("RefereeEntryDlg", "Referee\'s country", None, QtGui.QApplication.UnicodeUTF8))
+        self.refCountrySelect.setToolTip(QtGui.QApplication.translate("RefereeEntryDlg", "Referee\'s country", None, QtGui.QApplication.UnicodeUTF8))
 
 import fmrd_resources_rc

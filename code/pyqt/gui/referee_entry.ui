@@ -410,12 +410,12 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;&amp;amp;Region&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
       <property name="buddy">
-       <cstring>refConfed</cstring>
+       <cstring>refConfedSelect</cstring>
       </property>
      </widget>
     </item>
     <item row="1" column="1">
-     <widget class="QComboBox" name="refConfed">
+     <widget class="QComboBox" name="refConfedSelect">
       <property name="minimumSize">
        <size>
         <width>241</width>
@@ -443,12 +443,12 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Cou&amp;amp;ntry&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
       <property name="buddy">
-       <cstring>refCountry</cstring>
+       <cstring>refCountrySelect</cstring>
       </property>
      </widget>
     </item>
     <item row="2" column="1">
-     <widget class="QComboBox" name="refCountry">
+     <widget class="QComboBox" name="refCountrySelect">
       <property name="minimumSize">
        <size>
         <width>241</width>
