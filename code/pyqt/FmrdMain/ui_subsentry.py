@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'gui/subs_entry.ui'
 #
-# Created: Fri Aug  5 15:10:58 2011
+# Created: Sat Aug  6 01:32:16 2011
 #      by: PyQt4 UI code generator 4.7.2
 #
 # WARNING! All changes made in this file will be lost!

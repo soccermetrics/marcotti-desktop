@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'gui/venue_entry.ui'
 #
-# Created: Fri Aug  5 15:11:01 2011
+# Created: Sat Aug  6 01:32:18 2011
 #      by: PyQt4 UI code generator 4.7.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -24,14 +24,14 @@ class Ui_VenueEntryDlg(object):
         self.firstEntry.setGeometry(QtCore.QRect(10, 10, 71, 33))
         self.firstEntry.setText("")
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("images/first.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap(":/images/first.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.firstEntry.setIcon(icon)
         self.firstEntry.setObjectName("firstEntry")
         self.prevEntry = QtGui.QPushButton(self.frame_2)
         self.prevEntry.setGeometry(QtCore.QRect(90, 10, 71, 33))
         self.prevEntry.setText("")
         icon1 = QtGui.QIcon()
-        icon1.addPixmap(QtGui.QPixmap("images/prev.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon1.addPixmap(QtGui.QPixmap(":/images/prev.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.prevEntry.setIcon(icon1)
         self.prevEntry.setObjectName("prevEntry")
         self.nextEntry = QtGui.QPushButton(self.frame_2)
@@ -40,7 +40,7 @@ class Ui_VenueEntryDlg(object):
         self.nextEntry.setMaximumSize(QtCore.QSize(71, 33))
         self.nextEntry.setText("")
         icon2 = QtGui.QIcon()
-        icon2.addPixmap(QtGui.QPixmap("images/next.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon2.addPixmap(QtGui.QPixmap(":/images/next.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.nextEntry.setIcon(icon2)
         self.nextEntry.setObjectName("nextEntry")
         self.lastEntry = QtGui.QPushButton(self.frame_2)
@@ -49,7 +49,7 @@ class Ui_VenueEntryDlg(object):
         self.lastEntry.setMaximumSize(QtCore.QSize(71, 33))
         self.lastEntry.setText("")
         icon3 = QtGui.QIcon()
-        icon3.addPixmap(QtGui.QPixmap("images/last.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon3.addPixmap(QtGui.QPixmap(":/images/last.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.lastEntry.setIcon(icon3)
         self.lastEntry.setObjectName("lastEntry")
         self.frame = QtGui.QFrame(VenueEntryDlg)
@@ -60,19 +60,19 @@ class Ui_VenueEntryDlg(object):
         self.addEntry = QtGui.QPushButton(self.frame)
         self.addEntry.setGeometry(QtCore.QRect(10, 10, 80, 31))
         icon4 = QtGui.QIcon()
-        icon4.addPixmap(QtGui.QPixmap("images/add.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon4.addPixmap(QtGui.QPixmap(":/images/add.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.addEntry.setIcon(icon4)
         self.addEntry.setObjectName("addEntry")
         self.deleteEntry = QtGui.QPushButton(self.frame)
         self.deleteEntry.setGeometry(QtCore.QRect(100, 10, 80, 31))
         icon5 = QtGui.QIcon()
-        icon5.addPixmap(QtGui.QPixmap("images/delete.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon5.addPixmap(QtGui.QPixmap(":/images/delete.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.deleteEntry.setIcon(icon5)
         self.deleteEntry.setObjectName("deleteEntry")
         self.closeButton = QtGui.QPushButton(self.frame)
         self.closeButton.setGeometry(QtCore.QRect(190, 10, 80, 31))
         icon6 = QtGui.QIcon()
-        icon6.addPixmap(QtGui.QPixmap("images/quit.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon6.addPixmap(QtGui.QPixmap(":/images/quit.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.closeButton.setIcon(icon6)
         self.closeButton.setObjectName("closeButton")
         self.line = QtGui.QFrame(VenueEntryDlg)
@@ -113,12 +113,12 @@ class Ui_VenueEntryDlg(object):
         self.label_6 = QtGui.QLabel(self.layoutWidget)
         self.label_6.setObjectName("label_6")
         self.gridLayout.addWidget(self.label_6, 3, 0, 1, 1)
-        self.confedSelect = QtGui.QComboBox(self.layoutWidget)
-        self.confedSelect.setMinimumSize(QtCore.QSize(255, 31))
-        self.confedSelect.setMaximumSize(QtCore.QSize(255, 31))
-        self.confedSelect.setWhatsThis("")
-        self.confedSelect.setObjectName("confedSelect")
-        self.gridLayout.addWidget(self.confedSelect, 3, 1, 1, 1)
+        self.venueConfedSelect = QtGui.QComboBox(self.layoutWidget)
+        self.venueConfedSelect.setMinimumSize(QtCore.QSize(255, 31))
+        self.venueConfedSelect.setMaximumSize(QtCore.QSize(255, 31))
+        self.venueConfedSelect.setWhatsThis("")
+        self.venueConfedSelect.setObjectName("venueConfedSelect")
+        self.gridLayout.addWidget(self.venueConfedSelect, 3, 1, 1, 1)
         self.label_3 = QtGui.QLabel(self.layoutWidget)
         self.label_3.setObjectName("label_3")
         self.gridLayout.addWidget(self.label_3, 4, 0, 1, 1)
@@ -170,7 +170,7 @@ class Ui_VenueEntryDlg(object):
         self.label.setBuddy(self.venueID_display)
         self.label_4.setBuddy(self.venueNameEdit)
         self.label_5.setBuddy(self.venueCityEdit)
-        self.label_6.setBuddy(self.confedSelect)
+        self.label_6.setBuddy(self.venueConfedSelect)
         self.label_3.setBuddy(self.venueCountrySelect)
         self.label_2.setBuddy(self.venueTeamSelect)
         self.label_8.setBuddy(self.venueLatitudeEdit)
@@ -214,7 +214,7 @@ class Ui_VenueEntryDlg(object):
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans Serif\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Con&amp;federation</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.confedSelect.setToolTip(QtGui.QApplication.translate("VenueEntryDlg", "Football confederation", None, QtGui.QApplication.UnicodeUTF8))
+        self.venueConfedSelect.setToolTip(QtGui.QApplication.translate("VenueEntryDlg", "Football confederation", None, QtGui.QApplication.UnicodeUTF8))
         self.label_3.setText(QtGui.QApplication.translate("VenueEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"

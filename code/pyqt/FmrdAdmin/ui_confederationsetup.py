@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'gui/confederation_setup.ui'
 #
-# Created: Fri Aug  5 15:11:03 2011
+# Created: Sat Aug  6 01:32:20 2011
 #      by: PyQt4 UI code generator 4.7.2
 #
 # WARNING! All changes made in this file will be lost!

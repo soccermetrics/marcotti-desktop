@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'gui/enviro_entry.ui'
 #
-# Created: Fri Aug  5 15:10:52 2011
+# Created: Sat Aug  6 01:32:09 2011
 #      by: PyQt4 UI code generator 4.7.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -97,6 +97,9 @@ class Ui_EnviroEntryDlg(object):
         self.closeButton = QtGui.QPushButton(self.layoutWidget1)
         self.closeButton.setMinimumSize(QtCore.QSize(85, 27))
         self.closeButton.setMaximumSize(QtCore.QSize(85, 27))
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap(":/images/quit.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.closeButton.setIcon(icon)
         self.closeButton.setObjectName("closeButton")
         self.horizontalLayout.addWidget(self.closeButton)
         self.label_7.setBuddy(self.matchID_display)
