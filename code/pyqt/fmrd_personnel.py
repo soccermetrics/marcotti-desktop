@@ -871,7 +871,7 @@ class LineupEntryDlg(QDialog, ui_lineupentry.Ui_LineupEntryDlg):
         self.connect(self.saveEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.NULL))
         self.connect(self.addEntry, SIGNAL("clicked()"), self.addRecord)
         self.connect(self.deleteEntry, SIGNAL("clicked()"), self.deleteRecord)        
-        self.connect(self.closeButton, SIGNAL("clicked()"), lambda: self.accept(self.match_id))
+        self.connect(self.closeButton, SIGNAL("clicked()"), self.accept)
         
         self.connect(self.playerSelect, SIGNAL("currentIndexChanged(int)"), self.enableWidget)
         
