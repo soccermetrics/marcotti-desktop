@@ -468,12 +468,14 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
         match_id -- primary key of current record in Matches table
         
         """
+        row = self.mapper.currentIndex()
         if not self.mapper.submit():
             MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
             return
             
         subdialog = EnviroEntryDlg(match_id, self)
         subdialog.exec_()
+        self.mapper.setCurrentIndex(row)
         
     def openLineups(self, match_id, teamName):
         """Opens Lineups subdialog for one of the teams in a specific match from Match dialog.
@@ -488,6 +490,7 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
         and manager fields have been populated with non-NULL values.
         
         """
+        row = self.mapper.currentIndex()
         if not self.mapper.submit():
             MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
             return
@@ -496,6 +499,7 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
 #        print "Match ID: %s" % match_id
 #        print "Team Name: %s" % teamName
         subdialog.exec_()
+        self.mapper.setCurrentIndex(row)
     
 class EnviroEntryDlg(QDialog, ui_enviroentry.Ui_EnviroEntryDlg):
     """Implements environmental conditions data entry dialog, and accesses and writes to Environments table.
