@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'gui/flankpos_setup.ui'
 #
-# Created: Mon Aug  8 00:07:37 2011
+# Created: Mon Aug  8 00:36:19 2011
 #      by: PyQt4 UI code generator 4.7.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -82,7 +82,7 @@ class Ui_FlankPosSetupDlg(object):
         self.horizontalLayout_3.addItem(spacerItem2)
         self.addEntry = QtGui.QPushButton(self.layoutWidget_2)
         icon4 = QtGui.QIcon()
-        icon4.addPixmap(QtGui.QPixmap("images/add.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon4.addPixmap(QtGui.QPixmap(":/images/add.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.addEntry.setIcon(icon4)
         self.addEntry.setObjectName("addEntry")
         self.horizontalLayout_3.addWidget(self.addEntry)
@@ -94,13 +94,13 @@ class Ui_FlankPosSetupDlg(object):
         self.horizontalLayout_3.addWidget(self.saveEntry)
         self.deleteEntry = QtGui.QPushButton(self.layoutWidget_2)
         icon6 = QtGui.QIcon()
-        icon6.addPixmap(QtGui.QPixmap("images/delete.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon6.addPixmap(QtGui.QPixmap(":/images/delete.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.deleteEntry.setIcon(icon6)
         self.deleteEntry.setObjectName("deleteEntry")
         self.horizontalLayout_3.addWidget(self.deleteEntry)
         self.closeButton = QtGui.QPushButton(self.layoutWidget_2)
         icon7 = QtGui.QIcon()
-        icon7.addPixmap(QtGui.QPixmap("images/quit.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon7.addPixmap(QtGui.QPixmap(":/images/quit.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.closeButton.setIcon(icon7)
         self.closeButton.setObjectName("closeButton")
         self.horizontalLayout_3.addWidget(self.closeButton)
