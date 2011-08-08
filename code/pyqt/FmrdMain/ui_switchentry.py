@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'gui/switchpos_entry.ui'
 #
-# Created: Mon Aug  8 00:36:15 2011
+# Created: Mon Aug  8 12:04:38 2011
 #      by: PyQt4 UI code generator 4.7.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -16,12 +16,12 @@ class Ui_SwitchEntryDlg(object):
         SwitchEntryDlg.setMinimumSize(QtCore.QSize(580, 460))
         SwitchEntryDlg.setMaximumSize(QtCore.QSize(580, 460))
         self.line = QtGui.QFrame(SwitchEntryDlg)
-        self.line.setGeometry(QtCore.QRect(10, 130, 451, 16))
+        self.line.setGeometry(QtCore.QRect(10, 130, 461, 16))
         self.line.setFrameShape(QtGui.QFrame.HLine)
         self.line.setFrameShadow(QtGui.QFrame.Sunken)
         self.line.setObjectName("line")
         self.line_2 = QtGui.QFrame(SwitchEntryDlg)
-        self.line_2.setGeometry(QtCore.QRect(450, 10, 20, 381))
+        self.line_2.setGeometry(QtCore.QRect(460, 0, 20, 391))
         self.line_2.setFrameShape(QtGui.QFrame.VLine)
         self.line_2.setFrameShadow(QtGui.QFrame.Sunken)
         self.line_2.setObjectName("line_2")
@@ -67,7 +67,7 @@ class Ui_SwitchEntryDlg(object):
         self.lastEntry.setObjectName("lastEntry")
         self.horizontalLayout_2.addWidget(self.lastEntry)
         self.layoutWidget1 = QtGui.QWidget(SwitchEntryDlg)
-        self.layoutWidget1.setGeometry(QtCore.QRect(10, 10, 441, 121))
+        self.layoutWidget1.setGeometry(QtCore.QRect(10, 0, 451, 131))
         self.layoutWidget1.setObjectName("layoutWidget1")
         self.gridLayout = QtGui.QGridLayout(self.layoutWidget1)
         self.gridLayout.setObjectName("gridLayout")
@@ -174,7 +174,7 @@ class Ui_SwitchEntryDlg(object):
         spacerItem = QtGui.QSpacerItem(138, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
         self.gridLayout_2.addItem(spacerItem, 4, 2, 1, 1)
         self.layoutWidget_2 = QtGui.QWidget(SwitchEntryDlg)
-        self.layoutWidget_2.setGeometry(QtCore.QRect(470, 160, 91, 221))
+        self.layoutWidget_2.setGeometry(QtCore.QRect(480, 160, 91, 221))
         self.layoutWidget_2.setObjectName("layoutWidget_2")
         self.verticalLayout = QtGui.QVBoxLayout(self.layoutWidget_2)
         self.verticalLayout.setObjectName("verticalLayout")

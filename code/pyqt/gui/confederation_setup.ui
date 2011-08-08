@@ -199,7 +199,7 @@ p, li { white-space: pre-wrap; }
     <rect>
      <x>260</x>
      <y>70</y>
-     <width>371</width>
+     <width>372</width>
      <height>51</height>
     </rect>
    </property>
@@ -226,8 +226,8 @@ p, li { white-space: pre-wrap; }
        <string>&amp;Add</string>
       </property>
       <property name="icon">
-       <iconset>
-        <normaloff>images/add.png</normaloff>images/add.png</iconset>
+       <iconset resource="fmrd_resources.qrc">
+        <normaloff>:/images/add.png</normaloff>:/images/add.png</iconset>
       </property>
      </widget>
     </item>
@@ -254,8 +254,8 @@ p, li { white-space: pre-wrap; }
        <string>&amp;Delete</string>
       </property>
       <property name="icon">
-       <iconset>
-        <normaloff>images/delete.png</normaloff>images/delete.png</iconset>
+       <iconset resource="fmrd_resources.qrc">
+        <normaloff>:/images/delete.png</normaloff>:/images/delete.png</iconset>
       </property>
      </widget>
     </item>
@@ -268,8 +268,8 @@ p, li { white-space: pre-wrap; }
        <string>&amp;Close</string>
       </property>
       <property name="icon">
-       <iconset>
-        <normaloff>images/quit.png</normaloff>images/quit.png</iconset>
+       <iconset resource="fmrd_resources.qrc">
+        <normaloff>:/images/quit.png</normaloff>:/images/quit.png</iconset>
       </property>
      </widget>
     </item>

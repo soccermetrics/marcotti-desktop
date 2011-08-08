@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'gui/confederation_setup.ui'
 #
-# Created: Mon Aug  8 00:36:18 2011
+# Created: Mon Aug  8 12:04:17 2011
 #      by: PyQt4 UI code generator 4.7.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -75,7 +75,7 @@ class Ui_ConfedSetupDlg(object):
         spacerItem1 = QtGui.QSpacerItem(18, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
         self.horizontalLayout_2.addItem(spacerItem1)
         self.layoutWidget_3 = QtGui.QWidget(ConfedSetupDlg)
-        self.layoutWidget_3.setGeometry(QtCore.QRect(260, 70, 371, 51))
+        self.layoutWidget_3.setGeometry(QtCore.QRect(260, 70, 372, 51))
         self.layoutWidget_3.setObjectName("layoutWidget_3")
         self.horizontalLayout_3 = QtGui.QHBoxLayout(self.layoutWidget_3)
         self.horizontalLayout_3.setObjectName("horizontalLayout_3")
@@ -83,7 +83,7 @@ class Ui_ConfedSetupDlg(object):
         self.horizontalLayout_3.addItem(spacerItem2)
         self.addEntry = QtGui.QPushButton(self.layoutWidget_3)
         icon4 = QtGui.QIcon()
-        icon4.addPixmap(QtGui.QPixmap("images/add.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon4.addPixmap(QtGui.QPixmap(":/images/add.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.addEntry.setIcon(icon4)
         self.addEntry.setObjectName("addEntry")
         self.horizontalLayout_3.addWidget(self.addEntry)
@@ -95,13 +95,13 @@ class Ui_ConfedSetupDlg(object):
         self.horizontalLayout_3.addWidget(self.saveEntry)
         self.deleteEntry = QtGui.QPushButton(self.layoutWidget_3)
         icon6 = QtGui.QIcon()
-        icon6.addPixmap(QtGui.QPixmap("images/delete.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon6.addPixmap(QtGui.QPixmap(":/images/delete.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.deleteEntry.setIcon(icon6)
         self.deleteEntry.setObjectName("deleteEntry")
         self.horizontalLayout_3.addWidget(self.deleteEntry)
         self.closeButton = QtGui.QPushButton(self.layoutWidget_3)
         icon7 = QtGui.QIcon()
-        icon7.addPixmap(QtGui.QPixmap("images/quit.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon7.addPixmap(QtGui.QPixmap(":/images/quit.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.closeButton.setIcon(icon7)
         self.closeButton.setObjectName("closeButton")
         self.horizontalLayout_3.addWidget(self.closeButton)
