@@ -75,7 +75,7 @@ class CompEntryDlg(QDialog, ui_competitionentry.Ui_CompEntryDlg):
         self.connect(self.nextEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.NEXT))
         self.connect(self.lastEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.LAST))
         self.connect(self.addEntry, SIGNAL("clicked()"), self.addRecord)
-#        self.connect(self.deleteEntry, SIGNAL("clicked()"), self.deleteRecord)        
+        self.connect(self.deleteEntry, SIGNAL("clicked()"), self.deleteRecord)        
         self.connect(self.closeButton, SIGNAL("clicked()"), self.accept)
         
     def accept(self):
