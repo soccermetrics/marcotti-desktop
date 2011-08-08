@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'gui/country_setup.ui'
 #
-# Created: Sat Aug  6 01:32:21 2011
+# Created: Mon Aug  8 00:07:35 2011
 #      by: PyQt4 UI code generator 4.7.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -104,12 +104,12 @@ class Ui_CountrySetupDlg(object):
         self.confedSelect.setMaxCount(8)
         self.confedSelect.setObjectName("confedSelect")
         self.formLayout.setWidget(2, QtGui.QFormLayout.FieldRole, self.confedSelect)
-        self.layoutWidget2 = QtGui.QWidget(CountrySetupDlg)
-        self.layoutWidget2.setGeometry(QtCore.QRect(410, 10, 101, 171))
-        self.layoutWidget2.setObjectName("layoutWidget2")
-        self.verticalLayout = QtGui.QVBoxLayout(self.layoutWidget2)
+        self.widget = QtGui.QWidget(CountrySetupDlg)
+        self.widget.setGeometry(QtCore.QRect(410, 10, 111, 171))
+        self.widget.setObjectName("widget")
+        self.verticalLayout = QtGui.QVBoxLayout(self.widget)
         self.verticalLayout.setObjectName("verticalLayout")
-        self.addEntry = QtGui.QPushButton(self.layoutWidget2)
+        self.addEntry = QtGui.QPushButton(self.widget)
         self.addEntry.setMinimumSize(QtCore.QSize(85, 33))
         self.addEntry.setMaximumSize(QtCore.QSize(85, 33))
         icon4 = QtGui.QIcon()
@@ -117,7 +117,7 @@ class Ui_CountrySetupDlg(object):
         self.addEntry.setIcon(icon4)
         self.addEntry.setObjectName("addEntry")
         self.verticalLayout.addWidget(self.addEntry)
-        self.deleteEntry = QtGui.QPushButton(self.layoutWidget2)
+        self.deleteEntry = QtGui.QPushButton(self.widget)
         self.deleteEntry.setMinimumSize(QtCore.QSize(85, 33))
         self.deleteEntry.setMaximumSize(QtCore.QSize(85, 33))
         icon5 = QtGui.QIcon()
@@ -125,14 +125,22 @@ class Ui_CountrySetupDlg(object):
         self.deleteEntry.setIcon(icon5)
         self.deleteEntry.setObjectName("deleteEntry")
         self.verticalLayout.addWidget(self.deleteEntry)
-        spacerItem = QtGui.QSpacerItem(20, 58, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
+        self.saveEntry = QtGui.QPushButton(self.widget)
+        self.saveEntry.setMinimumSize(QtCore.QSize(85, 33))
+        self.saveEntry.setMaximumSize(QtCore.QSize(85, 33))
+        icon6 = QtGui.QIcon()
+        icon6.addPixmap(QtGui.QPixmap(":/images/save.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.saveEntry.setIcon(icon6)
+        self.saveEntry.setObjectName("saveEntry")
+        self.verticalLayout.addWidget(self.saveEntry)
+        spacerItem = QtGui.QSpacerItem(96, 10, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
         self.verticalLayout.addItem(spacerItem)
-        self.closeButton = QtGui.QPushButton(self.layoutWidget2)
+        self.closeButton = QtGui.QPushButton(self.widget)
         self.closeButton.setMinimumSize(QtCore.QSize(85, 33))
         self.closeButton.setMaximumSize(QtCore.QSize(85, 33))
-        icon6 = QtGui.QIcon()
-        icon6.addPixmap(QtGui.QPixmap(":/images/quit.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.closeButton.setIcon(icon6)
+        icon7 = QtGui.QIcon()
+        icon7.addPixmap(QtGui.QPixmap(":/images/quit.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.closeButton.setIcon(icon7)
         self.closeButton.setObjectName("closeButton")
         self.verticalLayout.addWidget(self.closeButton)
         self.label.setBuddy(self.countryID_display)
@@ -169,6 +177,8 @@ class Ui_CountrySetupDlg(object):
         self.addEntry.setText(QtGui.QApplication.translate("CountrySetupDlg", "&Add", None, QtGui.QApplication.UnicodeUTF8))
         self.deleteEntry.setToolTip(QtGui.QApplication.translate("CountrySetupDlg", "Delete Entry", None, QtGui.QApplication.UnicodeUTF8))
         self.deleteEntry.setText(QtGui.QApplication.translate("CountrySetupDlg", "&Delete", None, QtGui.QApplication.UnicodeUTF8))
+        self.saveEntry.setToolTip(QtGui.QApplication.translate("CountrySetupDlg", "Delete Entry", None, QtGui.QApplication.UnicodeUTF8))
+        self.saveEntry.setText(QtGui.QApplication.translate("CountrySetupDlg", "&Save", None, QtGui.QApplication.UnicodeUTF8))
         self.closeButton.setToolTip(QtGui.QApplication.translate("CountrySetupDlg", "Close Window", None, QtGui.QApplication.UnicodeUTF8))
         self.closeButton.setText(QtGui.QApplication.translate("CountrySetupDlg", "&Close", None, QtGui.QApplication.UnicodeUTF8))
 

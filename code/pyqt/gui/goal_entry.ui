@@ -6,19 +6,19 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>520</width>
+    <width>580</width>
     <height>460</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>520</width>
+    <width>580</width>
     <height>460</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>520</width>
+    <width>580</width>
     <height>460</height>
    </size>
   </property>
@@ -30,25 +30,12 @@
     <rect>
      <x>10</x>
      <y>140</y>
-     <width>401</width>
+     <width>451</width>
      <height>16</height>
     </rect>
    </property>
    <property name="orientation">
     <enum>Qt::Horizontal</enum>
-   </property>
-  </widget>
-  <widget class="Line" name="line_2">
-   <property name="geometry">
-    <rect>
-     <x>400</x>
-     <y>10</y>
-     <width>20</width>
-     <height>391</height>
-    </rect>
-   </property>
-   <property name="orientation">
-    <enum>Qt::Vertical</enum>
    </property>
   </widget>
   <widget class="QWidget" name="layoutWidget">
@@ -172,7 +159,7 @@
     <rect>
      <x>10</x>
      <y>10</y>
-     <width>391</width>
+     <width>441</width>
      <height>131</height>
     </rect>
    </property>
@@ -204,13 +191,13 @@ p, li { white-space: pre-wrap; }
      <widget class="QComboBox" name="compSelect">
       <property name="minimumSize">
        <size>
-        <width>271</width>
+        <width>331</width>
         <height>31</height>
        </size>
       </property>
       <property name="maximumSize">
        <size>
-        <width>271</width>
+        <width>331</width>
         <height>31</height>
        </size>
       </property>
@@ -282,13 +269,13 @@ p, li { white-space: pre-wrap; }
      <widget class="QComboBox" name="matchSelect">
       <property name="minimumSize">
        <size>
-        <width>271</width>
+        <width>331</width>
         <height>31</height>
        </size>
       </property>
       <property name="maximumSize">
        <size>
-        <width>271</width>
+        <width>331</width>
         <height>31</height>
        </size>
       </property>
@@ -301,7 +288,7 @@ p, li { white-space: pre-wrap; }
     <rect>
      <x>10</x>
      <y>160</y>
-     <width>391</width>
+     <width>441</width>
      <height>241</height>
     </rect>
    </property>
@@ -381,13 +368,13 @@ p, li { white-space: pre-wrap; }
      <widget class="QComboBox" name="teamSelect">
       <property name="minimumSize">
        <size>
-        <width>261</width>
+        <width>301</width>
         <height>31</height>
        </size>
       </property>
       <property name="maximumSize">
        <size>
-        <width>261</width>
+        <width>301</width>
         <height>31</height>
        </size>
       </property>
@@ -423,13 +410,13 @@ p, li { white-space: pre-wrap; }
      <widget class="QComboBox" name="playerSelect">
       <property name="minimumSize">
        <size>
-        <width>261</width>
+        <width>301</width>
         <height>31</height>
        </size>
       </property>
       <property name="maximumSize">
        <size>
-        <width>261</width>
+        <width>301</width>
         <height>31</height>
        </size>
       </property>
@@ -465,13 +452,13 @@ p, li { white-space: pre-wrap; }
      <widget class="QComboBox" name="goaleventSelect">
       <property name="minimumSize">
        <size>
-        <width>201</width>
+        <width>271</width>
         <height>31</height>
        </size>
       </property>
       <property name="maximumSize">
        <size>
-        <width>201</width>
+        <width>271</width>
         <height>31</height>
        </size>
       </property>
@@ -507,13 +494,13 @@ p, li { white-space: pre-wrap; }
      <widget class="QComboBox" name="goaltypeSelect">
       <property name="minimumSize">
        <size>
-        <width>201</width>
+        <width>271</width>
         <height>31</height>
        </size>
       </property>
       <property name="maximumSize">
        <size>
-        <width>201</width>
+        <width>271</width>
         <height>31</height>
        </size>
       </property>
@@ -628,10 +615,10 @@ p, li { white-space: pre-wrap; }
   <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
-     <x>420</x>
-     <y>168</y>
+     <x>470</x>
+     <y>160</y>
      <width>91</width>
-     <height>231</height>
+     <height>241</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
@@ -688,6 +675,32 @@ p, li { white-space: pre-wrap; }
      </widget>
     </item>
     <item>
+     <widget class="QPushButton" name="saveEntry">
+      <property name="minimumSize">
+       <size>
+        <width>80</width>
+        <height>33</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>80</width>
+        <height>33</height>
+       </size>
+      </property>
+      <property name="toolTip">
+       <string>Delete Entry</string>
+      </property>
+      <property name="text">
+       <string>&amp;Save</string>
+      </property>
+      <property name="icon">
+       <iconset resource="fmrd_resources.qrc">
+        <normaloff>:/images/save.png</normaloff>:/images/save.png</iconset>
+      </property>
+     </widget>
+    </item>
+    <item>
      <spacer name="verticalSpacer_2">
       <property name="orientation">
        <enum>Qt::Vertical</enum>
@@ -727,6 +740,19 @@ p, li { white-space: pre-wrap; }
      </widget>
     </item>
    </layout>
+  </widget>
+  <widget class="Line" name="line_3">
+   <property name="geometry">
+    <rect>
+     <x>450</x>
+     <y>10</y>
+     <width>20</width>
+     <height>391</height>
+    </rect>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Vertical</enum>
+   </property>
   </widget>
  </widget>
  <resources>

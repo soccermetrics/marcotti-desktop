@@ -41,60 +41,6 @@
   <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
-     <x>390</x>
-     <y>30</y>
-     <width>87</width>
-     <height>141</height>
-    </rect>
-   </property>
-   <layout class="QVBoxLayout" name="verticalLayout">
-    <item>
-     <widget class="QPushButton" name="addEntry">
-      <property name="toolTip">
-       <string>Add Entry</string>
-      </property>
-      <property name="text">
-       <string>&amp;Add</string>
-      </property>
-      <property name="icon">
-       <iconset resource="fmrd_resources.qrc">
-        <normaloff>:/images/add.png</normaloff>:/images/add.png</iconset>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QPushButton" name="deleteEntry">
-      <property name="toolTip">
-       <string>Delete Entry</string>
-      </property>
-      <property name="text">
-       <string>&amp;Delete</string>
-      </property>
-      <property name="icon">
-       <iconset resource="fmrd_resources.qrc">
-        <normaloff>:/images/delete.png</normaloff>:/images/delete.png</iconset>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QPushButton" name="closeButton">
-      <property name="toolTip">
-       <string>Close Window</string>
-      </property>
-      <property name="text">
-       <string>&amp;Close</string>
-      </property>
-      <property name="icon">
-       <iconset resource="fmrd_resources.qrc">
-        <normaloff>:/images/quit.png</normaloff>:/images/quit.png</iconset>
-      </property>
-     </widget>
-    </item>
-   </layout>
-  </widget>
-  <widget class="QWidget" name="layoutWidget">
-   <property name="geometry">
-    <rect>
      <x>10</x>
      <y>31</y>
      <width>342</width>
@@ -312,6 +258,74 @@ p, li { white-space: pre-wrap; }
        </spacer>
       </item>
      </layout>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="">
+   <property name="geometry">
+    <rect>
+     <x>390</x>
+     <y>32</y>
+     <width>87</width>
+     <height>181</height>
+    </rect>
+   </property>
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QPushButton" name="addEntry">
+      <property name="toolTip">
+       <string>Add Entry</string>
+      </property>
+      <property name="text">
+       <string>&amp;Add</string>
+      </property>
+      <property name="icon">
+       <iconset resource="fmrd_resources.qrc">
+        <normaloff>:/images/add.png</normaloff>:/images/add.png</iconset>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="saveEntry">
+      <property name="toolTip">
+       <string>Delete Entry</string>
+      </property>
+      <property name="text">
+       <string>&amp;Save</string>
+      </property>
+      <property name="icon">
+       <iconset resource="fmrd_resources.qrc">
+        <normaloff>:/images/save.png</normaloff>:/images/save.png</iconset>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="deleteEntry">
+      <property name="toolTip">
+       <string>Delete Entry</string>
+      </property>
+      <property name="text">
+       <string>&amp;Delete</string>
+      </property>
+      <property name="icon">
+       <iconset resource="fmrd_resources.qrc">
+        <normaloff>:/images/delete.png</normaloff>:/images/delete.png</iconset>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="closeButton">
+      <property name="toolTip">
+       <string>Close Window</string>
+      </property>
+      <property name="text">
+       <string>&amp;Close</string>
+      </property>
+      <property name="icon">
+       <iconset resource="fmrd_resources.qrc">
+        <normaloff>:/images/quit.png</normaloff>:/images/quit.png</iconset>
+      </property>
+     </widget>
     </item>
    </layout>
   </widget>

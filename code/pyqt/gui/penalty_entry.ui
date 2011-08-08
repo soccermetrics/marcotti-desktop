@@ -6,20 +6,20 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>560</width>
-    <height>450</height>
+    <width>640</width>
+    <height>460</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>560</width>
-    <height>450</height>
+    <width>640</width>
+    <height>460</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>560</width>
-    <height>450</height>
+    <width>640</width>
+    <height>460</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -30,7 +30,7 @@
     <rect>
      <x>10</x>
      <y>151</y>
-     <width>421</width>
+     <width>511</width>
      <height>241</height>
     </rect>
    </property>
@@ -98,13 +98,13 @@ p, li { white-space: pre-wrap; }
      <widget class="QComboBox" name="teamSelect">
       <property name="minimumSize">
        <size>
-        <width>261</width>
+        <width>271</width>
         <height>31</height>
        </size>
       </property>
       <property name="maximumSize">
        <size>
-        <width>261</width>
+        <width>271</width>
         <height>31</height>
        </size>
       </property>
@@ -140,13 +140,13 @@ p, li { white-space: pre-wrap; }
      <widget class="QComboBox" name="playerSelect">
       <property name="minimumSize">
        <size>
-        <width>231</width>
+        <width>271</width>
         <height>31</height>
        </size>
       </property>
       <property name="maximumSize">
        <size>
-        <width>231</width>
+        <width>271</width>
         <height>31</height>
        </size>
       </property>
@@ -182,13 +182,13 @@ p, li { white-space: pre-wrap; }
      <widget class="QComboBox" name="foulSelect">
       <property name="minimumSize">
        <size>
-        <width>201</width>
+        <width>271</width>
         <height>31</height>
        </size>
       </property>
       <property name="maximumSize">
        <size>
-        <width>201</width>
+        <width>271</width>
         <height>31</height>
        </size>
       </property>
@@ -345,9 +345,9 @@ p, li { white-space: pre-wrap; }
   <widget class="QWidget" name="layoutWidget_3">
    <property name="geometry">
     <rect>
-     <x>40</x>
+     <x>10</x>
      <y>400</y>
-     <width>351</width>
+     <width>381</width>
      <height>41</height>
     </rect>
    </property>
@@ -463,7 +463,7 @@ p, li { white-space: pre-wrap; }
     <rect>
      <x>10</x>
      <y>6</y>
-     <width>421</width>
+     <width>511</width>
      <height>121</height>
     </rect>
    </property>
@@ -495,13 +495,13 @@ p, li { white-space: pre-wrap; }
      <widget class="QComboBox" name="compSelect">
       <property name="minimumSize">
        <size>
-        <width>271</width>
+        <width>331</width>
         <height>31</height>
        </size>
       </property>
       <property name="maximumSize">
        <size>
-        <width>271</width>
+        <width>331</width>
         <height>31</height>
        </size>
       </property>
@@ -573,13 +573,13 @@ p, li { white-space: pre-wrap; }
      <widget class="QComboBox" name="matchSelect">
       <property name="minimumSize">
        <size>
-        <width>271</width>
+        <width>331</width>
         <height>31</height>
        </size>
       </property>
       <property name="maximumSize">
        <size>
-        <width>271</width>
+        <width>331</width>
         <height>31</height>
        </size>
       </property>
@@ -592,7 +592,7 @@ p, li { white-space: pre-wrap; }
     <rect>
      <x>10</x>
      <y>130</y>
-     <width>431</width>
+     <width>521</width>
      <height>16</height>
     </rect>
    </property>
@@ -603,8 +603,8 @@ p, li { white-space: pre-wrap; }
   <widget class="Line" name="line_2">
    <property name="geometry">
     <rect>
-     <x>430</x>
-     <y>0</y>
+     <x>520</x>
+     <y>10</y>
      <width>20</width>
      <height>391</height>
     </rect>
@@ -616,10 +616,10 @@ p, li { white-space: pre-wrap; }
   <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
-     <x>450</x>
-     <y>150</y>
-     <width>101</width>
-     <height>241</height>
+     <x>540</x>
+     <y>140</y>
+     <width>91</width>
+     <height>251</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
@@ -627,13 +627,13 @@ p, li { white-space: pre-wrap; }
      <widget class="QPushButton" name="addEntry">
       <property name="minimumSize">
        <size>
-        <width>85</width>
+        <width>80</width>
         <height>33</height>
        </size>
       </property>
       <property name="maximumSize">
        <size>
-        <width>85</width>
+        <width>80</width>
         <height>33</height>
        </size>
       </property>
@@ -653,13 +653,13 @@ p, li { white-space: pre-wrap; }
      <widget class="QPushButton" name="deleteEntry">
       <property name="minimumSize">
        <size>
-        <width>85</width>
+        <width>80</width>
         <height>33</height>
        </size>
       </property>
       <property name="maximumSize">
        <size>
-        <width>85</width>
+        <width>80</width>
         <height>33</height>
        </size>
       </property>
@@ -672,6 +672,32 @@ p, li { white-space: pre-wrap; }
       <property name="icon">
        <iconset resource="fmrd_resources.qrc">
         <normaloff>:/images/delete.png</normaloff>:/images/delete.png</iconset>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="saveEntry">
+      <property name="minimumSize">
+       <size>
+        <width>80</width>
+        <height>33</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>80</width>
+        <height>33</height>
+       </size>
+      </property>
+      <property name="toolTip">
+       <string>Delete Entry</string>
+      </property>
+      <property name="text">
+       <string>&amp;Save</string>
+      </property>
+      <property name="icon">
+       <iconset resource="fmrd_resources.qrc">
+        <normaloff>:/images/save.png</normaloff>:/images/save.png</iconset>
       </property>
      </widget>
     </item>
@@ -692,13 +718,13 @@ p, li { white-space: pre-wrap; }
      <widget class="QPushButton" name="closeButton">
       <property name="minimumSize">
        <size>
-        <width>85</width>
+        <width>80</width>
         <height>33</height>
        </size>
       </property>
       <property name="maximumSize">
        <size>
-        <width>85</width>
+        <width>80</width>
         <height>33</height>
        </size>
       </property>

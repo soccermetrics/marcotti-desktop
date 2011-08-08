@@ -6,35 +6,129 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>600</width>
+    <width>720</width>
     <height>140</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>600</width>
+    <width>720</width>
     <height>140</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>640</width>
-    <height>180</height>
+    <width>720</width>
+    <height>140</height>
    </size>
   </property>
   <property name="windowTitle">
    <string>Competition Entry</string>
   </property>
-  <widget class="QWidget" name="layoutWidget">
+  <widget class="QWidget" name="">
    <property name="geometry">
     <rect>
-     <x>12</x>
-     <y>20</y>
-     <width>552</width>
+     <x>270</x>
+     <y>68</y>
+     <width>441</width>
      <height>51</height>
     </rect>
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout">
+    <item>
+     <spacer name="horizontalSpacer_3">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>13</width>
+        <height>20</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item>
+     <widget class="QPushButton" name="addEntry">
+      <property name="toolTip">
+       <string>Add Entry</string>
+      </property>
+      <property name="text">
+       <string>&amp;Add</string>
+      </property>
+      <property name="icon">
+       <iconset>
+        <normaloff>images/add.png</normaloff>images/add.png</iconset>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="saveEntry">
+      <property name="toolTip">
+       <string>Delete Entry</string>
+      </property>
+      <property name="text">
+       <string>&amp;Save</string>
+      </property>
+      <property name="icon">
+       <iconset resource="fmrd_resources.qrc">
+        <normaloff>:/images/save.png</normaloff>:/images/save.png</iconset>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="deleteEntry">
+      <property name="toolTip">
+       <string>Delete Entry</string>
+      </property>
+      <property name="text">
+       <string>&amp;Delete</string>
+      </property>
+      <property name="icon">
+       <iconset>
+        <normaloff>images/delete.png</normaloff>images/delete.png</iconset>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="closeButton">
+      <property name="toolTip">
+       <string>Close Window</string>
+      </property>
+      <property name="text">
+       <string>&amp;Close</string>
+      </property>
+      <property name="icon">
+       <iconset>
+        <normaloff>images/quit.png</normaloff>images/quit.png</iconset>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <spacer name="horizontalSpacer_4">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>13</width>
+        <height>20</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>21</y>
+     <width>705</width>
+     <height>48</height>
+    </rect>
+   </property>
+   <layout class="QHBoxLayout" name="horizontalLayout_3">
     <item>
      <widget class="QLabel" name="label">
       <property name="text">
@@ -72,8 +166,8 @@ p, li { white-space: pre-wrap; }
       </property>
       <property name="sizeHint" stdset="0">
        <size>
-        <width>78</width>
-        <height>20</height>
+        <width>68</width>
+        <height>46</height>
        </size>
       </property>
      </spacer>
@@ -96,7 +190,13 @@ p, li { white-space: pre-wrap; }
      <widget class="QLineEdit" name="competitionEdit">
       <property name="minimumSize">
        <size>
-        <width>271</width>
+        <width>420</width>
+        <height>27</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>420</width>
         <height>27</height>
        </size>
       </property>
@@ -107,7 +207,7 @@ p, li { white-space: pre-wrap; }
     </item>
    </layout>
   </widget>
-  <widget class="QWidget" name="layoutWidget">
+  <widget class="QWidget" name="">
    <property name="geometry">
     <rect>
      <x>10</x>
@@ -117,6 +217,19 @@ p, li { white-space: pre-wrap; }
     </rect>
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout_2">
+    <item>
+     <spacer name="horizontalSpacer_5">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>18</width>
+        <height>20</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
     <item>
      <widget class="QPushButton" name="firstEntry">
       <property name="toolTip">
@@ -185,73 +298,6 @@ p, li { white-space: pre-wrap; }
        </size>
       </property>
      </spacer>
-    </item>
-   </layout>
-  </widget>
-  <widget class="QWidget" name="layoutWidget">
-   <property name="geometry">
-    <rect>
-     <x>290</x>
-     <y>70</y>
-     <width>275</width>
-     <height>51</height>
-    </rect>
-   </property>
-   <layout class="QHBoxLayout" name="horizontalLayout_3">
-    <item>
-     <spacer name="horizontalSpacer_3">
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
-      </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>13</width>
-        <height>20</height>
-       </size>
-      </property>
-     </spacer>
-    </item>
-    <item>
-     <widget class="QPushButton" name="addEntry">
-      <property name="toolTip">
-       <string>Add Entry</string>
-      </property>
-      <property name="text">
-       <string>&amp;Add</string>
-      </property>
-      <property name="icon">
-       <iconset resource="fmrd_resources.qrc">
-        <normaloff>:/images/add.png</normaloff>:/images/add.png</iconset>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QPushButton" name="deleteEntry">
-      <property name="toolTip">
-       <string>Delete Entry</string>
-      </property>
-      <property name="text">
-       <string>&amp;Delete</string>
-      </property>
-      <property name="icon">
-       <iconset resource="fmrd_resources.qrc">
-        <normaloff>:/images/delete.png</normaloff>:/images/delete.png</iconset>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QPushButton" name="closeButton">
-      <property name="toolTip">
-       <string>Close Window</string>
-      </property>
-      <property name="text">
-       <string>&amp;Close</string>
-      </property>
-      <property name="icon">
-       <iconset resource="fmrd_resources.qrc">
-        <normaloff>:/images/quit.png</normaloff>:/images/quit.png</iconset>
-      </property>
-     </widget>
     </item>
    </layout>
   </widget>

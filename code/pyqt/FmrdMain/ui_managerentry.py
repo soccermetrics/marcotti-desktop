@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'gui/manager_entry.ui'
 #
-# Created: Sat Aug  6 01:32:12 2011
+# Created: Mon Aug  8 00:07:27 2011
 #      by: PyQt4 UI code generator 4.7.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -12,9 +12,9 @@ from PyQt4 import QtCore, QtGui
 class Ui_ManagerEntryDlg(object):
     def setupUi(self, ManagerEntryDlg):
         ManagerEntryDlg.setObjectName("ManagerEntryDlg")
-        ManagerEntryDlg.resize(800, 250)
-        ManagerEntryDlg.setMinimumSize(QtCore.QSize(800, 250))
-        ManagerEntryDlg.setMaximumSize(QtCore.QSize(800, 250))
+        ManagerEntryDlg.resize(800, 230)
+        ManagerEntryDlg.setMinimumSize(QtCore.QSize(800, 230))
+        ManagerEntryDlg.setMaximumSize(QtCore.QSize(800, 230))
         self.frame_2 = QtGui.QFrame(ManagerEntryDlg)
         self.frame_2.setGeometry(QtCore.QRect(30, 170, 331, 51))
         self.frame_2.setFrameShape(QtGui.QFrame.StyledPanel)
@@ -57,7 +57,7 @@ class Ui_ManagerEntryDlg(object):
         self.lastEntry.setIcon(icon3)
         self.lastEntry.setObjectName("lastEntry")
         self.frame = QtGui.QFrame(ManagerEntryDlg)
-        self.frame.setGeometry(QtCore.QRect(460, 170, 281, 51))
+        self.frame.setGeometry(QtCore.QRect(410, 170, 371, 51))
         self.frame.setFrameShape(QtGui.QFrame.StyledPanel)
         self.frame.setFrameShadow(QtGui.QFrame.Raised)
         self.frame.setObjectName("frame")
@@ -69,21 +69,29 @@ class Ui_ManagerEntryDlg(object):
         icon4.addPixmap(QtGui.QPixmap(":/images/add.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.addEntry.setIcon(icon4)
         self.addEntry.setObjectName("addEntry")
+        self.saveEntry = QtGui.QPushButton(self.frame)
+        self.saveEntry.setGeometry(QtCore.QRect(100, 10, 80, 33))
+        self.saveEntry.setMinimumSize(QtCore.QSize(80, 33))
+        self.saveEntry.setMaximumSize(QtCore.QSize(80, 33))
+        icon5 = QtGui.QIcon()
+        icon5.addPixmap(QtGui.QPixmap(":/images/save.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.saveEntry.setIcon(icon5)
+        self.saveEntry.setObjectName("saveEntry")
         self.deleteEntry = QtGui.QPushButton(self.frame)
-        self.deleteEntry.setGeometry(QtCore.QRect(100, 10, 80, 33))
+        self.deleteEntry.setGeometry(QtCore.QRect(190, 10, 80, 33))
         self.deleteEntry.setMinimumSize(QtCore.QSize(80, 33))
         self.deleteEntry.setMaximumSize(QtCore.QSize(80, 33))
-        icon5 = QtGui.QIcon()
-        icon5.addPixmap(QtGui.QPixmap(":/images/delete.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.deleteEntry.setIcon(icon5)
+        icon6 = QtGui.QIcon()
+        icon6.addPixmap(QtGui.QPixmap(":/images/delete.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.deleteEntry.setIcon(icon6)
         self.deleteEntry.setObjectName("deleteEntry")
         self.closeButton = QtGui.QPushButton(self.frame)
-        self.closeButton.setGeometry(QtCore.QRect(190, 10, 80, 33))
+        self.closeButton.setGeometry(QtCore.QRect(280, 10, 80, 33))
         self.closeButton.setMinimumSize(QtCore.QSize(80, 33))
         self.closeButton.setMaximumSize(QtCore.QSize(80, 33))
-        icon6 = QtGui.QIcon()
-        icon6.addPixmap(QtGui.QPixmap(":/images/quit.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.closeButton.setIcon(icon6)
+        icon7 = QtGui.QIcon()
+        icon7.addPixmap(QtGui.QPixmap(":/images/quit.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.closeButton.setIcon(icon7)
         self.closeButton.setIconSize(QtCore.QSize(16, 16))
         self.closeButton.setObjectName("closeButton")
         self.line = QtGui.QFrame(ManagerEntryDlg)
@@ -177,6 +185,8 @@ class Ui_ManagerEntryDlg(object):
         self.lastEntry.setToolTip(QtGui.QApplication.translate("ManagerEntryDlg", "Last Entry", None, QtGui.QApplication.UnicodeUTF8))
         self.addEntry.setToolTip(QtGui.QApplication.translate("ManagerEntryDlg", "Add Entry", None, QtGui.QApplication.UnicodeUTF8))
         self.addEntry.setText(QtGui.QApplication.translate("ManagerEntryDlg", "&Add", None, QtGui.QApplication.UnicodeUTF8))
+        self.saveEntry.setToolTip(QtGui.QApplication.translate("ManagerEntryDlg", "Delete Entry", None, QtGui.QApplication.UnicodeUTF8))
+        self.saveEntry.setText(QtGui.QApplication.translate("ManagerEntryDlg", "&Save", None, QtGui.QApplication.UnicodeUTF8))
         self.deleteEntry.setToolTip(QtGui.QApplication.translate("ManagerEntryDlg", "Delete Entry", None, QtGui.QApplication.UnicodeUTF8))
         self.deleteEntry.setText(QtGui.QApplication.translate("ManagerEntryDlg", "&Delete", None, QtGui.QApplication.UnicodeUTF8))
         self.closeButton.setToolTip(QtGui.QApplication.translate("ManagerEntryDlg", "Close Entry", None, QtGui.QApplication.UnicodeUTF8))
