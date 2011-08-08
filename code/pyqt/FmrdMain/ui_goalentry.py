@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'gui/goal_entry.ui'
 #
-# Created: Mon Aug  8 00:36:10 2011
+# Created: Mon Aug  8 01:46:32 2011
 #      by: PyQt4 UI code generator 4.7.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -12,9 +12,9 @@ from PyQt4 import QtCore, QtGui
 class Ui_GoalEntryDlg(object):
     def setupUi(self, GoalEntryDlg):
         GoalEntryDlg.setObjectName("GoalEntryDlg")
-        GoalEntryDlg.resize(580, 460)
-        GoalEntryDlg.setMinimumSize(QtCore.QSize(580, 460))
-        GoalEntryDlg.setMaximumSize(QtCore.QSize(580, 460))
+        GoalEntryDlg.resize(600, 460)
+        GoalEntryDlg.setMinimumSize(QtCore.QSize(600, 460))
+        GoalEntryDlg.setMaximumSize(QtCore.QSize(600, 460))
         self.line = QtGui.QFrame(GoalEntryDlg)
         self.line.setGeometry(QtCore.QRect(10, 140, 451, 16))
         self.line.setFrameShape(QtGui.QFrame.HLine)
@@ -62,7 +62,7 @@ class Ui_GoalEntryDlg(object):
         self.lastEntry.setObjectName("lastEntry")
         self.horizontalLayout_2.addWidget(self.lastEntry)
         self.layoutWidget1 = QtGui.QWidget(GoalEntryDlg)
-        self.layoutWidget1.setGeometry(QtCore.QRect(10, 10, 441, 131))
+        self.layoutWidget1.setGeometry(QtCore.QRect(10, 10, 471, 131))
         self.layoutWidget1.setObjectName("layoutWidget1")
         self.gridLayout = QtGui.QGridLayout(self.layoutWidget1)
         self.gridLayout.setObjectName("gridLayout")
@@ -97,7 +97,7 @@ class Ui_GoalEntryDlg(object):
         self.matchSelect.setObjectName("matchSelect")
         self.gridLayout.addWidget(self.matchSelect, 2, 1, 1, 1)
         self.layoutWidget2 = QtGui.QWidget(GoalEntryDlg)
-        self.layoutWidget2.setGeometry(QtCore.QRect(10, 160, 441, 241))
+        self.layoutWidget2.setGeometry(QtCore.QRect(10, 160, 451, 241))
         self.layoutWidget2.setObjectName("layoutWidget2")
         self.gridLayout_2 = QtGui.QGridLayout(self.layoutWidget2)
         self.gridLayout_2.setObjectName("gridLayout_2")
@@ -180,7 +180,7 @@ class Ui_GoalEntryDlg(object):
         spacerItem = QtGui.QSpacerItem(138, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
         self.gridLayout_2.addItem(spacerItem, 5, 2, 1, 1)
         self.layoutWidget3 = QtGui.QWidget(GoalEntryDlg)
-        self.layoutWidget3.setGeometry(QtCore.QRect(470, 160, 91, 241))
+        self.layoutWidget3.setGeometry(QtCore.QRect(500, 160, 91, 241))
         self.layoutWidget3.setObjectName("layoutWidget3")
         self.verticalLayout = QtGui.QVBoxLayout(self.layoutWidget3)
         self.verticalLayout.setObjectName("verticalLayout")
@@ -219,7 +219,7 @@ class Ui_GoalEntryDlg(object):
         self.closeButton.setObjectName("closeButton")
         self.verticalLayout.addWidget(self.closeButton)
         self.line_3 = QtGui.QFrame(GoalEntryDlg)
-        self.line_3.setGeometry(QtCore.QRect(450, 10, 20, 391))
+        self.line_3.setGeometry(QtCore.QRect(480, 10, 20, 391))
         self.line_3.setFrameShape(QtGui.QFrame.VLine)
         self.line_3.setFrameShadow(QtGui.QFrame.Sunken)
         self.line_3.setObjectName("line_3")

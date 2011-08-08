@@ -6,19 +6,19 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>580</width>
+    <width>600</width>
     <height>460</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>580</width>
+    <width>600</width>
     <height>460</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>580</width>
+    <width>600</width>
     <height>460</height>
    </size>
   </property>
@@ -159,7 +159,7 @@
     <rect>
      <x>10</x>
      <y>10</y>
-     <width>441</width>
+     <width>471</width>
      <height>131</height>
     </rect>
    </property>
@@ -288,7 +288,7 @@ p, li { white-space: pre-wrap; }
     <rect>
      <x>10</x>
      <y>160</y>
-     <width>441</width>
+     <width>451</width>
      <height>241</height>
     </rect>
    </property>
@@ -615,7 +615,7 @@ p, li { white-space: pre-wrap; }
   <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
-     <x>470</x>
+     <x>500</x>
      <y>160</y>
      <width>91</width>
      <height>241</height>
@@ -744,7 +744,7 @@ p, li { white-space: pre-wrap; }
   <widget class="Line" name="line_3">
    <property name="geometry">
     <rect>
-     <x>450</x>
+     <x>480</x>
      <y>10</y>
      <width>20</width>
      <height>391</height>
