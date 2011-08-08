@@ -173,8 +173,9 @@ class GoalEntryDlg(QDialog, ui_goalentry.Ui_GoalEntryDlg):
         self.nextEntry.setDisabled(True)
         self.lastEntry.setDisabled(True)
         
-        # disable add and delete entry buttons
+        # disable add, save, and delete entry buttons
         self.addEntry.setDisabled(True)
+        self.saveEntry.setDisabled(True)
         self.deleteEntry.setDisabled(True)
         
         #
@@ -185,6 +186,7 @@ class GoalEntryDlg(QDialog, ui_goalentry.Ui_GoalEntryDlg):
         self.connect(self.prevEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.PREV))
         self.connect(self.nextEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.NEXT))
         self.connect(self.lastEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.LAST))
+        self.connect(self.saveEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.NULL))
         self.connect(self.addEntry, SIGNAL("clicked()"), self.addRecord)        
         self.connect(self.deleteEntry, SIGNAL("clicked()"), self.deleteRecord)        
         self.connect(self.closeButton, SIGNAL("clicked()"), self.accept)
@@ -306,8 +308,9 @@ class GoalEntryDlg(QDialog, ui_goalentry.Ui_GoalEntryDlg):
     def filterGoals(self):
         """Sets filter for Goals table based on Match selection."""
         
-        # enable add/delete entry buttons
+        # enable add. save, and delete entry buttons
         self.addEntry.setEnabled(True)
+        self.saveEntry.setEnabled(True)
         self.deleteEntry.setEnabled(True)
 
         # clear filter
@@ -574,8 +577,9 @@ class PenaltyEntryDlg(QDialog, ui_penaltyentry.Ui_PenaltyEntryDlg):
         self.nextEntry.setDisabled(True)
         self.lastEntry.setDisabled(True)
         
-        # disable add and delete entry buttons
+        # disable add,save, and delete entry buttons
         self.addEntry.setDisabled(True)
+        self.saveEntry.setDisabled(True)
         self.deleteEntry.setDisabled(True)
         
         #
@@ -586,6 +590,7 @@ class PenaltyEntryDlg(QDialog, ui_penaltyentry.Ui_PenaltyEntryDlg):
         self.connect(self.prevEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.PREV))
         self.connect(self.nextEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.NEXT))
         self.connect(self.lastEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.LAST))
+        self.connect(self.saveEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.NULL))
         self.connect(self.addEntry, SIGNAL("clicked()"), self.addRecord)        
         self.connect(self.deleteEntry, SIGNAL("clicked()"), self.deleteRecord)        
         self.connect(self.closeButton, SIGNAL("clicked()"), self.accept)
@@ -781,8 +786,9 @@ class PenaltyEntryDlg(QDialog, ui_penaltyentry.Ui_PenaltyEntryDlg):
     def filterPenaltiesAndTeams(self):
         """Filters Penalties table to display all entries from selected match, and filters Teams combobox down to the two participants."""
         
-        # enable add/delete entry buttons
+        # enable add, save, and delete entry buttons
         self.addEntry.setEnabled(True)
+        self.saveEntry.setEnabled(True)
         self.deleteEntry.setEnabled(True)
 
         # block signals from team combobox
@@ -1056,8 +1062,9 @@ class OffenseEntryDlg(QDialog, ui_offenseentry.Ui_OffenseEntryDlg):
         self.nextEntry.setDisabled(True)
         self.lastEntry.setDisabled(True)
         
-        # disable add and delete entry buttons
+        # disable add, save, and delete entry buttons
         self.addEntry.setDisabled(True)
+        self.saveEntry.setDisabled(True)
         self.deleteEntry.setDisabled(True)
         
         #
@@ -1068,6 +1075,7 @@ class OffenseEntryDlg(QDialog, ui_offenseentry.Ui_OffenseEntryDlg):
         self.connect(self.prevEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.PREV))
         self.connect(self.nextEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.NEXT))
         self.connect(self.lastEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.LAST))
+        self.connect(self.saveEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.NULL))
         self.connect(self.addEntry, SIGNAL("clicked()"), self.addRecord)        
         self.connect(self.deleteEntry, SIGNAL("clicked()"), self.deleteRecord)        
         self.connect(self.closeButton, SIGNAL("clicked()"), self.accept)
@@ -1189,8 +1197,9 @@ class OffenseEntryDlg(QDialog, ui_offenseentry.Ui_OffenseEntryDlg):
     def filterOffensesAndTeams(self):
         """Filters Offenses table down to entries from selected match, and filters Teams combobox down to both participants."""
 #        print "Calling filterOffensesAndTeams()"
-        # enable add/delete entry buttons
+        # enable add, save, and delete entry buttons
         self.addEntry.setEnabled(True)
+        self.saveEntry.setEnabled(True)
         self.deleteEntry.setEnabled(True)
 
         # block signals from team combobox
@@ -1550,8 +1559,9 @@ class SubsEntryDlg(QDialog, ui_subsentry.Ui_SubsEntryDlg):
         self.nextEntry.setDisabled(True)
         self.lastEntry.setDisabled(True)
         
-        # disable add and delete entry buttons
+        # disable add, save, and delete entry buttons
         self.addEntry.setDisabled(True)
+        self.saveEntry.setDisabled(True)
         self.deleteEntry.setDisabled(True)
         
         #
@@ -1562,6 +1572,7 @@ class SubsEntryDlg(QDialog, ui_subsentry.Ui_SubsEntryDlg):
         self.connect(self.prevEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.PREV))
         self.connect(self.nextEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.NEXT))
         self.connect(self.lastEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.LAST))
+        self.connect(self.saveEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.NULL))
         self.connect(self.addEntry, SIGNAL("clicked()"), self.addRecord)
         self.connect(self.deleteEntry, SIGNAL("clicked()"), self.deleteRecord)           
         self.connect(self.closeButton, SIGNAL("clicked()"), self.accept)
@@ -1935,8 +1946,9 @@ class SubsEntryDlg(QDialog, ui_subsentry.Ui_SubsEntryDlg):
     def filterSubstitutionsAndTeams(self):
         """Filters Substitutions table from match selection."""
         
-        # enable add/delete entry buttons
+        # enable add, save, and delete entry buttons
         self.addEntry.setEnabled(True)
+        self.saveEntry.setEnabled(True)
         self.deleteEntry.setEnabled(True)
 
         # block signals from team combobox
@@ -2205,8 +2217,9 @@ class SwitchEntryDlg(QDialog, ui_switchentry.Ui_SwitchEntryDlg):
         self.nextEntry.setDisabled(True)
         self.lastEntry.setDisabled(True)
         
-        # disable add and delete entry buttons
+        # disable add, save, and delete entry buttons
         self.addEntry.setDisabled(True)
+        self.saveEntry.setDisabled(True)
         self.deleteEntry.setDisabled(True)
         
         #
@@ -2217,6 +2230,7 @@ class SwitchEntryDlg(QDialog, ui_switchentry.Ui_SwitchEntryDlg):
         self.connect(self.prevEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.PREV))
         self.connect(self.nextEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.NEXT))
         self.connect(self.lastEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.LAST))
+        self.connect(self.saveEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.NULL))
         self.connect(self.addEntry, SIGNAL("clicked()"), self.addRecord)
         self.connect(self.deleteEntry, SIGNAL("clicked()"), self.deleteRecord)           
         self.connect(self.closeButton, SIGNAL("clicked()"), self.accept)
@@ -2445,8 +2459,9 @@ class SwitchEntryDlg(QDialog, ui_switchentry.Ui_SwitchEntryDlg):
 
     def filterSwitchesAndTeams(self):
         """Filters SwitchPositions table from match selection."""
-        # enable add/delete entry buttons
+        # enable add, save, and delete entry buttons
         self.addEntry.setEnabled(True)
+        self.saveEntry.setEnabled(True)
         self.deleteEntry.setEnabled(True)
 
         # block signals from team combobox
