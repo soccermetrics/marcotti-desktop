@@ -75,7 +75,7 @@ ADMIN = 2
 MAXLOGINS = 3
 
 # Navigation enums
-FIRST,  PREV,  NEXT,  LAST = range(4)
+NULL, FIRST,  PREV,  NEXT,  LAST = range(5)
 
 # Define minimum number of personnel 
 MIN_STARTERS = 11
