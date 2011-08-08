@@ -88,8 +88,6 @@ class UserMainSwitchboard(QMainWindow, ui_usermainswitchboard.Ui_UserMainSwitchb
      
     def OpenAbout(self):
         """Opens About window."""
-#        dialog = AboutDlg(self)
-#        dialog.exec_()
         DisplayAboutDialog(self, Constants.VERSION)
     
     # routines for opening main dialogs (access by pushbuttons)

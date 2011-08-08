@@ -104,8 +104,6 @@ class MainSwitchboard(QMainWindow, ui_mainswitchboard.Ui_MainSwitchboard):
      
     def OpenAbout(self):
         """Opens About window."""
-#        dialog = AboutDlg(self)
-#        dialog.exec_()
         DisplayAboutDialog(self, Constants.VERSION)
         
     def OpenCards(self):
