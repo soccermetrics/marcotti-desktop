@@ -33,7 +33,6 @@ need to be changed by the user.  With exception of About window, these
 modules would be incorporated only into an administration version of the tool. 
 
 Classes:
-AboutDlg -- display About window
 CardSetupDlg -- data entry to Disciplinary Card table
 ConfedSetupDlg -- data entry to Confederations table
 CountrySetupDlg -- data entry to Countries table
@@ -48,21 +47,6 @@ RoundSetupDlg -- data entry to Rounds table
 WxCondSetupDlg -- data entry to Weather Conditions table
 
 """
-
-class AboutDlg(QDialog, ui_aboutwindow.Ui_AboutDlg):
-    """Implements About dialog.
-    
-    Displays descriptive information about the data-entry tool.
-    
-    """    
-    def __init__(self, parent=None):
-        "Constructor for AboutDlg class."
-        super(AboutDlg, self).__init__(parent)
-        self.setupUi(self)
-        
-        # configure signal/slot
-        QObject.connect(self.pushButton, SIGNAL("clicked()"), self, SLOT("close()"))
-
 
 class CardSetupDlg(QDialog, ui_cardsetup.Ui_CardSetupDlg):
     """Implements card data entry dialog, and accesses and writes to Disciplinary Card table."""
