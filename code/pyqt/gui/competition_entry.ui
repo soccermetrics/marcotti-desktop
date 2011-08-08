@@ -25,7 +25,7 @@
   <property name="windowTitle">
    <string>Competition Entry</string>
   </property>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>270</x>
@@ -57,8 +57,8 @@
        <string>&amp;Add</string>
       </property>
       <property name="icon">
-       <iconset>
-        <normaloff>images/add.png</normaloff>images/add.png</iconset>
+       <iconset resource="fmrd_resources.qrc">
+        <normaloff>:/images/add.png</normaloff>:/images/add.png</iconset>
       </property>
      </widget>
     </item>
@@ -85,8 +85,8 @@
        <string>&amp;Delete</string>
       </property>
       <property name="icon">
-       <iconset>
-        <normaloff>images/delete.png</normaloff>images/delete.png</iconset>
+       <iconset resource="fmrd_resources.qrc">
+        <normaloff>:/images/delete.png</normaloff>:/images/delete.png</iconset>
       </property>
      </widget>
     </item>
@@ -99,8 +99,8 @@
        <string>&amp;Close</string>
       </property>
       <property name="icon">
-       <iconset>
-        <normaloff>images/quit.png</normaloff>images/quit.png</iconset>
+       <iconset resource="fmrd_resources.qrc">
+        <normaloff>:/images/quit.png</normaloff>:/images/quit.png</iconset>
       </property>
      </widget>
     </item>
@@ -119,7 +119,7 @@
     </item>
    </layout>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>10</x>
@@ -207,7 +207,7 @@ p, li { white-space: pre-wrap; }
     </item>
    </layout>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>10</x>
@@ -217,19 +217,6 @@ p, li { white-space: pre-wrap; }
     </rect>
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout_2">
-    <item>
-     <spacer name="horizontalSpacer_5">
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
-      </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>18</width>
-        <height>20</height>
-       </size>
-      </property>
-     </spacer>
-    </item>
     <item>
      <widget class="QPushButton" name="firstEntry">
       <property name="toolTip">
