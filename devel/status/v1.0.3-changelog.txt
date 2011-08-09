@@ -1,0 +1,23 @@
+FMRD-Desktop Version 1.0.3
+==========================
+
+(+) - external changes to user
+(*) - internal changes
+
+Changes relative to Version 1.0.2
+---------------------------------
+
+* Capitalize class names in UI/Python files to comply with PEP 8
+* Move navigation enums to Constants module
++ Linked icons in UI dialogs to resource file
++ Added error message dialog for failed database commits
++ Added Save button functionality to data entry UIs
++ Added Save/Discard option upon Close selection in UI dialogs
++ Fixed database authentication procedure after initial failed login
+* Removed superfluous self.mapper.submit() call from addRecord() methods
+* Make About dialog a function
+* Added version string in Constants module
+* Removed VERSION file from docs submodule
+
+
+
