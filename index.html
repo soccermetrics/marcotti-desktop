@@ -10,7 +10,7 @@
 
 <body
 style="font-family: Times New Roman,Times,serif; font-size: medium; font-style: normal; font-weight:normal; font-variant: normal; text-align: left; text-decoration: none; border: solid medium #0000ff;">
-<h1>FMRD-Desktop 1.0.2</h1>
+<h1>FMRD-Desktop 1.0.3</h1>
 
 <p>The Football Match Result Database (FMRD) stores and maintains the match
 result data needed to support football (soccer) research activities for the
@@ -21,7 +21,7 @@ database models league competitions. </p>
 <ul>
   <li>Maintains data on matches that occur within football league competitions,
     whether among national teams or domestic clubs.</li>
-  <li>Maintains complete top-level data on the football match, including
+  <li>Maintains complete top-level data on the football match, including 
     <ul>
       <li>Match date</li>
       <li>Competition name</li>
@@ -32,14 +32,14 @@ database models league competitions. </p>
         weather conditions at kickoff, halftime, and fulltime</li>
     </ul>
   </li>
-  <li>Maintains complete information on participating personnel, such as
+  <li>Maintains complete information on participating personnel, such as 
     <ul>
       <li>Players</li>
       <li>Managers</li>
       <li>Match referees</li>
     </ul>
   </li>
-  <li>Maintains complete information on macro-events that occur during a match
+  <li>Maintains complete information on macro-events that occur during a match 
     <ul>
       <li>Goals</li>
       <li>Penalties</li>
@@ -66,7 +66,11 @@ distributed according to the GNU General Public License (GPL).</p>
 
 <h2>Downloads</h2>
 
-<p>The current version of the application is 1.0.2.</p>
+<p>The current version of the application is 1.0.3. The 'master' branch
+contains the current version of the executables, most recent copy of the code
+repository, and links to the documentation and SQL submodules. The executable
+ZIP files contain a standalone executable (Windows or Linux), the SQL
+implementation, and the FMRD-Desktop user's manual.</p>
 
 <table border="5">
   <col />
@@ -74,13 +78,20 @@ distributed according to the GNU General Public License (GPL).</p>
   <col />
   <tbody>
     <tr>
-      <td>Latest Version</td>
+      <td>Current master branch</td>
       <td><a
         href="http://github.com/hhamilton-src/fmrd-desktop/zipball/master">ZIP</a>
         file</td>
       <td><a
         href="http://github.com/hhamilton-src/fmrd-desktop/tarball/master">TAR</a>
         file</td>
+    </tr>
+    <tr>
+      <td>Executable (v1.0.3)</td>
+      <td><a
+        href="http://github.com/hhamilton-src/fmrd-desktop/blob/v1.0.3/dist/fmrd-desktop-v1.0.3-windows.zip">Windows</a></td>
+      <td><a
+        href="http://github.com/hhamilton-src/fmrd-desktop/blob/v1.0.3/dist/fmrd-desktop-v1.0.3-linux.zip">Linux</a></td>
     </tr>
   </tbody>
 </table>
@@ -111,10 +122,24 @@ href="http://github.com">Github</a> account.</p>
   <li>After the database is formed you will be asked to enter username and
     password. The script will then load the validation tables of the database
     will be loaded.</li>
-  <li>Run the data-entry application from the command-line: 
-    <p><code>$ ./fmrd-main.pyw</code></p>
+  <li>You can run the data-entry application in one of two ways:
+    <ul>
+      <li>From the command-line in the code/pyqt/ directory: 
+        <p><code>$ ./fmrd-main.pyw</code></p>
+      </li>
+    </ul>
+    <ul>
+      <li>Or, by clicking on the appropriate FMRD-Desktop program within the
+        dist/ folder.</li>
+    </ul>
   </li>
 </ul>
+
+<h2>Documentation</h2>
+
+<p>FMRD-Desktop User's Manual: [<a
+href="https://github.com/hhamilton-src/fmrd-desktop/blob/c1f988001fd2b0dc0a1299bc6480e17529feef3a/manual/fmrd-manual-frameset.html">HTML</a>][<a
+href="https://github.com/hhamilton-src/fmrd-desktop/blob/c1f988001fd2b0dc0a1299bc6480e17529feef3a/manual/fmrd-manual.pdf">PDF</a>]</p>
 
 <h2>Community</h2>
 
