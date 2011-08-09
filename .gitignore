@@ -7,6 +7,8 @@
 *.prj
 # Eric project directory
 .eric4project/
+# Build directory
+build/
 # Log files from build
 *.log
 # Warning files from build
