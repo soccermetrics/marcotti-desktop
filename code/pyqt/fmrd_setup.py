@@ -24,6 +24,8 @@ from PyQt4.QtSql import *
 from FmrdAdmin import *
 from FmrdLib import (Constants, MsgPrompts)
 from FmrdLib.CustomDelegates import *
+from FmrdLib.CheckTables import *
+
 
 """ 
 Contains classes that implement entry forms to administrative tables of FMRD.

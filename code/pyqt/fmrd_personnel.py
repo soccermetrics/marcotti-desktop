@@ -26,7 +26,6 @@ from FmrdLib import (Constants,  MsgPrompts)
 from FmrdLib.CustomDelegates import *
 from FmrdLib.CustomModels import *
 from FmrdLib.CheckTables import *
-from FmrdLib.MsgPrompts import *
 
 
 """Contains classes that implement personnel entry forms to main tables of FMRD.
