@@ -104,7 +104,7 @@ class MainSwitchboard(QMainWindow, ui_mainswitchboard.Ui_MainSwitchboard):
      
     def OpenAbout(self):
         """Opens About window."""
-        DisplayAboutDialog(self, Constants.VERSION)
+        DisplayAboutDialog(self, Constants.DATAENTRY_VERSION, Constants.SQL_VERSION)
         
     def OpenCards(self):
         """Opens Disciplinary Cards window."""
