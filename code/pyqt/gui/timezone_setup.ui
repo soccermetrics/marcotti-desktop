@@ -271,6 +271,9 @@ p, li { white-space: pre-wrap; }
           <height>30</height>
          </size>
         </property>
+        <property name="toolTip">
+         <string>Time zone name</string>
+        </property>
        </widget>
       </item>
      </layout>
@@ -318,7 +321,7 @@ p, li { white-space: pre-wrap; }
          </size>
         </property>
         <property name="toolTip">
-         <string>Field position</string>
+         <string>Confederation in which time zone lies</string>
         </property>
        </widget>
       </item>
@@ -378,6 +381,9 @@ p, li { white-space: pre-wrap; }
           <width>80</width>
           <height>30</height>
          </size>
+        </property>
+        <property name="toolTip">
+         <string>Offset from UTC (Decimal hours)</string>
         </property>
        </widget>
       </item>
