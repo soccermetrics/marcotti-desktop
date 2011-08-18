@@ -54,7 +54,7 @@ class GoalEntryDlg(QDialog, ui_goalentry.Ui_GoalEntryDlg):
         
         MCH_ID = CMP_ID = RND_ID = 0
         TEAM = PLAY = BODY = 1
-        SORT_NAME = 7
+        SORT_NAME = 4
 
         #
         # Define comboboxes used to filter Goals table
@@ -454,7 +454,7 @@ class PenaltyEntryDlg(QDialog, ui_penaltyentry.Ui_PenaltyEntryDlg):
         
         CMP_ID = RND_ID = MCH_ID = TM_ID = 0
         TEAM = FOUL = OUTCOME = 1
-        SORT_NAME = 7
+        SORT_NAME = 4
 
         #
         # Define comboboxes used to filter Penalty table
@@ -939,7 +939,7 @@ class OffenseEntryDlg(QDialog, ui_offenseentry.Ui_OffenseEntryDlg):
         
         CMP_ID = RND_ID = MCH_ID = TM_ID = 0
         TEAM = FOUL = CARD = 1
-        SORT_NAME = 7
+        SORT_NAME = 4
 
         #
         # Define comboboxes used to filter Offense table
@@ -1426,7 +1426,7 @@ class SubsEntryDlg(QDialog, ui_subsentry.Ui_SubsEntryDlg):
         # define local parameters
         CMP_ID = RND_ID = MCH_ID = TM_ID = 0
         TEAM = IN_ID = OUT_ID = 1
-        SORT_NAME = 7
+        SORT_NAME = 4
         
         #
         # Define comboboxes used to filter Offense table
@@ -2105,7 +2105,7 @@ class SwitchEntryDlg(QDialog, ui_switchentry.Ui_SwitchEntryDlg):
         # define local parameters
         CMP_ID = RND_ID = MCH_ID = TM_ID = 0
         TEAM = POS = 1
-        SORT_NAME = 7
+        SORT_NAME = 4
         
         #
         # Define comboboxes used to filter Offense table
