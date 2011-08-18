@@ -162,7 +162,7 @@
    <property name="geometry">
     <rect>
      <x>450</x>
-     <y>70</y>
+     <y>80</y>
      <width>281</width>
      <height>121</height>
     </rect>
@@ -442,6 +442,34 @@ p, li { white-space: pre-wrap; }
      </size>
     </property>
    </widget>
+  </widget>
+  <widget class="QPushButton" name="venueHistoryButton">
+   <property name="geometry">
+    <rect>
+     <x>490</x>
+     <y>230</y>
+     <width>210</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>210</width>
+     <height>30</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>210</width>
+     <height>30</height>
+    </size>
+   </property>
+   <property name="toolTip">
+    <string>Venue surface and capacity history</string>
+   </property>
+   <property name="text">
+    <string>Surface/Capacity History</string>
+   </property>
   </widget>
   <widget class="QWidget" name="">
    <property name="geometry">
