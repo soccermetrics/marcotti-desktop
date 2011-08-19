@@ -207,6 +207,7 @@ class TeamEntryDlg(QDialog, ui_teamentry.Ui_TeamEntryDlg):
         # underlying database model
         self.model = QSqlTableModel(self)
         self.model.setTable("tbl_teams")
+        self.model.setRelation(TeamEntryDlg.CTRY_ID, QSqlRelation("tbl_countries", "country_id", "cty_name"))           
         self.model.setSort(TeamEntryDlg.ID, Qt.AscendingOrder)
         self.model.select()
         
