@@ -38,6 +38,7 @@ MinLineupID    = "1000000"
 
 # match overview table IDs
 MinCompetitionID = "100"
+MinTimeZoneID     = "100"
 MinVenueID          = "1000"
 MinTeamID           = "10000"
 MinEnviroID          = "1000000"

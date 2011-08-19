@@ -1561,6 +1561,169 @@ class ConfedSetupDlg(QDialog, ui_confederationsetup.Ui_ConfedSetupDlg):
                 DeletionErrorPrompt(self)
 
 
+class TimeZoneSetupDlg(QDialog, ui_timezonesetup.Ui_TimeZoneSetupDlg):
+    """Implements time zone data entry dialog, which accesses and writes to Time Zones table."""
+    
+    ID,  CONFED_ID, NAME, OFFSET = range(4)
+    
+    def __init__(self, parent=None):
+        """Constructor for TimeZoneSetupDlg class."""
+        super(TimeZoneSetupDlg, self).__init__(parent)
+        self.setupUi(self)
+        
+        CONFED_NAME = 1
+        
+        # define model
+        # underlying database model
+        self.model = QSqlRelationalTableModel(self)
+        self.model.setTable("tbl_timezones")
+        self.model.setRelation(TimeZoneSetupDlg.CONFED_ID, QSqlRelation("tbl_confederations", "confed_id", "confed_name"))
+        self.model.setSort(TimeZoneSetupDlg.ID, Qt.AscendingOrder)
+        self.model.select()
+        
+        # define mapper
+        # establish ties between underlying database model and data widgets on form
+        self.mapper = QDataWidgetMapper(self)
+        self.mapper.setSubmitPolicy(QDataWidgetMapper.ManualSubmit)
+        self.mapper.setModel(self.model)
+        self.mapper.addMapping(self.timezoneID_display, TimeZoneSetupDlg.ID)
+        
+         # set up combobox that links to Confederations table
+        confedModel = self.model.relationModel(TimeZoneSetupDlg.CONFED_ID)
+        confedModel.setSort(CONFED_NAME, Qt.AscendingOrder)
+        self.confedSelect.setModel(confedModel)
+        self.confedSelect.setModelColumn(confedModel.fieldIndex("confed_name"))        
+        self.mapper.addMapping(self.tzRegionSelect, TimeZoneSetupDlg.CONFED_ID)
+        
+        # mapping other widgets to form
+        self.mapper.addMapping(self.tzNameEdit, TimeZoneSetupDlg.NAME)
+        self.mapper.addMapping(self.tzRegionSelect, TimeZoneSetupDlg.OFFSET)
+        self.mapper.toFirst()
+        
+        # disable First and Previous Entry buttons
+        self.firstEntry.setDisabled(True)
+        self.prevEntry.setDisabled(True)
+        
+        # configure signal/slot
+        self.connect(self.firstEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.FIRST))
+        self.connect(self.prevEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.PREV))
+        self.connect(self.nextEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.NEXT))
+        self.connect(self.lastEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.LAST))
+        self.connect(self.saveEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.NULL))
+        self.connect(self.addEntry, SIGNAL("clicked()"), self.addRecord)
+        self.connect(self.deleteEntry, SIGNAL("clicked()"), self.deleteRecord)
+        self.connect(self.closeButton, SIGNAL("clicked()"), self.accept)
+
+    def accept(self):
+        """Submits changes to database and closes window upon confirmation from user."""
+        confirm = MsgPrompts.SaveDiscardOptionPrompt(self)
+        if confirm:
+            if not self.mapper.submit():
+                MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+        QDialog.accept(self)
+        
+    def saveRecord(self, where):
+        """Submits changes to database and navigates through form."""
+        row = self.mapper.currentIndex()
+        if not self.mapper.submit():
+            MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+        if where == Constants.FIRST:
+            self.firstEntry.setDisabled(True)
+            self.prevEntry.setDisabled(True)
+            if not self.nextEntry.isEnabled():
+                self.nextEntry.setEnabled(True)
+                self.lastEntry.setEnabled(True)
+            row = 0
+        elif where == Constants.PREV:
+            if row <= 1:
+                self.firstEntry.setDisabled(True)
+                self.prevEntry.setDisabled(True)                
+                row = 0
+            else:
+                if not self.nextEntry.isEnabled():
+                    self.nextEntry.setEnabled(True)
+                    self.lastEntry.setEnabled(True)                    
+                row -= 1
+        elif where == Constants.NEXT:
+            row += 1
+            if not self.prevEntry.isEnabled():
+                self.prevEntry.setEnabled(True)
+                self.firstEntry.setEnabled(True)
+            if row >= self.model.rowCount() - 1:
+                self.nextEntry.setDisabled(True)
+                self.lastEntry.setDisabled(True)
+                row = self.model.rowCount() - 1
+        elif where == Constants.LAST:
+            self.nextEntry.setDisabled(True)
+            self.lastEntry.setDisabled(True)
+            if not self.prevEntry.isEnabled():
+                self.prevEntry.setEnabled(True)
+                self.firstEntry.setEnabled(True)
+            row = self.model.rowCount() - 1
+        self.mapper.setCurrentIndex(row)
+        
+    def addRecord(self):
+        """Adds new record at end of entry list."""                
+        # save current index if valid
+        row = self.mapper.currentIndex()
+        if row != -1:
+            if not self.mapper.submit():
+                MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+                return
+        
+        # move to end of table and insert new record
+        row = self.model.rowCount()
+        query = QSqlQuery()
+        query.exec_(QString("SELECT MAX(timezone_id) FROM tbl_timezones"))
+        if query.next():
+            maxTimeZoneID= query.value(0).toInt()[0]
+            if not maxTimeZoneID:
+                timezone_id = Constants.MinTimeZoneID
+            else:
+                timezone_id = QString()
+                timezone_id.setNum(maxTimeZoneID+1)          
+        self.model.insertRow(row)
+        self.mapper.setCurrentIndex(row)
+
+        # assign value to confedID field
+        self.timezoneID_display.setText(timezone_id)
+        
+        self.nextEntry.setDisabled(True)
+        self.lastEntry.setDisabled(True)
+        self.tzOffsetEditEdit.setText("0.00")
+        self.tzNameEdit.setFocus()
+        
+    def deleteRecord(self):
+        """Deletes record from database upon user confirmation.
+        
+        First, check that the time zone record is not being referenced in the Venues table.
+        If it is not being referenced in the dependent table, ask for user confirmation and delete 
+        record upon positive confirmation.  If it is being referenced by the dependent table, alert user.
+        """
+        
+        childTableList = ["tbl_venues"]
+        fieldName = "timezone_id"
+        timezone_id = self.timezoneID_display.text()
+        
+        if not CountChildRecords(childTableList, fieldName, timezone_id):
+            if QMessageBox.question(self, QString("Delete Record"), 
+                                                QString("Delete current record?"), 
+                                                QMessageBox.Yes|QMessageBox.No) == QMessageBox.No:
+                return
+            else:
+                row = self.mapper.currentIndex()
+                self.model.removeRow(row)
+                if not self.model.submitAll():
+                    MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+                    return
+                if row + 1 >= self.model.rowCount():
+                    row = self.model.rowCount() - 1
+                self.mapper.setCurrentIndex(row) 
+        else:
+                DeletionErrorPrompt(self)
+        
+        
+        
 class RoundSetupDlg(QDialog, ui_roundsetup.Ui_RoundSetupDlg):
     """Implements matchday data entry dialog, and accesses and writes to Rounds table."""
     
