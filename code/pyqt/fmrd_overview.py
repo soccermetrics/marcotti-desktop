@@ -192,12 +192,16 @@ class TeamEntryDlg(QDialog, ui_teamentry.Ui_TeamEntryDlg):
     
     """
     
-    ID,  NAME = range(2)
+    ID,  CTRY_ID, NAME = range(3)
     
     def __init__(self, parent=None):
         """Constructor for TeamEntryDlg class."""
         super(TeamEntryDlg, self).__init__(parent)
         self.setupUi(self)
+
+        # define local parameters
+        CONFED_ID, CONFED_NAME = range(2)
+        COUNTRY_ID, COUNTRY_NAME = range(2)
 
         # define model
         # underlying database model
@@ -211,9 +215,38 @@ class TeamEntryDlg(QDialog, ui_teamentry.Ui_TeamEntryDlg):
         self.mapper = QDataWidgetMapper(self)
         self.mapper.setSubmitPolicy(QDataWidgetMapper.ManualSubmit)
         self.mapper.setModel(self.model)
+        localDelegate = GenericDelegate(self)
+        localDelegate.insertColumnDelegate(TeamEntryDlg.CTRY_ID, CountryComboBoxDelegate(self))
+        self.mapper.setItemDelegate(localDelegate)        
         self.mapper.addMapping(self.teamID_display, TeamEntryDlg.ID)
+        
+        # relation model for Country combobox
+        self.countryModel = self.model.relationModel(TeamEntryDlg.CTRY_ID)
+        self.countryModel.setSort(COUNTRY_ID, Qt.AscendingOrder)
+        self.teamCountrySelect.setModel(self.countryModel)
+        self.teamCountrySelect.setModelColumn(self.countryModel.fieldIndex("cty_name"))        
+        self.mapper.addMapping(self.teamCountrySelect, TeamEntryDlg.CTRY_ID)
+        
+        # map other widgets on form        
         self.mapper.addMapping(self.teamNameEdit, TeamEntryDlg.NAME)
         self.mapper.toFirst()
+        
+        # set up Confederation combobox that links to tbl_confederations
+        # this result is not saved in database record, only used to filter Country combobox
+        self.confedModel = QSqlTableModel(self)
+        self.confedModel.setTable("tbl_confederations")
+        self.confedModel.setSort(CONFED_ID, Qt.AscendingOrder)
+        self.confedModel.select()
+        
+        # define Confederation mapper 
+        # establish ties between Confederation database model and data widgets on form
+        confedMapper = QDataWidgetMapper(self)
+        confedMapper.setModel(self.confedModel)
+        self.teamConfedSelect.setModel(self.confedModel)
+        confedMapper.setItemDelegate(TeamConfedComboBoxDelegate(self))
+        self.teamConfedSelect.setModelColumn(self.confedModel.fieldIndex("confed_name"))
+        confedMapper.addMapping(self.teamConfedSelect, CONFED_NAME)
+        confedMapper.toFirst()       
         
         # disable First and Previous Entry buttons
         self.firstEntry.setDisabled(True)
@@ -228,6 +261,8 @@ class TeamEntryDlg(QDialog, ui_teamentry.Ui_TeamEntryDlg):
         self.connect(self.addEntry, SIGNAL("clicked()"), self.addRecord)
         self.connect(self.deleteEntry, SIGNAL("clicked()"), self.deleteRecord)        
         self.connect(self.closeButton, SIGNAL("clicked()"), self.accept)
+        self.connect(self.mapper, SIGNAL("currentIndexChanged(int)"), self.updateConfed)
+        self.connect(self.venueConfedSelect, SIGNAL("activated(int)"), self.filterCountryBox)        
         
     def accept(self):
         """Submits changes to database and closes window upon confirmation from user."""
@@ -339,6 +374,48 @@ class TeamEntryDlg(QDialog, ui_teamentry.Ui_TeamEntryDlg):
                 self.mapper.setCurrentIndex(row) 
         else:
                 DeletionErrorPrompt(self)
+                
+    def updateConfed(self):
+        """Updates current index of Confederation combobox.
+        
+        Ensures consistency between the current nation and its confederation.
+        """
+        # look for current index on Country combobox
+        # extract confed_id from underlying model
+        currIdx = self.teamCountrySelect.currentIndex()
+        currCountry = self.teamCountrySelect.currentText()
+        id = self.countryModel.record(currIdx).value("confed_id").toString()
+        
+        # make query on tbl_confederations
+        # extract confederation name corresponding to confederation ID
+        # there will only be one confederation in query result
+        query = QSqlQuery()
+        query.exec_(QString("SELECT confed_name FROM tbl_confederations WHERE confed_id = %1").arg(id))
+        if query.isActive():
+            query.next()
+            confedStr = query.value(0).toString()
+        else:
+            confedStr = "-1"
+            
+        # search for confederation name in combobox, set index to current index
+        self.teamConfedSelect.setCurrentIndex(self.teamConfedSelect.findText(confedStr, Qt.MatchExactly))
+        
+        # update index of Country combobox to that of currCountry
+        self.filterCountryBox()
+        self.teamCountrySelect.setCurrentIndex(self.teamCountrySelect.findText(currCountry, Qt.MatchExactly))
+     
+    def filterCountryBox(self):
+        """Enables Country combobox and filters contents on Country combobox upon selection of Confederation."""
+        # enable Country combobox if disabled
+        if ~self.teamCountrySelect.isEnabled():
+            self.teamCountrySelect.setEnabled(True)
+        
+        # filter tbl_countries based on confederation selection
+        currIdx = self.teamConfedSelect.currentIndex()
+        id = self.confedModel.record(currIdx).value("confed_id").toString()
+        self.countryModel.setFilter(QString("confed_id = %1").arg(id))
+        self.countryModel.select()
+                
                 
 class VenueEntryDlg(QDialog, ui_venueentry.Ui_VenueEntryDlg):
     """Implements Venues data entry dialog, and accesses and writes to Venues table.

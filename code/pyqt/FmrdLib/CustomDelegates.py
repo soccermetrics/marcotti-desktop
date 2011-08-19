@@ -1301,6 +1301,23 @@ class RefConfedComboBoxDelegate(ConfedComboBoxDelegateTemplate):
         self.countryBox = parent.refCountrySelect
 
 
+class TeamConfedComboBoxDelegate(ConfedComboBoxDelegateTemplate):
+    """Implements custom delegate for Confederation ComboBox in Teams dialog.  
+    
+    Sets countryBox member to Country combobox in Teams dialog, 
+    which is used to set index of Confederation combobox.
+    
+    Inherits ConfedComboBoxDelegateTemplate.
+    
+    """
+
+    def __init__(self, parent=None):
+        """Constructor for TeamConfedComboBoxDelegate class."""
+        super(TeamConfedComboBoxDelegate, self).__init__(parent)
+        
+        self.countryBox = parent.teamCountrySelect
+
+
 class VenConfedComboBoxDelegate(ConfedComboBoxDelegateTemplate):
     """Implements custom delegate for Confederation ComboBox in Venues dialog.  
     
