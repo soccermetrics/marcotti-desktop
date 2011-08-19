@@ -425,7 +425,7 @@ class VenueEntryDlg(QDialog, ui_venueentry.Ui_VenueEntryDlg):
     
     """
     
-    ID,  TEAM_ID,  CTRY_ID, CITY, NAME, ALT, LAT, LONG = range(8)
+    ID,  TEAM_ID,  CTRY_ID, TZ_ID,  CITY, NAME, ALT, LAT, LONG = range(9)
 
     def __init__(self, parent=None):
         super(VenueEntryDlg, self).__init__(parent)
@@ -433,8 +433,7 @@ class VenueEntryDlg(QDialog, ui_venueentry.Ui_VenueEntryDlg):
         
         # define local parameters
         CONFED_ID, CONFED_NAME = range(2)
-        COUNTRY_ID, COUNTRY_NAME = range(2)
-        HOST_ID, HOST_NAME = range(2)
+        COUNTRY_NAME = HOST_NAME = TIMEZONE_NAME = 1
 
         # define underlying database model
         # because of foreign keys, instantiate QSqlRelationalTableModel and
@@ -442,7 +441,8 @@ class VenueEntryDlg(QDialog, ui_venueentry.Ui_VenueEntryDlg):
         self.model = QSqlRelationalTableModel(self)
         self.model.setTable("tbl_venues")
         self.model.setRelation(VenueEntryDlg.TEAM_ID, QSqlRelation("tbl_teams", "team_id", "tm_name"))
-        self.model.setRelation(VenueEntryDlg.CTRY_ID, QSqlRelation("tbl_countries", "country_id", "cty_name"))   
+        self.model.setRelation(VenueEntryDlg.CTRY_ID, QSqlRelation("tbl_countries", "country_id", "cty_name"))
+        self.model.setRelation(VenueEntryDlg.TZ_ID, QSqlRelation("tbl_timezones", "timezone_id", "tz_name"))
         self.model.setSort(VenueEntryDlg.ID, Qt.AscendingOrder)
         self.model.select()
         
@@ -456,19 +456,29 @@ class VenueEntryDlg(QDialog, ui_venueentry.Ui_VenueEntryDlg):
         self.mapper.setItemDelegate(localDelegate)
         self.mapper.addMapping(self.venueID_display, VenueEntryDlg.ID)
         
-        # relation model for Country combobox
-        self.countryModel = self.model.relationModel(VenueEntryDlg.CTRY_ID)
-        self.countryModel.setSort(COUNTRY_ID, Qt.AscendingOrder)
-        self.venueCountrySelect.setModel(self.countryModel)
-        self.venueCountrySelect.setModelColumn(self.countryModel.fieldIndex("cty_name"))
-        self.mapper.addMapping(self.venueCountrySelect, VenueEntryDlg.CTRY_ID)
-        
         # relation model for Home Team combobox
         self.teamModel = self.model.relationModel(VenueEntryDlg.TEAM_ID)
-        self.teamModel.setSort(HOST_ID, Qt.AscendingOrder)
+        self.teamModel.setSort(HOST_NAME, Qt.AscendingOrder)
         self.venueTeamSelect.setModel(self.teamModel)
         self.venueTeamSelect.setModelColumn(self.teamModel.fieldIndex("tm_name"))
+        self.venueTeamSelect.setCurrentIndex(-1)
         self.mapper.addMapping(self.venueTeamSelect, VenueEntryDlg.TEAM_ID)        
+        
+        # relation model for Country combobox
+        self.countryModel = self.model.relationModel(VenueEntryDlg.CTRY_ID)
+        self.countryModel.setSort(COUNTRY_NAME, Qt.AscendingOrder)
+        self.venueCountrySelect.setModel(self.countryModel)
+        self.venueCountrySelect.setModelColumn(self.countryModel.fieldIndex("cty_name"))
+        self.venueCountrySelect.setCurrentIndex(-1)
+        self.mapper.addMapping(self.venueCountrySelect, VenueEntryDlg.CTRY_ID)
+        
+        # relation model for Time Zone combobox
+        self.timezoneModel = self.model.relationModel(VenueEntryDlg.TZ_ID)
+        self.timezoneModel.setSort(TIMEZONE_NAME, Qt.AscendingOrder)
+        self.venueTimezoneSelect.setModel(self.timezoneModel)
+        self.venueTimezoneSelect.setModelColumn(self.timezoneModel.fieldIndex("tz_name"))
+        self.venueTimezoneSelect.setCurrentIndex(-1)
+        self.mapper.addMapping(self.venueTimezoneSelect, VenueEntryDlg.TZ_ID)
         
         # map other widgets on form
         self.mapper.addMapping(self.venueCityEdit, VenueEntryDlg.CITY)
@@ -509,6 +519,7 @@ class VenueEntryDlg(QDialog, ui_venueentry.Ui_VenueEntryDlg):
         self.connect(self.closeButton, SIGNAL("clicked()"), self.accept)
         self.connect(self.mapper, SIGNAL("currentIndexChanged(int)"), self.updateConfed)
         self.connect(self.venueConfedSelect, SIGNAL("activated(int)"), self.filterCountryBox)
+        self.connect(self.venueHistoryButton, SIGNAL("clicked()"), lambda: self.openVenueHistory(self.venueID_display.text()))
      
     def accept(self):
         """Submits changes to database and closes window upon confirmation from user."""
@@ -658,3 +669,78 @@ class VenueEntryDlg(QDialog, ui_venueentry.Ui_VenueEntryDlg):
         id = self.confedModel.record(currIdx).value("confed_id").toString()
         self.countryModel.setFilter(QString("confed_id = %1").arg(id))
         self.countryModel.select()
+        
+    def openVenueHistory(self, venue_id):
+        """Opens Venue History subdialog for a specific match from Match dialog.
+        
+        Saves current match record, instantiates VenueHistoryDlg object and opens window.
+        Argument: 
+        venue_id -- primary key of current record in Venues table
+        
+        """
+        row = self.mapper.currentIndex()
+        if not self.mapper.submit():
+            MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+            return
+            
+        subdialog = VenueHistoryDlg(venue_id, self)
+        subdialog.exec_()
+        self.mapper.setCurrentIndex(row)
+        
+        
+class VenueHistoryDlg(QDialog, ui_venuehistoryentry.Ui_VenueHistoryDlg):
+    """Implements Venue History data entry dialog, and accesses and writes to VenueHistory table.
+    
+    This dialog accepts historical data on the playing surface, dimensions, and seated and unseated
+    capacity of the venue.
+    
+    """
+    
+    HISTORY_ID, VENUE_ID, EFFDATE, SURFACE_ID, PITCH_LENGTH, PITCH_WIDTH, CAPACITY, SEATS = range(8)
+    
+    def __init__(self, venue_id, parent=None):
+        """Constructor for VenueHistoryDlg class"""
+        super(VenueHistoryDlg, self).__init__(parent)
+        self.setupUi(self)
+    
+        # define underlying database model (tbl_venuehistory)
+        self.model = QSqlRelationalTableModel(self)
+        self.model.setTable("tbl_venuehistory")
+        self.model.setFilter(QString("venue_id = %1").arg(venue_id))
+        self.model.setRelation(VenueHistoryDlg.VENUE_ID, QSqlRelation("tbl_venues", "venue_id", "ven_name"))
+        self.model.setRelation(VenueHistoryDlg.SURFACE_ID, QSqlRelation("tbl_venuesurfaces", "venuesurface_id", "vensurf_desc"))
+        self.model.setSort(VenueHistoryDlg.EFFDATE, Qt.AscendingOrder)
+        
+        # set header data for table view
+        self.model.setHeaderData(VenueHistoryDlg.EFFDATE, Qt.Horizontal, QVariant("Effective Date"))
+        self.model.setHeaderData(VenueHistoryDlg.SURFACE_ID, Qt.Horizontal, QVariant("Playing Surface"))
+        self.model.setHeaderData(VenueHistoryDlg.PITCH_LENGTH, Qt.Horizontal, QVariant("Pitch Length (m)"))
+        self.model.setHeaderData(VenueHistoryDlg.PITCH_WIDTH, Qt.Horizontal, QVariant("Pitch Width (m)"))
+        self.model.setHeaderData(VenueHistoryDlg.CAPACITY, Qt.Horizontal, QVariant("Capacity"))
+        self.model.setHeaderData(VenueHistoryDlg.SEATS, Qt.Horizontal, QVariant("Seats"))
+        self.model.select()
+        
+        # set venue name
+        query = QSqlQuery()
+        query.exec_(QString("SELECT ven_name FROM tbl_venues WHERE venue_id = %1").arg(venue_id))
+        if query.isActive():
+            query.next()
+            venueName = query.value(0).toString()
+        else:
+            venueName = "ERROR"
+        self.venueName_display.setText(venueName)
+        
+        # define table view
+        self.venueHistory = QTableWidget()
+        self.venueHistory.setModel(self.model)
+        self.venueHistory.setSelectionMode(QTableView.SingleSelection)
+        self.venueHistory.setSelectionBehavior(QTableView.SelectRows)
+        self.venueHistory.setColumnHidden(HISTORY_ID, True)
+        self.venueHistory.setColumnHidden(VENUE_ID, True)
+        self.venueHistory.resizeColumnsToContents()
+        
+        # configure signal/slot        
+        self.connect(self.addEntry, SIGNAL("clicked()"), self.addRecord)
+        self.connect(self.deleteEntry, SIGNAL("clicked()"), self.deleteRecord)        
+        self.connect(self.closeButton, SIGNAL("clicked()"), self.accept)
+        
