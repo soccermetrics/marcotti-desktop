@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'gui/player_entry.ui'
 #
-# Created: Mon Aug  8 00:36:13 2011
+# Created: Thu Aug 18 17:52:54 2011
 #      by: PyQt4 UI code generator 4.7.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -12,11 +12,11 @@ from PyQt4 import QtCore, QtGui
 class Ui_PlayerEntryDlg(object):
     def setupUi(self, PlayerEntryDlg):
         PlayerEntryDlg.setObjectName("PlayerEntryDlg")
-        PlayerEntryDlg.resize(800, 250)
-        PlayerEntryDlg.setMinimumSize(QtCore.QSize(800, 250))
-        PlayerEntryDlg.setMaximumSize(QtCore.QSize(800, 250))
+        PlayerEntryDlg.resize(800, 300)
+        PlayerEntryDlg.setMinimumSize(QtCore.QSize(800, 300))
+        PlayerEntryDlg.setMaximumSize(QtCore.QSize(800, 300))
         self.frame_2 = QtGui.QFrame(PlayerEntryDlg)
-        self.frame_2.setGeometry(QtCore.QRect(10, 180, 331, 51))
+        self.frame_2.setGeometry(QtCore.QRect(20, 220, 331, 51))
         self.frame_2.setFrameShape(QtGui.QFrame.StyledPanel)
         self.frame_2.setFrameShadow(QtGui.QFrame.Raised)
         self.frame_2.setObjectName("frame_2")
@@ -58,7 +58,7 @@ class Ui_PlayerEntryDlg(object):
         self.lastEntry.setIcon(icon3)
         self.lastEntry.setObjectName("lastEntry")
         self.line = QtGui.QFrame(PlayerEntryDlg)
-        self.line.setGeometry(QtCore.QRect(350, 10, 20, 161))
+        self.line.setGeometry(QtCore.QRect(350, 10, 20, 151))
         self.line.setFrameShape(QtGui.QFrame.VLine)
         self.line.setFrameShadow(QtGui.QFrame.Sunken)
         self.line.setObjectName("line")
@@ -138,7 +138,7 @@ class Ui_PlayerEntryDlg(object):
         self.plyrPositionSelect.setObjectName("plyrPositionSelect")
         self.gridLayout_2.addWidget(self.plyrPositionSelect, 3, 1, 1, 1)
         self.frame = QtGui.QFrame(PlayerEntryDlg)
-        self.frame.setGeometry(QtCore.QRect(390, 180, 371, 51))
+        self.frame.setGeometry(QtCore.QRect(400, 220, 371, 51))
         self.frame.setFrameShape(QtGui.QFrame.StyledPanel)
         self.frame.setFrameShadow(QtGui.QFrame.Raised)
         self.frame.setObjectName("frame")
@@ -175,6 +175,25 @@ class Ui_PlayerEntryDlg(object):
         self.closeButton.setIcon(icon7)
         self.closeButton.setIconSize(QtCore.QSize(16, 16))
         self.closeButton.setObjectName("closeButton")
+        self.line_2 = QtGui.QFrame(PlayerEntryDlg)
+        self.line_2.setGeometry(QtCore.QRect(10, 160, 771, 20))
+        self.line_2.setFrameShape(QtGui.QFrame.HLine)
+        self.line_2.setFrameShadow(QtGui.QFrame.Sunken)
+        self.line_2.setObjectName("line_2")
+        self.widget = QtGui.QWidget(PlayerEntryDlg)
+        self.widget.setGeometry(QtCore.QRect(12, 180, 771, 32))
+        self.widget.setObjectName("widget")
+        self.horizontalLayout = QtGui.QHBoxLayout(self.widget)
+        self.horizontalLayout.setObjectName("horizontalLayout")
+        spacerItem = QtGui.QSpacerItem(228, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
+        self.horizontalLayout.addItem(spacerItem)
+        self.plyrHistoryButton = QtGui.QPushButton(self.widget)
+        self.plyrHistoryButton.setMinimumSize(QtCore.QSize(240, 30))
+        self.plyrHistoryButton.setMaximumSize(QtCore.QSize(240, 30))
+        self.plyrHistoryButton.setObjectName("plyrHistoryButton")
+        self.horizontalLayout.addWidget(self.plyrHistoryButton)
+        spacerItem1 = QtGui.QSpacerItem(278, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
+        self.horizontalLayout.addItem(spacerItem1)
         self.label.setBuddy(self.plyrID_display)
         self.label_4.setBuddy(self.plyrFirstNameEdit)
         self.label_5.setBuddy(self.plyrLastNameEdit)
@@ -250,5 +269,7 @@ class Ui_PlayerEntryDlg(object):
         self.deleteEntry.setText(QtGui.QApplication.translate("PlayerEntryDlg", "&Delete", None, QtGui.QApplication.UnicodeUTF8))
         self.closeButton.setToolTip(QtGui.QApplication.translate("PlayerEntryDlg", "Close Entry", None, QtGui.QApplication.UnicodeUTF8))
         self.closeButton.setText(QtGui.QApplication.translate("PlayerEntryDlg", "&Close", None, QtGui.QApplication.UnicodeUTF8))
+        self.plyrHistoryButton.setToolTip(QtGui.QApplication.translate("PlayerEntryDlg", "Player height and weight history", None, QtGui.QApplication.UnicodeUTF8))
+        self.plyrHistoryButton.setText(QtGui.QApplication.translate("PlayerEntryDlg", "Height/Weight History", None, QtGui.QApplication.UnicodeUTF8))
 
 import fmrd_resources_rc
