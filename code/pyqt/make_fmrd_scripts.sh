@@ -56,7 +56,8 @@ echo "Autocoding FMRD setup UIs..."
 #pyuic4 -o FmrdAdmin/ui_penoutcomesetup.py gui/penoutcome_setup.ui
 #pyuic4 -o FmrdAdmin/ui_positionsetup.py gui/position_setup.ui
 #pyuic4 -o FmrdAdmin/ui_roundsetup.py gui/round_setup.ui
-pyuic4 -o FmrdAdmin/ui_timezonesetup.py gui/timezone_setup.ui
+pyuic4 -o FmrdAdmin/ui_timezonesetup.py gui/timezone_setup.ui    
+pyuic4 -o FmrdAdmin/ui_venuesurfacesetup.py gui/venuesurface_setup.ui    
 #pyuic4 -o FmrdAdmin/ui_weathersetup.py gui/weather_setup.ui
 
 # Convert resources file and copy to FmrdMain/ and FmrdAdmin/.
