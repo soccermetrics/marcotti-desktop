@@ -1,0 +1,115 @@
+# -*- coding: utf-8 -*-
+
+# Form implementation generated from reading ui file 'gui/playerhistory_entry.ui'
+#
+# Created: Thu Aug 18 17:52:55 2011
+#      by: PyQt4 UI code generator 4.7.2
+#
+# WARNING! All changes made in this file will be lost!
+
+from PyQt4 import QtCore, QtGui
+
+class Ui_PlayerHistoryDlg(object):
+    def setupUi(self, PlayerHistoryDlg):
+        PlayerHistoryDlg.setObjectName("PlayerHistoryDlg")
+        PlayerHistoryDlg.resize(420, 380)
+        PlayerHistoryDlg.setMinimumSize(QtCore.QSize(420, 380))
+        PlayerHistoryDlg.setMaximumSize(QtCore.QSize(420, 380))
+        self.playerHistory = QtGui.QTableView(PlayerHistoryDlg)
+        self.playerHistory.setGeometry(QtCore.QRect(20, 50, 381, 261))
+        self.playerHistory.setObjectName("playerHistory")
+        self.frame = QtGui.QFrame(PlayerHistoryDlg)
+        self.frame.setGeometry(QtCore.QRect(20, 320, 381, 51))
+        self.frame.setFrameShape(QtGui.QFrame.StyledPanel)
+        self.frame.setFrameShadow(QtGui.QFrame.Raised)
+        self.frame.setObjectName("frame")
+        self.addEntry = QtGui.QPushButton(self.frame)
+        self.addEntry.setGeometry(QtCore.QRect(10, 10, 80, 33))
+        self.addEntry.setMinimumSize(QtCore.QSize(80, 33))
+        self.addEntry.setMaximumSize(QtCore.QSize(80, 33))
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap(":/images/add.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.addEntry.setIcon(icon)
+        self.addEntry.setObjectName("addEntry")
+        self.deleteEntry = QtGui.QPushButton(self.frame)
+        self.deleteEntry.setGeometry(QtCore.QRect(100, 10, 80, 33))
+        self.deleteEntry.setMinimumSize(QtCore.QSize(80, 33))
+        self.deleteEntry.setMaximumSize(QtCore.QSize(80, 33))
+        icon1 = QtGui.QIcon()
+        icon1.addPixmap(QtGui.QPixmap(":/images/delete.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.deleteEntry.setIcon(icon1)
+        self.deleteEntry.setObjectName("deleteEntry")
+        self.closeButton = QtGui.QPushButton(self.frame)
+        self.closeButton.setGeometry(QtCore.QRect(290, 10, 80, 33))
+        self.closeButton.setMinimumSize(QtCore.QSize(80, 33))
+        self.closeButton.setMaximumSize(QtCore.QSize(80, 33))
+        icon2 = QtGui.QIcon()
+        icon2.addPixmap(QtGui.QPixmap(":/images/quit.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.closeButton.setIcon(icon2)
+        self.closeButton.setIconSize(QtCore.QSize(16, 16))
+        self.closeButton.setObjectName("closeButton")
+        self.layoutWidget = QtGui.QWidget(PlayerHistoryDlg)
+        self.layoutWidget.setGeometry(QtCore.QRect(17, 10, 381, 41))
+        self.layoutWidget.setObjectName("layoutWidget")
+        self.horizontalLayout = QtGui.QHBoxLayout(self.layoutWidget)
+        self.horizontalLayout.setObjectName("horizontalLayout")
+        self.label = QtGui.QLabel(self.layoutWidget)
+        self.label.setMinimumSize(QtCore.QSize(60, 20))
+        self.label.setMaximumSize(QtCore.QSize(60, 20))
+        self.label.setObjectName("label")
+        self.horizontalLayout.addWidget(self.label)
+        self.player_display = QtGui.QLineEdit(self.layoutWidget)
+        self.player_display.setMinimumSize(QtCore.QSize(300, 30))
+        self.player_display.setMaximumSize(QtCore.QSize(300, 30))
+        palette = QtGui.QPalette()
+        brush = QtGui.QBrush(QtGui.QColor(194, 190, 186))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Active, QtGui.QPalette.Button, brush)
+        brush = QtGui.QBrush(QtGui.QColor(194, 190, 186))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Active, QtGui.QPalette.Base, brush)
+        brush = QtGui.QBrush(QtGui.QColor(194, 190, 186))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Active, QtGui.QPalette.Window, brush)
+        brush = QtGui.QBrush(QtGui.QColor(194, 190, 186))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Inactive, QtGui.QPalette.Button, brush)
+        brush = QtGui.QBrush(QtGui.QColor(194, 190, 186))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Inactive, QtGui.QPalette.Base, brush)
+        brush = QtGui.QBrush(QtGui.QColor(194, 190, 186))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Inactive, QtGui.QPalette.Window, brush)
+        brush = QtGui.QBrush(QtGui.QColor(194, 190, 186))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.Button, brush)
+        brush = QtGui.QBrush(QtGui.QColor(194, 190, 186))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.Base, brush)
+        brush = QtGui.QBrush(QtGui.QColor(194, 190, 186))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.Window, brush)
+        self.player_display.setPalette(palette)
+        self.player_display.setReadOnly(True)
+        self.player_display.setObjectName("player_display")
+        self.horizontalLayout.addWidget(self.player_display)
+
+        self.retranslateUi(PlayerHistoryDlg)
+        QtCore.QMetaObject.connectSlotsByName(PlayerHistoryDlg)
+
+    def retranslateUi(self, PlayerHistoryDlg):
+        PlayerHistoryDlg.setWindowTitle(QtGui.QApplication.translate("PlayerHistoryDlg", "Height/Weight History", None, QtGui.QApplication.UnicodeUTF8))
+        self.addEntry.setToolTip(QtGui.QApplication.translate("PlayerHistoryDlg", "Add Entry", None, QtGui.QApplication.UnicodeUTF8))
+        self.addEntry.setText(QtGui.QApplication.translate("PlayerHistoryDlg", "&Add", None, QtGui.QApplication.UnicodeUTF8))
+        self.deleteEntry.setToolTip(QtGui.QApplication.translate("PlayerHistoryDlg", "Delete Entry", None, QtGui.QApplication.UnicodeUTF8))
+        self.deleteEntry.setText(QtGui.QApplication.translate("PlayerHistoryDlg", "&Delete", None, QtGui.QApplication.UnicodeUTF8))
+        self.closeButton.setToolTip(QtGui.QApplication.translate("PlayerHistoryDlg", "Close Entry", None, QtGui.QApplication.UnicodeUTF8))
+        self.closeButton.setText(QtGui.QApplication.translate("PlayerHistoryDlg", "&Close", None, QtGui.QApplication.UnicodeUTF8))
+        self.label.setText(QtGui.QApplication.translate("PlayerHistoryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Player</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
+        self.player_display.setToolTip(QtGui.QApplication.translate("PlayerHistoryDlg", "Player", None, QtGui.QApplication.UnicodeUTF8))
+
+import fmrd_resources_rc
