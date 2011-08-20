@@ -323,7 +323,7 @@ p, li { white-space: pre-wrap; }
   <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
-     <x>130</x>
+     <x>10</x>
      <y>280</y>
      <width>332</width>
      <height>65</height>
@@ -447,9 +447,9 @@ p, li { white-space: pre-wrap; }
   <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
-     <x>130</x>
+     <x>80</x>
      <y>360</y>
-     <width>328</width>
+     <width>361</width>
      <height>51</height>
     </rect>
    </property>
@@ -458,14 +458,14 @@ p, li { white-space: pre-wrap; }
      <widget class="QPushButton" name="firstEntry">
       <property name="minimumSize">
        <size>
-        <width>77</width>
-        <height>27</height>
+        <width>80</width>
+        <height>30</height>
        </size>
       </property>
       <property name="maximumSize">
        <size>
-        <width>77</width>
-        <height>27</height>
+        <width>80</width>
+        <height>30</height>
        </size>
       </property>
       <property name="toolTip">
@@ -484,14 +484,14 @@ p, li { white-space: pre-wrap; }
      <widget class="QPushButton" name="prevEntry">
       <property name="minimumSize">
        <size>
-        <width>77</width>
-        <height>27</height>
+        <width>80</width>
+        <height>30</height>
        </size>
       </property>
       <property name="maximumSize">
        <size>
-        <width>77</width>
-        <height>27</height>
+        <width>80</width>
+        <height>30</height>
        </size>
       </property>
       <property name="toolTip">
@@ -510,14 +510,14 @@ p, li { white-space: pre-wrap; }
      <widget class="QPushButton" name="nextEntry">
       <property name="minimumSize">
        <size>
-        <width>77</width>
-        <height>27</height>
+        <width>80</width>
+        <height>30</height>
        </size>
       </property>
       <property name="maximumSize">
        <size>
-        <width>77</width>
-        <height>27</height>
+        <width>80</width>
+        <height>30</height>
        </size>
       </property>
       <property name="toolTip">
@@ -536,14 +536,14 @@ p, li { white-space: pre-wrap; }
      <widget class="QPushButton" name="lastEntry">
       <property name="minimumSize">
        <size>
-        <width>77</width>
-        <height>27</height>
+        <width>80</width>
+        <height>30</height>
        </size>
       </property>
       <property name="maximumSize">
        <size>
-        <width>77</width>
-        <height>27</height>
+        <width>80</width>
+        <height>30</height>
        </size>
       </property>
       <property name="toolTip">
@@ -880,12 +880,12 @@ p, li { white-space: pre-wrap; }
     </item>
    </layout>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
-     <x>510</x>
+     <x>520</x>
      <y>360</y>
-     <width>411</width>
+     <width>401</width>
      <height>51</height>
     </rect>
    </property>
@@ -907,14 +907,14 @@ p, li { white-space: pre-wrap; }
      <widget class="QPushButton" name="addEntry">
       <property name="minimumSize">
        <size>
-        <width>85</width>
-        <height>27</height>
+        <width>90</width>
+        <height>30</height>
        </size>
       </property>
       <property name="maximumSize">
        <size>
-        <width>85</width>
-        <height>27</height>
+        <width>90</width>
+        <height>30</height>
        </size>
       </property>
       <property name="toolTip">
@@ -931,6 +931,18 @@ p, li { white-space: pre-wrap; }
     </item>
     <item>
      <widget class="QPushButton" name="saveEntry">
+      <property name="minimumSize">
+       <size>
+        <width>90</width>
+        <height>30</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>90</width>
+        <height>30</height>
+       </size>
+      </property>
       <property name="toolTip">
        <string>Delete Entry</string>
       </property>
@@ -947,14 +959,14 @@ p, li { white-space: pre-wrap; }
      <widget class="QPushButton" name="deleteEntry">
       <property name="minimumSize">
        <size>
-        <width>85</width>
-        <height>27</height>
+        <width>90</width>
+        <height>30</height>
        </size>
       </property>
       <property name="maximumSize">
        <size>
-        <width>85</width>
-        <height>27</height>
+        <width>90</width>
+        <height>30</height>
        </size>
       </property>
       <property name="toolTip">
@@ -973,14 +985,14 @@ p, li { white-space: pre-wrap; }
      <widget class="QPushButton" name="closeButton">
       <property name="minimumSize">
        <size>
-        <width>85</width>
-        <height>27</height>
+        <width>90</width>
+        <height>30</height>
        </size>
       </property>
       <property name="maximumSize">
        <size>
-        <width>85</width>
-        <height>27</height>
+        <width>90</width>
+        <height>30</height>
        </size>
       </property>
       <property name="toolTip">
@@ -1009,6 +1021,56 @@ p, li { white-space: pre-wrap; }
      </spacer>
     </item>
    </layout>
+  </widget>
+  <widget class="QGroupBox" name="attendanceBox">
+   <property name="geometry">
+    <rect>
+     <x>370</x>
+     <y>280</y>
+     <width>141</width>
+     <height>63</height>
+    </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>141</width>
+     <height>63</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>141</width>
+     <height>63</height>
+    </size>
+   </property>
+   <property name="title">
+    <string>Attendance</string>
+   </property>
+   <property name="flat">
+    <bool>false</bool>
+   </property>
+   <widget class="QLineEdit" name="attendanceEdit">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>25</y>
+      <width>113</width>
+      <height>27</height>
+     </rect>
+    </property>
+    <property name="toolTip">
+     <string>Match attendance</string>
+    </property>
+    <property name="inputMask">
+     <string>999999; </string>
+    </property>
+    <property name="text">
+     <string>0</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+    </property>
+   </widget>
   </widget>
  </widget>
  <resources>
