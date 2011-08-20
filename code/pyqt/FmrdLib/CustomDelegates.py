@@ -1335,6 +1335,123 @@ class VenConfedComboBoxDelegate(ConfedComboBoxDelegateTemplate):
         self.countryBox = parent.venueCountrySelect
 
 
+class DateColumnDelegate(QStyledItemDelegate):
+    """Implements date widget in UI table views."""
+    
+    def __init__(self, minimum=QDate(), maximum=QDate.currentDate(), format="yyyy-MM-dd", parent=None):
+        """Constructor for DateColumnDelegate class. 
+        
+        Arguments:
+        minimum - minimum date for entry (default: date of Julian calendar transfer)
+        maximum - maximum date for entry (default: today)
+        format - displayed date format (default: ISO format YYYY-MM-DD
+        
+        """
+        super(DateColumnDelegate, self).__init__(parent)
+        self.minimum = minimum
+        self.maximum = maximum
+        self.format = QString(format)
+        
+    def createEditor(self, parent, option, index):
+        """Creates Date widget and initializes it with member attributes."""
+        dateedit = QDateEdit(parent)
+        dateedit.setDateRange(self.minimum, self.maximum)
+        dateedit.setAlignment(Qt.Center|Qt.AlignVCenter)
+        dateedit.setDisplayFormat(self.format)
+        return dateedit
+        
+    def setEditorData(self, editor, index):
+        """Writes current entry from model into editor. 
+        
+        Arguments:
+            editor -- DateEdit widget
+            index -- current index of database table model
+            
+        """        
+        value = index.model().data(index, Qt.DisplayRole).toDate()
+        editor.setData(value)
+        
+    def setModelData(self, editor, model, data):
+        """Writes current date from editor to current entry in database model.
+        
+        Arguments:
+            editor -- DateEdit widget
+            model -- underlying database table model
+            index -- current index of database table model
+            
+        """        
+        model.setData(index, QVariant(editor.date()))
+        
+
+class SurfaceColumnDelegate(QSqlRelationalDelegate):
+    """Implements surface combobox in tabular views."""
+    
+    def __init__(self, parent=None):
+        super(SurfaceColumnDelegate).__init__(parent)
+        
+    def createEditor(self, parent, option, index):
+        """Creates ComboBox widget."""
+        relationModel = index.model().relationModel(index.column())
+        surfaceedit = QComboBox(parent)
+        surfaceedit.setModel(relationModel)
+        surfaceedit.setModelColumn(relationModel.fieldIndex("vensurf_desc"))
+        surfaceedit.setCurrentIndex(-1)
+        return surfaceedit
+        
+    def setEditorData(self, editor, index):
+        """Writes current entry from model into editor. 
+        
+        Arguments:
+            editor -- ComboBox widget
+            index -- current index of database table model
+            
+        """   
+        # get text of current index
+        surfaceText = index.model().data(index, Qt.DisplayRole).toString()
+            
+        # set current index of team combobox
+        editor.setCurrentIndex(editor.findText(surfaceText, Qt.MatchExactly))
+        
+
+class NumericColumnDelegate(QStyledItemDelegate):
+    """Implements LineEdit widgets that accept numeric inputs."""
+    
+    def __init__(self, minimum=0, maximum=0, format="000000", parent=None):
+        super(NumericColumnDelegate).__init__(parent)
+        self.minimum = minimum
+        self.maximum = maximum
+        self.format = QString(format)
+        
+    def createEditor(self, parent, option, index):
+        """Creates LineEdit widget and initializes its attributes."""
+        numericEdit = QLineEdit(parent)
+        numericEdit.setInputMask(self.format)
+        numericEdit.setValidator(QIntValidator(self.minimum, self.maximum, parent))
+        return numericEdit
+        
+    def setEditorData(self, editor, index):
+        """Writes current entry from model into editor. 
+        
+        Arguments:
+            editor -- LineEdit widget
+            index -- current index of database table model
+            
+        """        
+        value = index.model().data(index, Qt.DisplayRole).toDate()
+        editor.setData(value)
+        
+    def setModelData(self, editor, model, data):
+        """Writes current text from editor to current entry in database model.
+        
+        Arguments:
+            editor -- LineEdit widget
+            model -- underlying database table model
+            index -- current index of database table model
+            
+        """        
+        model.setData(index, QVariant(editor.text()))
+    
+
 class GenericDelegate(QSqlRelationalDelegate):
     """Implements generic components of UI delegates.
     
