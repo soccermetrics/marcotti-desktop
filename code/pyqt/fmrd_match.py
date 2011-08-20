@@ -44,7 +44,7 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
     
     """
     
-    ID,  DATE, HALF1, HALF2, COMP_ID, ROUND_ID, VENUE_ID, REF_ID = range(8)
+    ID,  DATE, HALF1, HALF2, ATTEND, COMP_ID, ROUND_ID, VENUE_ID, REF_ID = range(9)
     
     def __init__(self, parent=None):
         """Constructor for MatchEntryDlg class."""
@@ -111,6 +111,7 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
         self.mapper.addMapping(self.matchDateEdit, MatchEntryDlg.DATE)
         self.mapper.addMapping(self.firstHalfLengthEdit, MatchEntryDlg.HALF1)
         self.mapper.addMapping(self.secondHalfLengthEdit, MatchEntryDlg.HALF2)
+        self.mapper.addMapping(self.attendanceEdit, MatchEntryDlg.ATTEND)
         self.mapper.toFirst()
         
         # define models used in Team and Manager comboboxes
