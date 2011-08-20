@@ -731,8 +731,17 @@ class VenueHistoryDlg(QDialog, ui_venuehistoryentry.Ui_VenueHistoryDlg):
         self.venueName_display.setText(venueName)
         
         # define table view
-        self.venueHistory = QTableWidget()
         self.venueHistory.setModel(self.model)
+        # form GenericDelegate
+        venueDelegate = GenericDelegate(self)
+        venueDelegate.insertColumnDelegate(VenueHistoryDlg.EFFDATE, DateColumnDelegate())
+        venueDelegate.insertColumnDelegate(VenueHistoryDlg.SURFACE_ID, SurfaceColumnDelegate())
+        venueDelegate.insertColumnDelegate(VenueHistoryDlg.PITCH_LENGTH, NumericColumnDelegate(90, 120, "000"))
+        venueDelegate.insertColumnDelegate(VenueHistoryDlg.PITCH_WIDTH, NumericColumnDelegate(45, 90, "00"))
+        venueDelegate.insertColumnDelegate(VenueHistoryDlg.CAPACITY, NumericColumnDelegate(0, 999999, "000000"))
+        venueDelegate.insertColumnDelegate(VenueHistoryDlg.SEATS, NumericColumnDelegate(0, 999999, "000000"))
+        self.venueHistory.setItemDelegate(venueDelegate)
+
         self.venueHistory.setSelectionMode(QTableView.SingleSelection)
         self.venueHistory.setSelectionBehavior(QTableView.SelectRows)
         self.venueHistory.setColumnHidden(HISTORY_ID, True)
@@ -743,4 +752,19 @@ class VenueHistoryDlg(QDialog, ui_venuehistoryentry.Ui_VenueHistoryDlg):
         self.connect(self.addEntry, SIGNAL("clicked()"), self.addRecord)
         self.connect(self.deleteEntry, SIGNAL("clicked()"), self.deleteRecord)        
         self.connect(self.closeButton, SIGNAL("clicked()"), self.accept)
+        
+    def accept(self):
+        """Commits changes to database and closes dialog."""
+        QDialog.accept(self)
+        
+    def addRecord(self):
+        """Add blank row to table view."""
+        index = self.venueHistory.currentIndex()
+        if not index.isValid():
+            return
+        
+        
+    def deleteRecord(self):
+        """Deletes current row in table view from database."""
+        return False
         
