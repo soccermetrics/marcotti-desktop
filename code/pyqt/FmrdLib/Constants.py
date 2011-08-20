@@ -23,8 +23,8 @@
 # Software version
 # #############
 
-DATAENTRY_VERSION = "1.0.3"
-SQL_VERSION = "1.0.0"
+DATAENTRY_VERSION = "1.1.0"
+SQL_VERSION = "1.1.1"
 
 # #############
 # Table IDs
