@@ -13,3 +13,5 @@ build/
 *.log
 # Warning files from build
 warn*.txt
+# SQL directory (handled by submodule)
+sql/
