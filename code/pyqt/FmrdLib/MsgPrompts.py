@@ -87,3 +87,8 @@ def DatabaseCommitErrorPrompt(parent, error):
     """Displays pop-up message box to alert user of database record commit error."""
     QMessageBox.critical(parent, "Database Commit Error", 
                          """Error Code %d: %s""" % (error.number(), error.text()), QMessageBox.Close)
+                         
+def DuplicateRecordErrorPrompt(parent, table, desc):
+    """Displays pop-up message box to alert user of identical record already in database."""
+    QMessageBox.critical(parent, "Identical Record in Database", 
+                         """There is already a record in %s with descriptor '%s' """ % (table, desc), QMessageBox.Close)
