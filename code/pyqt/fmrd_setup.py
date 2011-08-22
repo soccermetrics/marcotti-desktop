@@ -91,17 +91,31 @@ class CardSetupDlg(QDialog, ui_cardsetup.Ui_CardSetupDlg):
         self.connect(self.closeButton, SIGNAL("clicked()"), self.accept)
 
     def accept(self):
-        """Submits changes to database and closes window upon confirmation from user."""
-        if MsgPrompts.SaveDiscardOptionPrompt(self):
-            if not self.mapper.submit():
-                MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+        """Submits changes to database and closes window.
+       
+       First, tests whether a duplicate record already exists, and if not, seeks delete
+       confirmation from user.
+       """
+        if not CheckDuplicateRecords("card_type", self.model.tableName(), self.cardtypeEdit.text()):
+            if MsgPrompts.SaveDiscardOptionPrompt(self):
+                if not self.mapper.submit():
+                    MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+        else:
+            MsgPrompts.DuplicateRecordErrorPrompt(self, self.model.tableName(), self.cardtypeEdit.text())
         QDialog.accept(self)
     
     def saveRecord(self, where):
-        """Submits changes to database and navigates through form."""
+        """Submits changes to database and navigates through form.
+        
+        Change is submitted only if duplicate record does not already exist in database.
+        """
         row = self.mapper.currentIndex()
-        if not self.mapper.submit():
-            MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+        if not CheckDuplicateRecords("card_type", self.model.tableName(), self.cardtypeEdit.text()):        
+            if not self.mapper.submit():
+                MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+        else:
+            MsgPrompts.DuplicateRecordErrorPrompt(self, self.model.tableName(), self.cardtypeEdit.text())
+            return
         
         if where == Constants.FIRST:
             self.firstEntry.setDisabled(True)
@@ -143,8 +157,12 @@ class CardSetupDlg(QDialog, ui_cardsetup.Ui_CardSetupDlg):
         # save current index if valid
         row = self.mapper.currentIndex()
         if row != -1:
-            if not self.mapper.submit():
-                MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+            if not CheckDuplicateRecords("card_type", self.model.tableName(), self.cardtypeEdit.text()):        
+                if not self.mapper.submit():
+                    MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+                    return
+            else:
+                MsgPrompts.DuplicateRecordErrorPrompt(self, self.model.tableName(), self.cardtypeEdit.text())
                 return
         
         row = self.model.rowCount()
