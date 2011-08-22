@@ -706,8 +706,11 @@ class PlayerEntryDlg(QDialog, ui_playerentry.Ui_PlayerEntryDlg):
         """Deletes record from database upon user confirmation.
         
         First, check that the player record is not being referenced in the Lineups table.
-        If it is not being referenced there, ask for user confirmation and delete 
-        record upon positive confirmation.  If it is being referenced by Lineups, alert user.
+        If it is not being referenced there, ask for user confirmation and upon a positive response,
+        delete records in the following order:
+            (1) Player History table
+            (2) Players table.
+        If the record is being referenced by Lineups, alert user.
         """
         
         childTableList = ["tbl_lineups"]
@@ -720,6 +723,9 @@ class PlayerEntryDlg(QDialog, ui_playerentry.Ui_PlayerEntryDlg):
                                                 QMessageBox.Yes|QMessageBox.No) == QMessageBox.No:
                 return
             else:
+                # delete corresponding records in PlayerHistory table
+                self.deletePlayerHistories(player_id)
+                # delete records in Players table
                 row = self.mapper.currentIndex()
                 self.model.removeRow(row)
                 if not self.model.submitAll():
@@ -730,6 +736,14 @@ class PlayerEntryDlg(QDialog, ui_playerentry.Ui_PlayerEntryDlg):
                 self.mapper.setCurrentIndex(row) 
         else:
                 DeletionErrorPrompt(self)
+        
+    def deletePlayerHistories(self, player_id):
+        """Deletes player history records that reference a specific player."""
+        
+        deletionQuery = QSqlQuery()
+        deletionQuery.prepare("DELETE FROM tbl_playerhistory WHERE player_id = ?")
+        deletionQuery.addBindValue(QVariant(player_id))
+        deletionQuery.exec_()
         
     def updateConfed(self):
         """Updates current index of Confederation combobox.
