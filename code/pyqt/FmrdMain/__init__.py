@@ -3,6 +3,7 @@ __all__ = ["ui_fmrdlogin",
 "ui_competitionentry",
 "ui_teamentry",
 "ui_venueentry",
+"ui_venuehistoryentry"
 "ui_playerentry",
 "ui_playerhistoryentry", 
 "ui_managerentry",
