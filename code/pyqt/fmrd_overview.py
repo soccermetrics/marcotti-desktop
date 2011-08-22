@@ -770,8 +770,13 @@ class VenueHistoryDlg(QDialog, ui_venuehistoryentry.Ui_VenueHistoryDlg):
         
         Deletion is handled at the model level.
         """
-        index = self.view.currentIndex()
+        index = self.venueHistory.currentIndex()
         if not index.isValid():
             return
-        self.model.removeRow(index.row())
-        self.model.submitAll()
+        if QMessageBox.question(self, QString("Delete Record"), 
+                                            QString("Delete current record?"), 
+                                            QMessageBox.Yes|QMessageBox.No) == QMessageBox.No:
+            return
+        else:        
+            self.model.removeRow(index.row())
+            self.model.submitAll()
