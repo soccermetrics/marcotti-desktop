@@ -9,4 +9,6 @@ __all__ = ["ui_cardsetup",
 "ui_countrysetup",
 "ui_confederationsetup",
 "ui_weathersetup",
-"ui_roundsetup"]
+"ui_roundsetup", 
+"ui_timezonesetup", 
+"ui_venuesurfacesetup"]
