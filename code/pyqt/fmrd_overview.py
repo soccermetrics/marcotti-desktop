@@ -761,7 +761,7 @@ class VenueHistoryDlg(QDialog, ui_venuehistoryentry.Ui_VenueHistoryDlg):
         """Inserts a new record in the database and focuses on the effective date field in table view."""
         row = self.model.rowCount()
         self.model.insertRow(row)
-        index = self.model.index(row, EFFDATE)
+        index = self.model.index(row, VenueHistoryDlg.EFFDATE)
         self.venueHistory.setCurrentIndex(index)
         self.venueHistory.edit(index)
         
