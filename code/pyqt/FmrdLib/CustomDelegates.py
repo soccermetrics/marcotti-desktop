@@ -91,7 +91,7 @@ class NullLineEditDelegate(QSqlRelationalDelegate):
             
         """
         textline = editor.text()
-        textline.trimmed()
+        textline = textline.trimmed()
         model.setData(index, QVariant((QVariant.String)) if textline.length() == 0 else textline)
         
         
