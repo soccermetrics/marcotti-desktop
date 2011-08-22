@@ -100,21 +100,24 @@ resourceFile = "fmrd_resources_rc.py"
 print "Autoencoding main UIs..."                   
 for mainFile,guiFile in zip(MainList,GuiMainList):
 	if os.path.getmtime(mainDir+mainFile) < os.path.getmtime(guiDir+guiFile):
-		subprocess.call("pyuic4 -o "+mainDir+mainFile+" "+guiDir+guiFile),shell=True)
+		print "Building %s" % mainFile
+		subprocess.call("pyuic4 -o "+mainDir+mainFile+" "+guiDir+guiFile,shell=True)
 	else:
 		print "%s: No need to rebuild" % mainFile
 
 print "Autoencoding setup UIs..."
 for adminFile,guiFile in zip(AdminList,GuiAdminList):
 	if os.path.getmtime(adminDir+adminFile) < os.path.getmtime(guiDir+guiFile):
-		subprocess.call("pyuic4 -o "+adminDir+adminFile+" "+guiDir+guiFile),shell=True)		
+		print "Building %s" % adminFile
+		subprocess.call("pyuic4 -o "+adminDir+adminFile+" "+guiDir+guiFile,shell=True)		
 	else:
 		print "%s: No need to rebuild" % adminFile
 	
 print "Autoencoding resource files..."
 for localDir in (adminDir,mainDir):
 	if os.path.getmtime(localDir+resourceFile) < os.path.getmtime(guiDir+guiResourceFile):
-		subprocess.call("pyrcc4 -o "+localDir+resourceFile+" "+guiDir+guiResourceFile),shell=True)		
+		print "Building %s" % resourceFile
+		subprocess.call("pyrcc4 -o "+localDir+resourceFile+" "+guiDir+guiResourceFile,shell=True)		
 	else:
 		print "%s: No need to rebuild" % resourceFile		
 		
