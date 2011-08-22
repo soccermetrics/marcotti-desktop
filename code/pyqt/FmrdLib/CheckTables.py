@@ -287,3 +287,31 @@ def CountChildRecords(list, field, id):
         else:
             return -1
     return numRecords
+
+def CheckDuplicateRecords(field, table, desc):
+    """Check for duplicate record before record is committed to database.
+    
+    Arguments:
+        field - name of descriptor field in table (string)
+        table - name of database table (string)
+        desc - descriptor field in data entry form (string)
+    If there is a duplicate, return TRUE.  Otherwise, return FALSE.
+    """
+    
+    # trim whitespace from descriptor
+    desc = desc.trimmed()
+    
+    query = QSqlQuery()
+    queryString = QString("SELECT COUNT(*) FROM %1 WHERE %2=?").arg(table).arg(field)
+    query.prepare(queryString)
+    query.addBindValue(desc)
+    query.exec_()
+    if query.next():
+        if query.value(0).toInt()[0]:
+            return True
+        else:
+            return False
+    else:
+        return True
+
+
