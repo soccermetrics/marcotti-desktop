@@ -86,6 +86,8 @@ class MainSwitchboard(QMainWindow, ui_mainswitchboard.Ui_MainSwitchboard):
         QObject.connect(self.switchButton, SIGNAL("clicked()"), self.OpenPosSwitches)
         
         # signal/slot connections for menu actions
+        QObject.connect(self.actionField_Surfaces, SIGNAL("triggered()"), self.OpenVenueSurfaces)
+        QObject.connect(self.actionTime_Zones, SIGNAL("triggered()"), self.OpenTimeZones)
         QObject.connect(self.actionRounds, SIGNAL("triggered()"), self.OpenRounds)
         QObject.connect(self.actionWeather_Conditions,  SIGNAL("triggered()"), self.OpenWeatherConditions)
         QObject.connect(self.actionConfederations, SIGNAL("triggered()"), self.OpenConfederations)
@@ -161,6 +163,16 @@ class MainSwitchboard(QMainWindow, ui_mainswitchboard.Ui_MainSwitchboard):
         dialog = RoundSetupDlg(self)
         dialog.exec_()
         
+    def OpenTimeZones(self):
+        """Opens Time Zones window."""
+        dialog = TimeZoneSetupDlg(self)
+        dialog.exec_()
+
+    def OpenVenueSurfaces(self):
+        """Opens Venue Field Surfaces window."""
+        dialog = VenueSurfaceSetupDlg(self)
+        dialog.exec_()
+
     def OpenWeatherConditions(self):
         """Opens Weather Conditions window."""
         dialog = WxCondSetupDlg(self)
