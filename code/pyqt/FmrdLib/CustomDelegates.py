@@ -1411,6 +1411,46 @@ class SurfaceColumnDelegate(QSqlRelationalDelegate):
             
         # set current index of team combobox
         editor.setCurrentIndex(editor.findText(surfaceText, Qt.MatchExactly))
+
+
+class FloatColumnDelegate(QStyledItemDelegate):
+    """Implements LineEdit widgets that accept decimal inputs."""
+    
+    def __init__(self, minimum=0.00, maximum=0.00, decimals=2, format="0.00", parent=None):
+        super(NumericColumnDelegate).__init__(parent)
+        self.minimum = minimum
+        self.maximum = maximum
+        self.decimals = decimals
+        self.format = QString(format)
+        
+    def createEditor(self, parent, option, index):
+        """Creates LineEdit widget and initializes its attributes."""
+        numericEdit = QLineEdit(parent)
+        numericEdit.setInputMask(self.format)
+        numericEdit.setValidator(QDoubleValidator(self.minimum, self.maximum, self.decimals, parent))
+        return numericEdit
+        
+    def setEditorData(self, editor, index):
+        """Writes current entry from model into editor. 
+        
+        Arguments:
+            editor -- LineEdit widget
+            index -- current index of database table model
+            
+        """        
+        value = index.model().data(index, Qt.DisplayRole).toDate()
+        editor.setData(value)
+        
+    def setModelData(self, editor, model, data):
+        """Writes current text from editor to current entry in database model.
+        
+        Arguments:
+            editor -- LineEdit widget
+            model -- underlying database table model
+            index -- current index of database table model
+            
+        """        
+        model.setData(index, QVariant(editor.text()))
         
 
 class NumericColumnDelegate(QStyledItemDelegate):
