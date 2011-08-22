@@ -196,7 +196,9 @@
      <property name="title">
       <string>&amp;Overview</string>
      </property>
+     <addaction name="actionField_Surfaces"/>
      <addaction name="actionRounds"/>
+     <addaction name="actionTime_Zones"/>
      <addaction name="actionWeather_Conditions"/>
     </widget>
     <widget class="QMenu" name="menuPersonnel">
@@ -213,11 +215,11 @@
      <property name="title">
       <string>&amp;Events</string>
      </property>
+     <addaction name="actionCards"/>
+     <addaction name="actionFouls"/>
      <addaction name="actionGoal_Events"/>
      <addaction name="actionGoal_Strikes"/>
      <addaction name="actionPenalty_Outcomes"/>
-     <addaction name="actionFouls"/>
-     <addaction name="actionCards"/>
     </widget>
     <addaction name="menuOverview"/>
     <addaction name="menuPersonnel"/>
@@ -308,6 +310,16 @@
   <action name="actionCards">
    <property name="text">
     <string>Cards</string>
+   </property>
+  </action>
+  <action name="actionTime_Zones">
+   <property name="text">
+    <string>Time Zones</string>
+   </property>
+  </action>
+  <action name="actionField_Surfaces">
+   <property name="text">
+    <string>Field Surfaces</string>
    </property>
   </action>
  </widget>

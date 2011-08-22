@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'gui/main_switchboard.ui'
 #
-# Created: Sat Aug  6 01:32:12 2011
+# Created: Mon Aug 22 17:26:47 2011
 #      by: PyQt4 UI code generator 4.7.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -131,19 +131,25 @@ class Ui_MainSwitchboard(object):
         self.actionFouls.setObjectName("actionFouls")
         self.actionCards = QtGui.QAction(MainSwitchboard)
         self.actionCards.setObjectName("actionCards")
+        self.actionTime_Zones = QtGui.QAction(MainSwitchboard)
+        self.actionTime_Zones.setObjectName("actionTime_Zones")
+        self.actionField_Surfaces = QtGui.QAction(MainSwitchboard)
+        self.actionField_Surfaces.setObjectName("actionField_Surfaces")
         self.menuMain.addAction(self.actionQuit)
+        self.menuOverview.addAction(self.actionField_Surfaces)
         self.menuOverview.addAction(self.actionRounds)
+        self.menuOverview.addAction(self.actionTime_Zones)
         self.menuOverview.addAction(self.actionWeather_Conditions)
         self.menuPersonnel.addAction(self.actionConfederations)
         self.menuPersonnel.addAction(self.actionCountries)
         self.menuPersonnel.addAction(self.actionField_Positions)
         self.menuPersonnel.addAction(self.actionFlank_Positions)
         self.menuPersonnel.addAction(self.actionPositions)
+        self.menuEvents.addAction(self.actionCards)
+        self.menuEvents.addAction(self.actionFouls)
         self.menuEvents.addAction(self.actionGoal_Events)
         self.menuEvents.addAction(self.actionGoal_Strikes)
         self.menuEvents.addAction(self.actionPenalty_Outcomes)
-        self.menuEvents.addAction(self.actionFouls)
-        self.menuEvents.addAction(self.actionCards)
         self.menuSetup.addAction(self.menuOverview.menuAction())
         self.menuSetup.addAction(self.menuPersonnel.menuAction())
         self.menuSetup.addAction(self.menuEvents.menuAction())
@@ -195,4 +201,6 @@ class Ui_MainSwitchboard(object):
         self.actionPenalty_Outcomes.setText(QtGui.QApplication.translate("MainSwitchboard", "Penalty Outcomes", None, QtGui.QApplication.UnicodeUTF8))
         self.actionFouls.setText(QtGui.QApplication.translate("MainSwitchboard", "Fouls", None, QtGui.QApplication.UnicodeUTF8))
         self.actionCards.setText(QtGui.QApplication.translate("MainSwitchboard", "Cards", None, QtGui.QApplication.UnicodeUTF8))
+        self.actionTime_Zones.setText(QtGui.QApplication.translate("MainSwitchboard", "Time Zones", None, QtGui.QApplication.UnicodeUTF8))
+        self.actionField_Surfaces.setText(QtGui.QApplication.translate("MainSwitchboard", "Field Surfaces", None, QtGui.QApplication.UnicodeUTF8))
 
