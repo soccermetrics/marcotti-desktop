@@ -604,8 +604,11 @@ class VenueEntryDlg(QDialog, ui_venueentry.Ui_VenueEntryDlg):
         """Deletes record from database upon user confirmation.
         
         First, check that the venue record is not being referenced in the Matches table.
-        If it is not being referenced in the dependent table, ask for user confirmation and delete 
-        record upon positive confirmation.  If it is being referenced by dependent table, alert user.
+        If it is not being referenced in the dependent table, ask for user confirmation, and 
+        upon positive response delete records in the following order:
+            (1) Venue History table
+            (2) Venues table
+        If it is being referenced by dependent table, alert user.
         """
         
         childTableList = ["tbl_matches"]
@@ -618,6 +621,9 @@ class VenueEntryDlg(QDialog, ui_venueentry.Ui_VenueEntryDlg):
                                                 QMessageBox.Yes|QMessageBox.No) == QMessageBox.No:
                 return
             else:
+                # delete corresponding records in VenueHistory table
+                self.deleteVenueHistories(venue_id)
+                # delete records in Venues table
                 row = self.mapper.currentIndex()
                 self.model.removeRow(row)
                 if not self.model.submitAll():
@@ -628,6 +634,14 @@ class VenueEntryDlg(QDialog, ui_venueentry.Ui_VenueEntryDlg):
                 self.mapper.setCurrentIndex(row) 
         else:
                 DeletionErrorPrompt(self)
+                
+    def deleteVenueHistories(self, venue_id):
+        """Deletes venue history records that reference a specific match venue."""
+        
+        deletionQuery = QSqlQuery()
+        deletionQuery.prepare("DELETE FROM tbl_venuehistory WHERE venue_id = ?")
+        deletionQuery.addBindValue(QVariant(venue_id))
+        deletionQuery.exec_()
 
     def updateConfed(self):
         """Updates current index of Confederation combobox.
