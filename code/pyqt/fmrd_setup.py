@@ -212,7 +212,7 @@ class CardSetupDlg(QDialog, ui_cardsetup.Ui_CardSetupDlg):
                     row = self.model.rowCount() - 1
                 self.mapper.setCurrentIndex(row) 
         else:
-                DeletionErrorPrompt(self)
+            DeletionErrorPrompt(self)
 
 
 class FoulSetupDlg(QDialog, ui_foulsetup.Ui_FoulSetupDlg):
@@ -361,7 +361,7 @@ class FoulSetupDlg(QDialog, ui_foulsetup.Ui_FoulSetupDlg):
                     row = self.model.rowCount() - 1
                 self.mapper.setCurrentIndex(row) 
         else:
-                DeletionErrorPrompt(self)
+            DeletionErrorPrompt(self)
         
         
 class PenSetupDlg(QDialog, ui_penoutcomesetup.Ui_PenSetupDlg):
@@ -508,7 +508,7 @@ class PenSetupDlg(QDialog, ui_penoutcomesetup.Ui_PenSetupDlg):
                     row = self.model.rowCount() - 1
                 self.mapper.setCurrentIndex(row) 
         else:
-                DeletionErrorPrompt(self)
+            DeletionErrorPrompt(self)
 
 
 class GoalEventSetupDlg(QDialog, ui_goaleventsetup.Ui_GoalEventSetupDlg):
@@ -655,7 +655,7 @@ class GoalEventSetupDlg(QDialog, ui_goaleventsetup.Ui_GoalEventSetupDlg):
                     row = self.model.rowCount() - 1
                 self.mapper.setCurrentIndex(row) 
         else:
-                DeletionErrorPrompt(self)
+            DeletionErrorPrompt(self)
 
 
 class GoalStrikeSetupDlg(QDialog, ui_goalstrikesetup.Ui_GoalStrikeSetupDlg):
@@ -801,7 +801,7 @@ class GoalStrikeSetupDlg(QDialog, ui_goalstrikesetup.Ui_GoalStrikeSetupDlg):
                     row = self.model.rowCount() - 1
                 self.mapper.setCurrentIndex(row) 
         else:
-                DeletionErrorPrompt(self)
+            DeletionErrorPrompt(self)
         
 
 class FieldPosSetupDlg(QDialog, ui_fieldpossetup.Ui_FieldPosSetupDlg):
@@ -948,7 +948,7 @@ class FieldPosSetupDlg(QDialog, ui_fieldpossetup.Ui_FieldPosSetupDlg):
                     row = self.model.rowCount() - 1
                 self.mapper.setCurrentIndex(row) 
         else:
-                DeletionErrorPrompt(self)
+            DeletionErrorPrompt(self)
         
         
 class FlankPosSetupDlg(QDialog, ui_flankpossetup.Ui_FlankPosSetupDlg):
@@ -1098,7 +1098,7 @@ class FlankPosSetupDlg(QDialog, ui_flankpossetup.Ui_FlankPosSetupDlg):
                     row = self.model.rowCount() - 1
                 self.mapper.setCurrentIndex(row) 
         else:
-                DeletionErrorPrompt(self)
+            DeletionErrorPrompt(self)
 
         
 # Implements user interface to Position table, which links to Flank Position and Field Position tables.
@@ -1266,7 +1266,7 @@ class PosSetupDlg(QDialog, ui_positionsetup.Ui_PosSetupDlg):
                     row = self.model.rowCount() - 1
                 self.mapper.setCurrentIndex(row) 
         else:
-                DeletionErrorPrompt(self)
+            DeletionErrorPrompt(self)
 
 class CountrySetupDlg(QDialog, ui_countrysetup.Ui_CountrySetupDlg):
     """Implements country data entry dialog, which accesses and writes to Countries table.
@@ -1428,7 +1428,7 @@ class CountrySetupDlg(QDialog, ui_countrysetup.Ui_CountrySetupDlg):
                     row = self.model.rowCount() - 1
                 self.mapper.setCurrentIndex(row) 
         else:
-                DeletionErrorPrompt(self)
+            DeletionErrorPrompt(self)
         
 
 class ConfedSetupDlg(QDialog, ui_confederationsetup.Ui_ConfedSetupDlg):
@@ -1576,7 +1576,7 @@ class ConfedSetupDlg(QDialog, ui_confederationsetup.Ui_ConfedSetupDlg):
                     row = self.model.rowCount() - 1
                 self.mapper.setCurrentIndex(row) 
         else:
-                DeletionErrorPrompt(self)
+            DeletionErrorPrompt(self)
 
 
 class TimeZoneSetupDlg(QDialog, ui_timezonesetup.Ui_TimeZoneSetupDlg):
@@ -1738,10 +1738,156 @@ class TimeZoneSetupDlg(QDialog, ui_timezonesetup.Ui_TimeZoneSetupDlg):
                     row = self.model.rowCount() - 1
                 self.mapper.setCurrentIndex(row) 
         else:
-                DeletionErrorPrompt(self)
+            DeletionErrorPrompt(self)
+
+
+class VenueSurfaceSetupDlg(QDialog, ui_venuesurfacesetup.Ui_VenueSurfaceSetupDlg):
+    """Implements field surface data entry dialog, and accesses and writes to Time Zones table."""
+    
+    ID,  DESC = range(2)
+    
+    def __init__(self, parent=None):
+        """Constructor for VenueSurfaceSetupDlg class."""
+        super(VenueSurfaceSetupDlg, self).__init__(parent)
+        self.setupUi(self)
         
+        # define model
+        # underlying database model
+        self.model = QSqlTableModel(self)
+        self.model.setTable("tbl_venuesurfaces")
+        self.model.setSort(VenueSurfaceSetupDlg.ID, Qt.AscendingOrder)
+        self.model.select()
         
+        # define mapper
+        # establish ties between underlying database model and data widgets on form
+        self.mapper = QDataWidgetMapper(self)
+        self.mapper.setSubmitPolicy(QDataWidgetMapper.ManualSubmit)
+        self.mapper.setModel(self.model)
+        self.mapper.addMapping(self.vensurfID_display, VenueSurfaceSetupDlg.ID)
+        self.mapper.addMapping(self.vensurfNameEdit, VenueSurfaceSetupDlg.DESC)
+        self.mapper.toFirst()
         
+        # disable First and Previous Entry buttons
+        self.firstEntry.setDisabled(True)
+        self.prevEntry.setDisabled(True)
+        
+        # configure signal/slot
+        self.connect(self.firstEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.FIRST))
+        self.connect(self.prevEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.PREV))
+        self.connect(self.nextEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.NEXT))
+        self.connect(self.lastEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.LAST))
+        self.connect(self.saveEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.NULL))
+        self.connect(self.addEntry, SIGNAL("clicked()"), self.addRecord)
+        self.connect(self.deleteEntry, SIGNAL("clicked()"), self.deleteRecord)        
+        self.connect(self.closeButton, SIGNAL("clicked()"), self.accept)
+
+    def accept(self):
+        """Submits changes to database and closes window upon confirmation from user."""
+        confirm = MsgPrompts.SaveDiscardOptionPrompt(self)
+        if confirm:
+            if not self.mapper.submit():
+                MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+        QDialog.accept(self)
+    
+    def saveRecord(self, where):
+        """Submits changes to database and navigates through form."""
+        row = self.mapper.currentIndex()
+        if not self.mapper.submit():
+            MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+        if where == Constants.FIRST:
+            self.firstEntry.setDisabled(True)
+            self.prevEntry.setDisabled(True)
+            if not self.nextEntry.isEnabled():
+                self.nextEntry.setEnabled(True)
+                self.lastEntry.setEnabled(True)
+            row = 0
+        elif where == Constants.PREV:
+            if row <= 1:
+                self.firstEntry.setDisabled(True)
+                self.prevEntry.setDisabled(True)                
+                row = 0
+            else:
+                if not self.nextEntry.isEnabled():
+                    self.nextEntry.setEnabled(True)
+                    self.lastEntry.setEnabled(True)                    
+                row -= 1
+        elif where == Constants.NEXT:
+            row += 1
+            if not self.prevEntry.isEnabled():
+                self.prevEntry.setEnabled(True)
+                self.firstEntry.setEnabled(True)
+            if row >= self.model.rowCount() - 1:
+                self.nextEntry.setDisabled(True)
+                self.lastEntry.setDisabled(True)
+                row = self.model.rowCount() - 1
+        elif where == Constants.LAST:
+            self.nextEntry.setDisabled(True)
+            self.lastEntry.setDisabled(True)
+            if not self.prevEntry.isEnabled():
+                self.prevEntry.setEnabled(True)
+                self.firstEntry.setEnabled(True)
+            row = self.model.rowCount() - 1
+        self.mapper.setCurrentIndex(row)
+        
+    def addRecord(self):
+        """Adds new record at end of entry list."""                
+        # save current index if valid
+        row = self.mapper.currentIndex()
+        if row != -1:
+            if not self.mapper.submit():
+                MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+                return
+        
+        row = self.model.rowCount()
+        query = QSqlQuery()
+        query.exec_(QString("SELECT MAX(venuesurface_id) FROM tbl_venuesurfaces"))
+        if query.next():
+            maxSurfaceID = query.value(0).toInt()[0]
+            if not maxSurfaceID:
+                surface_id = Constants.MinSurfaceID
+            else:
+                surface_id = QString()
+                surface_id.setNum(maxRoundID+1)          
+        self.model.insertRow(row)
+        self.mapper.setCurrentIndex(row)
+
+        # assign value to SurfaceID field
+        self.vensurfID_display.setText(surface_id)
+        
+        self.nextEntry.setDisabled(True)
+        self.lastEntry.setDisabled(True)        
+        self.vensurfNameEdit.setFocus()
+    
+    def deleteRecord(self):
+        """Deletes record from database upon user confirmation.
+        
+        First, check that the field surface record is not being referenced in the Venue History table.
+        If it is not being referenced in the dependent table, ask for user confirmation and delete 
+        record upon positive confirmation.  If it is being referenced by the dependent table, alert user.
+        """
+        
+        childTableList = ["tbl_venuehistory"]
+        fieldName = "venuesurface_id"
+        surface_id = self.vensurfID_display.text()
+        
+        if not CountChildRecords(childTableList, fieldName, surface_id):
+            if QMessageBox.question(self, QString("Delete Record"), 
+                                                QString("Delete current record?"), 
+                                                QMessageBox.Yes|QMessageBox.No) == QMessageBox.No:
+                return
+            else:
+                row = self.mapper.currentIndex()
+                self.model.removeRow(row)
+                if not self.model.submitAll():
+                    MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+                    return
+                if row + 1 >= self.model.rowCount():
+                    row = self.model.rowCount() - 1
+                self.mapper.setCurrentIndex(row) 
+        else:
+            DeletionErrorPrompt(self)
+
+
 class RoundSetupDlg(QDialog, ui_roundsetup.Ui_RoundSetupDlg):
     """Implements matchday data entry dialog, and accesses and writes to Rounds table."""
     
@@ -1886,7 +2032,7 @@ class RoundSetupDlg(QDialog, ui_roundsetup.Ui_RoundSetupDlg):
                     row = self.model.rowCount() - 1
                 self.mapper.setCurrentIndex(row) 
         else:
-                DeletionErrorPrompt(self)
+            DeletionErrorPrompt(self)
             
             
 class WxCondSetupDlg(QDialog, ui_weathersetup.Ui_WxCondSetupDlg):
@@ -2036,4 +2182,4 @@ class WxCondSetupDlg(QDialog, ui_weathersetup.Ui_WxCondSetupDlg):
                     row = self.model.rowCount() - 1
                 self.mapper.setCurrentIndex(row) 
         else:
-                DeletionErrorPrompt(self)
+            DeletionErrorPrompt(self)
