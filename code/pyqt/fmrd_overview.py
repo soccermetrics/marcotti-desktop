@@ -758,13 +758,20 @@ class VenueHistoryDlg(QDialog, ui_venuehistoryentry.Ui_VenueHistoryDlg):
         QDialog.accept(self)
         
     def addRecord(self):
-        """Add blank row to table view."""
-        index = self.venueHistory.currentIndex()
-        if not index.isValid():
-            return
-        
+        """Inserts a new record in the database and focuses on the effective date field in table view."""
+        row = self.model.rowCount()
+        self.model.insertRow(row)
+        index = self.model.index(row, EFFDATE)
+        self.venueHistory.setCurrentIndex(index)
+        self.venueHistory.edit(index)
         
     def deleteRecord(self):
-        """Deletes current row in table view from database."""
-        return False
+        """Deletes current row in table view from database.
         
+        Deletion is handled at the model level.
+        """
+        index = self.view.currentIndex()
+        if not index.isValid():
+            return
+        self.model.removeRow(index.row())
+        self.model.submitAll()
