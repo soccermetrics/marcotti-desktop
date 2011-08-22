@@ -616,6 +616,7 @@ class PlayerEntryDlg(QDialog, ui_playerentry.Ui_PlayerEntryDlg):
         self.connect(self.closeButton, SIGNAL("clicked()"), self.accept)
         self.connect(self.mapper, SIGNAL("currentIndexChanged(int)"), self.updateConfed)
         self.connect(self.plyrConfedSelect, SIGNAL("currentIndexChanged(int)"), self.filterCountryBox)
+        self.connect(self.plyrHistoryButton, SIGNAL("clicked()"), lambda: self.openPlayerHistory(self.plyrID_display.text()))
      
     def accept(self):
         """Submits changes to database and closes window upon confirmation from user."""
@@ -775,6 +776,111 @@ class PlayerEntryDlg(QDialog, ui_playerentry.Ui_PlayerEntryDlg):
         id = self.confedModel.record(currIdx).value("confed_id").toString()
         self.countryModel.setFilter(QString("confed_id = %1").arg(id))
         self.countryModel.select()
+        
+    def openPlayerHistory(self, player_id):
+        """Opens Player History subdialog for a specific player from Player dialog.
+        
+        Saves current player record, instantiates PlayerHistoryDlg object and opens window.
+        Argument: 
+        player_id -- primary key of current record in Players table
+        
+        """
+        row = self.mapper.currentIndex()
+        if not self.mapper.submit():
+            MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+            return
+            
+        subdialog = PlayerHistoryDlg(player_id, self)
+        subdialog.exec_()
+        self.mapper.setCurrentIndex(row)
+
+        
+        
+class PlayerHistoryDlg(QDialog, ui_playerhistoryentry.Ui_PlayerHistoryDlg):
+    """Implements player history data entry dialog.
+    
+    This dialog accepts data on the players' height and weight as measured on 
+    certain dates, allowing for tracking of physical data with time.  Height changes very
+    little for professional players, but more so for junior athletes.
+    """
+    
+    HISTORY_ID, PLAYER_ID, EFFDATE, HEIGHT, WEIGHT = range(5)
+    
+    def __init__(self, player_id, parent=None):
+        """Constructor for PlayerHistoryDlg class."""
+        super(PlayerHistoryDlg).__init__(parent)
+        self.setupUi(self)
+        
+        # define underlying database model (tbl_playerhistory)
+        self.model = QSqlRelationalTableModel(self)
+        self.model.setTable("tbl_playerhistory")
+        self.model.setFilter(QString("player_id = %1").arg(player_id))
+        self.model.setRelation(PlayerHistoryDlg.VENUE_ID, QSqlRelation("players_list", "player_id", "full_name"))
+        self.model.setSort(PlayerHistoryDlg.EFFDATE, Qt.AscendingOrder)
+        
+        # set header data for table view
+        self.model.setHeaderData(PlayerHistoryDlg.EFFDATE, Qt.Horizontal, QVariant("Effective Date"))
+        self.model.setHeaderData(PlayerHistoryDlg.HEIGHT, Qt.Horizontal, QVariant("Player Height (m)"))
+        self.model.setHeaderData(PlayerHistoryDlg.WEIGHT, Qt.Horizontal, QVariant("Player Weight (kg)"))
+        self.model.select()
+        
+        # display player name
+        query = QSqlQuery()
+        query.exec_(QString("SELECT full_name FROM players_list WHERE player_id = %1").arg(player_id))
+        if query.isActive():
+            query.next()
+            playerName = query.value(0).toString()
+        else:
+            playerName = "ERROR"
+        self.player_display.setText(playerName)
+        
+        # set table view for Player History
+        self.playerHistory.setModel(self.model)
+        # define generic delegate
+        playerDelegate = GenericDelegate(self)
+        playerDelegate.insertColumnDelegate(PlayerHistoryDlg.EFFDATE, DateColumnDelegate())
+        playerDelegate.insertColumnDelegate(PlayerHistoryDlg.HEIGHT, FloatColumnDelegate(0.00, 2.50, 2, "0.00"))
+        playerDelegate.insertColumnDelegate(PlayerHistoryDlg.WEIGHT, NumericColumnDelegate(0, 150, "000"))
+        self.playerHistory.setItemDelegate(playerDelegate)
+        # define other view attributes
+        self.playerHistory.setSelectionMode(QTableView.SingleSelection)
+        self.playerHistory.setSelectionBehavior(QTableView.SelectRows)
+        self.playerHistory.setColumnHidden(HISTORY_ID, True)
+        self.playerHistory.setColumnHidden(PLAYER_ID, True)
+        self.playerHistory.resizeColumnsToContents()
+        
+        # configure signal/slot        
+        self.connect(self.addEntry, SIGNAL("clicked()"), self.addRecord)
+        self.connect(self.deleteEntry, SIGNAL("clicked()"), self.deleteRecord)        
+        self.connect(self.closeButton, SIGNAL("clicked()"), self.accept)
+        
+    def accept(self):
+        """Commits changes to database and closes dialog."""
+        QDialog.accept(self)
+        
+    def addRecord(self):
+        """Inserts a new record in the database and focuses on the effective date field in table view."""
+        row = self.model.rowCount()
+        self.model.insertRow(row)
+        index = self.model.index(row, PlayerHistoryDlg.EFFDATE)
+        self.playerHistory.setCurrentIndex(index)
+        self.playerHistory.edit(index)
+        
+    def deleteRecord(self):
+        """Deletes current row in table view from database.
+        
+        Deletion is handled at the model level.
+        """
+        index = self.playerHistory.currentIndex()
+        if not index.isValid():
+            return
+        if QMessageBox.question(self, QString("Delete Record"), 
+                                            QString("Delete current record?"), 
+                                            QMessageBox.Yes|QMessageBox.No) == QMessageBox.No:
+            return
+        else:        
+            self.model.removeRow(index.row())
+            self.model.submitAll()        
         
         
 class LineupEntryDlg(QDialog, ui_lineupentry.Ui_LineupEntryDlg):
