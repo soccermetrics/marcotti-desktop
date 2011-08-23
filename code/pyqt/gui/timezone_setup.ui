@@ -154,7 +154,7 @@
     </item>
    </layout>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>10</x>
@@ -384,6 +384,12 @@ p, li { white-space: pre-wrap; }
         </property>
         <property name="toolTip">
          <string>Offset from UTC (Decimal hours)</string>
+        </property>
+        <property name="inputMask">
+         <string>#00.00; </string>
+        </property>
+        <property name="text">
+         <string>+00.00</string>
         </property>
        </widget>
       </item>
