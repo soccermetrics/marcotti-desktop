@@ -386,10 +386,13 @@ p, li { white-space: pre-wrap; }
          <string>Offset from UTC (Decimal hours)</string>
         </property>
         <property name="inputMask">
-         <string>#00.00; </string>
+         <string/>
         </property>
         <property name="text">
-         <string>+00.00</string>
+         <string/>
+        </property>
+        <property name="maxLength">
+         <number>6</number>
         </property>
        </widget>
       </item>
