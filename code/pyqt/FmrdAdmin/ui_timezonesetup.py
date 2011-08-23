@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'gui/timezone_setup.ui'
 #
-# Created: Tue Aug 23 11:01:40 2011
+# Created: Tue Aug 23 12:12:48 2011
 #      by: PyQt4 UI code generator 4.7.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -117,6 +117,9 @@ class Ui_TimeZoneSetupDlg(object):
         self.tzOffsetEdit = QtGui.QLineEdit(self.layoutWidget1)
         self.tzOffsetEdit.setMinimumSize(QtCore.QSize(80, 30))
         self.tzOffsetEdit.setMaximumSize(QtCore.QSize(80, 30))
+        self.tzOffsetEdit.setInputMask("")
+        self.tzOffsetEdit.setText("")
+        self.tzOffsetEdit.setMaxLength(6)
         self.tzOffsetEdit.setObjectName("tzOffsetEdit")
         self.horizontalLayout_6.addWidget(self.tzOffsetEdit)
         spacerItem2 = QtGui.QSpacerItem(168, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
@@ -209,8 +212,6 @@ class Ui_TimeZoneSetupDlg(object):
 "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">UTC &amp;Offset</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
         self.tzOffsetEdit.setToolTip(QtGui.QApplication.translate("TimeZoneSetupDlg", "Offset from UTC (Decimal hours)", None, QtGui.QApplication.UnicodeUTF8))
-        self.tzOffsetEdit.setInputMask(QtGui.QApplication.translate("TimeZoneSetupDlg", "#00.00; ", None, QtGui.QApplication.UnicodeUTF8))
-        self.tzOffsetEdit.setText(QtGui.QApplication.translate("TimeZoneSetupDlg", "+00.00", None, QtGui.QApplication.UnicodeUTF8))
         self.firstEntry.setToolTip(QtGui.QApplication.translate("TimeZoneSetupDlg", "First Entry", None, QtGui.QApplication.UnicodeUTF8))
         self.prevEntry.setToolTip(QtGui.QApplication.translate("TimeZoneSetupDlg", "Previous Entry", None, QtGui.QApplication.UnicodeUTF8))
         self.nextEntry.setToolTip(QtGui.QApplication.translate("TimeZoneSetupDlg", "Next Entry", None, QtGui.QApplication.UnicodeUTF8))

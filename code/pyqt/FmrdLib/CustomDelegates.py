@@ -28,8 +28,10 @@ AwayMgrComboBoxDelegate -- delegate for Away Manager combobox
 AwayTeamComboBoxDelegate -- delegate for Away Team combobox
 CheckBoxDelegate -- delegate for CheckBox widgets
 CountryComboBoxDelegate -- delegate for Country comboboxes
+DateColumnDelegate - delegate for Date fields in table views
 EventPlayerComboBoxDelegate -- delegate for Player combobox in Match Events dialogs
 EventTeamComboBoxDelegate -- delegate for Team combobox in Match Events dialogs
+FloatColumnDelegate - delegate for Line Edit fields in table views that accept floating values
 GenericDelegate -- container class for array of custom delegates
 GoalPlayerComboBoxDelegate -- delegate for Player combobox in Goals dialog
 HomeMgrComboBoxDelegate -- delegate for Home Manager combobox
@@ -39,10 +41,12 @@ LineupPositionComboBoxDelegate -- delegate for Position combobox in Lineup dialo
 LineupTeamDisplayDelegate -- delegate for Team combobox in Lineup dialog
 MgrConfedComboBoxDelegate -- delegate for Confederation combobox in Manager dialog
 NullLineEditDelegate -- delegate for handling NULLs in LineEdit widgets
+NumericColumnDelegate - delegate for Line Edit fields in table views that accept integer values
 PlyrConfedComboBoxDelegate -- delegate for Confederation combobox in Player dialog
 RefConfedComboBoxDelegate -- delegate for Confederation combobox in Referee dialog
 SubInComboBoxDelegate -- delegate for Players (In) combobox in Substitutions dialog
 SubOutComboBoxDelegate -- delegate for Players (Out) combobox in Substitutions dialog
+SurfaceColumnDelegate - delegate for Playing Surface dropbox in Venue Surfaces dialog
 SwitchPlayerComboBoxDelegate -- delegate for Players combobox in Switch Positions dialog
 VenConfedComboBoxDelegate -- delegate for Confederation combobox in Venues dialog
 WeatherComboBoxDelegate -- delegate for Weather Conditions combobox in Environments dialog
@@ -1335,6 +1339,40 @@ class VenConfedComboBoxDelegate(ConfedComboBoxDelegateTemplate):
         self.countryBox = parent.venueCountrySelect
 
 
+class UTCOffsetDelegate(QSqlRelationalDelegate):
+    """Implements layout of UTC offset field in Time Zone dialog."""
+    
+    def __init__(self, parent=None):
+        """Constructor for UTCOffsetDelegate class."""
+        super(UTCOffsetDelegate, self).__init__(parent)
+        
+    def setEditorData(self, editor, index):
+        """Formats current model record and writes it into widget.
+        
+        Arguments:
+            editor -- LineEdit widget
+            index -- current index of database table model
+            
+        """        
+        value = index.model().data(index, Qt.DisplayRole).toFloat()[0]
+        str = QString("%1").arg(value, 2, 'f', 2)
+        if value > 0:
+            str = QString("+") + str
+        editor.setText(str)
+        
+    def setModelData(self, editor, model, index):
+        """Writes current data from editor to current entry in database model.
+        
+        Arguments:
+            editor -- LineEdit widget
+            model -- underlying database table model
+            index -- current index of database table model
+            
+        """
+        value = editor.text().toFloat()[0]
+        model.setData(index, QVariant(value))
+    
+    
 class DateColumnDelegate(QStyledItemDelegate):
     """Implements date widget in UI table views."""
     
@@ -1371,7 +1409,7 @@ class DateColumnDelegate(QStyledItemDelegate):
         value = index.model().data(index, Qt.DisplayRole).toDate()
         editor.setData(value)
         
-    def setModelData(self, editor, model, data):
+    def setModelData(self, editor, model, index):
         """Writes current date from editor to current entry in database model.
         
         Arguments:
@@ -1441,7 +1479,7 @@ class FloatColumnDelegate(QStyledItemDelegate):
         value = index.model().data(index, Qt.DisplayRole).toDate()
         editor.setData(value)
         
-    def setModelData(self, editor, model, data):
+    def setModelData(self, editor, model, index):
         """Writes current text from editor to current entry in database model.
         
         Arguments:
@@ -1480,7 +1518,7 @@ class NumericColumnDelegate(QStyledItemDelegate):
         value = index.model().data(index, Qt.DisplayRole).toDate()
         editor.setData(value)
         
-    def setModelData(self, editor, model, data):
+    def setModelData(self, editor, model, index):
         """Writes current text from editor to current entry in database model.
         
         Arguments:
