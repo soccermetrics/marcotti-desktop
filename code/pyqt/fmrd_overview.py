@@ -205,7 +205,7 @@ class TeamEntryDlg(QDialog, ui_teamentry.Ui_TeamEntryDlg):
 
         # define model
         # underlying database model
-        self.model = QSqlTableModel(self)
+        self.model = QSqlRelationalTableModel(self)
         self.model.setTable("tbl_teams")
         self.model.setRelation(TeamEntryDlg.CTRY_ID, QSqlRelation("tbl_countries", "country_id", "cty_name"))           
         self.model.setSort(TeamEntryDlg.ID, Qt.AscendingOrder)
@@ -265,7 +265,7 @@ class TeamEntryDlg(QDialog, ui_teamentry.Ui_TeamEntryDlg):
         self.connect(self.deleteEntry, SIGNAL("clicked()"), self.deleteRecord)        
         self.connect(self.closeButton, SIGNAL("clicked()"), self.accept)
         self.connect(self.mapper, SIGNAL("currentIndexChanged(int)"), self.updateConfed)
-        self.connect(self.venueConfedSelect, SIGNAL("activated(int)"), self.filterCountryBox)        
+        self.connect(self.teamConfedSelect, SIGNAL("activated(int)"), self.filterCountryBox)        
         
     def accept(self):
         """Submits changes to database and closes window upon confirmation from user."""
