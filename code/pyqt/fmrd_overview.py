@@ -450,6 +450,11 @@ class VenueEntryDlg(QDialog, ui_venueentry.Ui_VenueEntryDlg):
         CONFED_ID, CONFED_NAME = range(2)
         COUNTRY_NAME = HOST_NAME = TIMEZONE_NAME = 1
 
+        # define validators for geographic fields
+        self.venueLatitudeEdit.setValidator(QDoubleValidator(-90.000000, 90.000000, 6, self.layoutWidget))
+        self.venueLongitudeEdit.setValidator(QDoubleValidator(-180.000000, 180.000000, 6, self.layoutWidget))
+        self.venueAltEdit.setValidator(QIntValidator(0, 5000, self.layoutWidget))
+        
         # define underlying database model
         # because of foreign keys, instantiate QSqlRelationalTableModel and
         # define relations to it
@@ -468,6 +473,8 @@ class VenueEntryDlg(QDialog, ui_venueentry.Ui_VenueEntryDlg):
         self.mapper.setModel(self.model)
         localDelegate = GenericDelegate(self)
         localDelegate.insertColumnDelegate(VenueEntryDlg.CTRY_ID, CountryComboBoxDelegate(self))
+        localDelegate.insertColumnDelegate(VenueEntryDlg.LAT, GeoCoordinateDelegate(self))
+        localDelegate.insertColumnDelegate(VenueEntryDlg.LONG, GeoCoordinateDelegate(self))
         self.mapper.setItemDelegate(localDelegate)
         self.mapper.addMapping(self.venueID_display, VenueEntryDlg.ID)
         
@@ -616,7 +623,11 @@ class VenueEntryDlg(QDialog, ui_venueentry.Ui_VenueEntryDlg):
         self.venueID_display.setText(venue_id)
         
         self.nextEntry.setDisabled(True)
-        self.lastEntry.setDisabled(True)        
+        self.lastEntry.setDisabled(True)
+
+        self.venueAltEdit.setText("0")
+        self.venueLatitudeEdit.setText("0.000000")
+        self.venueLongitudeEdit.setText("0.000000")
         self.venueCountrySelect.setDisabled(True)        
         self.venueNameEdit.setFocus()
     
