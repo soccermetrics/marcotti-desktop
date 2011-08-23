@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'gui/player_entry.ui'
 #
-# Created: Thu Aug 18 17:52:54 2011
+# Created: Tue Aug 23 18:33:10 2011
 #      by: PyQt4 UI code generator 4.7.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -16,7 +16,7 @@ class Ui_PlayerEntryDlg(object):
         PlayerEntryDlg.setMinimumSize(QtCore.QSize(800, 300))
         PlayerEntryDlg.setMaximumSize(QtCore.QSize(800, 300))
         self.frame_2 = QtGui.QFrame(PlayerEntryDlg)
-        self.frame_2.setGeometry(QtCore.QRect(20, 220, 331, 51))
+        self.frame_2.setGeometry(QtCore.QRect(20, 240, 331, 51))
         self.frame_2.setFrameShape(QtGui.QFrame.StyledPanel)
         self.frame_2.setFrameShadow(QtGui.QFrame.Raised)
         self.frame_2.setObjectName("frame_2")
@@ -138,7 +138,7 @@ class Ui_PlayerEntryDlg(object):
         self.plyrPositionSelect.setObjectName("plyrPositionSelect")
         self.gridLayout_2.addWidget(self.plyrPositionSelect, 3, 1, 1, 1)
         self.frame = QtGui.QFrame(PlayerEntryDlg)
-        self.frame.setGeometry(QtCore.QRect(400, 220, 371, 51))
+        self.frame.setGeometry(QtCore.QRect(400, 240, 371, 51))
         self.frame.setFrameShape(QtGui.QFrame.StyledPanel)
         self.frame.setFrameShadow(QtGui.QFrame.Raised)
         self.frame.setObjectName("frame")
@@ -180,14 +180,14 @@ class Ui_PlayerEntryDlg(object):
         self.line_2.setFrameShape(QtGui.QFrame.HLine)
         self.line_2.setFrameShadow(QtGui.QFrame.Sunken)
         self.line_2.setObjectName("line_2")
-        self.widget = QtGui.QWidget(PlayerEntryDlg)
-        self.widget.setGeometry(QtCore.QRect(12, 180, 771, 32))
-        self.widget.setObjectName("widget")
-        self.horizontalLayout = QtGui.QHBoxLayout(self.widget)
+        self.layoutWidget2 = QtGui.QWidget(PlayerEntryDlg)
+        self.layoutWidget2.setGeometry(QtCore.QRect(12, 180, 771, 51))
+        self.layoutWidget2.setObjectName("layoutWidget2")
+        self.horizontalLayout = QtGui.QHBoxLayout(self.layoutWidget2)
         self.horizontalLayout.setObjectName("horizontalLayout")
         spacerItem = QtGui.QSpacerItem(228, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
         self.horizontalLayout.addItem(spacerItem)
-        self.plyrHistoryButton = QtGui.QPushButton(self.widget)
+        self.plyrHistoryButton = QtGui.QPushButton(self.layoutWidget2)
         self.plyrHistoryButton.setMinimumSize(QtCore.QSize(240, 30))
         self.plyrHistoryButton.setMaximumSize(QtCore.QSize(240, 30))
         self.plyrHistoryButton.setObjectName("plyrHistoryButton")
