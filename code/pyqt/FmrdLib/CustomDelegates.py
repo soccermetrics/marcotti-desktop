@@ -33,6 +33,7 @@ EventPlayerComboBoxDelegate -- delegate for Player combobox in Match Events dial
 EventTeamComboBoxDelegate -- delegate for Team combobox in Match Events dialogs
 FloatColumnDelegate - delegate for Line Edit fields in table views that accept floating values
 GenericDelegate -- container class for array of custom delegates
+GeoCoordinateDelegate -- delegate for geographic coordinate fields in Venues dialog
 GoalPlayerComboBoxDelegate -- delegate for Player combobox in Goals dialog
 HomeMgrComboBoxDelegate -- delegate for Home Manager combobox
 HomeTeamComboBoxDelegate -- delegate for Home Team combobox
@@ -1337,6 +1338,38 @@ class VenConfedComboBoxDelegate(ConfedComboBoxDelegateTemplate):
         super(VenConfedComboBoxDelegate, self).__init__(parent)
         
         self.countryBox = parent.venueCountrySelect
+
+
+class GeoCoordinateDelegate(QStyledItemDelegate):
+    """Implements formatting of geographic coordinate fields (Latitude/Longitude) dialog."""
+    
+    def __init__(self, parent=None):
+        """Constructor for GeoCoordinateDelegate class."""
+        super(GeoCoordinateDelegate, self).__init__(parent)
+        
+    def setEditorData(self, editor, index):
+        """Formats current model record and writes it into widget.
+        
+        Arguments:
+            editor -- LineEdit widget
+            index -- current index of database table model
+            
+        """        
+        value = index.model().data(index, Qt.DisplayRole).toFloat()[0]
+        str = QString("%1").arg(value, 3, 'f', 6)
+        editor.setText(str)
+        
+    def setModelData(self, editor, model, index):
+        """Writes current data from editor to current entry in database model.
+        
+        Arguments:
+            editor -- LineEdit widget
+            model -- underlying database table model
+            index -- current index of database table model
+            
+        """
+        value = editor.text().toFloat()[0]
+        model.setData(index, QVariant(value))
 
 
 class UTCOffsetDelegate(QSqlRelationalDelegate):

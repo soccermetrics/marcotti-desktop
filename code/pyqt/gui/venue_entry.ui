@@ -186,7 +186,7 @@
        <string>Altitude above mean sea level (meters)</string>
       </property>
       <property name="inputMask">
-       <string>#0000; </string>
+       <string/>
       </property>
       <property name="maxLength">
        <number>5</number>

@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'gui/venue_entry.ui'
 #
-# Created: Tue Aug 23 18:33:11 2011
+# Created: Tue Aug 23 18:55:09 2011
 #      by: PyQt4 UI code generator 4.7.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -65,6 +65,7 @@ class Ui_VenueEntryDlg(object):
         self.venueAltEdit = QtGui.QLineEdit(self.layoutWidget)
         self.venueAltEdit.setMinimumSize(QtCore.QSize(81, 27))
         self.venueAltEdit.setMaximumSize(QtCore.QSize(81, 27))
+        self.venueAltEdit.setInputMask("")
         self.venueAltEdit.setMaxLength(5)
         self.venueAltEdit.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
         self.venueAltEdit.setObjectName("venueAltEdit")
@@ -237,7 +238,6 @@ class Ui_VenueEntryDlg(object):
         self.nextEntry.setToolTip(QtGui.QApplication.translate("VenueEntryDlg", "Next Entry", None, QtGui.QApplication.UnicodeUTF8))
         self.lastEntry.setToolTip(QtGui.QApplication.translate("VenueEntryDlg", "Last Entry", None, QtGui.QApplication.UnicodeUTF8))
         self.venueAltEdit.setToolTip(QtGui.QApplication.translate("VenueEntryDlg", "Altitude above mean sea level (meters)", None, QtGui.QApplication.UnicodeUTF8))
-        self.venueAltEdit.setInputMask(QtGui.QApplication.translate("VenueEntryDlg", "#0000; ", None, QtGui.QApplication.UnicodeUTF8))
         self.label_8.setText(QtGui.QApplication.translate("VenueEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
