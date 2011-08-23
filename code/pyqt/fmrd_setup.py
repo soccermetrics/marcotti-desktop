@@ -96,12 +96,12 @@ class CardSetupDlg(QDialog, ui_cardsetup.Ui_CardSetupDlg):
        First, tests whether a duplicate record already exists, and if not, seeks delete
        confirmation from user.
        """
-        if not CheckDuplicateRecords("card_type", self.model.tableName(), self.cardtypeEdit.text()):
-            if MsgPrompts.SaveDiscardOptionPrompt(self):
-                if not self.mapper.submit():
-                    MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
-        else:
-            MsgPrompts.DuplicateRecordErrorPrompt(self, self.model.tableName(), self.cardtypeEdit.text())
+        row = self.mapper.currentIndex()
+        if self.isDirty(row):
+            if not CheckDuplicateRecords("card_type", self.model.tableName(), self.cardtypeEdit.text()):        
+                if MsgPrompts.SaveDiscardOptionPrompt(self):
+                    if not self.mapper.submit():
+                        MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
         QDialog.accept(self)
     
     def saveRecord(self, where):
@@ -110,12 +110,14 @@ class CardSetupDlg(QDialog, ui_cardsetup.Ui_CardSetupDlg):
         Change is submitted only if duplicate record does not already exist in database.
         """
         row = self.mapper.currentIndex()
-        if not CheckDuplicateRecords("card_type", self.model.tableName(), self.cardtypeEdit.text()):        
-            if not self.mapper.submit():
-                MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
-        else:
-            MsgPrompts.DuplicateRecordErrorPrompt(self, self.model.tableName(), self.cardtypeEdit.text())
-            return
+        if self.isDirty(row):
+            if not CheckDuplicateRecords("card_type", self.model.tableName(), self.cardtypeEdit.text()):        
+                if not self.mapper.submit():
+                    MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+            else:
+                MsgPrompts.DuplicateRecordErrorPrompt(self, self.model.tableName(), self.cardtypeEdit.text())
+                self.mapper.revert()
+                return
         
         if where == Constants.FIRST:
             self.firstEntry.setDisabled(True)
@@ -157,13 +159,15 @@ class CardSetupDlg(QDialog, ui_cardsetup.Ui_CardSetupDlg):
         # save current index if valid
         row = self.mapper.currentIndex()
         if row != -1:
-            if not CheckDuplicateRecords("card_type", self.model.tableName(), self.cardtypeEdit.text()):        
-                if not self.mapper.submit():
-                    MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+            if self.isDirty(row):
+                if not CheckDuplicateRecords("card_type", self.model.tableName(), self.cardtypeEdit.text()):        
+                    if not self.mapper.submit():
+                        MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+                        return
+                else:
+                    MsgPrompts.DuplicateRecordErrorPrompt(self, self.model.tableName(), self.cardtypeEdit.text())
+                    self.mapper.revert()
                     return
-            else:
-                MsgPrompts.DuplicateRecordErrorPrompt(self, self.model.tableName(), self.cardtypeEdit.text())
-                return
         
         row = self.model.rowCount()
         query = QSqlQuery()
@@ -213,6 +217,26 @@ class CardSetupDlg(QDialog, ui_cardsetup.Ui_CardSetupDlg):
                 self.mapper.setCurrentIndex(row) 
         else:
             DeletionErrorPrompt(self)
+            
+    def isDirty(self, row):
+        """Compares current state of data entry form to current record in database, and returns a boolean.
+        
+        Arguments:
+            row: current record in mapper and model
+        
+        Returns:
+            TRUE: there are changes between data entry form and current record in database,
+                      or new record in database
+            FALSE: no changes between data entry form and current record in database
+        """
+        if row == self.model.rowCount():
+            return True
+        else:
+            index = self.model.index(row, CardSetupDlg.DESC)        
+            if self.cardtypeEdit.text() != self.model.data(index).toString():
+                return True
+            else:
+                return False
 
 
 class FoulSetupDlg(QDialog, ui_foulsetup.Ui_FoulSetupDlg):
