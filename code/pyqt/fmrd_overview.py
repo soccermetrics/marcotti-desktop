@@ -225,7 +225,8 @@ class TeamEntryDlg(QDialog, ui_teamentry.Ui_TeamEntryDlg):
         self.countryModel = self.model.relationModel(TeamEntryDlg.CTRY_ID)
         self.countryModel.setSort(COUNTRY_ID, Qt.AscendingOrder)
         self.teamCountrySelect.setModel(self.countryModel)
-        self.teamCountrySelect.setModelColumn(self.countryModel.fieldIndex("cty_name"))        
+        self.teamCountrySelect.setModelColumn(self.countryModel.fieldIndex("cty_name"))    
+        self.teamCountrySelect.setCurrentIndex(-1)
         self.mapper.addMapping(self.teamCountrySelect, TeamEntryDlg.CTRY_ID)
         
         # map other widgets on form        
@@ -246,6 +247,7 @@ class TeamEntryDlg(QDialog, ui_teamentry.Ui_TeamEntryDlg):
         self.teamConfedSelect.setModel(self.confedModel)
         confedMapper.setItemDelegate(TeamConfedComboBoxDelegate(self))
         self.teamConfedSelect.setModelColumn(self.confedModel.fieldIndex("confed_name"))
+        self.teamConfedSelect.setCurrentIndex(-1)
         confedMapper.addMapping(self.teamConfedSelect, CONFED_NAME)
         confedMapper.toFirst()       
         
@@ -340,6 +342,9 @@ class TeamEntryDlg(QDialog, ui_teamentry.Ui_TeamEntryDlg):
         
         self.nextEntry.setDisabled(True)
         self.lastEntry.setDisabled(True)
+        
+        self.teamConfedSelect.setCurrentIndex(-1)
+        self.teamCountrySelect.setCurrentIndex(-1)
         self.teamNameEdit.setFocus()
     
     def deleteRecord(self):

@@ -82,6 +82,7 @@ class ManagerEntryDlg(QDialog, ui_managerentry.Ui_ManagerEntryDlg):
         self.countryModel.setSort(COUNTRY_ID, Qt.AscendingOrder)
         self.mgrCountrySelect.setModel(self.countryModel)
         self.mgrCountrySelect.setModelColumn(self.countryModel.fieldIndex("cty_name"))
+        self.mgrCountrySelect.setCurrentIndex(-1)
         self.mapper.addMapping(self.mgrCountrySelect, ManagerEntryDlg.CTRY_ID)
         
         # map other widgets on form
@@ -103,6 +104,7 @@ class ManagerEntryDlg(QDialog, ui_managerentry.Ui_ManagerEntryDlg):
         confedMapper.setModel(self.confedModel)
         self.mgrConfedSelect.setModel(self.confedModel)
         confedMapper.setItemDelegate(MgrConfedComboBoxDelegate(self))
+        self.mgrConfedSelect.setCurrentIndex(-1)
         self.mgrConfedSelect.setModelColumn(self.confedModel.fieldIndex("confed_name"))
         confedMapper.addMapping(self.mgrConfedSelect, CONFED_NAME)
         confedMapper.toFirst()
@@ -202,7 +204,9 @@ class ManagerEntryDlg(QDialog, ui_managerentry.Ui_ManagerEntryDlg):
         self.lastEntry.setDisabled(True) 
  
         self.mgrDOBEdit.setText("1901-01-01")        
-        self.mgrCountrySelect.setDisabled(True)        
+        self.mgrCountrySelect.setDisabled(True)
+        self.mgrCountrySelect.setCurrentIndex(-1)
+        self.mgrConfedSelect.setCurrentIndex(-1)
         self.mgrFirstNameEdit.setFocus()
     
     def deleteRecord(self):
@@ -323,6 +327,7 @@ class RefereeEntryDlg(QDialog, ui_refereeentry.Ui_RefereeEntryDlg):
         self.countryModel.setSort(COUNTRY_ID, Qt.AscendingOrder)
         self.refCountrySelect.setModel(self.countryModel)
         self.refCountrySelect.setModelColumn(self.countryModel.fieldIndex("cty_name"))
+        self.refCountrySelect.setCurrentIndex(-1)
         self.mapper.addMapping(self.refCountrySelect, RefereeEntryDlg.CTRY_ID)
 
         # map other widgets on form
@@ -344,6 +349,7 @@ class RefereeEntryDlg(QDialog, ui_refereeentry.Ui_RefereeEntryDlg):
         self.refConfedSelect.setModel(self.confedModel)
         confedMapper.setItemDelegate(RefConfedComboBoxDelegate(self))         
         self.refConfedSelect.setModelColumn(self.confedModel.fieldIndex("confed_name"))
+        self.refConfedSelect.setCurrentIndex(-1)
         confedMapper.addMapping(self.refConfedSelect, CONFED_NAME)
         confedMapper.toFirst()
         
@@ -444,7 +450,9 @@ class RefereeEntryDlg(QDialog, ui_refereeentry.Ui_RefereeEntryDlg):
         self.lastEntry.setDisabled(True)        
         
         self.refDOBEdit.setText("1901-01-01")                
-        self.refCountrySelect.setDisabled(True)        
+        self.refCountrySelect.setDisabled(True)
+        self.refCountrySelect.setCurrentIndex(-1)
+        self.refConfedSelect.setCurrentIndex(-1)
         self.refFirstNameEdit.setFocus()
     
     def deleteRecord(self):
@@ -566,6 +574,7 @@ class PlayerEntryDlg(QDialog, ui_playerentry.Ui_PlayerEntryDlg):
         self.countryModel.setSort(COUNTRY_NAME, Qt.AscendingOrder)
         self.plyrCountrySelect.setModel(self.countryModel)
         self.plyrCountrySelect.setModelColumn(self.countryModel.fieldIndex("cty_name"))
+        self.plyrCountrySelect.setCurrentIndex(-1)
         self.mapper.addMapping(self.plyrCountrySelect, PlayerEntryDlg.CTRY_ID)
         
         # relation model for Position combobox
@@ -573,6 +582,7 @@ class PlayerEntryDlg(QDialog, ui_playerentry.Ui_PlayerEntryDlg):
         self.positionModel.setSort(POSITION_NAME, Qt.AscendingOrder)
         self.plyrPositionSelect.setModel(self.positionModel)
         self.plyrPositionSelect.setModelColumn(self.positionModel.fieldIndex("position_name"))
+        self.plyrPositionSelect.setCurrentIndex(-1)
         self.mapper.addMapping(self.plyrPositionSelect, PlayerEntryDlg.POS_ID)
 
         # map other widgets on form
@@ -595,6 +605,7 @@ class PlayerEntryDlg(QDialog, ui_playerentry.Ui_PlayerEntryDlg):
         self.plyrConfedSelect.setModel(self.confedModel)
         confedMapper.setItemDelegate(PlyrConfedComboBoxDelegate(self))        
         self.plyrConfedSelect.setModelColumn(self.confedModel.fieldIndex("confed_name"))
+        self.plyrConfedSelect.setCurrentIndex(-1)
         confedMapper.addMapping(self.plyrConfedSelect, CONFED_NAME)
         confedMapper.toFirst()
                 
@@ -699,7 +710,10 @@ class PlayerEntryDlg(QDialog, ui_playerentry.Ui_PlayerEntryDlg):
         self.lastEntry.setDisabled(True)   
         
         self.plyrDOBEdit.setText("1901-01-01")        
-        self.plyrCountrySelect.setDisabled(True)        
+        self.plyrCountrySelect.setDisabled(True)
+        self.plyrConfedSelect.setCurrentIndex(-1)
+        self.plyrCountrySelect.setCurrentIndex(-1)
+        self.plyrPositionSelect.setCurrentIndex(-1)
         self.plyrFirstNameEdit.setFocus()
     
     def deleteRecord(self):
