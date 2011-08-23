@@ -65,6 +65,14 @@ class CompEntryDlg(QDialog, ui_competitionentry.Ui_CompEntryDlg):
         self.mapper.addMapping(self.competitionEdit, CompEntryDlg.DESC)
         self.mapper.toFirst()
         
+        # disable all fields if no records in database table
+        # (also disable save and delete buttons)
+        if not self.model.rowCount():
+            self.compID_display.setDisabled(True)
+            self.competitionEdit.setDisabled(True)
+            self.saveEntry.setDisabled(True)
+            self.deleteEntry.setDisabled(True)
+            
         # disable First and Previous Entry buttons
         self.firstEntry.setDisabled(True)
         self.prevEntry.setDisabled(True) 
@@ -105,15 +113,13 @@ class CompEntryDlg(QDialog, ui_competitionentry.Ui_CompEntryDlg):
                 self.lastEntry.setEnabled(True)
             row = 0
         elif where == Constants.PREV:
-            if row <= 1:
+            row -= 1
+            if not self.nextEntry.isEnabled():
+                    self.nextEntry.setEnabled(True)
+                    self.lastEntry.setEnabled(True)   
+            if row == 0:
                 self.firstEntry.setDisabled(True)
                 self.prevEntry.setDisabled(True)                
-                row = 0
-            else:
-                if not self.nextEntry.isEnabled():
-                    self.nextEntry.setEnabled(True)
-                    self.lastEntry.setEnabled(True)                    
-                row -= 1
         elif where == Constants.NEXT:
             row += 1
             if not self.prevEntry.isEnabled():
@@ -131,6 +137,10 @@ class CompEntryDlg(QDialog, ui_competitionentry.Ui_CompEntryDlg):
                 self.firstEntry.setEnabled(True)
             row = self.model.rowCount() - 1
         self.mapper.setCurrentIndex(row)
+        
+        # enable Delete button if at least one record
+        if self.model.rowCount():
+            self.deleteEntry.setEnabled(True)
         
     def addRecord(self):
         """Adds new record at end of entry list, and sets focus on Competition Name editable field."""
@@ -157,8 +167,20 @@ class CompEntryDlg(QDialog, ui_competitionentry.Ui_CompEntryDlg):
         # assign value to competitionID field
         self.compID_display.setText(competition_id)
         
+        # disable next/last navigation buttons
         self.nextEntry.setDisabled(True)
-        self.lastEntry.setDisabled(True)        
+        self.lastEntry.setDisabled(True)
+        # enable first/previous navigation buttons
+        if self.model.rowCount() > 1:
+            self.prevEntry.setEnabled(True)
+            self.firstEntry.setEnabled(True)
+        
+        # enable Save buttons
+        self.saveEntry.setEnabled(True)
+        
+        # enable form widgets
+        self.compID_display.setEnabled(True)
+        self.competitionEdit.setEnabled(True)
         self.competitionEdit.setFocus()
     
     def deleteRecord(self):
@@ -256,6 +278,15 @@ class TeamEntryDlg(QDialog, ui_teamentry.Ui_TeamEntryDlg):
         confedMapper.addMapping(self.teamConfedSelect, CONFED_NAME)
         confedMapper.toFirst()       
         
+        # disable all fields if no records in database table
+        if not self.model.rowCount():
+            self.teamID_display.setDisabled(True)
+            self.teamConfedSelect.setDisabled(True)
+            self.teamCountrySelect.setDisabled(True)
+            # disable save and delete entry buttons
+            self.saveEntry.setDisabled(True)
+            self.deleteEntry.setDisabled(True)
+            
         # disable First and Previous Entry buttons
         self.firstEntry.setDisabled(True)
         self.prevEntry.setDisabled(True)
