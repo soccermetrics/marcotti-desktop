@@ -78,7 +78,12 @@ class CardSetupDlg(QDialog, ui_cardsetup.Ui_CardSetupDlg):
         
         # disable First and Previous Entry buttons
         self.firstEntry.setDisabled(True)
-        self.prevEntry.setDisabled(True)        
+        self.prevEntry.setDisabled(True)
+        
+        # disable Next and Last Entry buttons if less than two records
+        if self.model.rowCount() < 2:
+            self.nextEntry.setDisabled(True)
+            self.lastEntry.setDisabled(True)
         
         # configure signal/slot
         self.connect(self.firstEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.FIRST))
@@ -269,6 +274,11 @@ class FoulSetupDlg(QDialog, ui_foulsetup.Ui_FoulSetupDlg):
         self.firstEntry.setDisabled(True)
         self.prevEntry.setDisabled(True)
         
+        # disable Next and Last Entry buttons if less than two records
+        if self.model.rowCount() < 2:
+            self.nextEntry.setDisabled(True)
+            self.lastEntry.setDisabled(True)
+            
         # configure signal/slot
         self.connect(self.firstEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.FIRST))
         self.connect(self.prevEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.PREV))
@@ -418,6 +428,11 @@ class PenSetupDlg(QDialog, ui_penoutcomesetup.Ui_PenSetupDlg):
         self.firstEntry.setDisabled(True)
         self.prevEntry.setDisabled(True)
         
+        # disable Next and Last Entry buttons if less than two records
+        if self.model.rowCount() < 2:
+            self.nextEntry.setDisabled(True)
+            self.lastEntry.setDisabled(True)
+            
         # configure signal/slot
         self.connect(self.firstEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.FIRST))
         self.connect(self.prevEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.PREV))
@@ -565,6 +580,11 @@ class GoalEventSetupDlg(QDialog, ui_goaleventsetup.Ui_GoalEventSetupDlg):
         self.firstEntry.setDisabled(True)
         self.prevEntry.setDisabled(True)
         
+        # disable Next and Last Entry buttons if less than two records
+        if self.model.rowCount() < 2:
+            self.nextEntry.setDisabled(True)
+            self.lastEntry.setDisabled(True)
+            
         # configure signal/slot
         self.connect(self.firstEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.FIRST))
         self.connect(self.prevEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.PREV))
@@ -711,6 +731,11 @@ class GoalStrikeSetupDlg(QDialog, ui_goalstrikesetup.Ui_GoalStrikeSetupDlg):
         self.firstEntry.setDisabled(True)
         self.prevEntry.setDisabled(True)
         
+        # disable Next and Last Entry buttons if less than two records
+        if self.model.rowCount() < 2:
+            self.nextEntry.setDisabled(True)
+            self.lastEntry.setDisabled(True)
+            
         # configure signal/slot
         self.connect(self.firstEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.FIRST))
         self.connect(self.prevEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.PREV))
@@ -858,6 +883,11 @@ class FieldPosSetupDlg(QDialog, ui_fieldpossetup.Ui_FieldPosSetupDlg):
         self.firstEntry.setDisabled(True)
         self.prevEntry.setDisabled(True)
         
+        # disable Next and Last Entry buttons if less than two records
+        if self.model.rowCount() < 2:
+            self.nextEntry.setDisabled(True)
+            self.lastEntry.setDisabled(True)
+            
         # configure signal/slot
         self.connect(self.firstEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.FIRST))
         self.connect(self.prevEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.PREV))
@@ -1008,6 +1038,11 @@ class FlankPosSetupDlg(QDialog, ui_flankpossetup.Ui_FlankPosSetupDlg):
         self.firstEntry.setDisabled(True)
         self.prevEntry.setDisabled(True)
         
+        # disable Next and Last Entry buttons if less than two records
+        if self.model.rowCount() < 2:
+            self.nextEntry.setDisabled(True)
+            self.lastEntry.setDisabled(True)
+            
         # configure signal/slot
         self.connect(self.firstEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.FIRST))
         self.connect(self.prevEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.PREV))
@@ -1173,6 +1208,11 @@ class PosSetupDlg(QDialog, ui_positionsetup.Ui_PosSetupDlg):
         self.firstEntry.setDisabled(True)
         self.prevEntry.setDisabled(True)
         
+        # disable Next and Last Entry buttons if less than two records
+        if self.model.rowCount() < 2:
+            self.nextEntry.setDisabled(True)
+            self.lastEntry.setDisabled(True)
+            
         # configure signal/slot
         self.connect(self.firstEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.FIRST))
         self.connect(self.prevEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.PREV))
@@ -1333,6 +1373,11 @@ class CountrySetupDlg(QDialog, ui_countrysetup.Ui_CountrySetupDlg):
         self.firstEntry.setDisabled(True)
         self.prevEntry.setDisabled(True)
 
+        # disable Next and Last Entry buttons if less than two records
+        if self.model.rowCount() < 2:
+            self.nextEntry.setDisabled(True)
+            self.lastEntry.setDisabled(True)
+            
         # configure signal/slot
         self.connect(self.firstEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.FIRST))
         self.connect(self.prevEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.PREV))
@@ -1485,6 +1530,11 @@ class ConfedSetupDlg(QDialog, ui_confederationsetup.Ui_ConfedSetupDlg):
         self.firstEntry.setDisabled(True)
         self.prevEntry.setDisabled(True)
         
+        # disable Next and Last Entry buttons if less than two records
+        if self.model.rowCount() < 2:
+            self.nextEntry.setDisabled(True)
+            self.lastEntry.setDisabled(True)
+            
         # configure signal/slot
         self.connect(self.firstEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.FIRST))
         self.connect(self.prevEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.PREV))
@@ -1649,6 +1699,11 @@ class TimeZoneSetupDlg(QDialog, ui_timezonesetup.Ui_TimeZoneSetupDlg):
         self.firstEntry.setDisabled(True)
         self.prevEntry.setDisabled(True)
         
+        # disable Next and Last Entry buttons if less than two records
+        if self.model.rowCount() < 2:
+            self.nextEntry.setDisabled(True)
+            self.lastEntry.setDisabled(True)
+            
         # configure signal/slot
         self.connect(self.firstEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.FIRST))
         self.connect(self.prevEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.PREV))
@@ -1798,6 +1853,11 @@ class VenueSurfaceSetupDlg(QDialog, ui_venuesurfacesetup.Ui_VenueSurfaceSetupDlg
         self.firstEntry.setDisabled(True)
         self.prevEntry.setDisabled(True)
         
+        # disable Next and Last Entry buttons if less than two records
+        if self.model.rowCount() < 2:
+            self.nextEntry.setDisabled(True)
+            self.lastEntry.setDisabled(True)
+            
         # configure signal/slot
         self.connect(self.firstEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.FIRST))
         self.connect(self.prevEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.PREV))
@@ -1945,6 +2005,11 @@ class RoundSetupDlg(QDialog, ui_roundsetup.Ui_RoundSetupDlg):
         self.firstEntry.setDisabled(True)
         self.prevEntry.setDisabled(True)
         
+        # disable Next and Last Entry buttons if less than two records
+        if self.model.rowCount() < 2:
+            self.nextEntry.setDisabled(True)
+            self.lastEntry.setDisabled(True)
+            
         # configure signal/slot
         self.connect(self.firstEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.FIRST))
         self.connect(self.prevEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.PREV))
@@ -2092,6 +2157,11 @@ class WxCondSetupDlg(QDialog, ui_weathersetup.Ui_WxCondSetupDlg):
         self.firstEntry.setDisabled(True)
         self.prevEntry.setDisabled(True)
         
+        # disable Next and Last Entry buttons if less than two records
+        if self.model.rowCount() < 2:
+            self.nextEntry.setDisabled(True)
+            self.lastEntry.setDisabled(True)
+            
         # configure signal/slot
         self.connect(self.firstEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.FIRST))
         self.connect(self.prevEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.PREV))

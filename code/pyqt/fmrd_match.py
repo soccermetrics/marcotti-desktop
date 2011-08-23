@@ -206,10 +206,12 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
         self.awaymgrMapper.addMapping(self.awaymgrSelect, MGR_NAME)
         self.awaymgrMapper.toFirst()        
               
-        # disable buttons depending on number of records in tbl_matches
-        if self.model.rowCount() <= 1:
-            self.firstEntry.setDisabled(True)
-            self.prevEntry.setDisabled(True)
+        # disable First and Previous Entry buttons
+        self.firstEntry.setDisabled(True)
+        self.prevEntry.setDisabled(True)        
+        
+        # disable Next and Last Entry buttons if less than two records
+        if self.model.rowCount() < 2:
             self.nextEntry.setDisabled(True)
             self.lastEntry.setDisabled(True)
         
