@@ -1628,18 +1628,19 @@ class TimeZoneSetupDlg(QDialog, ui_timezonesetup.Ui_TimeZoneSetupDlg):
         self.mapper = QDataWidgetMapper(self)
         self.mapper.setSubmitPolicy(QDataWidgetMapper.ManualSubmit)
         self.mapper.setModel(self.model)
+        self.mapper.setItemDelegate(QSqlRelationalDelegate(self))        
         self.mapper.addMapping(self.timezoneID_display, TimeZoneSetupDlg.ID)
         
          # set up combobox that links to Confederations table
         confedModel = self.model.relationModel(TimeZoneSetupDlg.CONFED_ID)
         confedModel.setSort(CONFED_NAME, Qt.AscendingOrder)
-        self.confedSelect.setModel(confedModel)
-        self.confedSelect.setModelColumn(confedModel.fieldIndex("confed_name"))        
+        self.tzRegionSelect.setModel(confedModel)
+        self.tzRegionSelect.setModelColumn(confedModel.fieldIndex("confed_name"))        
         self.mapper.addMapping(self.tzRegionSelect, TimeZoneSetupDlg.CONFED_ID)
         
         # mapping other widgets to form
         self.mapper.addMapping(self.tzNameEdit, TimeZoneSetupDlg.NAME)
-        self.mapper.addMapping(self.tzRegionSelect, TimeZoneSetupDlg.OFFSET)
+        self.mapper.addMapping(self.tzOffsetEdit, TimeZoneSetupDlg.OFFSET)
         self.mapper.toFirst()
         
         # disable First and Previous Entry buttons
@@ -1732,7 +1733,7 @@ class TimeZoneSetupDlg(QDialog, ui_timezonesetup.Ui_TimeZoneSetupDlg):
         
         self.nextEntry.setDisabled(True)
         self.lastEntry.setDisabled(True)
-        self.tzOffsetEditEdit.setText("0.00")
+        self.tzOffsetEdit.setText("0.00")
         self.tzNameEdit.setFocus()
         
     def deleteRecord(self):
