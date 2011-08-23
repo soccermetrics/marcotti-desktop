@@ -148,7 +148,7 @@
   <widget class="Line" name="line">
    <property name="geometry">
     <rect>
-     <x>430</x>
+     <x>450</x>
      <y>10</y>
      <width>20</width>
      <height>291</height>
@@ -161,7 +161,7 @@
   <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
-     <x>450</x>
+     <x>470</x>
      <y>80</y>
      <width>281</width>
      <height>121</height>
@@ -190,6 +190,9 @@
       </property>
       <property name="maxLength">
        <number>5</number>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
       </property>
      </widget>
     </item>
@@ -225,13 +228,16 @@ p, li { white-space: pre-wrap; }
        <string>Geographic latitude of venue (decimal degrees)</string>
       </property>
       <property name="inputMask">
-       <string>#000.000000; </string>
+       <string/>
       </property>
       <property name="text">
-       <string>-000.000000</string>
+       <string/>
       </property>
       <property name="maxLength">
        <number>11</number>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
       </property>
      </widget>
     </item>
@@ -267,10 +273,10 @@ p, li { white-space: pre-wrap; }
        <string>Geographic longitude of venue (decimal degrees)</string>
       </property>
       <property name="inputMask">
-       <string>#000.000000; </string>
+       <string/>
       </property>
       <property name="text">
-       <string>-000.000000</string>
+       <string/>
       </property>
       <property name="maxLength">
        <number>11</number>
@@ -446,7 +452,7 @@ p, li { white-space: pre-wrap; }
   <widget class="QPushButton" name="venueHistoryButton">
    <property name="geometry">
     <rect>
-     <x>490</x>
+     <x>500</x>
      <y>230</y>
      <width>210</width>
      <height>30</height>
@@ -471,12 +477,12 @@ p, li { white-space: pre-wrap; }
     <string>Surface/Capacity History</string>
    </property>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>19</x>
      <y>17</y>
-     <width>398</width>
+     <width>431</width>
      <height>281</height>
     </rect>
    </property>
