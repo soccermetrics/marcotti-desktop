@@ -67,7 +67,12 @@ class CompEntryDlg(QDialog, ui_competitionentry.Ui_CompEntryDlg):
         
         # disable First and Previous Entry buttons
         self.firstEntry.setDisabled(True)
-        self.prevEntry.setDisabled(True)        
+        self.prevEntry.setDisabled(True) 
+        
+        # disable Next and Last Entry buttons if less than two records
+        if self.model.rowCount() < 2:
+            self.nextEntry.setDisabled(True)
+            self.lastEntry.setDisabled(True)
         
         # configure signal/slot
         self.connect(self.firstEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.FIRST))
@@ -254,7 +259,12 @@ class TeamEntryDlg(QDialog, ui_teamentry.Ui_TeamEntryDlg):
         # disable First and Previous Entry buttons
         self.firstEntry.setDisabled(True)
         self.prevEntry.setDisabled(True)
-        
+
+        # disable Next and Last Entry buttons if less than two records
+        if self.model.rowCount() < 2:
+            self.nextEntry.setDisabled(True)
+            self.lastEntry.setDisabled(True)
+
         # configure signal/slot
         self.connect(self.firstEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.FIRST))
         self.connect(self.prevEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.PREV))
@@ -288,24 +298,21 @@ class TeamEntryDlg(QDialog, ui_teamentry.Ui_TeamEntryDlg):
                 self.lastEntry.setEnabled(True)
             row = 0
         elif where == Constants.PREV:
-            if row <= 1:
+            row -= 1
+            if not self.nextEntry.isEnabled():
+                    self.nextEntry.setEnabled(True)
+                    self.lastEntry.setEnabled(True)   
+            if row == 0:
                 self.firstEntry.setDisabled(True)
                 self.prevEntry.setDisabled(True)                
-                row = 0
-            else:
-                if not self.nextEntry.isEnabled():
-                    self.nextEntry.setEnabled(True)
-                    self.lastEntry.setEnabled(True)                    
-                row -= 1
         elif where == Constants.NEXT:
             row += 1
             if not self.prevEntry.isEnabled():
                 self.prevEntry.setEnabled(True)
                 self.firstEntry.setEnabled(True)
-            if row >= self.model.rowCount() - 1:
+            if row == self.model.rowCount() - 1:
                 self.nextEntry.setDisabled(True)
                 self.lastEntry.setDisabled(True)
-                row = self.model.rowCount() - 1
         elif where == Constants.LAST:
             self.nextEntry.setDisabled(True)
             self.lastEntry.setDisabled(True)
@@ -342,6 +349,9 @@ class TeamEntryDlg(QDialog, ui_teamentry.Ui_TeamEntryDlg):
         
         self.nextEntry.setDisabled(True)
         self.lastEntry.setDisabled(True)
+        if self.model.rowCount() > 1:
+            self.firstEntry.setEnabled(True)
+            self.prevEntry.setEnabled(True)
         
         self.teamConfedSelect.setCurrentIndex(-1)
         self.teamCountrySelect.setCurrentIndex(-1)
@@ -513,6 +523,11 @@ class VenueEntryDlg(QDialog, ui_venueentry.Ui_VenueEntryDlg):
         self.firstEntry.setDisabled(True)
         self.prevEntry.setDisabled(True)       
 
+        # disable Next and Last Entry buttons if less than two records
+        if self.model.rowCount() < 2:
+            self.nextEntry.setDisabled(True)
+            self.lastEntry.setDisabled(True)
+            
          # configure signal/slot
         self.connect(self.firstEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.FIRST))
         self.connect(self.prevEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.PREV))
