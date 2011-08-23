@@ -1628,7 +1628,9 @@ class TimeZoneSetupDlg(QDialog, ui_timezonesetup.Ui_TimeZoneSetupDlg):
         self.mapper = QDataWidgetMapper(self)
         self.mapper.setSubmitPolicy(QDataWidgetMapper.ManualSubmit)
         self.mapper.setModel(self.model)
-        self.mapper.setItemDelegate(QSqlRelationalDelegate(self))        
+        localDelegate = GenericDelegate(self)
+        localDelegate.insertColumnDelegate(TimeZoneSetupDlg.OFFSET, UTCOffsetDelegate())
+        self.mapper.setItemDelegate(localDelegate)        
         self.mapper.addMapping(self.timezoneID_display, TimeZoneSetupDlg.ID)
         
          # set up combobox that links to Confederations table
