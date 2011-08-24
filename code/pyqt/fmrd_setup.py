@@ -76,6 +76,14 @@ class CardSetupDlg(QDialog, ui_cardsetup.Ui_CardSetupDlg):
         self.mapper.addMapping(self.cardtypeEdit, CardSetupDlg.DESC)
         self.mapper.toFirst()
         
+        # disable all fields if no records in database table
+        if not self.model.rowCount():
+            self.cardID_display.setDisabled(True)
+            self.cardtypeEdit.setDisabled(True)
+            # disable save and delete buttons
+            self.saveEntry.setDisabled(True)
+            self.deleteEntry.setDisabled(True)
+        
         # disable First and Previous Entry buttons
         self.firstEntry.setDisabled(True)
         self.prevEntry.setDisabled(True)
@@ -157,6 +165,10 @@ class CardSetupDlg(QDialog, ui_cardsetup.Ui_CardSetupDlg):
             row = self.model.rowCount() - 1
         self.mapper.setCurrentIndex(row)
         
+        # enable Delete button if at least one record
+        if self.model.rowCount():
+            self.deleteEntry.setEnabled(True)        
+        
     def addRecord(self):
         """Adds new record at end of entry list."""                
         # save current index if valid
@@ -188,8 +200,24 @@ class CardSetupDlg(QDialog, ui_cardsetup.Ui_CardSetupDlg):
         # assign value to cardID field
         self.cardID_display.setText(card_id)
         
+        # disable next/last navigation buttons
         self.nextEntry.setDisabled(True)
-        self.lastEntry.setDisabled(True)        
+        self.lastEntry.setDisabled(True)
+        # enable first/previous navigation buttons
+        if self.model.rowCount() > 1:
+            self.prevEntry.setEnabled(True)
+            self.firstEntry.setEnabled(True)
+            # enable Delete button if at least one record
+            self.deleteEntry.setEnabled(True)
+            
+        # enable Save button
+        if not self.saveEntry.isEnabled():
+            self.saveEntry.setEnabled(True)
+        
+        # enable form widgets
+        self.cardID_display.setEnabled(True)
+        self.cardtypeEdit.setEnabled(True)
+        # initialize form widgets
         self.cardtypeEdit.setFocus()
     
     def deleteRecord(self):
@@ -218,6 +246,9 @@ class CardSetupDlg(QDialog, ui_cardsetup.Ui_CardSetupDlg):
                 if row + 1 >= self.model.rowCount():
                     row = self.model.rowCount() - 1
                 self.mapper.setCurrentIndex(row) 
+                # disable Delete button if no records in database
+                if not self.model.rowCount():
+                    self.deleteEntry.setDisabled(True)                
         else:
             DeletionErrorPrompt(self)
             
@@ -267,6 +298,14 @@ class FoulSetupDlg(QDialog, ui_foulsetup.Ui_FoulSetupDlg):
         self.mapper.addMapping(self.foulID_display, FoulSetupDlg.ID)
         self.mapper.addMapping(self.foulDescEdit, FoulSetupDlg.DESC)
         self.mapper.toFirst()
+        
+        # disable all fields if no records in database table
+        if not self.model.rowCount():
+            self.foulID_display.setDisabled(True)
+            self.foulDescEdit.setDisabled(True)
+            # disable save and delete buttons
+            self.saveEntry.setDisabled(True)
+            self.deleteEntry.setDisabled(True)
         
         # disable First and Previous Entry buttons
         self.firstEntry.setDisabled(True)
@@ -332,6 +371,10 @@ class FoulSetupDlg(QDialog, ui_foulsetup.Ui_FoulSetupDlg):
             row = self.model.rowCount() - 1
         self.mapper.setCurrentIndex(row)
         
+        # enable Delete button if at least one record
+        if self.model.rowCount():
+            self.deleteEntry.setEnabled(True)        
+        
     def addRecord(self):
         """Adds new record at end of entry list."""                        
         # save current index if valid
@@ -357,8 +400,25 @@ class FoulSetupDlg(QDialog, ui_foulsetup.Ui_FoulSetupDlg):
         # assign value to foulID field
         self.foulID_display.setText(foul_id)
         
+        # disable next/last navigation buttons
         self.nextEntry.setDisabled(True)
         self.lastEntry.setDisabled(True)
+        # enable first/previous navigation buttons
+        if self.model.rowCount() > 1:
+            self.prevEntry.setEnabled(True)
+            self.firstEntry.setEnabled(True)
+            # enable Delete button if at least one record
+            self.deleteEntry.setEnabled(True)
+            
+        # enable Save button
+        if not self.saveEntry.isEnabled():
+            self.saveEntry.setEnabled(True)
+        
+        # enable form widgets
+        self.foulID_display.setEnabled(True)
+        self.foulDescEdit.setEnabled(True)
+        
+        # initialize form widgets
         self.foulDescEdit.setFocus()
     
     def deleteRecord(self):
@@ -389,6 +449,9 @@ class FoulSetupDlg(QDialog, ui_foulsetup.Ui_FoulSetupDlg):
                 if row + 1 >= self.model.rowCount():
                     row = self.model.rowCount() - 1
                 self.mapper.setCurrentIndex(row) 
+                # disable Delete button if no records in database
+                if not self.model.rowCount():
+                    self.deleteEntry.setDisabled(True)                
         else:
             DeletionErrorPrompt(self)
         
@@ -419,6 +482,14 @@ class PenSetupDlg(QDialog, ui_penoutcomesetup.Ui_PenSetupDlg):
         self.mapper.addMapping(self.penOutcomeEdit, PenSetupDlg.DESC)
         self.mapper.toFirst()
         
+        # disable all fields if no records in database table
+        if not self.model.rowCount():
+            self.penoutcomeID_display.setDisabled(True)
+            self.penOutcomeEdit.setDisabled(True)
+            # disable save and delete buttons
+            self.saveEntry.setDisabled(True)
+            self.deleteEntry.setDisabled(True)
+        
         # disable First and Previous Entry buttons
         self.firstEntry.setDisabled(True)
         self.prevEntry.setDisabled(True)
@@ -484,6 +555,10 @@ class PenSetupDlg(QDialog, ui_penoutcomesetup.Ui_PenSetupDlg):
             row = self.model.rowCount() - 1
         self.mapper.setCurrentIndex(row)
         
+        # enable Delete button if at least one record
+        if self.model.rowCount():
+            self.deleteEntry.setEnabled(True)        
+        
     def addRecord(self):
         """Adds new record at end of entry list."""                        
         # save current index if valid
@@ -509,8 +584,25 @@ class PenSetupDlg(QDialog, ui_penoutcomesetup.Ui_PenSetupDlg):
         # assign value to penOutcomeID field
         self.penoutcomeID_display.setText(outcome_id)
         
+        # disable next/last navigation buttons
         self.nextEntry.setDisabled(True)
         self.lastEntry.setDisabled(True)
+        # enable first/previous navigation buttons
+        if self.model.rowCount() > 1:
+            self.prevEntry.setEnabled(True)
+            self.firstEntry.setEnabled(True)
+            # enable Delete button if at least one record
+            self.deleteEntry.setEnabled(True)
+            
+        # enable Save button
+        if not self.saveEntry.isEnabled():
+            self.saveEntry.setEnabled(True)
+        
+        # enable form widgets
+        self.penoutcomeID_display.setEnabled(True)
+        self.penOutcomeEdit.setEnabled(True)
+        
+        # initialize form widgets
         self.penOutcomeEdit.setFocus()
     
     def deleteRecord(self):
@@ -539,6 +631,9 @@ class PenSetupDlg(QDialog, ui_penoutcomesetup.Ui_PenSetupDlg):
                 if row + 1 >= self.model.rowCount():
                     row = self.model.rowCount() - 1
                 self.mapper.setCurrentIndex(row) 
+                # disable Delete button if no records in database
+                if not self.model.rowCount():
+                    self.deleteEntry.setDisabled(True)                
         else:
             DeletionErrorPrompt(self)
 
@@ -569,6 +664,14 @@ class GoalEventSetupDlg(QDialog, ui_goaleventsetup.Ui_GoalEventSetupDlg):
         self.mapper.addMapping(self.goaleventEdit, GoalEventSetupDlg.DESC)
         self.mapper.toFirst()
         
+        # disable all fields if no records in database table
+        if not self.model.rowCount():
+            self.goaleventID_display.setDisabled(True)
+            self.goaleventEdit.setDisabled(True)
+            # disable save and delete buttons
+            self.saveEntry.setDisabled(True)
+            self.deleteEntry.setDisabled(True)
+        
         # disable First and Previous Entry buttons
         self.firstEntry.setDisabled(True)
         self.prevEntry.setDisabled(True)
@@ -634,6 +737,10 @@ class GoalEventSetupDlg(QDialog, ui_goaleventsetup.Ui_GoalEventSetupDlg):
             row = self.model.rowCount() - 1
         self.mapper.setCurrentIndex(row)
         
+        # enable Delete button if at least one record
+        if self.model.rowCount():
+            self.deleteEntry.setEnabled(True)        
+        
     def addRecord(self):        
         """Adds new record at end of entry list."""                        
         # save current index if valid
@@ -659,8 +766,25 @@ class GoalEventSetupDlg(QDialog, ui_goaleventsetup.Ui_GoalEventSetupDlg):
         # assign value to GoalEventID field
         self.goaleventID_display.setText(event_id)
         
+        # disable next/last navigation buttons
         self.nextEntry.setDisabled(True)
         self.lastEntry.setDisabled(True)
+        # enable first/previous navigation buttons
+        if self.model.rowCount() > 1:
+            self.prevEntry.setEnabled(True)
+            self.firstEntry.setEnabled(True)
+            # enable Delete button if at least one record
+            self.deleteEntry.setEnabled(True)
+            
+        # enable Save button
+        if not self.saveEntry.isEnabled():
+            self.saveEntry.setEnabled(True)
+        
+        # enable form widgets
+        self.goaleventID_display.setEnabled(True)
+        self.goaleventEdit.setEnabled(True)
+        
+        # initialize form widgets
         self.goaleventEdit.setFocus()
     
     def deleteRecord(self):
@@ -689,6 +813,9 @@ class GoalEventSetupDlg(QDialog, ui_goaleventsetup.Ui_GoalEventSetupDlg):
                 if row + 1 >= self.model.rowCount():
                     row = self.model.rowCount() - 1
                 self.mapper.setCurrentIndex(row) 
+                # disable Delete button if no records in database
+                if not self.model.rowCount():
+                    self.deleteEntry.setDisabled(True)                
         else:
             DeletionErrorPrompt(self)
 
@@ -718,6 +845,14 @@ class GoalStrikeSetupDlg(QDialog, ui_goalstrikesetup.Ui_GoalStrikeSetupDlg):
         self.mapper.addMapping(self.goalstrikeEdit, GoalStrikeSetupDlg.DESC)
         self.mapper.toFirst()
         
+        # disable all fields if no records in database table
+        if not self.model.rowCount():
+            self.goalstrikeID_display.setDisabled(True)
+            self.goalstrikeEdit.setDisabled(True)
+            # disable save and delete buttons
+            self.saveEntry.setDisabled(True)
+            self.deleteEntry.setDisabled(True)
+        
         # disable First and Previous Entry buttons
         self.firstEntry.setDisabled(True)
         self.prevEntry.setDisabled(True)
@@ -783,6 +918,10 @@ class GoalStrikeSetupDlg(QDialog, ui_goalstrikesetup.Ui_GoalStrikeSetupDlg):
             row = self.model.rowCount() - 1
         self.mapper.setCurrentIndex(row)
         
+        # enable Delete button if at least one record
+        if self.model.rowCount():
+            self.deleteEntry.setEnabled(True)        
+        
     def addRecord(self):
         """Adds new record at end of entry list."""                
         # save current index if valid
@@ -808,8 +947,25 @@ class GoalStrikeSetupDlg(QDialog, ui_goalstrikesetup.Ui_GoalStrikeSetupDlg):
         # assign value to goalStrikeID field
         self.goalstrikeID_display.setText(strike_id)
         
+        # disable next/last navigation buttons
         self.nextEntry.setDisabled(True)
         self.lastEntry.setDisabled(True)
+        # enable first/previous navigation buttons
+        if self.model.rowCount() > 1:
+            self.prevEntry.setEnabled(True)
+            self.firstEntry.setEnabled(True)
+            # enable Delete button if at least one record
+            self.deleteEntry.setEnabled(True)
+            
+        # enable Save button
+        if not self.saveEntry.isEnabled():
+            self.saveEntry.setEnabled(True)
+        
+        # enable form widgets
+        self.goalstrikeID_display.setEnabled(True)
+        self.goalstrikeEdit.setEnabled(True)
+        
+        # initialize form widgets
         self.goalstrikeEdit.setFocus()
     
     def deleteRecord(self):
@@ -838,6 +994,9 @@ class GoalStrikeSetupDlg(QDialog, ui_goalstrikesetup.Ui_GoalStrikeSetupDlg):
                 if row + 1 >= self.model.rowCount():
                     row = self.model.rowCount() - 1
                 self.mapper.setCurrentIndex(row) 
+                # disable Delete button if no records in database
+                if not self.model.rowCount():
+                    self.deleteEntry.setDisabled(True)                
         else:
             DeletionErrorPrompt(self)
         
@@ -868,6 +1027,14 @@ class FieldPosSetupDlg(QDialog, ui_fieldpossetup.Ui_FieldPosSetupDlg):
         self.mapper.addMapping(self.fieldposEdit, FieldPosSetupDlg.DESC)
         self.mapper.toFirst()
         
+        # disable all fields if no records in database table
+        if not self.model.rowCount():
+            self.fieldposID_display.setDisabled(True)
+            self.fieldposEdit.setDisabled(True)
+            # disable save and delete buttons
+            self.saveEntry.setDisabled(True)
+            self.deleteEntry.setDisabled(True)
+            
         # disable First and Previous Entry buttons
         self.firstEntry.setDisabled(True)
         self.prevEntry.setDisabled(True)
@@ -933,6 +1100,10 @@ class FieldPosSetupDlg(QDialog, ui_fieldpossetup.Ui_FieldPosSetupDlg):
             row = self.model.rowCount() - 1
         self.mapper.setCurrentIndex(row)
         
+        # enable Delete button if at least one record
+        if self.model.rowCount():
+            self.deleteEntry.setEnabled(True)        
+        
     def addRecord(self):
         """Adds new record at end of entry list."""                
         # save current index if valid
@@ -958,8 +1129,25 @@ class FieldPosSetupDlg(QDialog, ui_fieldpossetup.Ui_FieldPosSetupDlg):
         # assign value to fieldposID field
         self.fieldposID_display.setText(field_id)
         
+        # disable next/last navigation buttons
         self.nextEntry.setDisabled(True)
         self.lastEntry.setDisabled(True)
+        # enable first/previous navigation buttons
+        if self.model.rowCount() > 1:
+            self.prevEntry.setEnabled(True)
+            self.firstEntry.setEnabled(True)
+            # enable Delete button if at least one record
+            self.deleteEntry.setEnabled(True)
+            
+        # enable Save button
+        if not self.saveEntry.isEnabled():
+            self.saveEntry.setEnabled(True)
+        
+        # enable form widgets
+        self.fieldposID_display.setEnabled(True)
+        self.fieldposEdit.setEnabled(True)
+        
+        # initialize form widgets
         self.fieldposEdit.setFocus()
     
     def deleteRecord(self):
@@ -988,6 +1176,9 @@ class FieldPosSetupDlg(QDialog, ui_fieldpossetup.Ui_FieldPosSetupDlg):
                 if row + 1 >= self.model.rowCount():
                     row = self.model.rowCount() - 1
                 self.mapper.setCurrentIndex(row) 
+                # disable Delete button if no records in database
+                if not self.model.rowCount():
+                    self.deleteEntry.setDisabled(True)                                
         else:
             DeletionErrorPrompt(self)
         
@@ -1021,6 +1212,14 @@ class FlankPosSetupDlg(QDialog, ui_flankpossetup.Ui_FlankPosSetupDlg):
         self.mapper.addMapping(self.flankposEdit, FlankPosSetupDlg.DESC)
         self.mapper.toFirst()
         
+        # disable all fields if no records in database table
+        if not self.model.rowCount():
+            self.flankposID_display.setDisabled(True)
+            self.flankposEdit.setDisabled(True)
+            # disable save and delete buttons
+            self.saveEntry.setDisabled(True)
+            self.deleteEntry.setDisabled(True)
+            
         # disable First and Previous Entry buttons
         self.firstEntry.setDisabled(True)
         self.prevEntry.setDisabled(True)
@@ -1085,7 +1284,11 @@ class FlankPosSetupDlg(QDialog, ui_flankpossetup.Ui_FlankPosSetupDlg):
                 self.firstEntry.setEnabled(True)
             row = self.model.rowCount() - 1
         self.mapper.setCurrentIndex(row)
-        
+
+        # enable Delete button if at least one record
+        if self.model.rowCount():
+            self.deleteEntry.setEnabled(True)        
+
     def addRecord(self):
         """Adds new record at end of entry list."""                
         # save current index if valid
@@ -1111,8 +1314,25 @@ class FlankPosSetupDlg(QDialog, ui_flankpossetup.Ui_FlankPosSetupDlg):
         # assign value to flankposID field
         self.flankposID_display.setText(flank_id)
         
+        # disable next/last navigation buttons
         self.nextEntry.setDisabled(True)
         self.lastEntry.setDisabled(True)
+        # enable first/previous navigation buttons
+        if self.model.rowCount() > 1:
+            self.prevEntry.setEnabled(True)
+            self.firstEntry.setEnabled(True)
+            # enable Delete button if at least one record
+            self.deleteEntry.setEnabled(True)
+            
+        # enable Save button
+        if not self.saveEntry.isEnabled():
+            self.saveEntry.setEnabled(True)
+        
+        # enable form widgets
+        self.flankposID_display.setEnabled(True)
+        self.flankposEdit.setEnabled(True)
+        
+        # initialize form widgets
         self.flankposEdit.setFocus()
     
     def deleteRecord(self):
@@ -1141,6 +1361,9 @@ class FlankPosSetupDlg(QDialog, ui_flankpossetup.Ui_FlankPosSetupDlg):
                 if row + 1 >= self.model.rowCount():
                     row = self.model.rowCount() - 1
                 self.mapper.setCurrentIndex(row) 
+                # disable Delete button if no records in database
+                if not self.model.rowCount():
+                    self.deleteEntry.setDisabled(True)                
         else:
             DeletionErrorPrompt(self)
 
@@ -1189,6 +1412,15 @@ class PosSetupDlg(QDialog, ui_positionsetup.Ui_PosSetupDlg):
         self.mapper.addMapping(self.flankposSelect, PosSetupDlg.FLANK_ID)        
         self.mapper.toFirst()         
         
+        # disable all fields if no records in database table
+        if not self.model.rowCount():
+            self.positionID_display.setDisabled(True)
+            self.fieldposSelect.setDisabled(True)
+            self.flankposSelect.setDisabled(True)
+            # disable save and delete buttons
+            self.saveEntry.setDisabled(True)
+            self.deleteEntry.setDisabled(True)
+        
         # disable First and Previous Entry buttons
         self.firstEntry.setDisabled(True)
         self.prevEntry.setDisabled(True)
@@ -1254,6 +1486,10 @@ class PosSetupDlg(QDialog, ui_positionsetup.Ui_PosSetupDlg):
             row = self.model.rowCount() - 1
         self.mapper.setCurrentIndex(row)
         
+        # enable Delete button if at least one record
+        if self.model.rowCount():
+            self.deleteEntry.setEnabled(True)        
+        
     def addRecord(self):
         """Adds new record at end of entry list."""                
         # save current index if valid
@@ -1279,10 +1515,28 @@ class PosSetupDlg(QDialog, ui_positionsetup.Ui_PosSetupDlg):
         # assign value to PositionID field
         self.positionID_display.setText(position_id)
         
+        # disable next/last navigation buttons
         self.nextEntry.setDisabled(True)
-        self.lastEntry.setDisabled(True)        
-        self.countryEdit.setFocus()
-        self.confedSelect.setCurrentIndex(-1)
+        self.lastEntry.setDisabled(True)
+        # enable first/previous navigation buttons
+        if self.model.rowCount() > 1:
+            self.prevEntry.setEnabled(True)
+            self.firstEntry.setEnabled(True)
+            # enable Delete button if at least one record
+            self.deleteEntry.setEnabled(True)
+            
+        # enable Save button
+        if not self.saveEntry.isEnabled():
+            self.saveEntry.setEnabled(True)
+        
+        # enable form widgets
+        self.positionID_display.setEnabled(True)
+        self.flankposSelect.setEnabled(True)
+        self.fieldposSelect.setEnabled(True)
+        
+        # initialize form widgets
+        self.fieldposSelect.setCurrentIndex(-1)
+        self.flankposSelect.setCurrentIndex(-1)
         
     def deleteRecord(self):
         """Deletes record from database upon user confirmation.
@@ -1312,6 +1566,9 @@ class PosSetupDlg(QDialog, ui_positionsetup.Ui_PosSetupDlg):
                 if row + 1 >= self.model.rowCount():
                     row = self.model.rowCount() - 1
                 self.mapper.setCurrentIndex(row) 
+                # disable Delete button if no records in database
+                if not self.model.rowCount():
+                    self.deleteEntry.setDisabled(True)                
         else:
             DeletionErrorPrompt(self)
 
@@ -1352,6 +1609,15 @@ class CountrySetupDlg(QDialog, ui_countrysetup.Ui_CountrySetupDlg):
         self.mapper.addMapping(self.confedSelect, CountrySetupDlg.REGION_ID)        
         self.mapper.toFirst()        
        
+        # disable all fields if no records in database table
+        if not self.model.rowCount():
+            self.countryID_display.setDisabled(True)
+            self.confedSelect.setDisabled(True)
+            self.countryEdit.setDisabled(True)
+            # disable save and delete buttons
+            self.saveEntry.setDisabled(True)
+            self.deleteEntry.setDisabled(True)
+            
         # disable First and Previous Entry buttons
         self.firstEntry.setDisabled(True)
         self.prevEntry.setDisabled(True)
@@ -1417,6 +1683,10 @@ class CountrySetupDlg(QDialog, ui_countrysetup.Ui_CountrySetupDlg):
             row = self.model.rowCount() - 1
         self.mapper.setCurrentIndex(row)
         
+        # enable Delete button if at least one record
+        if self.model.rowCount():
+            self.deleteEntry.setEnabled(True)        
+        
     def addRecord(self):
         """Adds new record at end of entry list."""                
         # save current index if valid
@@ -1442,10 +1712,28 @@ class CountrySetupDlg(QDialog, ui_countrysetup.Ui_CountrySetupDlg):
         # assign value to countryID field
         self.countryID_display.setText(country_id)
         
+        # disable next/last navigation buttons
         self.nextEntry.setDisabled(True)
-        self.lastEntry.setDisabled(True)        
-        self.countryEdit.setFocus()
+        self.lastEntry.setDisabled(True)
+        # enable first/previous navigation buttons
+        if self.model.rowCount() > 1:
+            self.prevEntry.setEnabled(True)
+            self.firstEntry.setEnabled(True)
+            # enable Delete button if at least one record
+            self.deleteEntry.setEnabled(True)
+            
+        # enable Save button
+        if not self.saveEntry.isEnabled():
+            self.saveEntry.setEnabled(True)
+        
+        # enable form widgets
+        self.countryID_display.setEnabled(True)
+        self.confedSelect.setEnabled(True)
+        self.countryEdit.setEnabled(True)
+        
+        # initialize data widgets
         self.confedSelect.setCurrentIndex(-1)
+        self.countryEdit.setFocus()
         
     def deleteRecord(self):
         """Deletes record from database upon user confirmation.
@@ -1477,6 +1765,9 @@ class CountrySetupDlg(QDialog, ui_countrysetup.Ui_CountrySetupDlg):
                 if row + 1 >= self.model.rowCount():
                     row = self.model.rowCount() - 1
                 self.mapper.setCurrentIndex(row) 
+                # disable Delete button if no records in database
+                if not self.model.rowCount():
+                    self.deleteEntry.setDisabled(True)                
         else:
             DeletionErrorPrompt(self)
         
@@ -1507,6 +1798,14 @@ class ConfedSetupDlg(QDialog, ui_confederationsetup.Ui_ConfedSetupDlg):
         self.mapper.addMapping(self.confederationEdit, ConfedSetupDlg.NAME)
         self.mapper.toFirst()
         
+        # disable all fields if no records in database table
+        if not self.model.rowCount():
+            self.confedID_display.setDisabled(True)
+            self.confederationEdit.setDisabled(True)
+            # disable save and delete buttons
+            self.saveEntry.setDisabled(True)
+            self.deleteEntry.setDisabled(True)
+            
         # disable First and Previous Entry buttons
         self.firstEntry.setDisabled(True)
         self.prevEntry.setDisabled(True)
@@ -1571,7 +1870,11 @@ class ConfedSetupDlg(QDialog, ui_confederationsetup.Ui_ConfedSetupDlg):
                 self.firstEntry.setEnabled(True)
             row = self.model.rowCount() - 1
         self.mapper.setCurrentIndex(row)
-        
+
+        # enable Delete button if at least one record
+        if self.model.rowCount():
+            self.deleteEntry.setEnabled(True)        
+
     def addRecord(self):
         """Adds new record at end of entry list."""                
         # save current index if valid
@@ -1598,8 +1901,24 @@ class ConfedSetupDlg(QDialog, ui_confederationsetup.Ui_ConfedSetupDlg):
         # assign value to confedID field
         self.confedID_display.setText(confed_id)
         
+        # disable next/last navigation buttons
         self.nextEntry.setDisabled(True)
         self.lastEntry.setDisabled(True)
+        # enable first/previous navigation buttons
+        if self.model.rowCount() > 1:
+            self.prevEntry.setEnabled(True)
+            self.firstEntry.setEnabled(True)
+            # enable Delete button if at least one record
+            self.deleteEntry.setEnabled(True)
+            
+        # enable Save button
+        if not self.saveEntry.isEnabled():
+            self.saveEntry.setEnabled(True)
+        
+        # enable form widgets
+        self.confedID_display.setEnabled(True)
+        self.confederationEdit.setEnabled(True)
+        # initialize form widgets
         self.confederationEdit.setFocus()
         
     def deleteRecord(self):
@@ -1628,6 +1947,9 @@ class ConfedSetupDlg(QDialog, ui_confederationsetup.Ui_ConfedSetupDlg):
                 if row + 1 >= self.model.rowCount():
                     row = self.model.rowCount() - 1
                 self.mapper.setCurrentIndex(row) 
+                # disable Delete button if no records in database
+                if not self.model.rowCount():
+                    self.deleteEntry.setDisabled(True)                
         else:
             DeletionErrorPrompt(self)
 
@@ -1674,6 +1996,16 @@ class TimeZoneSetupDlg(QDialog, ui_timezonesetup.Ui_TimeZoneSetupDlg):
         self.mapper.addMapping(self.tzOffsetEdit, TimeZoneSetupDlg.OFFSET)
         self.mapper.toFirst()
         
+        # disable all fields if no records in database table
+        if not self.model.rowCount():
+            self.timezoneID_display.setDisabled(True)
+            self.tzNameEdit.setDisabled(True)
+            self.tzRegionSelect.setDisabled(True)
+            self.tzOffsetEdit.setDisabled(True)            
+            # disable save and delete buttons
+            self.saveEntry.setDisabled(True)
+            self.deleteEntry.setDisabled(True)
+        
         # disable First and Previous Entry buttons
         self.firstEntry.setDisabled(True)
         self.prevEntry.setDisabled(True)
@@ -1739,6 +2071,10 @@ class TimeZoneSetupDlg(QDialog, ui_timezonesetup.Ui_TimeZoneSetupDlg):
             row = self.model.rowCount() - 1
         self.mapper.setCurrentIndex(row)
         
+        # enable Delete button if at least one record
+        if self.model.rowCount():
+            self.deleteEntry.setEnabled(True)        
+        
     def addRecord(self):
         """Adds new record at end of entry list."""                
         # save current index if valid
@@ -1765,9 +2101,29 @@ class TimeZoneSetupDlg(QDialog, ui_timezonesetup.Ui_TimeZoneSetupDlg):
         # assign value to confedID field
         self.timezoneID_display.setText(timezone_id)
         
+        # disable next/last navigation buttons
         self.nextEntry.setDisabled(True)
         self.lastEntry.setDisabled(True)
+        # enable first/previous navigation buttons
+        if self.model.rowCount() > 1:
+            self.prevEntry.setEnabled(True)
+            self.firstEntry.setEnabled(True)
+            # enable Delete button if at least one record
+            self.deleteEntry.setEnabled(True)
+            
+        # enable Save button
+        if not self.saveEntry.isEnabled():
+            self.saveEntry.setEnabled(True)
+        
+        # enable form widgets
+        self.timezoneID_display.setEnabled(True)
+        self.tzNameEdit.setEnabled(True)
+        self.tzRegionSelect.setEnabled(True)
+        self.tzOffsetEdit.setEnabled(True)
+        
+        # initialize form widgets
         self.tzOffsetEdit.setText("0.00")
+        self.tzRegionSelect.setCurrentIndex(-1)
         self.tzNameEdit.setFocus()
         
     def deleteRecord(self):
@@ -1796,6 +2152,9 @@ class TimeZoneSetupDlg(QDialog, ui_timezonesetup.Ui_TimeZoneSetupDlg):
                 if row + 1 >= self.model.rowCount():
                     row = self.model.rowCount() - 1
                 self.mapper.setCurrentIndex(row) 
+                # disable Delete button if no records in database
+                if not self.model.rowCount():
+                    self.deleteEntry.setDisabled(True)                
         else:
             DeletionErrorPrompt(self)
 
@@ -1826,6 +2185,14 @@ class VenueSurfaceSetupDlg(QDialog, ui_venuesurfacesetup.Ui_VenueSurfaceSetupDlg
         self.mapper.addMapping(self.vensurfNameEdit, VenueSurfaceSetupDlg.DESC)
         self.mapper.toFirst()
         
+        # disable all fields if no records in database table
+        if not self.model.rowCount():
+            self.vensurfID_display.setDisabled(True)
+            self.vensurfNameEdit.setDisabled(True)
+            # disable save and delete buttons
+            self.saveEntry.setDisabled(True)
+            self.deleteEntry.setDisabled(True)
+        
         # disable First and Previous Entry buttons
         self.firstEntry.setDisabled(True)
         self.prevEntry.setDisabled(True)
@@ -1891,6 +2258,10 @@ class VenueSurfaceSetupDlg(QDialog, ui_venuesurfacesetup.Ui_VenueSurfaceSetupDlg
             row = self.model.rowCount() - 1
         self.mapper.setCurrentIndex(row)
         
+        # enable Delete button if at least one record
+        if self.model.rowCount():
+            self.deleteEntry.setEnabled(True)        
+        
     def addRecord(self):
         """Adds new record at end of entry list."""                
         # save current index if valid
@@ -1916,8 +2287,25 @@ class VenueSurfaceSetupDlg(QDialog, ui_venuesurfacesetup.Ui_VenueSurfaceSetupDlg
         # assign value to SurfaceID field
         self.vensurfID_display.setText(surface_id)
         
+        # disable next/last navigation buttons
         self.nextEntry.setDisabled(True)
-        self.lastEntry.setDisabled(True)        
+        self.lastEntry.setDisabled(True)
+        # enable first/previous navigation buttons
+        if self.model.rowCount() > 1:
+            self.prevEntry.setEnabled(True)
+            self.firstEntry.setEnabled(True)
+            # enable Delete button if at least one record
+            self.deleteEntry.setEnabled(True)
+            
+        # enable Save button
+        if not self.saveEntry.isEnabled():
+            self.saveEntry.setEnabled(True)
+        
+        # enable form widgets
+        self.vensurfID_display.setEnabled(True)
+        self.vensurfNameEdit.setEnabled(True)
+        
+        # initialize form widgets
         self.vensurfNameEdit.setFocus()
     
     def deleteRecord(self):
@@ -1946,6 +2334,9 @@ class VenueSurfaceSetupDlg(QDialog, ui_venuesurfacesetup.Ui_VenueSurfaceSetupDlg
                 if row + 1 >= self.model.rowCount():
                     row = self.model.rowCount() - 1
                 self.mapper.setCurrentIndex(row) 
+                # disable Delete button if no records in database
+                if not self.model.rowCount():
+                    self.deleteEntry.setDisabled(True)                
         else:
             DeletionErrorPrompt(self)
 
@@ -1976,6 +2367,14 @@ class RoundSetupDlg(QDialog, ui_roundsetup.Ui_RoundSetupDlg):
         self.mapper.addMapping(self.rounddescEdit, RoundSetupDlg.DESC)
         self.mapper.toFirst()
         
+        # disable all fields if no records in database table
+        if not self.model.rowCount():
+            self.roundID_display.setDisabled(True)
+            self.rounddescEdit.setDisabled(True)
+            # disable save and delete buttons
+            self.saveEntry.setDisabled(True)
+            self.deleteEntry.setDisabled(True)
+        
         # disable First and Previous Entry buttons
         self.firstEntry.setDisabled(True)
         self.prevEntry.setDisabled(True)
@@ -2041,6 +2440,10 @@ class RoundSetupDlg(QDialog, ui_roundsetup.Ui_RoundSetupDlg):
             row = self.model.rowCount() - 1
         self.mapper.setCurrentIndex(row)
         
+        # enable Delete button if at least one record
+        if self.model.rowCount():
+            self.deleteEntry.setEnabled(True)        
+        
     def addRecord(self):
         """Adds new record at end of entry list."""                
         # save current index if valid
@@ -2066,8 +2469,25 @@ class RoundSetupDlg(QDialog, ui_roundsetup.Ui_RoundSetupDlg):
         # assign value to RoundID field
         self.roundID_display.setText(round_id)
         
+        # disable next/last navigation buttons
         self.nextEntry.setDisabled(True)
-        self.lastEntry.setDisabled(True)        
+        self.lastEntry.setDisabled(True)
+        # enable first/previous navigation buttons
+        if self.model.rowCount() > 1:
+            self.prevEntry.setEnabled(True)
+            self.firstEntry.setEnabled(True)
+            # enable Delete button if at least one record
+            self.deleteEntry.setEnabled(True)
+            
+        # enable Save button
+        if not self.saveEntry.isEnabled():
+            self.saveEntry.setEnabled(True)
+        
+        # enable form widgets
+        self.roundID_display.setEnabled(True)
+        self.rounddescEdit.setEnabled(True)
+        
+        # initialize form widgets
         self.rounddescEdit.setFocus()
     
     def deleteRecord(self):
@@ -2096,6 +2516,9 @@ class RoundSetupDlg(QDialog, ui_roundsetup.Ui_RoundSetupDlg):
                 if row + 1 >= self.model.rowCount():
                     row = self.model.rowCount() - 1
                 self.mapper.setCurrentIndex(row) 
+                # disable Delete button if no records in database
+                if not self.model.rowCount():
+                    self.deleteEntry.setDisabled(True)                
         else:
             DeletionErrorPrompt(self)
             
@@ -2126,6 +2549,14 @@ class WxCondSetupDlg(QDialog, ui_weathersetup.Ui_WxCondSetupDlg):
         self.mapper.addMapping(self.wxcondEdit, WxCondSetupDlg.DESC)
         self.mapper.toFirst()
         
+        # disable all fields if no records in database table
+        if not self.model.rowCount():
+            self.weatherID_display.setDisabled(True)
+            self.wxcondEdit.setDisabled(True)
+            # disable save and delete buttons
+            self.saveEntry.setDisabled(True)
+            self.deleteEntry.setDisabled(True)
+        
         # disable First and Previous Entry buttons
         self.firstEntry.setDisabled(True)
         self.prevEntry.setDisabled(True)
@@ -2191,6 +2622,10 @@ class WxCondSetupDlg(QDialog, ui_weathersetup.Ui_WxCondSetupDlg):
             row = self.model.rowCount() - 1
         self.mapper.setCurrentIndex(row)
         
+        # enable Delete button if at least one record
+        if self.model.rowCount():
+            self.deleteEntry.setEnabled(True)        
+        
     def addRecord(self):
         """Adds new record at end of entry list."""                
         # save current index if valid
@@ -2216,8 +2651,25 @@ class WxCondSetupDlg(QDialog, ui_weathersetup.Ui_WxCondSetupDlg):
         # assign value to WeatherID field
         self.weatherID_display.setText(weather_id)
         
+        # disable next/last navigation buttons
         self.nextEntry.setDisabled(True)
         self.lastEntry.setDisabled(True)
+        # enable first/previous navigation buttons
+        if self.model.rowCount() > 1:
+            self.prevEntry.setEnabled(True)
+            self.firstEntry.setEnabled(True)
+            # enable Delete button if at least one record
+            self.deleteEntry.setEnabled(True)
+            
+        # enable Save button
+        if not self.saveEntry.isEnabled():
+            self.saveEntry.setEnabled(True)
+        
+        # enable form widgets
+        self.weatherID_display.setEnabled(True)
+        self.wxcondEdit.setEnabled(True)
+        
+        # initialize form widgets
         self.wxcondEdit.setFocus()
     
     def deleteRecord(self):
@@ -2249,5 +2701,8 @@ class WxCondSetupDlg(QDialog, ui_weathersetup.Ui_WxCondSetupDlg):
                 if row + 1 >= self.model.rowCount():
                     row = self.model.rowCount() - 1
                 self.mapper.setCurrentIndex(row) 
+                # disable Delete button if no records in database
+                if not self.model.rowCount():
+                    self.deleteEntry.setDisabled(True)                
         else:
             DeletionErrorPrompt(self)
