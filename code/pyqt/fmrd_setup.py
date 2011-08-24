@@ -132,15 +132,13 @@ class CardSetupDlg(QDialog, ui_cardsetup.Ui_CardSetupDlg):
                 self.lastEntry.setEnabled(True)
             row = 0
         elif where == Constants.PREV:
-            if row <= 1:
+            row -= 1
+            if not self.nextEntry.isEnabled():
+                    self.nextEntry.setEnabled(True)
+                    self.lastEntry.setEnabled(True)   
+            if row == 0:
                 self.firstEntry.setDisabled(True)
                 self.prevEntry.setDisabled(True)                
-                row = 0
-            else:
-                if not self.nextEntry.isEnabled():
-                    self.nextEntry.setEnabled(True)
-                    self.lastEntry.setEnabled(True)                    
-                row -= 1
         elif where == Constants.NEXT:
             row += 1
             if not self.prevEntry.isEnabled():
@@ -301,7 +299,6 @@ class FoulSetupDlg(QDialog, ui_foulsetup.Ui_FoulSetupDlg):
         row = self.mapper.currentIndex()
         if not self.mapper.submit():
             MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
-
         if where == Constants.FIRST:
             self.firstEntry.setDisabled(True)
             self.prevEntry.setDisabled(True)
@@ -310,15 +307,13 @@ class FoulSetupDlg(QDialog, ui_foulsetup.Ui_FoulSetupDlg):
                 self.lastEntry.setEnabled(True)
             row = 0
         elif where == Constants.PREV:
-            if row <= 1:
+            row -= 1
+            if not self.nextEntry.isEnabled():
+                    self.nextEntry.setEnabled(True)
+                    self.lastEntry.setEnabled(True)   
+            if row == 0:
                 self.firstEntry.setDisabled(True)
                 self.prevEntry.setDisabled(True)                
-                row = 0
-            else:
-                if not self.nextEntry.isEnabled():
-                    self.nextEntry.setEnabled(True)
-                    self.lastEntry.setEnabled(True)                    
-                row -= 1
         elif where == Constants.NEXT:
             row += 1
             if not self.prevEntry.isEnabled():
@@ -464,15 +459,13 @@ class PenSetupDlg(QDialog, ui_penoutcomesetup.Ui_PenSetupDlg):
                 self.lastEntry.setEnabled(True)
             row = 0
         elif where == Constants.PREV:
-            if row <= 1:
+            row -= 1
+            if not self.nextEntry.isEnabled():
+                    self.nextEntry.setEnabled(True)
+                    self.lastEntry.setEnabled(True)   
+            if row == 0:
                 self.firstEntry.setDisabled(True)
                 self.prevEntry.setDisabled(True)                
-                row = 0
-            else:
-                if not self.nextEntry.isEnabled():
-                    self.nextEntry.setEnabled(True)
-                    self.lastEntry.setEnabled(True)                    
-                row -= 1
         elif where == Constants.NEXT:
             row += 1
             if not self.prevEntry.isEnabled():
@@ -616,15 +609,13 @@ class GoalEventSetupDlg(QDialog, ui_goaleventsetup.Ui_GoalEventSetupDlg):
                 self.lastEntry.setEnabled(True)
             row = 0
         elif where == GoalEventSetupDlg.PREV:
-            if row <= 1:
+            row -= 1
+            if not self.nextEntry.isEnabled():
+                    self.nextEntry.setEnabled(True)
+                    self.lastEntry.setEnabled(True)   
+            if row == 0:
                 self.firstEntry.setDisabled(True)
                 self.prevEntry.setDisabled(True)                
-                row = 0
-            else:
-                if not self.nextEntry.isEnabled():
-                    self.nextEntry.setEnabled(True)
-                    self.lastEntry.setEnabled(True)                    
-                row -= 1
         elif where == GoalEventSetupDlg.NEXT:
             row += 1
             if not self.prevEntry.isEnabled():
@@ -767,15 +758,13 @@ class GoalStrikeSetupDlg(QDialog, ui_goalstrikesetup.Ui_GoalStrikeSetupDlg):
                 self.lastEntry.setEnabled(True)
             row = 0
         elif where == Constants.PREV:
-            if row <= 1:
+            row -= 1
+            if not self.nextEntry.isEnabled():
+                    self.nextEntry.setEnabled(True)
+                    self.lastEntry.setEnabled(True)   
+            if row == 0:
                 self.firstEntry.setDisabled(True)
                 self.prevEntry.setDisabled(True)                
-                row = 0
-            else:
-                if not self.nextEntry.isEnabled():
-                    self.nextEntry.setEnabled(True)
-                    self.lastEntry.setEnabled(True)                    
-                row -= 1
         elif where == Constants.NEXT:
             row += 1
             if not self.prevEntry.isEnabled():
@@ -919,15 +908,13 @@ class FieldPosSetupDlg(QDialog, ui_fieldpossetup.Ui_FieldPosSetupDlg):
                 self.lastEntry.setEnabled(True)
             row = 0
         elif where == Constants.PREV:
-            if row <= 1:
+            row -= 1
+            if not self.nextEntry.isEnabled():
+                    self.nextEntry.setEnabled(True)
+                    self.lastEntry.setEnabled(True)   
+            if row == 0:
                 self.firstEntry.setDisabled(True)
                 self.prevEntry.setDisabled(True)                
-                row = 0
-            else:
-                if not self.nextEntry.isEnabled():
-                    self.nextEntry.setEnabled(True)
-                    self.lastEntry.setEnabled(True)                    
-                row -= 1
         elif where == Constants.NEXT:
             row += 1
             if not self.prevEntry.isEnabled():
@@ -1074,15 +1061,13 @@ class FlankPosSetupDlg(QDialog, ui_flankpossetup.Ui_FlankPosSetupDlg):
                 self.lastEntry.setEnabled(True)
             row = 0
         elif where == Constants.PREV:
-            if row <= 1:
+            row -= 1
+            if not self.nextEntry.isEnabled():
+                    self.nextEntry.setEnabled(True)
+                    self.lastEntry.setEnabled(True)   
+            if row == 0:
                 self.firstEntry.setDisabled(True)
                 self.prevEntry.setDisabled(True)                
-                row = 0
-            else:
-                if not self.nextEntry.isEnabled():
-                    self.nextEntry.setEnabled(True)
-                    self.lastEntry.setEnabled(True)                    
-                row -= 1
         elif where == Constants.NEXT:
             row += 1
             if not self.prevEntry.isEnabled():
@@ -1244,15 +1229,13 @@ class PosSetupDlg(QDialog, ui_positionsetup.Ui_PosSetupDlg):
                 self.lastEntry.setEnabled(True)
             row = 0
         elif where == Constants.PREV:
-            if row <= 1:
+            row -= 1
+            if not self.nextEntry.isEnabled():
+                    self.nextEntry.setEnabled(True)
+                    self.lastEntry.setEnabled(True)   
+            if row == 0:
                 self.firstEntry.setDisabled(True)
                 self.prevEntry.setDisabled(True)                
-                row = 0
-            else:
-                if not self.nextEntry.isEnabled():
-                    self.nextEntry.setEnabled(True)
-                    self.lastEntry.setEnabled(True)                    
-                row -= 1
         elif where == Constants.NEXT:
             row += 1
             if not self.prevEntry.isEnabled():
@@ -1409,15 +1392,13 @@ class CountrySetupDlg(QDialog, ui_countrysetup.Ui_CountrySetupDlg):
                 self.lastEntry.setEnabled(True)
             row = 0
         elif where == Constants.PREV:
-            if row <= 1:
+            row -= 1
+            if not self.nextEntry.isEnabled():
+                    self.nextEntry.setEnabled(True)
+                    self.lastEntry.setEnabled(True)   
+            if row == 0:
                 self.firstEntry.setDisabled(True)
                 self.prevEntry.setDisabled(True)                
-                row = 0
-            else:
-                if not self.nextEntry.isEnabled():
-                    self.nextEntry.setEnabled(True)
-                    self.lastEntry.setEnabled(True)                    
-                row -= 1
         elif where == Constants.NEXT:
             row += 1
             if not self.prevEntry.isEnabled():
@@ -1566,15 +1547,13 @@ class ConfedSetupDlg(QDialog, ui_confederationsetup.Ui_ConfedSetupDlg):
                 self.lastEntry.setEnabled(True)
             row = 0
         elif where == Constants.PREV:
-            if row <= 1:
+            row -= 1
+            if not self.nextEntry.isEnabled():
+                    self.nextEntry.setEnabled(True)
+                    self.lastEntry.setEnabled(True)   
+            if row == 0:
                 self.firstEntry.setDisabled(True)
                 self.prevEntry.setDisabled(True)                
-                row = 0
-            else:
-                if not self.nextEntry.isEnabled():
-                    self.nextEntry.setEnabled(True)
-                    self.lastEntry.setEnabled(True)                    
-                row -= 1
         elif where == Constants.NEXT:
             row += 1
             if not self.prevEntry.isEnabled():
@@ -1735,15 +1714,13 @@ class TimeZoneSetupDlg(QDialog, ui_timezonesetup.Ui_TimeZoneSetupDlg):
                 self.lastEntry.setEnabled(True)
             row = 0
         elif where == Constants.PREV:
-            if row <= 1:
+            row -= 1
+            if not self.nextEntry.isEnabled():
+                    self.nextEntry.setEnabled(True)
+                    self.lastEntry.setEnabled(True)   
+            if row == 0:
                 self.firstEntry.setDisabled(True)
                 self.prevEntry.setDisabled(True)                
-                row = 0
-            else:
-                if not self.nextEntry.isEnabled():
-                    self.nextEntry.setEnabled(True)
-                    self.lastEntry.setEnabled(True)                    
-                row -= 1
         elif where == Constants.NEXT:
             row += 1
             if not self.prevEntry.isEnabled():
@@ -1889,15 +1866,13 @@ class VenueSurfaceSetupDlg(QDialog, ui_venuesurfacesetup.Ui_VenueSurfaceSetupDlg
                 self.lastEntry.setEnabled(True)
             row = 0
         elif where == Constants.PREV:
-            if row <= 1:
+            row -= 1
+            if not self.nextEntry.isEnabled():
+                    self.nextEntry.setEnabled(True)
+                    self.lastEntry.setEnabled(True)   
+            if row == 0:
                 self.firstEntry.setDisabled(True)
                 self.prevEntry.setDisabled(True)                
-                row = 0
-            else:
-                if not self.nextEntry.isEnabled():
-                    self.nextEntry.setEnabled(True)
-                    self.lastEntry.setEnabled(True)                    
-                row -= 1
         elif where == Constants.NEXT:
             row += 1
             if not self.prevEntry.isEnabled():
@@ -2041,15 +2016,13 @@ class RoundSetupDlg(QDialog, ui_roundsetup.Ui_RoundSetupDlg):
                 self.lastEntry.setEnabled(True)
             row = 0
         elif where == Constants.PREV:
-            if row <= 1:
+            row -= 1
+            if not self.nextEntry.isEnabled():
+                    self.nextEntry.setEnabled(True)
+                    self.lastEntry.setEnabled(True)   
+            if row == 0:
                 self.firstEntry.setDisabled(True)
                 self.prevEntry.setDisabled(True)                
-                row = 0
-            else:
-                if not self.nextEntry.isEnabled():
-                    self.nextEntry.setEnabled(True)
-                    self.lastEntry.setEnabled(True)                    
-                row -= 1
         elif where == Constants.NEXT:
             row += 1
             if not self.prevEntry.isEnabled():
@@ -2193,15 +2166,13 @@ class WxCondSetupDlg(QDialog, ui_weathersetup.Ui_WxCondSetupDlg):
                 self.lastEntry.setEnabled(True)
             row = 0
         elif where == Constants.PREV:
-            if row <= 1:
+            row -= 1
+            if not self.nextEntry.isEnabled():
+                    self.nextEntry.setEnabled(True)
+                    self.lastEntry.setEnabled(True)   
+            if row == 0:
                 self.firstEntry.setDisabled(True)
                 self.prevEntry.setDisabled(True)                
-                row = 0
-            else:
-                if not self.nextEntry.isEnabled():
-                    self.nextEntry.setEnabled(True)
-                    self.lastEntry.setEnabled(True)                    
-                row -= 1
         elif where == Constants.NEXT:
             row += 1
             if not self.prevEntry.isEnabled():
