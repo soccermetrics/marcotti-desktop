@@ -118,6 +118,9 @@ class ManagerEntryDlg(QDialog, ui_managerentry.Ui_ManagerEntryDlg):
             self.mgrDOBEdit.setDisabled(True)
             self.mgrConfedSelect.setDisabled(True)
             self.mgrCountrySelect.setDisabled(True)
+            # disable save and delete entry buttons
+            self.saveEntry.setDisabled(True)
+            self.deleteEntry.setDisabled(True)
         
         # disable First and Previous Entry buttons
         self.firstEntry.setDisabled(True)
@@ -397,6 +400,9 @@ class RefereeEntryDlg(QDialog, ui_refereeentry.Ui_RefereeEntryDlg):
             self.refDOBEdit.setDisabled(True)
             self.refConfedSelect.setDisabled(True)
             self.refCountrySelect.setDisabled(True)
+            # disable save and delete entry buttons
+            self.saveEntry.setDisabled(True)
+            self.deleteEntry.setDisabled(True)
         
         # disable First and Previous Entry buttons
         self.firstEntry.setDisabled(True)
@@ -699,6 +705,9 @@ class PlayerEntryDlg(QDialog, ui_playerentry.Ui_PlayerEntryDlg):
             self.plyrConfedSelect.setDisabled(True)
             self.plyrCountrySelect.setDisabled(True)
             self.plyrHistoryButton.setDisabled(True)
+            # disable save and delete entry buttons
+            self.saveEntry.setDisabled(True)
+            self.deleteEntry.setDisabled(True)
 
          # configure signal/slot
         self.connect(self.firstEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.FIRST))
