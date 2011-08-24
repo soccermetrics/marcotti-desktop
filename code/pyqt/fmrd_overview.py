@@ -408,6 +408,7 @@ class TeamEntryDlg(QDialog, ui_teamentry.Ui_TeamEntryDlg):
         self.teamConfedSelect.setEnabled(True)
         self.teamCountrySelect.setEnabled(True)
         
+        # initialize form widgets
         self.teamConfedSelect.setCurrentIndex(-1)
         self.teamCountrySelect.setCurrentIndex(-1)
         self.teamNameEdit.setFocus()
