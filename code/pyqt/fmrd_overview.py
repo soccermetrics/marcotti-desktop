@@ -175,8 +175,12 @@ class CompEntryDlg(QDialog, ui_competitionentry.Ui_CompEntryDlg):
             self.prevEntry.setEnabled(True)
             self.firstEntry.setEnabled(True)
         
-        # enable Save buttons
-        self.saveEntry.setEnabled(True)
+        # enable Save button
+        if not self.saveEntry.isEnabled():
+            self.saveEntry.setEnabled(True)
+        # enable Delete button if at least one record
+        if self.model.rowCount():
+            self.deleteEntry.setEnabled(True)
         
         # enable form widgets
         self.compID_display.setEnabled(True)
@@ -209,6 +213,9 @@ class CompEntryDlg(QDialog, ui_competitionentry.Ui_CompEntryDlg):
                 if row + 1 >= self.model.rowCount():
                     row = self.model.rowCount() - 1
                 self.mapper.setCurrentIndex(row) 
+                # disable Delete button if no records in database
+                if not self.model.rowCount():
+                    self.deleteEntry.setDisabled(True)
         else:
                 DeletionErrorPrompt(self)
                 
@@ -353,6 +360,10 @@ class TeamEntryDlg(QDialog, ui_teamentry.Ui_TeamEntryDlg):
             row = self.model.rowCount() - 1
         self.mapper.setCurrentIndex(row)
         
+        # enable Delete button if at least one record
+        if self.model.rowCount():
+            self.deleteEntry.setEnabled(True)        
+        
     def addRecord(self):
         """Adds new record at end of entry list, and sets focus on Team Name editable field."""
         # save current index if valid
@@ -378,11 +389,26 @@ class TeamEntryDlg(QDialog, ui_teamentry.Ui_TeamEntryDlg):
         # assign value to teamID field
         self.teamID_display.setText(team_id)
         
+        # disable next/last navigation buttons
         self.nextEntry.setDisabled(True)
         self.lastEntry.setDisabled(True)
+        # enable first/previous navigation buttons
         if self.model.rowCount() > 1:
-            self.firstEntry.setEnabled(True)
             self.prevEntry.setEnabled(True)
+            self.firstEntry.setEnabled(True)
+        
+        # enable Save button
+        if not self.saveEntry.isEnabled():
+            self.saveEntry.setEnabled(True)
+        # enable Delete button if at least one record
+        if self.model.rowCount():
+            self.deleteEntry.setEnabled(True)
+        
+        # enable form widgets
+        self.teamID_display.setEnabled(True)
+        self.teamNameEdit.setEnabled(True)
+        self.teamConfedSelect.setEnabled(True)
+        self.teamCountrySelect.setEnabled(True)
         
         self.teamConfedSelect.setCurrentIndex(-1)
         self.teamCountrySelect.setCurrentIndex(-1)
@@ -419,6 +445,9 @@ class TeamEntryDlg(QDialog, ui_teamentry.Ui_TeamEntryDlg):
                 if row + 1 >= self.model.rowCount():
                     row = self.model.rowCount() - 1
                 self.mapper.setCurrentIndex(row) 
+                # disable Delete button if no records in database
+                if not self.model.rowCount():
+                    self.deleteEntry.setDisabled(True)
         else:
                 DeletionErrorPrompt(self)
                 
@@ -557,6 +586,23 @@ class VenueEntryDlg(QDialog, ui_venueentry.Ui_VenueEntryDlg):
         confedMapper.addMapping(self.venueConfedSelect, CONFED_NAME)
         confedMapper.toFirst()       
        
+        # disable all fields if no records in database table
+        if not self.model.rowCount():
+            self.venueID_display.setDisabled(True)
+            self.venueNameEdit.setDisabled(True)
+            self.venueCityEdit.setDisabled(True)
+            self.venueConfedSelect.setDisabled(True)
+            self.venueCountrySelect.setDisabled(True)
+            self.venueTeamSelect.setDisabled(True)
+            self.venueTimezoneSelect.setDisabled(True)
+            self.venueAltEdit.setDisabled(True)
+            self.venueLatitudeEdit.setDisabled(True)
+            self.venueLongitudeEdit.setDisabled(True)
+            self.venueHistoryButton.setDisabled(True)
+            # disable save and delete entry buttons
+            self.saveEntry.setDisabled(True)
+            self.deleteEntry.setDisabled(True)
+       
         # disable First and Previous Entry buttons
         self.firstEntry.setDisabled(True)
         self.prevEntry.setDisabled(True)       
@@ -627,6 +673,10 @@ class VenueEntryDlg(QDialog, ui_venueentry.Ui_VenueEntryDlg):
             row = self.model.rowCount() - 1            
         self.mapper.setCurrentIndex(row)
         
+        # enable Delete button if at least one record
+        if self.model.rowCount():
+            self.deleteEntry.setEnabled(True)        
+        
     def addRecord(self):
         """Adds new record at end of entry list, and sets focus on Venue Name editable field while disabling all others."""
         
@@ -653,9 +703,34 @@ class VenueEntryDlg(QDialog, ui_venueentry.Ui_VenueEntryDlg):
         # assign value to venueID field
         self.venueID_display.setText(venue_id)
         
+        # disable next/last navigation buttons
         self.nextEntry.setDisabled(True)
         self.lastEntry.setDisabled(True)
+        # enable first/previous navigation buttons
+        if self.model.rowCount() > 1:
+            self.prevEntry.setEnabled(True)
+            self.firstEntry.setEnabled(True)
+        
+        # enable Save button
+        if not self.saveEntry.isEnabled():
+            self.saveEntry.setEnabled(True)
+        # enable Delete button if at least one record
+        if self.model.rowCount():
+            self.deleteEntry.setEnabled(True)
 
+        # enable data widgets
+        self.venueID_display.setEnabled(True)
+        self.venueNameEdit.setEnabled(True)
+        self.venueCityEdit.setEnabled(True)
+        self.venueConfedSelect.setEnabled(True)
+        self.venueTeamSelect.setEnabled(True)
+        self.venueTimezoneSelect.setEnabled(True)
+        self.venueAltEdit.setEnabled(True)
+        self.venueLatitudeEdit.setEnabled(True)
+        self.venueLongitudeEdit.setEnabled(True)
+        self.venueHistoryButton.setEnabled(True)
+        
+        # initialization of data widgets
         self.venueAltEdit.setText("0")
         self.venueLatitudeEdit.setText("0.000000")
         self.venueLongitudeEdit.setText("0.000000")
@@ -694,6 +769,9 @@ class VenueEntryDlg(QDialog, ui_venueentry.Ui_VenueEntryDlg):
                 if row + 1 >= self.model.rowCount():
                     row = self.model.rowCount() - 1
                 self.mapper.setCurrentIndex(row) 
+                # disable Delete button if no records in database
+                if not self.model.rowCount():
+                    self.deleteEntry.setDisabled(True)                
         else:
                 DeletionErrorPrompt(self)
                 
