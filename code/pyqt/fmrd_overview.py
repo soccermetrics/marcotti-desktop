@@ -66,10 +66,10 @@ class CompEntryDlg(QDialog, ui_competitionentry.Ui_CompEntryDlg):
         self.mapper.toFirst()
         
         # disable all fields if no records in database table
-        # (also disable save and delete buttons)
         if not self.model.rowCount():
             self.compID_display.setDisabled(True)
             self.competitionEdit.setDisabled(True)
+            # disable save and delete buttons
             self.saveEntry.setDisabled(True)
             self.deleteEntry.setDisabled(True)
             

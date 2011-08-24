@@ -109,6 +109,16 @@ class ManagerEntryDlg(QDialog, ui_managerentry.Ui_ManagerEntryDlg):
         confedMapper.addMapping(self.mgrConfedSelect, CONFED_NAME)
         confedMapper.toFirst()
         
+        # disable all fields if no records in database table
+        if not self.model.rowCount():
+            self.mgrID_display.setDisabled(True)
+            self.mgrFirstNameEdit.setDisabled(True)
+            self.mgrLastNameEdit.setDisabled(True)
+            self.mgrNicknameEdit.setDisabled(True)
+            self.mgrDOBEdit.setDisabled(True)
+            self.mgrConfedSelect.setDisabled(True)
+            self.mgrCountrySelect.setDisabled(True)
+        
         # disable First and Previous Entry buttons
         self.firstEntry.setDisabled(True)
         self.prevEntry.setDisabled(True)        
@@ -217,6 +227,15 @@ class ManagerEntryDlg(QDialog, ui_managerentry.Ui_ManagerEntryDlg):
         if not self.saveEntry.isEnabled():
             self.saveEntry.setEnabled(True)
 
+        # enable form widgets
+        self.mgrID_display.setEnabled(True)
+        self.mgrFirstNameEdit.setEnabled(True)
+        self.mgrLastNameEdit.setEnabled(True)
+        self.mgrNicknameEdit.setEnabled(True)
+        self.mgrDOBEdit.setEnabled(True)
+        self.mgrConfedSelect.setEnabled(True)
+
+        # initialize some form widgets
         self.mgrDOBEdit.setText("1901-01-01")        
         self.mgrCountrySelect.setDisabled(True)
         self.mgrCountrySelect.setCurrentIndex(-1)
@@ -370,6 +389,15 @@ class RefereeEntryDlg(QDialog, ui_refereeentry.Ui_RefereeEntryDlg):
         confedMapper.addMapping(self.refConfedSelect, CONFED_NAME)
         confedMapper.toFirst()
         
+        # disable all fields if no records in database table
+        if not self.model.rowCount():
+            self.refID_display.setDisabled(True)
+            self.refFirstNameEdit.setDisabled(True)
+            self.refLastNameEdit.setDisabled(True)
+            self.refDOBEdit.setDisabled(True)
+            self.refConfedSelect.setDisabled(True)
+            self.refCountrySelect.setDisabled(True)
+        
         # disable First and Previous Entry buttons
         self.firstEntry.setDisabled(True)
         self.prevEntry.setDisabled(True)        
@@ -480,6 +508,14 @@ class RefereeEntryDlg(QDialog, ui_refereeentry.Ui_RefereeEntryDlg):
             # enable Delete button if at least one record
             self.deleteEntry.setEnabled(True)
         
+        # enable data widgets
+        self.refID_display.setEnabled(True)
+        self.refFirstNameEdit.setEnabled(True)
+        self.refLastNameEdit.setEnabled(True)
+        self.refDOBEdit.setEnabled(True)
+        self.refConfedSelect.setEnabled(True)
+        
+        # initialize data widgets
         self.refDOBEdit.setText("1901-01-01")                
         self.refCountrySelect.setDisabled(True)
         self.refCountrySelect.setCurrentIndex(-1)
@@ -651,7 +687,19 @@ class PlayerEntryDlg(QDialog, ui_playerentry.Ui_PlayerEntryDlg):
         if self.model.rowCount() < 2:
             self.nextEntry.setDisabled(True)
             self.lastEntry.setDisabled(True)
-                    
+
+        # disable all fields and History button if no records in database table
+        if not self.model.rowCount():
+            self.plyrID_display.setDisabled(True)
+            self.plyrFirstNameEdit.setDisabled(True)
+            self.plyrLastNameEdit.setDisabled(True)
+            self.plyrNicknameEdit.setDisabled(True)
+            self.plyrDOBEdit.setDisabled(True)
+            self.plyrPositionSelect.setDisabled(True)
+            self.plyrConfedSelect.setDisabled(True)
+            self.plyrCountrySelect.setDisabled(True)
+            self.plyrHistoryButton.setDisabled(True)
+
          # configure signal/slot
         self.connect(self.firstEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.FIRST))
         self.connect(self.prevEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.PREV))
@@ -753,6 +801,17 @@ class PlayerEntryDlg(QDialog, ui_playerentry.Ui_PlayerEntryDlg):
             # enable Delete button if at least one record
             self.deleteEntry.setEnabled(True)
         
+        # enable form widgets and History button
+        self.plyrID_display.setEnabled(True)
+        self.plyrFirstNameEdit.setEnabled(True)
+        self.plyrLastNameEdit.setEnabled(True)
+        self.plyrNicknameEdit.setEnabled(True)
+        self.plyrDOBEdit.setEnabled(True)
+        self.plyrPositionSelect.setEnabled(True)
+        self.plyrConfedSelect.setEnabled(True)
+        self.plyrHistoryButton.setEnabled(True)
+        
+        # initialize form widgets
         self.plyrDOBEdit.setText("1901-01-01")        
         self.plyrCountrySelect.setDisabled(True)
         self.plyrConfedSelect.setCurrentIndex(-1)
