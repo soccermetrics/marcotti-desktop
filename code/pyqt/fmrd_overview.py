@@ -184,6 +184,7 @@ class CompEntryDlg(QDialog, ui_competitionentry.Ui_CompEntryDlg):
         # enable form widgets
         self.compID_display.setEnabled(True)
         self.competitionEdit.setEnabled(True)
+        # initialize form widgets
         self.competitionEdit.setFocus()
     
     def deleteRecord(self):
