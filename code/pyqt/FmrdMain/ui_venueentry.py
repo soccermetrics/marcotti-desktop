@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'gui/venue_entry.ui'
 #
-# Created: Tue Aug 23 18:55:09 2011
+# Created: Wed Aug 24 00:00:24 2011
 #      by: PyQt4 UI code generator 4.7.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -67,7 +67,7 @@ class Ui_VenueEntryDlg(object):
         self.venueAltEdit.setMaximumSize(QtCore.QSize(81, 27))
         self.venueAltEdit.setInputMask("")
         self.venueAltEdit.setMaxLength(5)
-        self.venueAltEdit.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
+        self.venueAltEdit.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
         self.venueAltEdit.setObjectName("venueAltEdit")
         self.gridLayout_2.addWidget(self.venueAltEdit, 0, 1, 1, 1)
         self.label_8 = QtGui.QLabel(self.layoutWidget)
@@ -79,7 +79,7 @@ class Ui_VenueEntryDlg(object):
         self.venueLatitudeEdit.setInputMask("")
         self.venueLatitudeEdit.setText("")
         self.venueLatitudeEdit.setMaxLength(11)
-        self.venueLatitudeEdit.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
+        self.venueLatitudeEdit.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
         self.venueLatitudeEdit.setObjectName("venueLatitudeEdit")
         self.gridLayout_2.addWidget(self.venueLatitudeEdit, 1, 1, 1, 1)
         self.label_9 = QtGui.QLabel(self.layoutWidget)
