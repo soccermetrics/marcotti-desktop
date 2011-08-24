@@ -205,7 +205,26 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
         self.awaymgrMapper.setItemDelegate(awaymgrDelegate)
         self.awaymgrMapper.addMapping(self.awaymgrSelect, MGR_NAME)
         self.awaymgrMapper.toFirst()        
-              
+        
+        # disable all fields if no records in database table
+        if not self.model.rowCount():
+            self.matchID_display.setDisabled(True)
+            self.matchCompSelect.setDisabled(True)
+            self.matchRoundSelect.setDisabled(True)
+            self.matchDateEdit.setDisabled(True)
+            self.matchRefSelect.setDisabled(True)
+            self.matchVenueSelect.setDisabled(True)
+            self.firstHalfLengthEdit.setDisabled(True)
+            self.secondHalfLengthEdit.setDisabled(True)
+            self.attendanceEdit.setDisabled(True)
+            self.hometeamSelect.setDisabled(True)
+            self.homemgrSelect.setDisabled(True)
+            self.awayteamSelect.setDisabled(True)
+            self.awaymgrSelect.setDisabled(True)
+            # disable save and delete entry buttons
+            self.saveEntry.setDisabled(True)
+            self.deleteEntry.setDisabled(True)
+        
         # disable First and Previous Entry buttons
         self.firstEntry.setDisabled(True)
         self.prevEntry.setDisabled(True)        
@@ -293,8 +312,13 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
                 self.prevEntry.setEnabled(True)
                 self.firstEntry.setEnabled(True)
             row = self.model.rowCount() - 1
-            
         self.mapper.setCurrentIndex(row)
+        
+        # enable Delete button if at least one record
+        if self.model.rowCount():
+            self.deleteEntry.setEnabled(True)        
+        
+        # refresh subforms
         currentID = self.matchID_display.text()
         self.refreshSubForms(currentID)
 
@@ -346,12 +370,30 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
         # assign value to matchID field
         self.matchID_display.setText(match_id)
         
-        # disable navigation button
-        self.lastEntry.setDisabled(True)
+        # disable next/last navigation buttons
         self.nextEntry.setDisabled(True)
-        if row >= 1:
+        self.lastEntry.setDisabled(True)
+        # enable first/previous navigation buttons
+        if self.model.rowCount() > 1:
             self.prevEntry.setEnabled(True)
             self.firstEntry.setEnabled(True)
+            # enable Delete button if at least one record
+            self.deleteEntry.setEnabled(True)
+
+        # enable Save button
+        if not self.saveEntry.isEnabled():
+            self.saveEntry.setEnabled(True)
+        
+        # enable form widgets
+        self.matchID_display.setEnabled(True)
+        self.matchCompSelect.setEnabled(True)
+        self.matchRoundSelect.setEnabled(True)
+        self.matchDateEdit.setEnabled(True)
+        self.matchRefSelect.setEnabled(True)
+        self.matchVenueSelect.setEnabled(True)
+        self.firstHalfLengthEdit.setEnabled(True)
+        self.secondHalfLengthEdit.setEnabled(True)
+        self.attendanceEdit.setEnabled(True)
         
         # disable comboboxes in home/away team section
         self.homemgrSelect.setDisabled(True)
@@ -360,14 +402,17 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
         self.homeLineupButton.setDisabled(True)
         self.awayLineupButton.setDisabled(True)
         
-        # set default values to:
-        #   1st/2nd half length widgets
-        #   match date
+        # initialize form widgets
+        self.matchRefSelect.setCurrentIndex(-1)
+        self.matchVenueSelect.setCurrentIndex(-1)
+        self.homemgrSelect.setCurrentIndex(-1)
+        self.hometeamSelect.setCurrentIndex(-1)
+        self.awaymgrSelect.setCurrentIndex(-1)
+        self.awayteamSelect.setCurrentIndex(-1)
+        
         self.firstHalfLengthEdit.setText("45")
         self.secondHalfLengthEdit.setText("45")
         self.matchDateEdit.setText("1901-01-01")
-        
-        # set focus on match date entry
         self.matchDateEdit.setFocus()
         
         # refresh subforms
@@ -417,6 +462,9 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
                 if row + 1 >= self.model.rowCount():
                     row = self.model.rowCount() - 1
                 self.mapper.setCurrentIndex(row) 
+                # disable Delete button if no records in database
+                if not self.model.rowCount():
+                    self.deleteEntry.setDisabled(True)
         else:
                 DeletionErrorPrompt(self)
 
