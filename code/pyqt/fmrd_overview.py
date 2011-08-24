@@ -174,13 +174,12 @@ class CompEntryDlg(QDialog, ui_competitionentry.Ui_CompEntryDlg):
         if self.model.rowCount() > 1:
             self.prevEntry.setEnabled(True)
             self.firstEntry.setEnabled(True)
+            # enable Delete button if at least one record
+            self.deleteEntry.setEnabled(True)
         
         # enable Save button
         if not self.saveEntry.isEnabled():
             self.saveEntry.setEnabled(True)
-        # enable Delete button if at least one record
-        if self.model.rowCount():
-            self.deleteEntry.setEnabled(True)
         
         # enable form widgets
         self.compID_display.setEnabled(True)
@@ -396,13 +395,12 @@ class TeamEntryDlg(QDialog, ui_teamentry.Ui_TeamEntryDlg):
         if self.model.rowCount() > 1:
             self.prevEntry.setEnabled(True)
             self.firstEntry.setEnabled(True)
-        
+            # enable Delete button if at least one record
+            self.deleteEntry.setEnabled(True)
+
         # enable Save button
         if not self.saveEntry.isEnabled():
             self.saveEntry.setEnabled(True)
-        # enable Delete button if at least one record
-        if self.model.rowCount():
-            self.deleteEntry.setEnabled(True)
         
         # enable form widgets
         self.teamID_display.setEnabled(True)
@@ -710,13 +708,12 @@ class VenueEntryDlg(QDialog, ui_venueentry.Ui_VenueEntryDlg):
         if self.model.rowCount() > 1:
             self.prevEntry.setEnabled(True)
             self.firstEntry.setEnabled(True)
+            # enable Delete button if at least one record
+            self.deleteEntry.setEnabled(True)
         
         # enable Save button
         if not self.saveEntry.isEnabled():
             self.saveEntry.setEnabled(True)
-        # enable Delete button if at least one record
-        if self.model.rowCount():
-            self.deleteEntry.setEnabled(True)
 
         # enable data widgets
         self.venueID_display.setEnabled(True)
