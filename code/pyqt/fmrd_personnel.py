@@ -203,11 +203,20 @@ class ManagerEntryDlg(QDialog, ui_managerentry.Ui_ManagerEntryDlg):
         # assign value to managerID field
         self.mgrID_display.setText(manager_id)
         
-        self.firstEntry.setEnabled(True)
-        self.prevEntry.setEnabled(True)        
+        # disable next/last navigation buttons
         self.nextEntry.setDisabled(True)
-        self.lastEntry.setDisabled(True) 
- 
+        self.lastEntry.setDisabled(True)
+        # enable first/previous navigation buttons
+        if self.model.rowCount() > 1:
+            self.prevEntry.setEnabled(True)
+            self.firstEntry.setEnabled(True)
+            # enable Delete button if at least one record
+            self.deleteEntry.setEnabled(True)
+
+        # enable Save button
+        if not self.saveEntry.isEnabled():
+            self.saveEntry.setEnabled(True)
+
         self.mgrDOBEdit.setText("1901-01-01")        
         self.mgrCountrySelect.setDisabled(True)
         self.mgrCountrySelect.setCurrentIndex(-1)
@@ -454,10 +463,15 @@ class RefereeEntryDlg(QDialog, ui_refereeentry.Ui_RefereeEntryDlg):
         # assign value to refereeID field
         self.refID_display.setText(referee_id)
 
-        self.firstEntry.setEnabled(True)
-        self.prevEntry.setEnabled(True)
+        # disable next/last navigation buttons
         self.nextEntry.setDisabled(True)
-        self.lastEntry.setDisabled(True)        
+        self.lastEntry.setDisabled(True)
+        # enable first/previous navigation buttons
+        if self.model.rowCount() > 1:
+            self.prevEntry.setEnabled(True)
+            self.firstEntry.setEnabled(True)
+            # enable Delete button if at least one record
+            self.deleteEntry.setEnabled(True)
         
         self.refDOBEdit.setText("1901-01-01")                
         self.refCountrySelect.setDisabled(True)
@@ -716,10 +730,15 @@ class PlayerEntryDlg(QDialog, ui_playerentry.Ui_PlayerEntryDlg):
         # assign value to playerID field
         self.plyrID_display.setText(player_id)
         
-        self.firstEntry.setEnabled(True)
-        self.prevEntry.setEnabled(True)
+        # disable next/last navigation buttons
         self.nextEntry.setDisabled(True)
-        self.lastEntry.setDisabled(True)   
+        self.lastEntry.setDisabled(True)
+        # enable first/previous navigation buttons
+        if self.model.rowCount() > 1:
+            self.prevEntry.setEnabled(True)
+            self.firstEntry.setEnabled(True)
+            # enable Delete button if at least one record
+            self.deleteEntry.setEnabled(True)
         
         self.plyrDOBEdit.setText("1901-01-01")        
         self.plyrCountrySelect.setDisabled(True)
