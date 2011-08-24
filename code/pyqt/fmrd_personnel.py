@@ -251,6 +251,9 @@ class ManagerEntryDlg(QDialog, ui_managerentry.Ui_ManagerEntryDlg):
                 if row + 1 >= self.model.rowCount():
                     row = self.model.rowCount() - 1
                 self.mapper.setCurrentIndex(row) 
+                # disable Delete button if no records in database
+                if not self.model.rowCount():
+                    self.deleteEntry.setDisabled(True)
         else:
                 DeletionErrorPrompt(self)
         
@@ -437,6 +440,10 @@ class RefereeEntryDlg(QDialog, ui_refereeentry.Ui_RefereeEntryDlg):
             row = self.model.rowCount() - 1        
         self.mapper.setCurrentIndex(row)
         
+        # enable Delete button if at least one record
+        if self.model.rowCount():
+            self.deleteEntry.setEnabled(True)
+        
     def addRecord(self):
         """Adds new record at end of entry list."""        
         # save current index if valid
@@ -505,6 +512,9 @@ class RefereeEntryDlg(QDialog, ui_refereeentry.Ui_RefereeEntryDlg):
                 if row + 1 >= self.model.rowCount():
                     row = self.model.rowCount() - 1
                 self.mapper.setCurrentIndex(row) 
+                # disable Delete button if no records in database
+                if not self.model.rowCount():
+                    self.deleteEntry.setDisabled(True)
         else:
                 DeletionErrorPrompt(self)
 
@@ -699,8 +709,11 @@ class PlayerEntryDlg(QDialog, ui_playerentry.Ui_PlayerEntryDlg):
                 self.prevEntry.setEnabled(True)
                 self.firstEntry.setEnabled(True)
             row = self.model.rowCount() - 1
-            
         self.mapper.setCurrentIndex(row)
+        
+        # enable Delete button if at least one record
+        if self.model.rowCount():
+            self.deleteEntry.setEnabled(True)
         
     def addRecord(self):
         """Adds new record at end of entry list."""        
@@ -779,6 +792,9 @@ class PlayerEntryDlg(QDialog, ui_playerentry.Ui_PlayerEntryDlg):
                 if row + 1 >= self.model.rowCount():
                     row = self.model.rowCount() - 1
                 self.mapper.setCurrentIndex(row) 
+                # disable Delete button if no records in database
+                if not self.model.rowCount():
+                    self.deleteEntry.setDisabled(True)
         else:
                 DeletionErrorPrompt(self)
         
@@ -1165,9 +1181,12 @@ class LineupEntryDlg(QDialog, ui_lineupentry.Ui_LineupEntryDlg):
             if not self.prevEntry.isEnabled():
                 self.prevEntry.setEnabled(True)
                 self.firstEntry.setEnabled(True)
-            row = self.model.rowCount() - 1
-            
+            row = self.model.rowCount() - 1            
         self.mapper.setCurrentIndex(row)
+        
+        # enable Delete button if at least one record
+        if self.model.rowCount():
+            self.deleteEntry.setEnabled(True)
         
         # update status bar
         self.statusReport()        
