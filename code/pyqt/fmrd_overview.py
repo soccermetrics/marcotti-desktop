@@ -583,6 +583,7 @@ class VenueEntryDlg(QDialog, ui_venueentry.Ui_VenueEntryDlg):
         self.venueConfedSelect.setModel(self.confedModel)
         confedMapper.setItemDelegate(VenConfedComboBoxDelegate(self))
         self.venueConfedSelect.setModelColumn(self.confedModel.fieldIndex("confed_name"))
+        self.venueConfedSelect.setCurrentIndex(-1)
         confedMapper.addMapping(self.venueConfedSelect, CONFED_NAME)
         confedMapper.toFirst()       
        
@@ -730,6 +731,9 @@ class VenueEntryDlg(QDialog, ui_venueentry.Ui_VenueEntryDlg):
         self.venueHistoryButton.setEnabled(True)
         
         # initialization of data widgets
+        self.venueTeamSelect.setCurrentIndex(-1)
+        self.venueTimezoneSelect.setCurrentIndex(-1)
+        self.venueConfedSelect.setCurrentIndex(-1)
         self.venueAltEdit.setText("0")
         self.venueLatitudeEdit.setText("0.000000")
         self.venueLongitudeEdit.setText("0.000000")
