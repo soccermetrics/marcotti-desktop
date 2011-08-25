@@ -1295,6 +1295,9 @@ class LineupEntryDlg(QDialog, ui_lineupentry.Ui_LineupEntryDlg):
                 if row + 1 >= self.model.rowCount():
                     row = self.model.rowCount() - 1
                 self.mapper.setCurrentIndex(row) 
+                # disable Delete button if no records in database
+                if not self.model.rowCount():
+                    self.deleteEntry.setDisabled(True)                                
         else:
                 DeletionErrorPrompt(self)
                 
