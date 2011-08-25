@@ -467,6 +467,43 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
                     self.deleteEntry.setDisabled(True)
         else:
                 DeletionErrorPrompt(self)
+                
+    def isDirty(self, row):
+        """Compares current state of data entry form to current record in database, and returns a boolean.
+        
+        Arguments:
+            row: current record in mapper and model
+        
+        Returns:
+            TRUE: there are changes between data entry form and current record in database,
+                      or new record in database
+            FALSE: no changes between data entry form and current record in database
+        """
+        # line edit fields
+        editorList = (self.matchDateEdit, self.firstHalfLengthEdit, self.secondHalfLengthEdit, self.attendanceEdit)
+        columnList = (MatchEntryDlg.DATE, MatchEntryDlg.HALF1, MatchEntryDlg.HALF2, MatchEntryDlg.ATTEND)
+        for editor, column in zip(editorList, columnList):
+            index = self.model.index(row, column)        
+            if editor.text() != self.model.data(index).toString():
+                return True
+                
+        # combobox fields
+        editorList = (self.matchCompSelect, self.matchRoundSelect, self.matchRefSelect, self.matchVenueSelect)
+        columnList = (MatchEntryDlg.COMP_ID, MatchEntryDlg.ROUND_ID, MatchEntryDlg.REF_ID, MatchEntryDlg.VENUE_ID)
+        for editor, column in zip(editorList, columnList):
+            index = self.model.index(row, column)        
+            if editor.currentText() != self.model.data(index).toString():
+                return True
+                    
+        # combobox fields that map to linking tables
+        editorList = (self.hometeamSelect, self.homemgrSelect, self.awayteamSelect, self.awaymgrSelect)
+        modelList = (self.hometeamModel, self.homemgrModel, self.awayteamModel, self.awaymgrModel)
+        for editor, model in zip(editorList, modelList):
+            index = model.index(0, 1)
+            if editor.currentText() != model.data(index).toString():
+                return True
+
+        return False                
 
     def deleteEnviroTables(self, match_id):
         """Deletes environmental conditions tables that reference a specific match.
@@ -686,7 +723,36 @@ class EnviroEntryDlg(QDialog, ui_enviroentry.Ui_EnviroEntryDlg):
             if not self.mapper.submit():
                 MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
         QDialog.accept(self)
+
+    def isDirty(self, row):
+        """Compares current state of data entry form to current record in database, and returns a boolean.
         
+        Arguments:
+            row: current record in mapper and model
+        
+        Returns:
+            TRUE: there are changes between data entry form and current record in database,
+                      or new record in database
+            FALSE: no changes between data entry form and current record in database
+        """
+        # line edit fields
+        editorList = (self.envKOTimeEdit, self.envKOTempEdit)
+        columnList = (EnviroEntryDlg.KICKOFF, EnviroEntryDlg.TEMP)
+        for editor, column in zip(editorList, columnList):
+            index = self.model.index(row, column)        
+            if editor.text() != self.model.data(index).toString():
+                return True
+                
+        # combobox fields that map to linking tables
+        editorList = (self.envKOWxSelect, self.envHTWxSelect, self.envFTWxSelect)   
+        modelList = (self.kickoffWeatherModel, self.halftimeWeatherModel, self.fulltimeWeatherModel)
+        for editor, model in zip(editorList, modelList):
+            index = model.index(0, 1)
+            if editor.currentText() != model.data(index).toString():
+                return True
+
+        return False                
+
     def updateLinkingTable(self, mapper, editor):
         """Updates current record or inserts new record in custom linking table.
         
@@ -705,5 +771,3 @@ class EnviroEntryDlg(QDialog, ui_enviroentry.Ui_EnviroEntryDlg):
             boxIndex = editor.currentIndex()
             value = editor.model().record(boxIndex).value(0)
             ok = linkmodel.setData(index, value)
-
-
