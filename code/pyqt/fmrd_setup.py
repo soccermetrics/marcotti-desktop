@@ -46,6 +46,8 @@ GoalStrikeSetupDlg -- data entry to Goal Strikes table
 PenSetupDlg -- data entry to Penalty Outcomes table
 PosSetupDlg -- data entry to Positions table
 RoundSetupDlg -- data entry to Rounds table
+TimeZoneSetupDlg -- data entry to Time Zones table
+VenueSurfaceSetupDlg -- data entry to Venue Surfaces table
 WxCondSetupDlg -- data entry to Weather Conditions table
 
 """
@@ -455,7 +457,27 @@ class FoulSetupDlg(QDialog, ui_foulsetup.Ui_FoulSetupDlg):
         else:
             DeletionErrorPrompt(self)
         
+    def isDirty(self, row):
+        """Compares current state of data entry form to current record in database, and returns a boolean.
         
+        Arguments:
+            row: current record in mapper and model
+        
+        Returns:
+            TRUE: there are changes between data entry form and current record in database,
+                      or new record in database
+            FALSE: no changes between data entry form and current record in database
+        """
+        if row == self.model.rowCount():
+            return True
+        else:
+            index = self.model.index(row, FoulSetupDlg.DESC)        
+            if self.foulDescEdit.text() != self.model.data(index).toString():
+                return True
+            else:
+                return False
+
+
 class PenSetupDlg(QDialog, ui_penoutcomesetup.Ui_PenSetupDlg):
     """ Implements penalty outcome data entry dialog, and accesses and writes to Penalty Outcomes table. """
     
@@ -636,6 +658,26 @@ class PenSetupDlg(QDialog, ui_penoutcomesetup.Ui_PenSetupDlg):
                     self.deleteEntry.setDisabled(True)                
         else:
             DeletionErrorPrompt(self)
+            
+    def isDirty(self, row):
+        """Compares current state of data entry form to current record in database, and returns a boolean.
+        
+        Arguments:
+            row: current record in mapper and model
+        
+        Returns:
+            TRUE: there are changes between data entry form and current record in database,
+                      or new record in database
+            FALSE: no changes between data entry form and current record in database
+        """
+        if row == self.model.rowCount():
+            return True
+        else:
+            index = self.model.index(row, PenSetupDlg.DESC)        
+            if self.penOutcomeEdit.text() != self.model.data(index).toString():
+                return True
+            else:
+                return False
 
 
 class GoalEventSetupDlg(QDialog, ui_goaleventsetup.Ui_GoalEventSetupDlg):
@@ -818,6 +860,26 @@ class GoalEventSetupDlg(QDialog, ui_goaleventsetup.Ui_GoalEventSetupDlg):
                     self.deleteEntry.setDisabled(True)                
         else:
             DeletionErrorPrompt(self)
+            
+    def isDirty(self, row):
+        """Compares current state of data entry form to current record in database, and returns a boolean.
+        
+        Arguments:
+            row: current record in mapper and model
+        
+        Returns:
+            TRUE: there are changes between data entry form and current record in database,
+                      or new record in database
+            FALSE: no changes between data entry form and current record in database
+        """
+        if row == self.model.rowCount():
+            return True
+        else:
+            index = self.model.index(row, GoalEventSetupDlg.DESC)        
+            if self.goaleventEdit.text() != self.model.data(index).toString():
+                return True
+            else:
+                return False            
 
 
 class GoalStrikeSetupDlg(QDialog, ui_goalstrikesetup.Ui_GoalStrikeSetupDlg):
@@ -1181,8 +1243,28 @@ class FieldPosSetupDlg(QDialog, ui_fieldpossetup.Ui_FieldPosSetupDlg):
                     self.deleteEntry.setDisabled(True)                                
         else:
             DeletionErrorPrompt(self)
+
+    def isDirty(self, row):
+        """Compares current state of data entry form to current record in database, and returns a boolean.
         
+        Arguments:
+            row: current record in mapper and model
         
+        Returns:
+            TRUE: there are changes between data entry form and current record in database,
+                      or new record in database
+            FALSE: no changes between data entry form and current record in database
+        """
+        if row == self.model.rowCount():
+            return True
+        else:
+            index = self.model.index(row, FieldPosSetupDlg.DESC)        
+            if self.fieldposEdit.text() != self.model.data(index).toString():
+                return True
+            else:
+                return False
+
+
 class FlankPosSetupDlg(QDialog, ui_flankpossetup.Ui_FlankPosSetupDlg):
     """Implements flank position data entry dialog, and accesses and writes to Flank Names table."""
     
@@ -1367,7 +1449,27 @@ class FlankPosSetupDlg(QDialog, ui_flankpossetup.Ui_FlankPosSetupDlg):
         else:
             DeletionErrorPrompt(self)
 
+    def isDirty(self, row):
+        """Compares current state of data entry form to current record in database, and returns a boolean.
         
+        Arguments:
+            row: current record in mapper and model
+        
+        Returns:
+            TRUE: there are changes between data entry form and current record in database,
+                      or new record in database
+            FALSE: no changes between data entry form and current record in database
+        """
+        if row == self.model.rowCount():
+            return True
+        else:
+            index = self.model.index(row, FlankPosSetupDlg.DESC)        
+            if self.flankposEdit.text() != self.model.data(index).toString():
+                return True
+            else:
+                return False
+
+
 # Implements user interface to Position table, which links to Flank Position and Field Position tables.
 class PosSetupDlg(QDialog, ui_positionsetup.Ui_PosSetupDlg):
     """Implements position data entry dialog, which accesses and writes to the Positions table.
@@ -1572,6 +1674,30 @@ class PosSetupDlg(QDialog, ui_positionsetup.Ui_PosSetupDlg):
         else:
             DeletionErrorPrompt(self)
 
+    def isDirty(self, row):
+        """Compares current state of data entry form to current record in database, and returns a boolean.
+        
+        Arguments:
+            row: current record in mapper and model
+        
+        Returns:
+            TRUE: there are changes between data entry form and current record in database,
+                      or new record in database
+            FALSE: no changes between data entry form and current record in database
+        """
+        if row == self.model.rowCount():
+            return True
+        else:
+            editorList = (self.fieldposSelect, self.flankposSelect)
+            columnList = (PosSetupDlg.FIELD_ID, PosSetupDlg.FLANK_ID)
+            
+            for editor, column in zip(editorList, columnList):
+                index = self.model.index(row, column)        
+                if editor.currentText() != self.model.data(index).toString():
+                    return True
+        return False
+
+
 class CountrySetupDlg(QDialog, ui_countrysetup.Ui_CountrySetupDlg):
     """Implements country data entry dialog, which accesses and writes to Countries table.
     
@@ -1770,7 +1896,27 @@ class CountrySetupDlg(QDialog, ui_countrysetup.Ui_CountrySetupDlg):
                     self.deleteEntry.setDisabled(True)                
         else:
             DeletionErrorPrompt(self)
+            
+    def isDirty(self, row):
+        """Compares current state of data entry form to current record in database, and returns a boolean.
         
+        Arguments:
+            row: current record in mapper and model
+        
+        Returns:
+            TRUE: there are changes between data entry form and current record in database,
+                      or new record in database
+            FALSE: no changes between data entry form and current record in database
+        """
+        if row == self.model.rowCount():
+            return True
+        else:
+            index = self.model.index(row, CountrySetupDlg.NAME)        
+            if self.countryEdit.text() != self.model.data(index).toString():
+                return True
+            else:
+                return False
+
 
 class ConfedSetupDlg(QDialog, ui_confederationsetup.Ui_ConfedSetupDlg):
     """Implements confederation data entry dialog, which accesses and writes to Confederations table."""
@@ -1952,6 +2098,26 @@ class ConfedSetupDlg(QDialog, ui_confederationsetup.Ui_ConfedSetupDlg):
                     self.deleteEntry.setDisabled(True)                
         else:
             DeletionErrorPrompt(self)
+
+    def isDirty(self, row):
+        """Compares current state of data entry form to current record in database, and returns a boolean.
+        
+        Arguments:
+            row: current record in mapper and model
+        
+        Returns:
+            TRUE: there are changes between data entry form and current record in database,
+                      or new record in database
+            FALSE: no changes between data entry form and current record in database
+        """
+        if row == self.model.rowCount():
+            return True
+        else:
+            index = self.model.index(row, ConfedSetupDlg.NAME)        
+            if self.confederationEdit.text() != self.model.data(index).toString():
+                return True
+            else:
+                return False
 
 
 class TimeZoneSetupDlg(QDialog, ui_timezonesetup.Ui_TimeZoneSetupDlg):
@@ -2157,6 +2323,27 @@ class TimeZoneSetupDlg(QDialog, ui_timezonesetup.Ui_TimeZoneSetupDlg):
                     self.deleteEntry.setDisabled(True)                
         else:
             DeletionErrorPrompt(self)
+            
+    def isDirty(self, row):
+        """Compares current state of data entry form to current record in database, and returns a boolean.
+        
+        Arguments:
+            row: current record in mapper and model
+        
+        Returns:
+            TRUE: there are changes between data entry form and current record in database,
+                      or new record in database
+            FALSE: no changes between data entry form and current record in database
+        """
+        if row == self.model.rowCount():
+            return True
+        else:
+            index = self.model.index(row, TimeZoneSetupDlg.NAME)        
+            if self.tzNameEdit.text() != self.model.data(index).toString():
+                return True
+            else:
+                return False
+
 
 
 class VenueSurfaceSetupDlg(QDialog, ui_venuesurfacesetup.Ui_VenueSurfaceSetupDlg):
@@ -2339,6 +2526,26 @@ class VenueSurfaceSetupDlg(QDialog, ui_venuesurfacesetup.Ui_VenueSurfaceSetupDlg
                     self.deleteEntry.setDisabled(True)                
         else:
             DeletionErrorPrompt(self)
+            
+    def isDirty(self, row):
+        """Compares current state of data entry form to current record in database, and returns a boolean.
+        
+        Arguments:
+            row: current record in mapper and model
+        
+        Returns:
+            TRUE: there are changes between data entry form and current record in database,
+                      or new record in database
+            FALSE: no changes between data entry form and current record in database
+        """
+        if row == self.model.rowCount():
+            return True
+        else:
+            index = self.model.index(row, VenueSurfaceSetupDlg.DESC)        
+            if self.vensurfNameEdit.text() != self.model.data(index).toString():
+                return True
+            else:
+                return False
 
 
 class RoundSetupDlg(QDialog, ui_roundsetup.Ui_RoundSetupDlg):
@@ -2521,8 +2728,28 @@ class RoundSetupDlg(QDialog, ui_roundsetup.Ui_RoundSetupDlg):
                     self.deleteEntry.setDisabled(True)                
         else:
             DeletionErrorPrompt(self)
-            
-            
+
+    def isDirty(self, row):
+        """Compares current state of data entry form to current record in database, and returns a boolean.
+        
+        Arguments:
+            row: current record in mapper and model
+        
+        Returns:
+            TRUE: there are changes between data entry form and current record in database,
+                      or new record in database
+            FALSE: no changes between data entry form and current record in database
+        """
+        if row == self.model.rowCount():
+            return True
+        else:
+            index = self.model.index(row, RoundSetupDlg.DESC)        
+            if self.rounddescEdit.text() != self.model.data(index).toString():
+                return True
+            else:
+                return False
+
+
 class WxCondSetupDlg(QDialog, ui_weathersetup.Ui_WxCondSetupDlg):
     """Implements weather condition data entry dialog, accesses and writes to WeatherConditions table."""
     
@@ -2706,3 +2933,23 @@ class WxCondSetupDlg(QDialog, ui_weathersetup.Ui_WxCondSetupDlg):
                     self.deleteEntry.setDisabled(True)                
         else:
             DeletionErrorPrompt(self)
+            
+    def isDirty(self, row):
+        """Compares current state of data entry form to current record in database, and returns a boolean.
+        
+        Arguments:
+            row: current record in mapper and model
+        
+        Returns:
+            TRUE: there are changes between data entry form and current record in database,
+                      or new record in database
+            FALSE: no changes between data entry form and current record in database
+        """
+        if row == self.model.rowCount():
+            return True
+        else:
+            index = self.model.index(row, WxCondSetupDlg.DESC)        
+            if self.wxcondEdit.text() != self.model.data(index).toString():
+                return True
+            else:
+                return False
