@@ -279,6 +279,35 @@ class ManagerEntryDlg(QDialog, ui_managerentry.Ui_ManagerEntryDlg):
         else:
                 DeletionErrorPrompt(self)
         
+    def isDirty(self, row):
+        """Compares current state of data entry form to current record in database, and returns a boolean.
+        
+        Arguments:
+            row: current record in mapper and model
+        
+        Returns:
+            TRUE: there are changes between data entry form and current record in database,
+                      or new record in database
+            FALSE: no changes between data entry form and current record in database
+        """
+        # line edit fields
+        editorList = (self.mgrFirstNameEdit, self.mgrLastNameEdit, self.mgrNicknameEdit, self.mgrDOBEdit)
+        columnList = (ManagerEntryDlg.FNAME, ManagerEntryDlg.LNAME, ManagerEntryDlg.NNAME, ManagerEntryDlg.DOB)
+        for editor, column in zip(editorList, columnList):
+            index = self.model.index(row, column)        
+            if editor.text() != self.model.data(index).toString():
+                return True
+                
+        # combobox fields
+        editorList = (self.mgrCountrySelect, )
+        columnList = (PlayerEntryDlg.CTRY_ID, )
+        for editor, column in zip(editorList, columnList):
+            index = self.model.index(row, column)        
+            if editor.currentText() != self.model.data(index).toString():
+                return True
+                    
+        return False
+        
     def updateConfed(self):
         """Updates current index of Confederation combobox.
         
@@ -559,6 +588,35 @@ class RefereeEntryDlg(QDialog, ui_refereeentry.Ui_RefereeEntryDlg):
                     self.deleteEntry.setDisabled(True)
         else:
                 DeletionErrorPrompt(self)
+                
+    def isDirty(self, row):
+        """Compares current state of data entry form to current record in database, and returns a boolean.
+        
+        Arguments:
+            row: current record in mapper and model
+        
+        Returns:
+            TRUE: there are changes between data entry form and current record in database,
+                      or new record in database
+            FALSE: no changes between data entry form and current record in database
+        """
+        # line edit fields
+        editorList = (self.refFirstNameEdit, self.refLastNameEdit, self.refDOBEdit)
+        columnList = (RefereeEntryDlg.FNAME, RefereeEntryDlg.LNAME, RefereeEntryDlg.DOB)
+        for editor, column in zip(editorList, columnList):
+            index = self.model.index(row, column)        
+            if editor.text() != self.model.data(index).toString():
+                return True
+                
+        # combobox fields
+        editorList = (self.refCountrySelect, )
+        columnList = (RefereeEntryDlg.CTRY_ID, )
+        for editor, column in zip(editorList, columnList):
+            index = self.model.index(row, column)        
+            if editor.currentText() != self.model.data(index).toString():
+                return True
+                    
+        return False                
 
     def updateConfed(self):
         """Updates current index of Confederation combobox.
@@ -865,6 +923,35 @@ class PlayerEntryDlg(QDialog, ui_playerentry.Ui_PlayerEntryDlg):
                     self.deleteEntry.setDisabled(True)
         else:
                 DeletionErrorPrompt(self)
+                
+    def isDirty(self, row):
+        """Compares current state of data entry form to current record in database, and returns a boolean.
+        
+        Arguments:
+            row: current record in mapper and model
+        
+        Returns:
+            TRUE: there are changes between data entry form and current record in database,
+                      or new record in database
+            FALSE: no changes between data entry form and current record in database
+        """
+        # line edit fields
+        editorList = (self.plyrFirstNameEdit, self.plyrLastNameEdit, self.plyrNicknameEdit, self.plyrDOBEdit)
+        columnList = (PlayerEntryDlg.FNAME, PlayerEntryDlg.LNAME, PlayerEntryDlg.NNAME, PlayerEntryDlg.DOB)
+        for editor, column in zip(editorList, columnList):
+            index = self.model.index(row, column)        
+            if editor.text() != self.model.data(index).toString():
+                return True
+                
+        # combobox fields
+        editorList = (self.plyrPositionSelect, self.plyrCountrySelect)
+        columnList = (PlayerEntryDlg.POS_ID, PlayerEntryDlg.CTRY_ID)
+        for editor, column in zip(editorList, columnList):
+            index = self.model.index(row, column)        
+            if editor.currentText() != self.model.data(index).toString():
+                return True
+                    
+        return False
         
     def deletePlayerHistories(self, player_id):
         """Deletes player history records that reference a specific player."""
@@ -1210,6 +1297,35 @@ class LineupEntryDlg(QDialog, ui_lineupentry.Ui_LineupEntryDlg):
                 self.mapper.setCurrentIndex(row) 
         else:
                 DeletionErrorPrompt(self)
+                
+    def isDirty(self, row):
+        """Compares current state of data entry form to current record in database, and returns a boolean.
+        
+        Arguments:
+            row: current record in mapper and model
+        
+        Returns:
+            TRUE: there are changes between data entry form and current record in database,
+                      or new record in database
+            FALSE: no changes between data entry form and current record in database
+        """
+        # combobox fields
+        editorList = (self.playerSelect, self.positionSelect)
+        columnList = (LineupEntryDlg.PLYR_ID, LineupEntryDlg.POS_ID)
+        for editor, column in zip(editorList, columnList):
+            index = self.model.index(row, column)        
+            if editor.text() != self.model.data(index).toString():
+                return True
+                
+        # checkbox fields
+        editorList = (self.captButton, self.startingButton)
+        columnList = (LineupEntryDlg.CAPT_FLAG, LineupEntryDlg.ST_FLAG)
+        for editor, column in zip(editorList, columnList):
+            index = self.model.index(row, column)        
+            if editor.isChecked() != self.model.data(index).toBool():
+                return True
+                    
+        return False                                
 
     def saveRecord(self, where):
         """Submits changes to database and navigates through form."""
