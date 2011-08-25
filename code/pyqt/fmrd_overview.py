@@ -219,6 +219,27 @@ class CompEntryDlg(QDialog, ui_competitionentry.Ui_CompEntryDlg):
         else:
                 DeletionErrorPrompt(self)
                 
+    def isDirty(self, row):
+        """Compares current state of data entry form to current record in database, and returns a boolean.
+        
+        Arguments:
+            row: current record in mapper and model
+        
+        Returns:
+            TRUE: there are changes between data entry form and current record in database,
+                      or new record in database
+            FALSE: no changes between data entry form and current record in database
+        """
+        if row == self.model.rowCount():
+            return True
+        else:
+            index = self.model.index(row, CompEntryDlg.DESC)        
+            if self.competitionEdit.text() != self.model.data(index).toString():
+                return True
+            else:
+                return False                
+                
+                
 class TeamEntryDlg(QDialog, ui_teamentry.Ui_TeamEntryDlg):
     """Implements Teams data entry dialog, and accesses and writes to Teams table.
     
@@ -450,6 +471,28 @@ class TeamEntryDlg(QDialog, ui_teamentry.Ui_TeamEntryDlg):
                     self.deleteEntry.setDisabled(True)
         else:
                 DeletionErrorPrompt(self)
+                
+    def isDirty(self, row):
+        """Compares current state of data entry form to current record in database, and returns a boolean.
+        
+        Arguments:
+            row: current record in mapper and model
+        
+        Returns:
+            TRUE: there are changes between data entry form and current record in database,
+                      or new record in database
+            FALSE: no changes between data entry form and current record in database
+        """
+        index = self.model.index(row, TeamEntryDlg.NAME)        
+        if self.teamNameEdit.text() != self.model.data(index).toString():
+            return True
+            
+        index = self.model.index(row, TeamEntryDlg.CTRY_ID)        
+        if self.teamCountrySelect.currentText() != self.model.data(index).toString():
+            return True
+            
+        return False
+                
                 
     def updateConfed(self):
         """Updates current index of Confederation combobox.
@@ -777,6 +820,36 @@ class VenueEntryDlg(QDialog, ui_venueentry.Ui_VenueEntryDlg):
                     self.deleteEntry.setDisabled(True)                
         else:
                 DeletionErrorPrompt(self)
+                
+    def isDirty(self, row):
+        """Compares current state of data entry form to current record in database, and returns a boolean.
+        
+        Arguments:
+            row: current record in mapper and model
+        
+        Returns:
+            TRUE: there are changes between data entry form and current record in database,
+                      or new record in database
+            FALSE: no changes between data entry form and current record in database
+        """
+        
+        # line edit fields
+        editorList = (self.venueNameEdit, self.venueAltEdit, self.venueLatitudeEdit, self.venueLongitudeEdit)
+        columnList = (VenueEntryDlg.NAME, VenueEntryDlg.ALT, VenueEntryDlg.LAT, VenueEntryDlg.LONG)
+        for editor, column in zip(editorList, columnList):
+            index = self.model.index(row, column)        
+            if editor.text() != self.model.data(index).toString():
+                return True
+                
+        # combobox fields
+        editorList = (self.venueTeamSelect, self.venueTimezoneSelect, self.venueCountrySelect)
+        columnList = (VenueEntryDlg.TEAM_ID, VenueEntryDlg.TZ_ID, VenueEntryDlg.CTRY_ID)
+        for editor, column in zip(editorList, columnList):
+            index = self.model.index(row, column)        
+            if editor.currentText() != self.model.data(index).toString():
+                return True
+        
+        return False
                 
     def deleteVenueHistories(self, venue_id):
         """Deletes venue history records that reference a specific match venue."""
