@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'gui/venuehistory_entry.ui'
 #
-# Created: Thu Aug 18 17:52:57 2011
+# Created: Fri Aug 26 15:09:20 2011
 #      by: PyQt4 UI code generator 4.7.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -12,14 +12,14 @@ from PyQt4 import QtCore, QtGui
 class Ui_VenueHistoryDlg(object):
     def setupUi(self, VenueHistoryDlg):
         VenueHistoryDlg.setObjectName("VenueHistoryDlg")
-        VenueHistoryDlg.resize(760, 380)
-        VenueHistoryDlg.setMinimumSize(QtCore.QSize(760, 380))
-        VenueHistoryDlg.setMaximumSize(QtCore.QSize(760, 380))
+        VenueHistoryDlg.resize(720, 380)
+        VenueHistoryDlg.setMinimumSize(QtCore.QSize(720, 380))
+        VenueHistoryDlg.setMaximumSize(QtCore.QSize(720, 380))
         self.venueHistory = QtGui.QTableView(VenueHistoryDlg)
-        self.venueHistory.setGeometry(QtCore.QRect(20, 50, 711, 261))
+        self.venueHistory.setGeometry(QtCore.QRect(20, 50, 681, 261))
         self.venueHistory.setObjectName("venueHistory")
         self.frame = QtGui.QFrame(VenueHistoryDlg)
-        self.frame.setGeometry(QtCore.QRect(20, 320, 711, 51))
+        self.frame.setGeometry(QtCore.QRect(20, 320, 681, 51))
         self.frame.setFrameShape(QtGui.QFrame.StyledPanel)
         self.frame.setFrameShadow(QtGui.QFrame.Raised)
         self.frame.setObjectName("frame")
@@ -40,7 +40,7 @@ class Ui_VenueHistoryDlg(object):
         self.deleteEntry.setIcon(icon1)
         self.deleteEntry.setObjectName("deleteEntry")
         self.closeButton = QtGui.QPushButton(self.frame)
-        self.closeButton.setGeometry(QtCore.QRect(620, 10, 80, 33))
+        self.closeButton.setGeometry(QtCore.QRect(590, 10, 80, 33))
         self.closeButton.setMinimumSize(QtCore.QSize(80, 33))
         self.closeButton.setMaximumSize(QtCore.QSize(80, 33))
         icon2 = QtGui.QIcon()
@@ -49,7 +49,7 @@ class Ui_VenueHistoryDlg(object):
         self.closeButton.setIconSize(QtCore.QSize(16, 16))
         self.closeButton.setObjectName("closeButton")
         self.layoutWidget = QtGui.QWidget(VenueHistoryDlg)
-        self.layoutWidget.setGeometry(QtCore.QRect(17, 10, 381, 41))
+        self.layoutWidget.setGeometry(QtCore.QRect(17, 0, 381, 51))
         self.layoutWidget.setObjectName("layoutWidget")
         self.horizontalLayout = QtGui.QHBoxLayout(self.layoutWidget)
         self.horizontalLayout.setObjectName("horizontalLayout")
