@@ -551,7 +551,8 @@ class VenueEntryDlg(QDialog, ui_venueentry.Ui_VenueEntryDlg):
         
         # define local parameters
         CONFED_ID, CONFED_NAME = range(2)
-        COUNTRY_NAME = HOST_NAME = TIMEZONE_NAME = 1
+        COUNTRY_NAME = HOST_NAME = 1
+        TIMEZONE_OFFSET = 3
 
         # define validators for geographic fields
         self.venueLatitudeEdit.setValidator(QDoubleValidator(-90.000000, 90.000000, 6, self.layoutWidget))
@@ -599,7 +600,7 @@ class VenueEntryDlg(QDialog, ui_venueentry.Ui_VenueEntryDlg):
         
         # relation model for Time Zone combobox
         self.timezoneModel = self.model.relationModel(VenueEntryDlg.TZ_ID)
-        self.timezoneModel.setSort(TIMEZONE_NAME, Qt.AscendingOrder)
+        self.timezoneModel.setSort(TIMEZONE_OFFSET, Qt.AscendingOrder)
         self.venueTimezoneSelect.setModel(self.timezoneModel)
         self.venueTimezoneSelect.setModelColumn(self.timezoneModel.fieldIndex("tz_name"))
         self.venueTimezoneSelect.setCurrentIndex(-1)
@@ -666,7 +667,7 @@ class VenueEntryDlg(QDialog, ui_venueentry.Ui_VenueEntryDlg):
         self.connect(self.deleteEntry, SIGNAL("clicked()"), self.deleteRecord)        
         self.connect(self.closeButton, SIGNAL("clicked()"), self.accept)
         self.connect(self.mapper, SIGNAL("currentIndexChanged(int)"), self.updateConfed)
-        self.connect(self.venueConfedSelect, SIGNAL("activated(int)"), self.filterCountryBox)
+        self.connect(self.venueConfedSelect, SIGNAL("activated(int)"), self.filterCountriesAndTimeZones)
         self.connect(self.venueHistoryButton, SIGNAL("clicked()"), lambda: self.openVenueHistory(self.venueID_display.text()))
      
     def accept(self):
@@ -767,7 +768,6 @@ class VenueEntryDlg(QDialog, ui_venueentry.Ui_VenueEntryDlg):
         self.venueCityEdit.setEnabled(True)
         self.venueConfedSelect.setEnabled(True)
         self.venueTeamSelect.setEnabled(True)
-        self.venueTimezoneSelect.setEnabled(True)
         self.venueAltEdit.setEnabled(True)
         self.venueLatitudeEdit.setEnabled(True)
         self.venueLongitudeEdit.setEnabled(True)
@@ -780,7 +780,9 @@ class VenueEntryDlg(QDialog, ui_venueentry.Ui_VenueEntryDlg):
         self.venueAltEdit.setText("0")
         self.venueLatitudeEdit.setText("0.000000")
         self.venueLongitudeEdit.setText("0.000000")
+        
         self.venueCountrySelect.setDisabled(True)        
+        self.venueTimezoneSelect.setDisabled(True)
         self.venueNameEdit.setFocus()
     
     def deleteRecord(self):
@@ -862,7 +864,8 @@ class VenueEntryDlg(QDialog, ui_venueentry.Ui_VenueEntryDlg):
     def updateConfed(self):
         """Updates current index of Confederation combobox.
         
-        Ensures consistency between the current nation and its confederation.
+        Ensures consistency between the current nation, the current time zone, 
+        and the confederation to which both belong.
         """
         # look for current index on Country combobox
         # extract confed_id from underlying model
@@ -870,6 +873,9 @@ class VenueEntryDlg(QDialog, ui_venueentry.Ui_VenueEntryDlg):
         currCountry = self.venueCountrySelect.currentText()
         id = self.countryModel.record(currIdx).value("confed_id").toString()
         
+        # get current text on Time Zone combobox
+        currTimeZone = self.venueTimezoneSelect.currentText()
+                
         # make query on tbl_confederations
         # extract confederation name corresponding to confederation ID
         # there will only be one confederation in query result
@@ -884,22 +890,39 @@ class VenueEntryDlg(QDialog, ui_venueentry.Ui_VenueEntryDlg):
         # search for confederation name in combobox, set index to current index
         self.venueConfedSelect.setCurrentIndex(self.venueConfedSelect.findText(confedStr, Qt.MatchExactly))
         
+        self.filterCountriesAndTimeZones()
         # update index of Country combobox to that of currCountry
-        self.filterCountryBox()
         self.venueCountrySelect.setCurrentIndex(self.venueCountrySelect.findText(currCountry, Qt.MatchExactly))
-     
-    def filterCountryBox(self):
-        """Enables Country combobox and filters contents on Country combobox upon selection of Confederation."""
+        # update index of Time Zone combobox to that of currTimeZone
+        self.venueTimezoneSelect.setCurrentIndex(self.venueTimezoneSelect.findText(currTimeZone, Qt.MatchExactly))
+        
+    def filterCountriesAndTimeZones(self):
+        """Enables Country and Time Zone comboboxes and filters contents.
+       
+       Filters Country and Time Zone comboboxes upon selection of Confederation."""
+        # flush filter
+        self.countryModel.setFilter(QString())
+        self.timezoneModel.setFilter(QString())
+        self.countryModel.select()
+        self.timezoneModel.select()
+        
         # enable Country combobox if disabled
         if ~self.venueCountrySelect.isEnabled():
             self.venueCountrySelect.setEnabled(True)
+            
+        # enable Time Zone combobox if disabled
+        if ~self.venueTimezoneSelect.isEnabled():
+            self.venueTimezoneSelect.setEnabled(True)
         
-        # filter tbl_countries based on confederation selection
+        # extract confed_id
         currIdx = self.venueConfedSelect.currentIndex()
         id = self.confedModel.record(currIdx).value("confed_id").toString()
+        # filter tbl_countries and tbl_timezones
         self.countryModel.setFilter(QString("confed_id = %1").arg(id))
+        self.timezoneModel.setFilter(QString("confed_id = %1").arg(id))
         self.countryModel.select()
-        
+        self.timezoneModel.select()
+    
     def openVenueHistory(self, venue_id):
         """Opens Venue History subdialog for a specific match from Match dialog.
         
@@ -932,11 +955,11 @@ class VenueHistoryDlg(QDialog, ui_venuehistoryentry.Ui_VenueHistoryDlg):
         """Constructor for VenueHistoryDlg class"""
         super(VenueHistoryDlg, self).__init__(parent)
         self.setupUi(self)
+        self.venue_id = venue_id
     
         # define underlying database model (tbl_venuehistory)
         self.model = QSqlRelationalTableModel(self)
         self.model.setTable("tbl_venuehistory")
-        self.model.setFilter(QString("venue_id = %1").arg(venue_id))
         self.model.setRelation(VenueHistoryDlg.VENUE_ID, QSqlRelation("tbl_venues", "venue_id", "ven_name"))
         self.model.setRelation(VenueHistoryDlg.SURFACE_ID, QSqlRelation("tbl_venuesurfaces", "venuesurface_id", "vensurf_desc"))
         self.model.setSort(VenueHistoryDlg.EFFDATE, Qt.AscendingOrder)
@@ -952,14 +975,14 @@ class VenueHistoryDlg(QDialog, ui_venuehistoryentry.Ui_VenueHistoryDlg):
         
         # set venue name
         query = QSqlQuery()
-        query.exec_(QString("SELECT ven_name FROM tbl_venues WHERE venue_id = %1").arg(venue_id))
+        query.exec_(QString("SELECT ven_name FROM tbl_venues WHERE venue_id = %1").arg(self.venue_id))
         if query.isActive():
             query.next()
             venueName = query.value(0).toString()
         else:
             venueName = "ERROR"
         self.venueName_display.setText(venueName)
-        
+                
         # define table view
         self.venueHistory.setModel(self.model)
         # form GenericDelegate
@@ -974,10 +997,10 @@ class VenueHistoryDlg(QDialog, ui_venuehistoryentry.Ui_VenueHistoryDlg):
 
         self.venueHistory.setSelectionMode(QTableView.SingleSelection)
         self.venueHistory.setSelectionBehavior(QTableView.SelectRows)
-        self.venueHistory.setColumnHidden(HISTORY_ID, True)
-        self.venueHistory.setColumnHidden(VENUE_ID, True)
+        self.venueHistory.setColumnHidden(VenueHistoryDlg.HISTORY_ID, True)
+        self.venueHistory.setColumnHidden(VenueHistoryDlg.VENUE_ID, True)
         self.venueHistory.resizeColumnsToContents()
-        
+                
         # configure signal/slot        
         self.connect(self.addEntry, SIGNAL("clicked()"), self.addRecord)
         self.connect(self.deleteEntry, SIGNAL("clicked()"), self.deleteRecord)        
@@ -985,11 +1008,23 @@ class VenueHistoryDlg(QDialog, ui_venuehistoryentry.Ui_VenueHistoryDlg):
         
     def accept(self):
         """Commits changes to database and closes dialog."""
+        index = self.venueHistory.currentIndex()
+        row = index.row()
+        idIndex = self.model.index(row, VenueHistoryDlg.VENUE_ID)
+        self.model.setData(idIndex, QVariant(self.venue_id))
+        self.model.submitAll()
         QDialog.accept(self)
         
     def addRecord(self):
         """Inserts a new record in the database and focuses on the effective date field in table view."""
+        index = self.venueHistory.currentIndex()
+        row = index.row()
+        if index.isValid():
+            idIndex = self.model.index(row, VenueHistoryDlg.VENUE_ID)
+            self.model.setData(idIndex, QVariant(self.venue_id))
+            self.model.submitAll()
         row = self.model.rowCount()
+        print row
         self.model.insertRow(row)
         index = self.model.index(row, VenueHistoryDlg.EFFDATE)
         self.venueHistory.setCurrentIndex(index)
