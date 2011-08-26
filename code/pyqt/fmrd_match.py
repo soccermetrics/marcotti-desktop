@@ -270,17 +270,23 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
 
     def accept(self):
         """Submits changes to database and closes window upon confirmation from user."""
-        confirm = MsgPrompts.SaveDiscardOptionPrompt(self)
-        if confirm:
-            if not self.mapper.submit():
-                MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+        row = self.mapper.currentIndex()
+        if self.isDirty(row):
+            if MsgPrompts.SaveDiscardOptionPrompt(self):
+                if not self.mapper.submit():
+                    MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
         QDialog.accept(self)
     
     def saveRecord(self, where):
         """"Submits changes to database, navigates through form, and resets subforms."""
         row = self.mapper.currentIndex()
-        if not self.mapper.submit():
-            MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+        if self.isDirty(row):
+            if MsgPrompts.SaveDiscardOptionPrompt(self):
+                if not self.mapper.submit():
+                    MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+            else:
+                self.mapper.revert()
+                return
         
         if where == Constants.FIRST:
             self.firstEntry.setDisabled(True)
@@ -350,9 +356,13 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
         # save current index if valid
         row = self.mapper.currentIndex()
         if row != -1:
-            if not self.mapper.submit():
-                MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
-                return
+            if self.isDirty(row):
+                if MsgPrompts.SaveDiscardOptionPrompt(self):
+                    if not self.mapper.submit():
+                        MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+                else:
+                    self.mapper.revert()
+                    return
         
         row = self.model.rowCount()
         query = QSqlQuery()
@@ -718,10 +728,11 @@ class EnviroEntryDlg(QDialog, ui_enviroentry.Ui_EnviroEntryDlg):
         
     def accept(self):
         """Submits changes to database and closes window upon confirmation from user."""
-        confirm = MsgPrompts.SaveDiscardOptionPrompt(self)
-        if confirm:
-            if not self.mapper.submit():
-                MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+        row = self.mapper.currentIndex()
+        if self.isDirty(row):
+            if MsgPrompts.SaveDiscardOptionPrompt(self):
+                if not self.mapper.submit():
+                    MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
         QDialog.accept(self)
 
     def isDirty(self, row):
