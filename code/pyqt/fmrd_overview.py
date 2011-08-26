@@ -1037,6 +1037,7 @@ class VenueHistoryDlg(QDialog, ui_venuehistoryentry.Ui_VenueHistoryDlg):
         self.venueHistory.setColumnHidden(VenueHistoryDlg.HISTORY_ID, True)
         self.venueHistory.setColumnHidden(VenueHistoryDlg.VENUE_ID, True)
         self.venueHistory.resizeColumnsToContents()
+        self.venueHistory.horizontalHeader().setStretchLastSection(True)
                 
         # configure signal/slot        
         self.connect(self.addEntry, SIGNAL("clicked()"), self.addRecord)
@@ -1061,7 +1062,6 @@ class VenueHistoryDlg(QDialog, ui_venuehistoryentry.Ui_VenueHistoryDlg):
             self.model.setData(idIndex, QVariant(self.venue_id))
             self.model.submitAll()
         row = self.model.rowCount()
-        print row
         self.model.insertRow(row)
         index = self.model.index(row, VenueHistoryDlg.EFFDATE)
         self.venueHistory.setCurrentIndex(index)
