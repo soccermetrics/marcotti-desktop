@@ -304,6 +304,35 @@ class GoalEntryDlg(QDialog, ui_goalentry.Ui_GoalEntryDlg):
         self.stoppageEdit.setDisabled(True)
         self.stoppageEdit.setText("0")
         self.goaltimeEdit.setText(QString())
+        
+    def isDirty(self, row):
+        """Compares current state of data entry form to current record in database, and returns a boolean.
+        
+        Arguments:
+            row: current record in mapper and model
+        
+        Returns:
+            TRUE: there are changes between data entry form and current record in database,
+                      or new record in database
+            FALSE: no changes between data entry form and current record in database
+        """
+        # line edit fields
+        editorList = (self.goaltimeEdit, self.stoppageEdit)
+        columnList = (GoalEntryDlg.TIME, GoalEntryDlg.STIME)
+        for editor, column in zip(editorList, columnList):
+            index = self.model.index(row, column)        
+            if editor.text() != self.model.data(index).toString():
+                return True
+                
+        # combobox fields
+        editorList = (self.teamSelect, self.playerSelect, self.goaleventSelect, self.goaltypeSelect)
+        columnList = (GoalEntryDlg.TEAM_ID, GoalEntryDlg.LINEUP_ID, GoalEntryDlg.PLAY_ID, GoalEntryDlg.BODY_ID)
+        for editor, column in zip(editorList, columnList):
+            index = self.model.index(row, column)        
+            if editor.currentText() != self.model.data(index).toString():
+                return True
+                    
+        return False
 
     def filterGoals(self):
         """Sets filter for Goals table based on Match selection."""
@@ -665,6 +694,35 @@ class PenaltyEntryDlg(QDialog, ui_penaltyentry.Ui_PenaltyEntryDlg):
         if row + 1 >= self.model.rowCount():
             row = self.model.rowCount() - 1
         self.mapper.setCurrentIndex(row) 
+        
+    def isDirty(self, row):
+        """Compares current state of data entry form to current record in database, and returns a boolean.
+        
+        Arguments:
+            row: current record in mapper and model
+        
+        Returns:
+            TRUE: there are changes between data entry form and current record in database,
+                      or new record in database
+            FALSE: no changes between data entry form and current record in database
+        """
+        # line edit fields
+        editorList = (self.pentimeEdit, self.stoppageEdit)
+        columnList = (PenaltyEntryDlg.TIME, PenaltyEntryDlg.STIME)
+        for editor, column in zip(editorList, columnList):
+            index = self.model.index(row, column)        
+            if editor.text() != self.model.data(index).toString():
+                return True
+                
+        # combobox fields
+        editorList = (self.playerSelect, self.foulSelect, self.penoutcomeSelect)
+        columnList = (PenaltyEntryDlg.LINEUP_ID, PenaltyEntryDlg.FOUL_ID, PenaltyEntryDlg.OUTCOME_ID)
+        for editor, column in zip(editorList, columnList):
+            index = self.model.index(row, column)        
+            if editor.currentText() != self.model.data(index).toString():
+                return True
+                    
+        return False                
 
     def addRecord(self):
         """Adds new record at end of entry list."""        
@@ -1151,6 +1209,35 @@ class OffenseEntryDlg(QDialog, ui_offenseentry.Ui_OffenseEntryDlg):
         if row + 1 >= self.model.rowCount():
             row = self.model.rowCount() - 1
         self.mapper.setCurrentIndex(row) 
+        
+    def isDirty(self, row):
+        """Compares current state of data entry form to current record in database, and returns a boolean.
+        
+        Arguments:
+            row: current record in mapper and model
+        
+        Returns:
+            TRUE: there are changes between data entry form and current record in database,
+                      or new record in database
+            FALSE: no changes between data entry form and current record in database
+        """
+        # line edit fields
+        editorList = (self.foultimeEdit, self.stoppageEdit)
+        columnList = (OffenseEntryDlg.TIME, OffenseEntryDlg.STIME)
+        for editor, column in zip(editorList, columnList):
+            index = self.model.index(row, column)        
+            if editor.text() != self.model.data(index).toString():
+                return True
+                
+        # combobox fields
+        editorList = (self.playerSelect, self.foulSelect, self.cardSelect)
+        columnList = (OffenseEntryDlg.LINEUP_ID, OffenseEntryDlg.FOUL_ID, OffenseEntryDlg.CARD_ID)
+        for editor, column in zip(editorList, columnList):
+            index = self.model.index(row, column)        
+            if editor.currentText() != self.model.data(index).toString():
+                return True
+                    
+        return False        
 
     def addRecord(self):
         """Adds new record at end of entry list."""
@@ -1670,6 +1757,35 @@ class SubsEntryDlg(QDialog, ui_subsentry.Ui_SubsEntryDlg):
         if row + 1 >= self.model.rowCount():
             row = self.model.rowCount() - 1
         self.mapper.setCurrentIndex(row) 
+        
+    def isDirty(self, row):
+        """Compares current state of data entry form to current record in database, and returns a boolean.
+        
+        Arguments:
+            row: current record in mapper and model
+        
+        Returns:
+            TRUE: there are changes between data entry form and current record in database,
+                      or new record in database
+            FALSE: no changes between data entry form and current record in database
+        """
+        # line edit fields
+        editorList = (self.subtimeEdit, self.stoppageEdit)
+        columnList = (SubsEntryDlg.TIME, SubsEntryDlg.STIME)
+        for editor, column in zip(editorList, columnList):
+            index = self.model.index(row, column)        
+            if editor.text() != self.model.data(index).toString():
+                return True
+                
+        # combobox fields that map to linking tables
+        editorList = (self.inplayerSelect, self.outplayerSelect)   
+        modelList = (self.inplayerModel, self.outplayerModel)
+        for editor, model in zip(editorList, modelList):
+            index = model.index(0, 1)
+            if editor.currentText() != model.data(index).toString():
+                return True
+
+        return False                
 
     def addRecord(self):
         """Adds new record at end of entry list."""
@@ -2307,7 +2423,36 @@ class SwitchEntryDlg(QDialog, ui_switchentry.Ui_SwitchEntryDlg):
         if row + 1 >= self.model.rowCount():
             row = self.model.rowCount() - 1
         self.mapper.setCurrentIndex(row) 
-
+        
+    def isDirty(self, row):
+        """Compares current state of data entry form to current record in database, and returns a boolean.
+        
+        Arguments:
+            row: current record in mapper and model
+        
+        Returns:
+            TRUE: there are changes between data entry form and current record in database,
+                      or new record in database
+            FALSE: no changes between data entry form and current record in database
+        """
+        # line edit fields
+        editorList = (self.switchtimeEdit, self.stoppageEdit)
+        columnList = (SwitchEntryDlg.TIME, SwitchEntryDlg.STIME)
+        for editor, column in zip(editorList, columnList):
+            index = self.model.index(row, column)        
+            if editor.text() != self.model.data(index).toString():
+                return True
+                
+        # combobox fields
+        editorList = (self.playerSelect, self.newPositionSelect)
+        columnList = (SwitchEntryDlg.LINEUP_ID, SwitchEntryDlg.POS_ID)
+        for editor, column in zip(editorList, columnList):
+            index = self.model.index(row, column)        
+            if editor.currentText() != self.model.data(index).toString():
+                return True
+                    
+        return False                
+        
     def addRecord(self):
         """Adds new record at end of entry list."""        
         # save current index if valid
