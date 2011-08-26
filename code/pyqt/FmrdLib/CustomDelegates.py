@@ -1488,7 +1488,7 @@ class FloatColumnDelegate(QStyledItemDelegate):
     """Implements LineEdit widgets that accept decimal inputs."""
     
     def __init__(self, minimum=0.00, maximum=0.00, decimals=2, format="0.00", parent=None):
-        super(NumericColumnDelegate, self).__init__(parent)
+        super(FloatColumnDelegate, self).__init__(parent)
         self.minimum = minimum
         self.maximum = maximum
         self.decimals = decimals
@@ -1509,8 +1509,8 @@ class FloatColumnDelegate(QStyledItemDelegate):
             index -- current index of database table model
             
         """        
-        value = index.model().data(index, Qt.DisplayRole).toDate()
-        editor.setData(value)
+        value = index.model().data(index, Qt.DisplayRole).toString()
+        editor.setText(value)
         
     def setModelData(self, editor, model, index):
         """Writes current text from editor to current entry in database model.
