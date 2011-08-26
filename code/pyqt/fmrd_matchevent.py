@@ -258,6 +258,9 @@ class GoalEntryDlg(QDialog, ui_goalentry.Ui_GoalEntryDlg):
         if row + 1 >= self.model.rowCount():
             row = self.model.rowCount() - 1
         self.mapper.setCurrentIndex(row) 
+        # disable Delete button if no records in database
+        if not self.model.rowCount():
+            self.deleteEntry.setDisabled(True)
 
     def addRecord(self):
         """Adds new record at end of entry list."""
@@ -694,6 +697,9 @@ class PenaltyEntryDlg(QDialog, ui_penaltyentry.Ui_PenaltyEntryDlg):
         if row + 1 >= self.model.rowCount():
             row = self.model.rowCount() - 1
         self.mapper.setCurrentIndex(row) 
+        # disable Delete button if no records in database
+        if not self.model.rowCount():
+            self.deleteEntry.setDisabled(True)        
         
     def isDirty(self, row):
         """Compares current state of data entry form to current record in database, and returns a boolean.
@@ -1209,6 +1215,9 @@ class OffenseEntryDlg(QDialog, ui_offenseentry.Ui_OffenseEntryDlg):
         if row + 1 >= self.model.rowCount():
             row = self.model.rowCount() - 1
         self.mapper.setCurrentIndex(row) 
+        # disable Delete button if no records in database
+        if not self.model.rowCount():
+            self.deleteEntry.setDisabled(True)
         
     def isDirty(self, row):
         """Compares current state of data entry form to current record in database, and returns a boolean.
@@ -1757,7 +1766,10 @@ class SubsEntryDlg(QDialog, ui_subsentry.Ui_SubsEntryDlg):
         if row + 1 >= self.model.rowCount():
             row = self.model.rowCount() - 1
         self.mapper.setCurrentIndex(row) 
-        
+        # disable Delete button if no records in database
+        if not self.model.rowCount():
+            self.deleteEntry.setDisabled(True)
+            
     def isDirty(self, row):
         """Compares current state of data entry form to current record in database, and returns a boolean.
         
@@ -2422,7 +2434,11 @@ class SwitchEntryDlg(QDialog, ui_switchentry.Ui_SwitchEntryDlg):
             return
         if row + 1 >= self.model.rowCount():
             row = self.model.rowCount() - 1
-        self.mapper.setCurrentIndex(row) 
+        self.mapper.setCurrentIndex(row)
+        # disable Delete button if no records in database
+        if not self.model.rowCount():
+            self.deleteEntry.setDisabled(True)
+        
         
     def isDirty(self, row):
         """Compares current state of data entry form to current record in database, and returns a boolean.
