@@ -117,6 +117,8 @@ class CardSetupDlg(QDialog, ui_cardsetup.Ui_CardSetupDlg):
                 if MsgPrompts.SaveDiscardOptionPrompt(self):
                     if not self.mapper.submit():
                         MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+            else:
+                MsgPrompts.DuplicateRecordErrorPrompt(self, self.model.tableName(), self.cardtypeEdit.text())
         QDialog.accept(self)
     
     def saveRecord(self, where):
@@ -330,16 +332,29 @@ class FoulSetupDlg(QDialog, ui_foulsetup.Ui_FoulSetupDlg):
 
     def accept(self):
         """Submits changes to database and closes window upon confirmation from user."""
-        if MsgPrompts.SaveDiscardOptionPrompt(self):
-            if not self.mapper.submit():
-                MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+        row = self.mapper.currentIndex()
+        if self.isDirty(row):
+            if not CheckDuplicateRecords("foul_desc", self.model.tableName(), self.foulDescEdit.text()):        
+                if MsgPrompts.SaveDiscardOptionPrompt(self):
+                    if not self.mapper.submit():
+                        MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+            else:
+                MsgPrompts.DuplicateRecordErrorPrompt(self, self.model.tableName(), self.foulDescEdit.text())
         QDialog.accept(self)
     
     def saveRecord(self, where):
         """Submits changes to database and navigates through form."""
         row = self.mapper.currentIndex()
-        if not self.mapper.submit():
-            MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+        if self.isDirty(row):
+            if not CheckDuplicateRecords("foul_desc", self.model.tableName(), self.foulDescEdit.text()):        
+                if MsgPrompts.SaveDiscardOptionPrompt(self):
+                    if not self.mapper.submit():
+                        MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+            else:
+                MsgPrompts.DuplicateRecordErrorPrompt(self, self.model.tableName(), self.foulDescEdit.text())
+                self.mapper.revert()
+                return
+                
         if where == Constants.FIRST:
             self.firstEntry.setDisabled(True)
             self.prevEntry.setDisabled(True)
@@ -382,9 +397,15 @@ class FoulSetupDlg(QDialog, ui_foulsetup.Ui_FoulSetupDlg):
         # save current index if valid
         row = self.mapper.currentIndex()
         if row != -1:
-            if not self.mapper.submit():
-                MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
-                return
+            if self.isDirty(row):
+                if not CheckDuplicateRecords("foul_desc", self.model.tableName(), self.foulDescEdit.text()):        
+                    if MsgPrompts.SaveDiscardOptionPrompt(self):
+                        if not self.mapper.submit():
+                            MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+                else:
+                    MsgPrompts.DuplicateRecordErrorPrompt(self, self.model.tableName(), self.foulDescEdit.text())
+                    self.mapper.revert()
+                    return
         
         row = self.model.rowCount()
         query = QSqlQuery()
@@ -533,17 +554,29 @@ class PenSetupDlg(QDialog, ui_penoutcomesetup.Ui_PenSetupDlg):
 
     def accept(self):
         """Submits changes to database and closes window upon confirmation from user."""
-        confirm = MsgPrompts.SaveDiscardOptionPrompt(self)
-        if confirm:
-            if not self.mapper.submit():
-                MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+        row = self.mapper.currentIndex()
+        if self.isDirty(row):
+            if not CheckDuplicateRecords("po_desc", self.model.tableName(), self.penOutcomeEdit.text()):        
+                if MsgPrompts.SaveDiscardOptionPrompt(self):
+                    if not self.mapper.submit():
+                        MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+            else:
+                MsgPrompts.DuplicateRecordErrorPrompt(self, self.model.tableName(), self.penOutcomeEdit.text())
         QDialog.accept(self)
     
     def saveRecord(self, where):
         """Submits changes to database and navigates through form."""
         row = self.mapper.currentIndex()
-        if not self.mapper.submit():
-            MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+        if self.isDirty(row):
+            if not CheckDuplicateRecords("po_desc", self.model.tableName(), self.penOutcomeEdit.text()):        
+                if MsgPrompts.SaveDiscardOptionPrompt(self):
+                    if not self.mapper.submit():
+                        MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+            else:
+                MsgPrompts.DuplicateRecordErrorPrompt(self, self.model.tableName(), self.penOutcomeEdit.text())
+                self.mapper.revert()
+                return
+                
         if where == Constants.FIRST:
             self.firstEntry.setDisabled(True)
             self.prevEntry.setDisabled(True)
@@ -586,9 +619,15 @@ class PenSetupDlg(QDialog, ui_penoutcomesetup.Ui_PenSetupDlg):
         # save current index if valid
         row = self.mapper.currentIndex()
         if row != -1:
-            if not self.mapper.submit():
-                MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
-                return
+            if self.isDirty(row):
+                if not CheckDuplicateRecords("po_desc", self.model.tableName(), self.penOutcomeEdit.text()):        
+                    if MsgPrompts.SaveDiscardOptionPrompt(self):
+                        if not self.mapper.submit():
+                            MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+                else:
+                    MsgPrompts.DuplicateRecordErrorPrompt(self, self.model.tableName(), self.penOutcomeEdit.text())
+                    self.mapper.revert()
+                    return
         
         row = self.model.rowCount()
         query = QSqlQuery()
@@ -735,17 +774,29 @@ class GoalEventSetupDlg(QDialog, ui_goaleventsetup.Ui_GoalEventSetupDlg):
 
     def accept(self):
         """Submits changes to database and closes window upon confirmation from user."""
-        confirm = MsgPrompts.SaveDiscardOptionPrompt(self)
-        if confirm:
-            if not self.mapper.submit():
-                MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+        row = self.mapper.currentIndex()
+        if self.isDirty(row):
+            if not CheckDuplicateRecords("gte_desc", self.model.tableName(), self.goaleventEdit.text()):        
+                if MsgPrompts.SaveDiscardOptionPrompt(self):
+                    if not self.mapper.submit():
+                        MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+            else:
+                MsgPrompts.DuplicateRecordErrorPrompt(self, self.model.tableName(), self.goaleventEdit.text())
         QDialog.accept(self)
     
     def saveRecord(self, where):
         """Submits changes to database and navigates through form."""
         row = self.mapper.currentIndex()
-        if not self.mapper.submit():
-            MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+        if self.isDirty(row):
+            if not CheckDuplicateRecords("gte_desc", self.model.tableName(), self.goaleventEdit.text()):        
+                if MsgPrompts.SaveDiscardOptionPrompt(self):
+                    if not self.mapper.submit():
+                        MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+            else:
+                MsgPrompts.DuplicateRecordErrorPrompt(self, self.model.tableName(), self.goaleventEdit.text())
+                self.mapper.revert()
+                return
+                
         if where == Constants.FIRST:
             self.firstEntry.setDisabled(True)
             self.prevEntry.setDisabled(True)
@@ -788,9 +839,15 @@ class GoalEventSetupDlg(QDialog, ui_goaleventsetup.Ui_GoalEventSetupDlg):
         # save current index if valid
         row = self.mapper.currentIndex()
         if row != -1:
-            if not self.mapper.submit():
-                MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
-                return
+            if self.isDirty(row):
+                if not CheckDuplicateRecords("gte_desc", self.model.tableName(), self.goaleventEdit.text()):        
+                    if MsgPrompts.SaveDiscardOptionPrompt(self):
+                        if not self.mapper.submit():
+                            MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+                else:
+                    MsgPrompts.DuplicateRecordErrorPrompt(self, self.model.tableName(), self.goaleventEdit.text())
+                    self.mapper.revert()
+                    return
         
         row = self.model.rowCount()
         query = QSqlQuery()
@@ -936,17 +993,29 @@ class GoalStrikeSetupDlg(QDialog, ui_goalstrikesetup.Ui_GoalStrikeSetupDlg):
 
     def accept(self):
         """Submits changes to database and closes window upon confirmation from user."""
-        confirm = MsgPrompts.SaveDiscardOptionPrompt(self)
-        if confirm:
-            if not self.mapper.submit():
-                MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+        row = self.mapper.currentIndex()
+        if self.isDirty(row):
+            if not CheckDuplicateRecords("gts_desc", self.model.tableName(), self.goalstrikeEdit.text()):        
+                if MsgPrompts.SaveDiscardOptionPrompt(self):
+                    if not self.mapper.submit():
+                        MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+            else:
+                MsgPrompts.DuplicateRecordErrorPrompt(self, self.model.tableName(), self.goalstrikeEdit.text())
         QDialog.accept(self)
     
     def saveRecord(self, where):
         """Submits changes to database and navigates through form."""
         row = self.mapper.currentIndex()
-        if not self.mapper.submit():
-            MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+        if self.isDirty(row):
+            if not CheckDuplicateRecords("gts_desc", self.model.tableName(), self.goalstrikeEdit.text()):        
+                if MsgPrompts.SaveDiscardOptionPrompt(self):
+                    if not self.mapper.submit():
+                        MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+            else:
+                MsgPrompts.DuplicateRecordErrorPrompt(self, self.model.tableName(), self.goalstrikeEdit.text())
+                self.mapper.revert()
+                return
+                
         if where == Constants.FIRST:
             self.firstEntry.setDisabled(True)
             self.prevEntry.setDisabled(True)
@@ -989,9 +1058,15 @@ class GoalStrikeSetupDlg(QDialog, ui_goalstrikesetup.Ui_GoalStrikeSetupDlg):
         # save current index if valid
         row = self.mapper.currentIndex()
         if row != -1:
-            if not self.mapper.submit():
-                MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
-                return
+            if self.isDirty(row):
+                if not CheckDuplicateRecords("gts_desc", self.model.tableName(), self.goalstrikeEdit.text()):        
+                    if MsgPrompts.SaveDiscardOptionPrompt(self):
+                        if not self.mapper.submit():
+                            MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+                else:
+                    MsgPrompts.DuplicateRecordErrorPrompt(self, self.model.tableName(), self.goalstrikeEdit.text())
+                    self.mapper.revert()
+                    return
         
         row = self.model.rowCount()
         query = QSqlQuery()
@@ -1118,17 +1193,28 @@ class FieldPosSetupDlg(QDialog, ui_fieldpossetup.Ui_FieldPosSetupDlg):
 
     def accept(self):
         """Submits changes to database and closes window upon confirmation from user."""
-        confirm = MsgPrompts.SaveDiscardOptionPrompt(self)
-        if confirm:
-            if not self.mapper.submit():
-                MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+        row = self.mapper.currentIndex()
+        if self.isDirty(row):
+            if not CheckDuplicateRecords("posfield_name", self.model.tableName(), self.fieldposEdit.text()):        
+                if MsgPrompts.SaveDiscardOptionPrompt(self):
+                    if not self.mapper.submit():
+                        MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+            else:
+                MsgPrompts.DuplicateRecordErrorPrompt(self, self.model.tableName(), self.fieldposEdit.text())
         QDialog.accept(self)
     
     def saveRecord(self, where):
         """Submits changes to database and navigates through form."""
         row = self.mapper.currentIndex()
-        if not self.mapper.submit():
-            MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+        if self.isDirty(row):
+            if not CheckDuplicateRecords("posfield_name", self.model.tableName(), self.fieldposEdit.text()):        
+                if MsgPrompts.SaveDiscardOptionPrompt(self):
+                    if not self.mapper.submit():
+                        MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+            else:
+                MsgPrompts.DuplicateRecordErrorPrompt(self, self.model.tableName(), self.fieldposEdit.text())
+                self.mapper.revert()
+                return
         if where == Constants.FIRST:
             self.firstEntry.setDisabled(True)
             self.prevEntry.setDisabled(True)
@@ -1171,9 +1257,15 @@ class FieldPosSetupDlg(QDialog, ui_fieldpossetup.Ui_FieldPosSetupDlg):
         # save current index if valid
         row = self.mapper.currentIndex()
         if row != -1:
-            if not self.mapper.submit():
-                MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
-                return
+            if self.isDirty(row):
+                if not CheckDuplicateRecords("posfield_name", self.model.tableName(), self.fieldposEdit.text()):        
+                    if MsgPrompts.SaveDiscardOptionPrompt(self):
+                        if not self.mapper.submit():
+                            MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+                else:
+                    MsgPrompts.DuplicateRecordErrorPrompt(self, self.model.tableName(), self.fieldposEdit.text())
+                    self.mapper.revert()
+                    return
         
         row = self.model.rowCount()
         query = QSqlQuery()
@@ -1323,17 +1415,29 @@ class FlankPosSetupDlg(QDialog, ui_flankpossetup.Ui_FlankPosSetupDlg):
 
     def accept(self):
         """Submits changes to database and closes window upon confirmation from user."""
-        confirm = MsgPrompts.SaveDiscardOptionPrompt(self)
-        if confirm:
-            if not self.mapper.submit():
-                MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+        row = self.mapper.currentIndex()
+        if self.isDirty(row):
+            if not CheckDuplicateRecords("posflank_name", self.model.tableName(), self.flankposEdit.text()):        
+                if MsgPrompts.SaveDiscardOptionPrompt(self):
+                    if not self.mapper.submit():
+                        MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+            else:
+                MsgPrompts.DuplicateRecordErrorPrompt(self, self.model.tableName(), self.flankposEdit.text())
         QDialog.accept(self)
     
     def saveRecord(self, where):
         """Submits changes to database and navigates through form."""
         row = self.mapper.currentIndex()
-        if not self.mapper.submit():
-            MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+        if self.isDirty(row):
+            if not CheckDuplicateRecords("posflank_name", self.model.tableName(), self.flankposEdit.text()):        
+                if MsgPrompts.SaveDiscardOptionPrompt(self):
+                    if not self.mapper.submit():
+                        MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+            else:
+                MsgPrompts.DuplicateRecordErrorPrompt(self, self.model.tableName(), self.flankposEdit.text())
+                self.mapper.revert()
+                return
+                
         if where == Constants.FIRST:
             self.firstEntry.setDisabled(True)
             self.prevEntry.setDisabled(True)
@@ -1376,9 +1480,15 @@ class FlankPosSetupDlg(QDialog, ui_flankpossetup.Ui_FlankPosSetupDlg):
         # save current index if valid
         row = self.mapper.currentIndex()
         if row != -1:
-            if not self.mapper.submit():
-                MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
-                return
+            if self.isDirty(row):
+                if not CheckDuplicateRecords("posflank_name", self.model.tableName(), self.flankposEdit.text()):        
+                    if MsgPrompts.SaveDiscardOptionPrompt(self):
+                        if not self.mapper.submit():
+                            MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+                else:
+                    MsgPrompts.DuplicateRecordErrorPrompt(self, self.model.tableName(), self.flankposEdit.text())
+                    self.mapper.revert()
+                    return
         
         row = self.model.rowCount()
         query = QSqlQuery()
@@ -1544,17 +1654,23 @@ class PosSetupDlg(QDialog, ui_positionsetup.Ui_PosSetupDlg):
         
     def accept(self):
         """Submits changes to database and closes window upon confirmation from user."""
-        confirm = MsgPrompts.SaveDiscardOptionPrompt(self)
-        if confirm:
-            if not self.mapper.submit():
-                MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+        row = self.mapper.currentIndex()
+        if self.isDirty(row):
+            if MsgPrompts.SaveDiscardOptionPrompt(self):
+                if not self.mapper.submit():
+                    MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
         QDialog.accept(self)
         
     def saveRecord(self, where):
         """Submits changes to database and navigates through form."""
         row = self.mapper.currentIndex()
-        if not self.mapper.submit():
-            MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+        if self.isDirty(row):
+            if MsgPrompts.SaveDiscardOptionPrompt(self):
+                if not self.mapper.submit():
+                    MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+            else:
+                self.mapper.revert()
+                return
         if where == Constants.FIRST:
             self.firstEntry.setDisabled(True)
             self.prevEntry.setDisabled(True)
@@ -1597,9 +1713,13 @@ class PosSetupDlg(QDialog, ui_positionsetup.Ui_PosSetupDlg):
         # save current index if valid
         row = self.mapper.currentIndex()
         if row != -1:
-            if not self.mapper.submit():
-                MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
-                return
+            if self.isDirty(row):
+                if MsgPrompts.SaveDiscardOptionPrompt(self):
+                    if not self.mapper.submit():
+                        MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+                else:
+                    self.mapper.revert()
+                    return
         
         row = self.model.rowCount()
         query = QSqlQuery()
@@ -1765,17 +1885,29 @@ class CountrySetupDlg(QDialog, ui_countrysetup.Ui_CountrySetupDlg):
         
     def accept(self):
         """Submits changes to database and closes window upon confirmation from user."""
-        confirm = MsgPrompts.SaveDiscardOptionPrompt(self)
-        if confirm:
-            if not self.mapper.submit():
-                MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+        row = self.mapper.currentIndex()
+        if self.isDirty(row):
+            if not CheckDuplicateRecords("cty_name", self.model.tableName(), self.countryEdit.text()):        
+                if MsgPrompts.SaveDiscardOptionPrompt(self):
+                    if not self.mapper.submit():
+                        MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+            else:
+                MsgPrompts.DuplicateRecordErrorPrompt(self, self.model.tableName(), self.countryEdit.text())
         QDialog.accept(self)
         
     def saveRecord(self, where):
         """Submits changes to database and navigates through form."""
         row = self.mapper.currentIndex()
-        if not self.mapper.submit():
-            MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+        if self.isDirty(row):
+            if not CheckDuplicateRecords("cty_name", self.model.tableName(), self.countryEdit.text()):        
+                if MsgPrompts.SaveDiscardOptionPrompt(self):
+                    if not self.mapper.submit():
+                        MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+            else:
+                MsgPrompts.DuplicateRecordErrorPrompt(self, self.model.tableName(), self.countryEdit.text())
+                self.mapper.revert()
+                return
+                
         if where == Constants.FIRST:
             self.firstEntry.setDisabled(True)
             self.prevEntry.setDisabled(True)
@@ -1818,9 +1950,15 @@ class CountrySetupDlg(QDialog, ui_countrysetup.Ui_CountrySetupDlg):
         # save current index if valid
         row = self.mapper.currentIndex()
         if row != -1:
-            if not self.mapper.submit():
-                MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
-                return
+            if self.isDirty(row):
+                if not CheckDuplicateRecords("cty_name", self.model.tableName(), self.countryEdit.text()):        
+                    if MsgPrompts.SaveDiscardOptionPrompt(self):
+                        if not self.mapper.submit():
+                            MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+                else:
+                    MsgPrompts.DuplicateRecordErrorPrompt(self, self.model.tableName(), self.countryEdit.text())
+                    self.mapper.revert()
+                    return
         
         row = self.model.rowCount()
         query = QSqlQuery()
@@ -1973,17 +2111,26 @@ class ConfedSetupDlg(QDialog, ui_confederationsetup.Ui_ConfedSetupDlg):
 
     def accept(self):
         """Submits changes to database and closes window upon confirmation from user."""
-        confirm = MsgPrompts.SaveDiscardOptionPrompt(self)
-        if confirm:
-            if not self.mapper.submit():
-                MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+        row = self.mapper.currentIndex()
+        if self.isDirty(row):
+            if not CheckDuplicateRecords("confed_name", self.model.tableName(), self.confederationEdit.text()):
+                if MsgPrompts.SaveDiscardOptionPrompt(self):
+                    if not self.mapper.submit():
+                        MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
         QDialog.accept(self)
         
     def saveRecord(self, where):
         """Submits changes to database and navigates through form."""
         row = self.mapper.currentIndex()
-        if not self.mapper.submit():
-            MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+        if self.isDirty(row):
+            if not CheckDuplicateRecords("confed_name", self.model.tableName(), self.confederationEdit.text()):        
+                if not self.mapper.submit():
+                    MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+            else:
+                MsgPrompts.DuplicateRecordErrorPrompt(self, self.model.tableName(), self.confederationEdit.text())
+                self.mapper.revert()
+                return
+                
         if where == Constants.FIRST:
             self.firstEntry.setDisabled(True)
             self.prevEntry.setDisabled(True)
@@ -2026,9 +2173,14 @@ class ConfedSetupDlg(QDialog, ui_confederationsetup.Ui_ConfedSetupDlg):
         # save current index if valid
         row = self.mapper.currentIndex()
         if row != -1:
-            if not self.mapper.submit():
-                MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
-                return
+            if self.isDirty(row):
+                if not CheckDuplicateRecords("confed_name", self.model.tableName(), self.confederationEdit.text()):        
+                    if not self.mapper.submit():
+                        MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+                else:
+                    MsgPrompts.DuplicateRecordErrorPrompt(self, self.model.tableName(), self.confederationEdit.text())
+                    self.mapper.revert()
+                    return
         
         # move to end of table and insert new record
         row = self.model.rowCount()
@@ -2193,17 +2345,28 @@ class TimeZoneSetupDlg(QDialog, ui_timezonesetup.Ui_TimeZoneSetupDlg):
 
     def accept(self):
         """Submits changes to database and closes window upon confirmation from user."""
-        confirm = MsgPrompts.SaveDiscardOptionPrompt(self)
-        if confirm:
-            if not self.mapper.submit():
-                MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+        row = self.mapper.currentIndex()
+        if self.isDirty(row):
+            if not CheckDuplicateRecords("tz_name", self.model.tableName(), self.tzNameEdit.text()):        
+                if MsgPrompts.SaveDiscardOptionPrompt(self):
+                    if not self.mapper.submit():
+                        MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+            else:
+                MsgPrompts.DuplicateRecordErrorPrompt(self, self.model.tableName(), self.tzNameEdit.text())
         QDialog.accept(self)
         
     def saveRecord(self, where):
         """Submits changes to database and navigates through form."""
         row = self.mapper.currentIndex()
-        if not self.mapper.submit():
-            MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+        if self.isDirty(row):
+            if not CheckDuplicateRecords("tz_name", self.model.tableName(), self.tzNameEdit.text()):        
+                if MsgPrompts.SaveDiscardOptionPrompt(self):
+                    if not self.mapper.submit():
+                        MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+            else:
+                MsgPrompts.DuplicateRecordErrorPrompt(self, self.model.tableName(), self.tzNameEdit.text())
+                self.mapper.revert()
+                return
         if where == Constants.FIRST:
             self.firstEntry.setDisabled(True)
             self.prevEntry.setDisabled(True)
@@ -2246,9 +2409,15 @@ class TimeZoneSetupDlg(QDialog, ui_timezonesetup.Ui_TimeZoneSetupDlg):
         # save current index if valid
         row = self.mapper.currentIndex()
         if row != -1:
-            if not self.mapper.submit():
-                MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
-                return
+            if self.isDirty(row):
+                if not CheckDuplicateRecords("tz_name", self.model.tableName(), self.tzNameEdit.text()):        
+                    if MsgPrompts.SaveDiscardOptionPrompt(self):
+                        if not self.mapper.submit():
+                            MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+                else:
+                    MsgPrompts.DuplicateRecordErrorPrompt(self, self.model.tableName(), self.tzNameEdit.text())
+                    self.mapper.revert()
+                    return
         
         # move to end of table and insert new record
         row = self.model.rowCount()
@@ -2401,17 +2570,31 @@ class VenueSurfaceSetupDlg(QDialog, ui_venuesurfacesetup.Ui_VenueSurfaceSetupDlg
 
     def accept(self):
         """Submits changes to database and closes window upon confirmation from user."""
-        confirm = MsgPrompts.SaveDiscardOptionPrompt(self)
-        if confirm:
-            if not self.mapper.submit():
-                MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+        row = self.mapper.currentIndex()
+        if self.isDirty(row):
+            if not CheckDuplicateRecords("vensurf_desc", self.model.tableName(), self.vensurfNameEdit.text()):        
+                if MsgPrompts.SaveDiscardOptionPrompt(self):
+                    if not self.mapper.submit():
+                        MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+            else:
+                MsgPrompts.DuplicateRecordErrorPrompt(self, self.model.tableName(), self.vensurfNameEdit.text())
+                self.mapper.revert()
+                return
         QDialog.accept(self)
     
     def saveRecord(self, where):
         """Submits changes to database and navigates through form."""
         row = self.mapper.currentIndex()
-        if not self.mapper.submit():
-            MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+        if self.isDirty(row):
+            if not CheckDuplicateRecords("vensurf_desc", self.model.tableName(), self.vensurfNameEdit.text()):        
+                if MsgPrompts.SaveDiscardOptionPrompt(self):
+                    if not self.mapper.submit():
+                        MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+            else:
+                MsgPrompts.DuplicateRecordErrorPrompt(self, self.model.tableName(), self.vensurfNameEdit.text())
+                self.mapper.revert()
+                return
+                
         if where == Constants.FIRST:
             self.firstEntry.setDisabled(True)
             self.prevEntry.setDisabled(True)
@@ -2454,9 +2637,15 @@ class VenueSurfaceSetupDlg(QDialog, ui_venuesurfacesetup.Ui_VenueSurfaceSetupDlg
         # save current index if valid
         row = self.mapper.currentIndex()
         if row != -1:
-            if not self.mapper.submit():
-                MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
-                return
+            if self.isDirty(row):
+                if not CheckDuplicateRecords("vensurf_desc", self.model.tableName(), self.vensurfNameEdit.text()):        
+                    if MsgPrompts.SaveDiscardOptionPrompt(self):
+                        if not self.mapper.submit():
+                            MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+                else:
+                    MsgPrompts.DuplicateRecordErrorPrompt(self, self.model.tableName(), self.vensurfNameEdit.text())
+                    self.mapper.revert()
+                    return
         
         row = self.model.rowCount()
         query = QSqlQuery()
@@ -2603,17 +2792,29 @@ class RoundSetupDlg(QDialog, ui_roundsetup.Ui_RoundSetupDlg):
     
     def accept(self):
         """Submits changes to database and closes window upon confirmation from user."""
-        confirm = MsgPrompts.SaveDiscardOptionPrompt(self)
-        if confirm:
-            if not self.mapper.submit():
-                MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+        row = self.mapper.currentIndex()
+        if self.isDirty(row):
+            if not CheckDuplicateRecords("round_desc", self.model.tableName(), self.rounddescEdit.text()):        
+                if MsgPrompts.SaveDiscardOptionPrompt(self):
+                    if not self.mapper.submit():
+                        MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+            else:
+                MsgPrompts.DuplicateRecordErrorPrompt(self, self.model.tableName(), self.rounddescEdit.text())
         QDialog.accept(self)
     
     def saveRecord(self, where):
         """Submits changes to database and navigates through form."""
         row = self.mapper.currentIndex()
-        if not self.mapper.submit():
-            MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+        if self.isDirty(row):
+            if not CheckDuplicateRecords("round_desc", self.model.tableName(), self.rounddescEdit.text()):        
+                if MsgPrompts.SaveDiscardOptionPrompt(self):
+                    if not self.mapper.submit():
+                        MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+            else:
+                MsgPrompts.DuplicateRecordErrorPrompt(self, self.model.tableName(), self.rounddescEdit.text())
+                self.mapper.revert()
+                return
+                
         if where == Constants.FIRST:
             self.firstEntry.setDisabled(True)
             self.prevEntry.setDisabled(True)
@@ -2656,9 +2857,15 @@ class RoundSetupDlg(QDialog, ui_roundsetup.Ui_RoundSetupDlg):
         # save current index if valid
         row = self.mapper.currentIndex()
         if row != -1:
-            if not self.mapper.submit():
-                MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
-                return
+            if self.isDirty(row):
+                if not CheckDuplicateRecords("round_desc", self.model.tableName(), self.rounddescEdit.text()):        
+                    if MsgPrompts.SaveDiscardOptionPrompt(self):
+                        if not self.mapper.submit():
+                            MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+                else:
+                    MsgPrompts.DuplicateRecordErrorPrompt(self, self.model.tableName(), self.rounddescEdit.text())
+                    self.mapper.revert()
+                    return
         
         row = self.model.rowCount()
         query = QSqlQuery()
@@ -2805,17 +3012,28 @@ class WxCondSetupDlg(QDialog, ui_weathersetup.Ui_WxCondSetupDlg):
 
     def accept(self):
         """Submits changes to database and closes window upon confirmation from user."""
-        confirm = MsgPrompts.SaveDiscardOptionPrompt(self)
-        if confirm:
-            if not self.mapper.submit():
-                MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+        row = self.mapper.currentIndex()
+        if self.isDirty(row):
+            if not CheckDuplicateRecords("wx_conditiondesc", self.model.tableName(), self.wxcondEdit.text()):        
+                if MsgPrompts.SaveDiscardOptionPrompt(self):
+                    if not self.mapper.submit():
+                        MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+            else:
+                MsgPrompts.DuplicateRecordErrorPrompt(self, self.model.tableName(), self.wxcondEdit.text())
         QDialog.accept(self)
     
     def saveRecord(self, where):
         """Submits changes to database and navigates through form."""
         row = self.mapper.currentIndex()
-        if not self.mapper.submit():
-            MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+        if self.isDirty(row):
+            if not CheckDuplicateRecords("wx_conditiondesc", self.model.tableName(), self.wxcondEdit.text()):        
+                if MsgPrompts.SaveDiscardOptionPrompt(self):
+                    if not self.mapper.submit():
+                        MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+            else:
+                MsgPrompts.DuplicateRecordErrorPrompt(self, self.model.tableName(), self.wxcondEdit.text())
+                self.mapper.revert()
+                return
         if where == Constants.FIRST:
             self.firstEntry.setDisabled(True)
             self.prevEntry.setDisabled(True)
@@ -2858,9 +3076,15 @@ class WxCondSetupDlg(QDialog, ui_weathersetup.Ui_WxCondSetupDlg):
         # save current index if valid
         row = self.mapper.currentIndex()
         if row != -1:
-            if not self.mapper.submit():
-                MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
-                return
+            if self.isDirty(row):
+                if not CheckDuplicateRecords("wx_conditiondesc", self.model.tableName(), self.wxcondEdit.text()):        
+                    if MsgPrompts.SaveDiscardOptionPrompt(self):
+                        if not self.mapper.submit():
+                            MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+                else:
+                    MsgPrompts.DuplicateRecordErrorPrompt(self, self.model.tableName(), self.wxcondEdit.text())
+                    self.mapper.revert()
+                    return
         
         row = self.model.rowCount()
         query = QSqlQuery()
