@@ -94,17 +94,28 @@ class CompEntryDlg(QDialog, ui_competitionentry.Ui_CompEntryDlg):
         
     def accept(self):
         """Submits changes to database and closes window upon confirmation from user."""
-        confirm = MsgPrompts.SaveDiscardOptionPrompt(self)
-        if confirm:
-            if not self.mapper.submit():
-                MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+        row = self.mapper.currentIndex()
+        if self.isDirty(row):
+            if not CheckDuplicateRecords("comp_name", self.model.tableName(), self.competitionEdit.text()):        
+                if MsgPrompts.SaveDiscardOptionPrompt(self):
+                    if not self.mapper.submit():
+                        MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+            else:
+                MsgPrompts.DuplicateRecordErrorPrompt(self, self.model.tableName(), self.competitionEdit.text())
         QDialog.accept(self)
     
     def saveRecord(self, where):
         """Submits changes to database and navigates through form."""
         row = self.mapper.currentIndex()
-        if not self.mapper.submit():
-            MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+        if self.isDirty(row):
+            if not CheckDuplicateRecords("comp_name", self.model.tableName(), self.competitionEdit.text()):        
+                if MsgPrompts.SaveDiscardOptionPrompt(self):
+                    if not self.mapper.submit():
+                        MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+            else:
+                MsgPrompts.DuplicateRecordErrorPrompt(self, self.model.tableName(), self.competitionEdit.text())
+                self.mapper.revert()
+                return
         if where == Constants.FIRST:
             self.firstEntry.setDisabled(True)
             self.prevEntry.setDisabled(True)
@@ -147,9 +158,15 @@ class CompEntryDlg(QDialog, ui_competitionentry.Ui_CompEntryDlg):
         # save current index if valid
         row = self.mapper.currentIndex()
         if row != -1:
-            if not self.mapper.submit():
-                MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
-                return
+            if self.isDirty(row):
+                if not CheckDuplicateRecords("comp_name", self.model.tableName(), self.competitionEdit.text()):        
+                    if MsgPrompts.SaveDiscardOptionPrompt(self):
+                        if not self.mapper.submit():
+                            MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+                else:
+                    MsgPrompts.DuplicateRecordErrorPrompt(self, self.model.tableName(), self.competitionEdit.text())
+                    self.mapper.revert()
+                    return
         
         row = self.model.rowCount()
         query = QSqlQuery()
@@ -338,17 +355,23 @@ class TeamEntryDlg(QDialog, ui_teamentry.Ui_TeamEntryDlg):
         
     def accept(self):
         """Submits changes to database and closes window upon confirmation from user."""
-        confirm = MsgPrompts.SaveDiscardOptionPrompt(self)
-        if confirm:
-            if not self.mapper.submit():
-                MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+        row = self.mapper.currentIndex()
+        if self.isDirty(row):
+            if MsgPrompts.SaveDiscardOptionPrompt(self):
+                if not self.mapper.submit():
+                    MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
         QDialog.accept(self)
     
     def saveRecord(self, where):
         """Submits changes to database and navigates through form."""
         row = self.mapper.currentIndex()
-        if not self.mapper.submit():
-            MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+        if self.isDirty(row):
+            if MsgPrompts.SaveDiscardOptionPrompt(self):
+                if not self.mapper.submit():
+                    MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+            else:
+                self.mapper.revert()
+                return
         if where == Constants.FIRST:
             self.firstEntry.setDisabled(True)
             self.prevEntry.setDisabled(True)
@@ -390,9 +413,13 @@ class TeamEntryDlg(QDialog, ui_teamentry.Ui_TeamEntryDlg):
         # save current index if valid
         row = self.mapper.currentIndex()
         if row != -1:
-            if not self.mapper.submit():
-                MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
-                return
+            if self.isDirty(row):
+                if MsgPrompts.SaveDiscardOptionPrompt(self):
+                    if not self.mapper.submit():
+                        MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+                else:
+                    self.mapper.revert()
+                    return
         
         row = self.model.rowCount()
         query = QSqlQuery()
@@ -672,17 +699,23 @@ class VenueEntryDlg(QDialog, ui_venueentry.Ui_VenueEntryDlg):
      
     def accept(self):
         """Submits changes to database and closes window upon confirmation from user."""
-        confirm = MsgPrompts.SaveDiscardOptionPrompt(self)
-        if confirm:
-            if not self.mapper.submit():
-                MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+        row = self.mapper.currentIndex()
+        if self.isDirty(row):
+            if MsgPrompts.SaveDiscardOptionPrompt(self):
+                if not self.mapper.submit():
+                    MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
         QDialog.accept(self)
     
     def saveRecord(self, where):
         """Submits changes to database and navigates through form."""
         row = self.mapper.currentIndex()
-        if not self.mapper.submit():
-            MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+        if self.isDirty(row):
+            if MsgPrompts.SaveDiscardOptionPrompt(self):
+                if not self.mapper.submit():
+                    MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+            else:
+                self.mapper.revert()
+                return
         if where == Constants.FIRST:
             self.firstEntry.setDisabled(True)
             self.prevEntry.setDisabled(True)
@@ -728,9 +761,13 @@ class VenueEntryDlg(QDialog, ui_venueentry.Ui_VenueEntryDlg):
         # save current index if valid
         row = self.mapper.currentIndex()
         if row != -1:
-            if not self.mapper.submit():
-                MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
-                return
+            if self.isDirty(row):
+                if MsgPrompts.SaveDiscardOptionPrompt(self):
+                    if not self.mapper.submit():
+                        MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+                else:
+                    self.mapper.revert()
+                    return
         
         row = self.model.rowCount()        
         query = QSqlQuery()
