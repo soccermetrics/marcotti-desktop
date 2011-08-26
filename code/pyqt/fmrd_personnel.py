@@ -299,7 +299,12 @@ class ManagerEntryDlg(QDialog, ui_managerentry.Ui_ManagerEntryDlg):
             TRUE: there are changes between data entry form and current record in database,
                       or new record in database
             FALSE: no changes between data entry form and current record in database
+                      or no records in database
         """
+        
+        if not self.model.rowCount():
+            return False
+            
         # line edit fields
         editorList = (self.mgrFirstNameEdit, self.mgrLastNameEdit, self.mgrNicknameEdit, self.mgrDOBEdit)
         columnList = (ManagerEntryDlg.FNAME, ManagerEntryDlg.LNAME, ManagerEntryDlg.NNAME, ManagerEntryDlg.DOB)
@@ -619,7 +624,12 @@ class RefereeEntryDlg(QDialog, ui_refereeentry.Ui_RefereeEntryDlg):
             TRUE: there are changes between data entry form and current record in database,
                       or new record in database
             FALSE: no changes between data entry form and current record in database
+                      or no records in database
         """
+        
+        if not self.model.rowCount():
+            return False
+            
         # line edit fields
         editorList = (self.refFirstNameEdit, self.refLastNameEdit, self.refDOBEdit)
         columnList = (RefereeEntryDlg.FNAME, RefereeEntryDlg.LNAME, RefereeEntryDlg.DOB)
@@ -964,7 +974,12 @@ class PlayerEntryDlg(QDialog, ui_playerentry.Ui_PlayerEntryDlg):
             TRUE: there are changes between data entry form and current record in database,
                       or new record in database
             FALSE: no changes between data entry form and current record in database
+                      or no records in database
         """
+        
+        if not self.model.rowCount():
+            return False
+            
         # line edit fields
         editorList = (self.plyrFirstNameEdit, self.plyrLastNameEdit, self.plyrNicknameEdit, self.plyrDOBEdit)
         columnList = (PlayerEntryDlg.FNAME, PlayerEntryDlg.LNAME, PlayerEntryDlg.NNAME, PlayerEntryDlg.DOB)
@@ -1068,14 +1083,14 @@ class PlayerHistoryDlg(QDialog, ui_playerhistoryentry.Ui_PlayerHistoryDlg):
     
     def __init__(self, player_id, parent=None):
         """Constructor for PlayerHistoryDlg class."""
-        super(PlayerHistoryDlg).__init__(parent)
+        super(PlayerHistoryDlg, self).__init__(parent)
         self.setupUi(self)
+        self.player_id = player_id
         
         # define underlying database model (tbl_playerhistory)
         self.model = QSqlRelationalTableModel(self)
         self.model.setTable("tbl_playerhistory")
-        self.model.setFilter(QString("player_id = %1").arg(player_id))
-        self.model.setRelation(PlayerHistoryDlg.VENUE_ID, QSqlRelation("players_list", "player_id", "full_name"))
+        self.model.setRelation(PlayerHistoryDlg.PLAYER_ID, QSqlRelation("players_list", "player_id", "full_name"))
         self.model.setSort(PlayerHistoryDlg.EFFDATE, Qt.AscendingOrder)
         
         # set header data for table view
@@ -1086,7 +1101,7 @@ class PlayerHistoryDlg(QDialog, ui_playerhistoryentry.Ui_PlayerHistoryDlg):
         
         # display player name
         query = QSqlQuery()
-        query.exec_(QString("SELECT full_name FROM players_list WHERE player_id = %1").arg(player_id))
+        query.exec_(QString("SELECT full_name FROM players_list WHERE player_id = %1").arg(self.player_id))
         if query.isActive():
             query.next()
             playerName = query.value(0).toString()
@@ -1105,9 +1120,10 @@ class PlayerHistoryDlg(QDialog, ui_playerhistoryentry.Ui_PlayerHistoryDlg):
         # define other view attributes
         self.playerHistory.setSelectionMode(QTableView.SingleSelection)
         self.playerHistory.setSelectionBehavior(QTableView.SelectRows)
-        self.playerHistory.setColumnHidden(HISTORY_ID, True)
-        self.playerHistory.setColumnHidden(PLAYER_ID, True)
+        self.playerHistory.setColumnHidden(PlayerHistoryDlg.HISTORY_ID, True)
+        self.playerHistory.setColumnHidden(PlayerHistoryDlg.PLAYER_ID, True)
         self.playerHistory.resizeColumnsToContents()
+        self.playerHistory.horizontalHeader().setStretchLastSection(True)
         
         # configure signal/slot        
         self.connect(self.addEntry, SIGNAL("clicked()"), self.addRecord)
@@ -1116,10 +1132,24 @@ class PlayerHistoryDlg(QDialog, ui_playerhistoryentry.Ui_PlayerHistoryDlg):
         
     def accept(self):
         """Commits changes to database and closes dialog."""
+        index = self.playerHistory.currentIndex()
+        row = index.row()
+        idIndex = self.model.index(row, PlayerHistoryDlg.PLAYER_ID)
+        self.model.setData(idIndex, QVariant(self.player_id))
+        self.model.submitAll()
+        # close dialog
         QDialog.accept(self)
         
     def addRecord(self):
         """Inserts a new record in the database and focuses on the effective date field in table view."""
+        # write current row to model
+        index = self.playerHistory.currentIndex()
+        row = index.row()
+        if index.isValid():
+            idIndex = self.model.index(row, PlayerHistory.PLAYER_ID)
+            self.model.setData(idIndex, QVariant(self.player_id))
+            self.model.submitAll()
+        # append new row to end of table view
         row = self.model.rowCount()
         self.model.insertRow(row)
         index = self.model.index(row, PlayerHistoryDlg.EFFDATE)
