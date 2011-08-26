@@ -6,19 +6,19 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>420</width>
+    <width>480</width>
     <height>380</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>420</width>
+    <width>480</width>
     <height>380</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>420</width>
+    <width>480</width>
     <height>380</height>
    </size>
   </property>
@@ -30,7 +30,7 @@
     <rect>
      <x>20</x>
      <y>50</y>
-     <width>381</width>
+     <width>441</width>
      <height>261</height>
     </rect>
    </property>
@@ -40,7 +40,7 @@
     <rect>
      <x>20</x>
      <y>320</y>
-     <width>381</width>
+     <width>441</width>
      <height>51</height>
     </rect>
    </property>
@@ -117,7 +117,7 @@
    <widget class="QPushButton" name="closeButton">
     <property name="geometry">
      <rect>
-      <x>290</x>
+      <x>350</x>
       <y>10</y>
       <width>80</width>
       <height>33</height>
@@ -157,9 +157,9 @@
    <property name="geometry">
     <rect>
      <x>17</x>
-     <y>10</y>
+     <y>0</y>
      <width>381</width>
-     <height>41</height>
+     <height>51</height>
     </rect>
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout">

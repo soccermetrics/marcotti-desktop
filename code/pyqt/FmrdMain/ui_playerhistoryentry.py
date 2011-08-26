@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'gui/playerhistory_entry.ui'
 #
-# Created: Thu Aug 18 17:52:55 2011
+# Created: Fri Aug 26 15:09:19 2011
 #      by: PyQt4 UI code generator 4.7.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -12,14 +12,14 @@ from PyQt4 import QtCore, QtGui
 class Ui_PlayerHistoryDlg(object):
     def setupUi(self, PlayerHistoryDlg):
         PlayerHistoryDlg.setObjectName("PlayerHistoryDlg")
-        PlayerHistoryDlg.resize(420, 380)
-        PlayerHistoryDlg.setMinimumSize(QtCore.QSize(420, 380))
-        PlayerHistoryDlg.setMaximumSize(QtCore.QSize(420, 380))
+        PlayerHistoryDlg.resize(480, 380)
+        PlayerHistoryDlg.setMinimumSize(QtCore.QSize(480, 380))
+        PlayerHistoryDlg.setMaximumSize(QtCore.QSize(480, 380))
         self.playerHistory = QtGui.QTableView(PlayerHistoryDlg)
-        self.playerHistory.setGeometry(QtCore.QRect(20, 50, 381, 261))
+        self.playerHistory.setGeometry(QtCore.QRect(20, 50, 441, 261))
         self.playerHistory.setObjectName("playerHistory")
         self.frame = QtGui.QFrame(PlayerHistoryDlg)
-        self.frame.setGeometry(QtCore.QRect(20, 320, 381, 51))
+        self.frame.setGeometry(QtCore.QRect(20, 320, 441, 51))
         self.frame.setFrameShape(QtGui.QFrame.StyledPanel)
         self.frame.setFrameShadow(QtGui.QFrame.Raised)
         self.frame.setObjectName("frame")
@@ -40,7 +40,7 @@ class Ui_PlayerHistoryDlg(object):
         self.deleteEntry.setIcon(icon1)
         self.deleteEntry.setObjectName("deleteEntry")
         self.closeButton = QtGui.QPushButton(self.frame)
-        self.closeButton.setGeometry(QtCore.QRect(290, 10, 80, 33))
+        self.closeButton.setGeometry(QtCore.QRect(350, 10, 80, 33))
         self.closeButton.setMinimumSize(QtCore.QSize(80, 33))
         self.closeButton.setMaximumSize(QtCore.QSize(80, 33))
         icon2 = QtGui.QIcon()
@@ -49,7 +49,7 @@ class Ui_PlayerHistoryDlg(object):
         self.closeButton.setIconSize(QtCore.QSize(16, 16))
         self.closeButton.setObjectName("closeButton")
         self.layoutWidget = QtGui.QWidget(PlayerHistoryDlg)
-        self.layoutWidget.setGeometry(QtCore.QRect(17, 10, 381, 41))
+        self.layoutWidget.setGeometry(QtCore.QRect(17, 0, 381, 51))
         self.layoutWidget.setObjectName("layoutWidget")
         self.horizontalLayout = QtGui.QHBoxLayout(self.layoutWidget)
         self.horizontalLayout.setObjectName("horizontalLayout")
