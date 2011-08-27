@@ -724,15 +724,13 @@ class VenueEntryDlg(QDialog, ui_venueentry.Ui_VenueEntryDlg):
                 self.lastEntry.setEnabled(True)
             row = 0
         elif where == Constants.PREV:
-            if row <= 1:
+            row -= 1
+            if not self.nextEntry.isEnabled():
+                    self.nextEntry.setEnabled(True)
+                    self.lastEntry.setEnabled(True)   
+            if row == 0:
                 self.firstEntry.setDisabled(True)
                 self.prevEntry.setDisabled(True)                
-                row = 0
-            else:
-                if not self.nextEntry.isEnabled():
-                    self.nextEntry.setEnabled(True)
-                    self.lastEntry.setEnabled(True)                    
-                row -= 1
         elif where == Constants.NEXT:
             row += 1
             if not self.prevEntry.isEnabled():
