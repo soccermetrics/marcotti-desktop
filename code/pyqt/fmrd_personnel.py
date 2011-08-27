@@ -1068,7 +1068,6 @@ class PlayerEntryDlg(QDialog, ui_playerentry.Ui_PlayerEntryDlg):
         subdialog = PlayerHistoryDlg(player_id, self)
         subdialog.exec_()
         self.mapper.setCurrentIndex(row)
-
         
         
 class PlayerHistoryDlg(QDialog, ui_playerhistoryentry.Ui_PlayerHistoryDlg):
@@ -1088,16 +1087,15 @@ class PlayerHistoryDlg(QDialog, ui_playerhistoryentry.Ui_PlayerHistoryDlg):
         self.player_id = player_id
         
         # define underlying database model (tbl_playerhistory)
-        self.model = QSqlRelationalTableModel(self)
-        self.model.setTable("tbl_playerhistory")
-        self.model.setRelation(PlayerHistoryDlg.PLAYER_ID, QSqlRelation("players_list", "player_id", "full_name"))
-        self.model.setSort(PlayerHistoryDlg.EFFDATE, Qt.AscendingOrder)
+        sourceModel = QSqlRelationalTableModel(self)
+        sourceModel.setTable("tbl_playerhistory")
+        sourceModel.setRelation(PlayerHistoryDlg.PLAYER_ID, QSqlRelation("players_list", "player_id", "full_name"))
         
         # set header data for table view
-        self.model.setHeaderData(PlayerHistoryDlg.EFFDATE, Qt.Horizontal, QVariant("Effective Date"))
-        self.model.setHeaderData(PlayerHistoryDlg.HEIGHT, Qt.Horizontal, QVariant("Player Height (m)"))
-        self.model.setHeaderData(PlayerHistoryDlg.WEIGHT, Qt.Horizontal, QVariant("Player Weight (kg)"))
-        self.model.select()
+        sourceModel.setHeaderData(PlayerHistoryDlg.EFFDATE, Qt.Horizontal, QVariant("Effective Date"))
+        sourceModel.setHeaderData(PlayerHistoryDlg.HEIGHT, Qt.Horizontal, QVariant("Player Height (m)"))
+        sourceModel.setHeaderData(PlayerHistoryDlg.WEIGHT, Qt.Horizontal, QVariant("Player Weight (kg)"))
+        sourceModel.select()
         
         # display player name
         query = QSqlQuery()
@@ -1109,8 +1107,17 @@ class PlayerHistoryDlg(QDialog, ui_playerhistoryentry.Ui_PlayerHistoryDlg):
             playerName = "ERROR"
         self.player_display.setText(playerName)
         
+        # define proxy model
+        self.proxyModel = QSortFilterProxyModel()
+        self.proxyModel.setSourceModel(sourceModel)
+        # define filter on venue name
+        self.proxyModel.setFilterRegExp(QRegExp(playerName, Qt.CaseSensitive, QRegExp.FixedString))
+        self.proxyModel.setFilterKeyColumn(PlayerHistoryDlg.PLAYER_ID)
+        # define sort on effective date
+        self.proxyModel.sort(PlayerHistoryDlg.EFFDATE, Qt.AscendingOrder)
+        
         # set table view for Player History
-        self.playerHistory.setModel(self.model)
+        self.playerHistory.setModel(self.proxyModel)
         # define generic delegate
         playerDelegate = GenericDelegate(self)
         playerDelegate.insertColumnDelegate(PlayerHistoryDlg.EFFDATE, DateColumnDelegate())
@@ -1134,9 +1141,9 @@ class PlayerHistoryDlg(QDialog, ui_playerhistoryentry.Ui_PlayerHistoryDlg):
         """Commits changes to database and closes dialog."""
         index = self.playerHistory.currentIndex()
         row = index.row()
-        idIndex = self.model.index(row, PlayerHistoryDlg.PLAYER_ID)
-        self.model.setData(idIndex, QVariant(self.player_id))
-        self.model.submitAll()
+        idIndex = self.proxyModel.index(row, PlayerHistoryDlg.PLAYER_ID)
+        self.proxyModel.setData(idIndex, QVariant(self.player_id))
+        self.proxyModel.submit()
         # close dialog
         QDialog.accept(self)
         
@@ -1146,13 +1153,13 @@ class PlayerHistoryDlg(QDialog, ui_playerhistoryentry.Ui_PlayerHistoryDlg):
         index = self.playerHistory.currentIndex()
         row = index.row()
         if index.isValid():
-            idIndex = self.model.index(row, PlayerHistory.PLAYER_ID)
-            self.model.setData(idIndex, QVariant(self.player_id))
-            self.model.submitAll()
+            idIndex = self.proxyModel.index(row, PlayerHistory.PLAYER_ID)
+            self.proxyModel.setData(idIndex, QVariant(self.player_id))
+            self.proxyModel.submit()
         # append new row to end of table view
-        row = self.model.rowCount()
-        self.model.insertRow(row)
-        index = self.model.index(row, PlayerHistoryDlg.EFFDATE)
+        row = self.proxyModel.rowCount()
+        self.proxyModel.insertRow(row)
+        index = self.proxyModel.index(row, PlayerHistoryDlg.EFFDATE)
         self.playerHistory.setCurrentIndex(index)
         self.playerHistory.edit(index)
         
@@ -1169,8 +1176,8 @@ class PlayerHistoryDlg(QDialog, ui_playerhistoryentry.Ui_PlayerHistoryDlg):
                                             QMessageBox.Yes|QMessageBox.No) == QMessageBox.No:
             return
         else:        
-            self.model.removeRow(index.row())
-            self.model.submitAll()        
+            self.proxyModel.removeRow(index.row())
+            self.proxyModel.submit()        
         
         
 class LineupEntryDlg(QDialog, ui_lineupentry.Ui_LineupEntryDlg):
