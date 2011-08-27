@@ -995,21 +995,20 @@ class VenueHistoryDlg(QDialog, ui_venuehistoryentry.Ui_VenueHistoryDlg):
         self.venue_id = venue_id
     
         # define underlying database model (tbl_venuehistory)
-        self.model = QSqlRelationalTableModel(self)
-        self.model.setTable("tbl_venuehistory")
-        self.model.setRelation(VenueHistoryDlg.VENUE_ID, QSqlRelation("tbl_venues", "venue_id", "ven_name"))
-        self.model.setRelation(VenueHistoryDlg.SURFACE_ID, QSqlRelation("tbl_venuesurfaces", "venuesurface_id", "vensurf_desc"))
-        self.model.setSort(VenueHistoryDlg.EFFDATE, Qt.AscendingOrder)
+        sourceModel = QSqlRelationalTableModel(self)
+        sourceModel.setTable("tbl_venuehistory")
+        sourceModel.setRelation(VenueHistoryDlg.VENUE_ID, QSqlRelation("tbl_venues", "venue_id", "ven_name"))
+        sourceModel.setRelation(VenueHistoryDlg.SURFACE_ID, QSqlRelation("tbl_venuesurfaces", "venuesurface_id", "vensurf_desc"))
         
         # set header data for table view
-        self.model.setHeaderData(VenueHistoryDlg.EFFDATE, Qt.Horizontal, QVariant("Effective Date"))
-        self.model.setHeaderData(VenueHistoryDlg.SURFACE_ID, Qt.Horizontal, QVariant("Playing Surface"))
-        self.model.setHeaderData(VenueHistoryDlg.PITCH_LENGTH, Qt.Horizontal, QVariant("Pitch Length (m)"))
-        self.model.setHeaderData(VenueHistoryDlg.PITCH_WIDTH, Qt.Horizontal, QVariant("Pitch Width (m)"))
-        self.model.setHeaderData(VenueHistoryDlg.CAPACITY, Qt.Horizontal, QVariant("Capacity"))
-        self.model.setHeaderData(VenueHistoryDlg.SEATS, Qt.Horizontal, QVariant("Seats"))
-        self.model.select()
-        
+        sourceModel.setHeaderData(VenueHistoryDlg.EFFDATE, Qt.Horizontal, QVariant("Effective Date"))
+        sourceModel.setHeaderData(VenueHistoryDlg.SURFACE_ID, Qt.Horizontal, QVariant("Playing Surface"))
+        sourceModel.setHeaderData(VenueHistoryDlg.PITCH_LENGTH, Qt.Horizontal, QVariant("Pitch Length (m)"))
+        sourceModel.setHeaderData(VenueHistoryDlg.PITCH_WIDTH, Qt.Horizontal, QVariant("Pitch Width (m)"))
+        sourceModel.setHeaderData(VenueHistoryDlg.CAPACITY, Qt.Horizontal, QVariant("Capacity"))
+        sourceModel.setHeaderData(VenueHistoryDlg.SEATS, Qt.Horizontal, QVariant("Seats"))
+        sourceModel.select()
+
         # set venue name
         query = QSqlQuery()
         query.exec_(QString("SELECT ven_name FROM tbl_venues WHERE venue_id = %1").arg(self.venue_id))
@@ -1017,11 +1016,20 @@ class VenueHistoryDlg(QDialog, ui_venuehistoryentry.Ui_VenueHistoryDlg):
             query.next()
             venueName = query.value(0).toString()
         else:
-            venueName = "ERROR"
+            return
         self.venueName_display.setText(venueName)
                 
+        # define proxy model
+        self.proxyModel = QSortFilterProxyModel()
+        self.proxyModel.setSourceModel(sourceModel)
+        # define filter on venue name
+        self.proxyModel.setFilterRegExp(QRegExp(venueName, Qt.CaseSensitive, QRegExp.FixedString))
+        self.proxyModel.setFilterKeyColumn(VenueHistoryDlg.VENUE_ID)
+        # define sort on effective date
+        self.proxyModel.sort(VenueHistoryDlg.EFFDATE, Qt.AscendingOrder)        
+        
         # define table view
-        self.venueHistory.setModel(self.model)
+        self.venueHistory.setModel(self.proxyModel)
         # form GenericDelegate
         venueDelegate = GenericDelegate(self)
         venueDelegate.insertColumnDelegate(VenueHistoryDlg.EFFDATE, DateColumnDelegate())
@@ -1048,9 +1056,9 @@ class VenueHistoryDlg(QDialog, ui_venuehistoryentry.Ui_VenueHistoryDlg):
         """Commits changes to database and closes dialog."""
         index = self.venueHistory.currentIndex()
         row = index.row()
-        idIndex = self.model.index(row, VenueHistoryDlg.VENUE_ID)
-        self.model.setData(idIndex, QVariant(self.venue_id))
-        self.model.submitAll()
+        idIndex = self.proxyModel.index(row, VenueHistoryDlg.VENUE_ID)
+        self.proxyModel.setData(idIndex, QVariant(self.venue_id))
+        self.proxyModel.submit()
         QDialog.accept(self)
         
     def addRecord(self):
@@ -1058,12 +1066,12 @@ class VenueHistoryDlg(QDialog, ui_venuehistoryentry.Ui_VenueHistoryDlg):
         index = self.venueHistory.currentIndex()
         row = index.row()
         if index.isValid():
-            idIndex = self.model.index(row, VenueHistoryDlg.VENUE_ID)
-            self.model.setData(idIndex, QVariant(self.venue_id))
-            self.model.submitAll()
-        row = self.model.rowCount()
-        self.model.insertRow(row)
-        index = self.model.index(row, VenueHistoryDlg.EFFDATE)
+            idIndex = self.proxyModel.index(row, VenueHistoryDlg.VENUE_ID)
+            self.proxyModel.setData(idIndex, QVariant(self.venue_id))
+            self.proxyModel.submit()
+        row = self.proxyModel.rowCount()
+        self.proxyModel.insertRow(row)
+        index = self.proxyModel.index(row, VenueHistoryDlg.EFFDATE)
         self.venueHistory.setCurrentIndex(index)
         self.venueHistory.edit(index)
         
@@ -1080,5 +1088,5 @@ class VenueHistoryDlg(QDialog, ui_venuehistoryentry.Ui_VenueHistoryDlg):
                                             QMessageBox.Yes|QMessageBox.No) == QMessageBox.No:
             return
         else:        
-            self.model.removeRow(index.row())
-            self.model.submitAll()
+            self.proxyModel.removeRow(index.row())
+            self.proxyModel.submit()
