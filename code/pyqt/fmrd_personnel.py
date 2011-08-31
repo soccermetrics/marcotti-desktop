@@ -568,6 +568,10 @@ class RefereeEntryDlg(QDialog, ui_refereeentry.Ui_RefereeEntryDlg):
             # enable Delete button if at least one record
             self.deleteEntry.setEnabled(True)
         
+        # enable Save button
+        if not self.saveEntry.isEnabled():
+            self.saveEntry.setEnabled(True)
+        
         # enable data widgets
         self.refID_display.setEnabled(True)
         self.refFirstNameEdit.setEnabled(True)
@@ -908,6 +912,10 @@ class PlayerEntryDlg(QDialog, ui_playerentry.Ui_PlayerEntryDlg):
             # enable Delete button if at least one record
             self.deleteEntry.setEnabled(True)
         
+        # enable Save button
+        if not self.saveEntry.isEnabled():
+            self.saveEntry.setEnabled(True)
+        
         # enable form widgets and History button
         self.plyrID_display.setEnabled(True)
         self.plyrFirstNameEdit.setEnabled(True)
@@ -1078,106 +1086,241 @@ class PlayerHistoryDlg(QDialog, ui_playerhistoryentry.Ui_PlayerHistoryDlg):
     little for professional players, but more so for junior athletes.
     """
     
-    HISTORY_ID, PLAYER_ID, EFFDATE, HEIGHT, WEIGHT = range(5)
+    ID, PLAYER_ID, EFFDATE, HEIGHT, WEIGHT = range(5)
     
     def __init__(self, player_id, parent=None):
         """Constructor for PlayerHistoryDlg class."""
         super(PlayerHistoryDlg, self).__init__(parent)
         self.setupUi(self)
-        self.player_id = player_id
+        self.local_id = player_id
         
         # define underlying database model (tbl_playerhistory)
-        sourceModel = QSqlRelationalTableModel(self)
-        sourceModel.setTable("tbl_playerhistory")
-        sourceModel.setRelation(PlayerHistoryDlg.PLAYER_ID, QSqlRelation("players_list", "player_id", "full_name"))
+        self.model = QSqlTableModel(self)
+        self.model.setTable("tbl_playerhistory")
+        self.model.setFilter(QString("player_id = %1").arg(player_id))
+        self.model.setSort(PlayerHistoryDlg.ID, Qt.AscendingOrder)
+        self.model.select()
         
-        # set header data for table view
-        sourceModel.setHeaderData(PlayerHistoryDlg.EFFDATE, Qt.Horizontal, QVariant("Effective Date"))
-        sourceModel.setHeaderData(PlayerHistoryDlg.HEIGHT, Qt.Horizontal, QVariant("Player Height (m)"))
-        sourceModel.setHeaderData(PlayerHistoryDlg.WEIGHT, Qt.Horizontal, QVariant("Player Weight (kg)"))
-        sourceModel.select()
-        
-        # display player name
+        # get birthdate from Players table
         query = QSqlQuery()
-        query.exec_(QString("SELECT full_name FROM players_list WHERE player_id = %1").arg(self.player_id))
-        if query.isActive():
-            query.next()
-            playerName = query.value(0).toString()
-        else:
-            playerName = "ERROR"
-        self.player_display.setText(playerName)
+        query.exec_(QString("SELECT plyr_birthdate FROM tbl_players WHERE player_id = %1").arg(player_id))
+        if query.next():
+            minBirthDate = query.value(0).toString()
         
-        # define proxy model
-        self.proxyModel = QSortFilterProxyModel()
-        self.proxyModel.setSourceModel(sourceModel)
-        # define filter on venue name
-        self.proxyModel.setFilterRegExp(QRegExp(playerName, Qt.CaseSensitive, QRegExp.FixedString))
-        self.proxyModel.setFilterKeyColumn(PlayerHistoryDlg.PLAYER_ID)
-        # define sort on effective date
-        self.proxyModel.sort(PlayerHistoryDlg.EFFDATE, Qt.AscendingOrder)
+        # set up validators
+        minDate = QDate()
+        minDate = QDate.fromString(minBirthDate, "yyyy-MM-dd")
+        self.plyrDateEdit.setDateRange(minDate, QDate.currentDate())
         
-        # set table view for Player History
-        self.playerHistory.setModel(self.proxyModel)
-        # define generic delegate
-        playerDelegate = GenericDelegate(self)
-        playerDelegate.insertColumnDelegate(PlayerHistoryDlg.EFFDATE, DateColumnDelegate())
-        playerDelegate.insertColumnDelegate(PlayerHistoryDlg.HEIGHT, FloatColumnDelegate(0.00, 2.50, 2, "0.00"))
-        playerDelegate.insertColumnDelegate(PlayerHistoryDlg.WEIGHT, NumericColumnDelegate(0, 150, "000"))
-        self.playerHistory.setItemDelegate(playerDelegate)
-        # define other view attributes
-        self.playerHistory.setSelectionMode(QTableView.SingleSelection)
-        self.playerHistory.setSelectionBehavior(QTableView.SelectRows)
-        self.playerHistory.setColumnHidden(PlayerHistoryDlg.HISTORY_ID, True)
-        self.playerHistory.setColumnHidden(PlayerHistoryDlg.PLAYER_ID, True)
-        self.playerHistory.resizeColumnsToContents()
-        self.playerHistory.horizontalHeader().setStretchLastSection(True)
+        self.plyrHeightEdit.setInputMask("0.00")
+        self.plyrHeightEdit.setValidator(QDoubleValidator(0.00, 2.50, 2, self.layoutWidget1))
+        
+        self.plyrWeightEdit.setInputMask("000")
+        self.plyrWeightEdit.setValidator(QIntValidator(0, 250, self.layoutWidget1))
+        
+        # define mapper
+        # establish ties between underlying database model and data widgets on form
+        self.mapper = QDataWidgetMapper(self)
+        self.mapper.setSubmitPolicy(QDataWidgetMapper.ManualSubmit)
+        self.mapper.setModel(self.model)
+        localDelegate = GenericDelegate(self)
+        localDelegate.insertColumnDelegate(PlayerHistoryDlg.PLAYER_ID, IDLineEditDelegate("players_list", "full_name", "player_id", self))
+        self.mapper.setItemDelegate(localDelegate)
+        self.mapper.addMapping(self.historyID_display, PlayerHistoryDlg.ID)
+        self.mapper.addMapping(self.player_display, PlayerHistoryDlg.PLAYER_ID)
+        self.mapper.addMapping(self.plyrDateEdit, PlayerHistoryDlg.EFFDATE)
+        self.mapper.addMapping(self.plyrHeightEdit, PlayerHistoryDlg.HEIGHT)
+        self.mapper.addMapping(self.plyrWeightEdit, PlayerHistoryDlg.WEIGHT)
+        self.mapper.toFirst()
+        
+        # disable First and Previous Entry buttons
+        self.firstEntry.setDisabled(True)
+        self.prevEntry.setDisabled(True)
+
+        # disable Next and Last Entry buttons if less than two records
+        if self.model.rowCount() < 2:
+            self.nextEntry.setDisabled(True)
+            self.lastEntry.setDisabled(True)
+
+        # disable all fields and History button if no records in database table
+        if not self.model.rowCount():
+            self.historyID_display.setDisabled(True)
+            self.plyrDateEdit.setDisabled(True)
+            self.plyrHeightEdit.setDisabled(True)
+            self.plyrWeightEdit.setDisabled(True)
+            # disable save and delete entry buttons
+            self.saveEntry.setDisabled(True)
+            self.deleteEntry.setDisabled(True)
         
         # configure signal/slot        
+        self.connect(self.firstEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.FIRST))
+        self.connect(self.prevEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.PREV))
+        self.connect(self.nextEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.NEXT))
+        self.connect(self.lastEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.LAST))
+        self.connect(self.saveEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.NULL))
         self.connect(self.addEntry, SIGNAL("clicked()"), self.addRecord)
         self.connect(self.deleteEntry, SIGNAL("clicked()"), self.deleteRecord)        
         self.connect(self.closeButton, SIGNAL("clicked()"), self.accept)
         
     def accept(self):
-        """Commits changes to database and closes dialog."""
-        index = self.playerHistory.currentIndex()
-        row = index.row()
-        idIndex = self.proxyModel.index(row, PlayerHistoryDlg.PLAYER_ID)
-        self.proxyModel.setData(idIndex, QVariant(self.player_id))
-        self.proxyModel.submit()
-        # close dialog
+        """Submits changes to database and closes window upon confirmation from user."""
+        row = self.mapper.currentIndex()
+        if self.isDirty(row):
+            if MsgPrompts.SaveDiscardOptionPrompt(self):
+                if not self.mapper.submit():
+                    MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
         QDialog.accept(self)
+    
+    def saveRecord(self, where):
+        """Submits changes to database and navigates through form."""
+        row = self.mapper.currentIndex()
+        if self.isDirty(row):
+            if MsgPrompts.SaveDiscardOptionPrompt(self):
+                if not self.mapper.submit():
+                    MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+            else:
+                self.mapper.revert()
+                return
+        
+        if where == Constants.FIRST:
+            self.firstEntry.setDisabled(True)
+            self.prevEntry.setDisabled(True)
+            if not self.nextEntry.isEnabled():
+                self.nextEntry.setEnabled(True)
+                self.lastEntry.setEnabled(True)
+            row = 0
+        elif where == Constants.PREV:
+            row -= 1
+            if not self.nextEntry.isEnabled():
+                    self.nextEntry.setEnabled(True)
+                    self.lastEntry.setEnabled(True)   
+            if row == 0:
+                self.firstEntry.setDisabled(True)
+                self.prevEntry.setDisabled(True)                
+        elif where == Constants.NEXT:
+            row += 1
+            if not self.prevEntry.isEnabled():
+                self.prevEntry.setEnabled(True)
+                self.firstEntry.setEnabled(True)
+            if row == self.model.rowCount() - 1:
+                self.nextEntry.setDisabled(True)
+                self.lastEntry.setDisabled(True)
+        elif where == Constants.LAST:
+            self.nextEntry.setDisabled(True)
+            self.lastEntry.setDisabled(True)
+            if not self.prevEntry.isEnabled():
+                self.prevEntry.setEnabled(True)
+                self.firstEntry.setEnabled(True)
+            row = self.model.rowCount() - 1
+        self.mapper.setCurrentIndex(row)
+        
+        # enable Delete button if at least one record
+        if self.model.rowCount():
+            self.deleteEntry.setEnabled(True)
         
     def addRecord(self):
-        """Inserts a new record in the database and focuses on the effective date field in table view."""
-        # write current row to model
-        index = self.playerHistory.currentIndex()
-        row = index.row()
-        if index.isValid():
-            idIndex = self.proxyModel.index(row, PlayerHistory.PLAYER_ID)
-            self.proxyModel.setData(idIndex, QVariant(self.player_id))
-            self.proxyModel.submit()
-        # append new row to end of table view
-        row = self.proxyModel.rowCount()
-        self.proxyModel.insertRow(row)
-        index = self.proxyModel.index(row, PlayerHistoryDlg.EFFDATE)
-        self.playerHistory.setCurrentIndex(index)
-        self.playerHistory.edit(index)
+        """Adds new record at end of entry list."""        
         
+        # save current index if valid
+        row = self.mapper.currentIndex()
+        if row != -1:
+            if self.isDirty(row):
+                if MsgPrompts.SaveDiscardOptionPrompt(self):
+                    if not self.mapper.submit():
+                        MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+                else:
+                    self.mapper.revert()
+                    return
+        
+        row = self.model.rowCount()
+        
+        query = QSqlQuery()
+        query.exec_(QString("SELECT MAX(playerhistory_id) FROM tbl_playerhistory"))
+        if query.next():
+            maxPlayerHistoryID = query.value(0).toInt()[0]
+            if not maxPlayerHistoryID:
+                playerhistory_id = Constants.MinPlayerHistoryID
+            else:
+                playerhistory_id= QString()
+                playerhistory_id.setNum(maxPlayerHistoryID+1)
+    
+        self.model.insertRow(row)
+        self.mapper.setCurrentIndex(row)
+
+        # assign value to playerhistoryID field
+        self.historyID_display.setText(playerhistory_id)
+        
+        # disable next/last navigation buttons
+        self.nextEntry.setDisabled(True)
+        self.lastEntry.setDisabled(True)
+        # enable first/previous navigation buttons
+        if self.model.rowCount() > 1:
+            self.prevEntry.setEnabled(True)
+            self.firstEntry.setEnabled(True)
+            # enable Delete button if at least one record
+            self.deleteEntry.setEnabled(True)
+        
+        # enable Save button
+        if not self.saveEntry.isEnabled():
+            self.saveEntry.setEnabled(True)
+        
+        # enable form widgets and History button
+        self.historyID_display.setEnabled(True)
+        self.plyrDateEdit.setEnabled(True)
+        self.plyrHeightEdit.setEnabled(True)
+        self.plyrWeightEdit.setEnabled(True)
+        
+        # initialize form widgets
+        self.plyrHeightEdit.setText("0.00")
+        self.plyrWeightEdit.setText("0")
+        self.plyrDateEdit.setFocus()
+    
     def deleteRecord(self):
-        """Deletes current row in table view from database.
+        """Deletes record from database upon user confirmation."""
         
-        Deletion is handled at the model level.
-        """
-        index = self.playerHistory.currentIndex()
-        if not index.isValid():
-            return
         if QMessageBox.question(self, QString("Delete Record"), 
                                             QString("Delete current record?"), 
                                             QMessageBox.Yes|QMessageBox.No) == QMessageBox.No:
             return
-        else:        
-            self.proxyModel.removeRow(index.row())
-            self.proxyModel.submit()        
+        else:
+            # delete records in Player History table
+            row = self.mapper.currentIndex()
+            self.model.removeRow(row)
+            if not self.model.submitAll():
+                MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+                return
+            if row + 1 >= self.model.rowCount():
+                row = self.model.rowCount() - 1
+            self.mapper.setCurrentIndex(row) 
+            # disable Delete button if no records in database
+            if not self.model.rowCount():
+                self.deleteEntry.setDisabled(True)
+                
+    def isDirty(self, row):
+        """Compares current state of data entry form to current record in database, and returns a boolean.
+        
+        Arguments:
+            row: current record in mapper and model
+        
+        Returns:
+            TRUE: there are changes between data entry form and current record in database,
+                      or new record in database
+            FALSE: no changes between data entry form and current record in database
+                      or no records in database
+        """
+        
+        if not self.model.rowCount():
+            return False
+            
+        # line edit fields
+        editorList = (self.plyrDateEdit, self.plyrHeightEdit, self.plyrWeightEdit)
+        columnList = (PlayerHistoryDlg.EFFDATE, PlayerHistoryDlg.HEIGHT, PlayerHistoryDlg.WEIGHT)
+        for editor, column in zip(editorList, columnList):
+            index = self.model.index(row, column)        
+            if editor.text() != self.model.data(index).toString():
+                return True
+                
+        return False
         
         
 class LineupEntryDlg(QDialog, ui_lineupentry.Ui_LineupEntryDlg):
