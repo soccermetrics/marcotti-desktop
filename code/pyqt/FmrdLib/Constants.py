@@ -37,12 +37,13 @@ MinPlayerID     = "100000"
 MinLineupID    = "1000000"
 
 # match overview table IDs
-MinCompetitionID = "100"
-MinTimeZoneID     = "100"
-MinVenueID          = "1000"
-MinTeamID           = "10000"
-MinEnviroID          = "1000000"
-MinMatchID          = "1000000"
+MinCompetitionID  = "100"
+MinTimeZoneID      = "100"
+MinVenueID           = "1000"
+MinTeamID            = "10000"
+MinEnviroID           = "1000000"
+MinMatchID           = "1000000"
+MinPlayerHistoryID = "1000000"
 
 # match event table IDs
 MinPenaltyID         = "10000"
