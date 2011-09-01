@@ -24,6 +24,7 @@ from PyQt4.QtSql import *
 """Contains generic classes that implement specialized models for use in FMRD tools.
 
 Classes:
+SqlRelationalProxyModel - proxy model for SQL relational table models
 LinkingSqlModel -- base editable linking table model
 ManagerLinkingModel -- implement HomeManagers and AwayManagers tables
 SubstituteLinkingModel -- implement InSubstitutions and OutSubstitutions tables
@@ -31,6 +32,41 @@ TeamLinkingModel -- implement HomeTeams and AwayTeams tables
 WeatherLinkingModel -- implement KickoffWeather, HalftimeWeather, and FulltimeWeather tables
 
 """
+
+class SqlRelationalProxyModel(QSortFilterProxyModel):
+    """Proxy model for SQL relational table models (QSqlRelationalTableModel).
+    
+    Assumes that source model is a QSqlRelationalTableModel object and calls
+    its relational methods.
+    
+    Inherits QSortFilterProxyModel.
+    """
+    
+    def __init__(self, parent=None):
+        """Constructor for SqlRelationalProxyModel class."""
+        super(SqlRelationalProxyModel, self).__init__(parent)
+    
+    def setRelation(self, column, relation):
+        """Sets the relation between the column and the foreign table.
+        
+        Calls setRelation() method in source model.
+        """
+        self.sourceModel().setRelation(column, relation)
+        
+    def relationModel(self, column):
+        """Returns the model object related to the column.
+        
+        Calls relationModel() method in source model.
+        """
+        return self.sourceModel().relationModel(column)
+        
+    def relation(self, column):
+        """Returns the QSqlRelation object related to the column.
+        
+        Calls relation() method in source model.
+        """
+        return self.sourceModel().relation(column)
+        
 
 class LinkingSqlModel(QSqlQueryModel):
     """Base editable linking table model."""
