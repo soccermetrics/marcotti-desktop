@@ -319,7 +319,7 @@
     </property>
    </widget>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>20</x>
@@ -377,7 +377,7 @@ p, li { white-space: pre-wrap; }
        </date>
       </property>
       <property name="displayFormat">
-       <string>YYYY-mm-dd</string>
+       <string>yyyy-MM-dd</string>
       </property>
       <property name="calendarPopup">
        <bool>true</bool>
@@ -411,13 +411,13 @@ p, li { white-space: pre-wrap; }
      <widget class="QComboBox" name="venueSurfaceSelect">
       <property name="minimumSize">
        <size>
-        <width>210</width>
+        <width>180</width>
         <height>30</height>
        </size>
       </property>
       <property name="maximumSize">
        <size>
-        <width>210</width>
+        <width>180</width>
         <height>30</height>
        </size>
       </property>
@@ -630,7 +630,7 @@ p, li { white-space: pre-wrap; }
     </item>
    </layout>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>22</x>
