@@ -1,7 +1,8 @@
 INSTALLATION
 ------------
 
-FMRD-Desktop is run from the command line.
+FMRD-Desktop is run from either the command line or the standalone
+application.
 
 Requirements:
     - Python 2.6 (3.0 not supported)
@@ -30,5 +31,8 @@ for assistance.  Obtain a username and password.
 (3) Go to code/pyqt/ directory and run the data-entry application:
 
     > ./fmrd-main.pyw
+    
+    Alternatively, you can go to the dist/ directory and click on the 
+    executable icon for either the Windows or Linux distributions.
 
 
