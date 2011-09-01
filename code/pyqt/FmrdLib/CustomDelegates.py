@@ -1484,6 +1484,76 @@ class SurfaceColumnDelegate(QSqlRelationalDelegate):
         editor.setCurrentIndex(editor.findText(surfaceText, Qt.MatchExactly))
 
 
+class SurfaceColumnProxyDelegate(QSqlRelationalDelegate):
+    """Create Playing Surface combobox in tabular view.
+    
+    Setup to handle proxy models."""
+    
+    def __init__(self, parent=None):
+        """Constructor for SurfaceColumnProxyDelegate class."""
+        super(SurfaceColumnProxyDelegate, self).__init__(parent)
+        
+    def createEditor(self, parent, option, index):
+        """Creates ComboBox widget."""
+        # index refers to a proxy model
+        proxyModel = index.model()
+        
+        # source model
+        sourceModel = proxyModel.sourceModel()
+        
+        # foreign model
+        childModel = sourceModel.relationModel(index.column())
+
+        # set up combobox
+        surfaceedit = QComboBox(parent)
+        surfaceedit.setModel(relationModel)
+        surfaceedit.setModelColumn(relationModel.fieldIndex("vensurf_desc"))
+        surfaceedit.setCurrentIndex(-1)
+        return surfaceedit
+        
+    def setEditorData(self, editor, index):
+        """Writes current entry from model into editor. 
+        
+        Arguments:
+            editor -- ComboBox widget
+            index -- current index of database table model
+            
+        """   
+        # define proxy model
+        proxyModel = index.model()
+        
+        # get text of current index
+        surfaceText = proxyModel.data(index, Qt.DisplayRole).toString()
+        
+        # set current index of team combobox
+        editor.setCurrentIndex(editor.findText(surfaceText, Qt.MatchExactly))
+
+    def setModelData(self, editor, model, index):
+        
+        # define proxy model
+        proxyModel = model
+        
+        # define underlying source model
+        sourceModel = proxyModel.sourceModel()
+        
+        # define relation model
+        childModel = sourceModel.relationModel(index.column())
+        
+        # get current item and calculate indexes 
+        currentItem = editor.currentIndex()
+        childDispIndex = childModel.fieldIndex(sqlModel.relation(index.column()).displayColumn())
+        childEditIndex = childModel.fieldIndex(sqlModel.relation(index.column()).indexColumn())
+        
+        # calculate values for Display and Edit roles
+        valueDisplay = childModel.data(childModel.index(currentItem, childIndex), Qt.DisplayRole)
+        valueEdit = childModel.data(childModel.index(currentItem, childEditIndex), Qt.EditRole)
+        
+        # call setData() for Display and Edit roles
+        # not sure if both are necessary,
+        proxyModel.setData(index, valueDisplay, Qt.DisplayRole)
+        proxyModel.setData(index, valueEdit, Qt.EditRole)
+
+
 class FloatColumnDelegate(QStyledItemDelegate):
     """Implements LineEdit widgets that accept decimal inputs."""
     
@@ -1561,6 +1631,55 @@ class NumericColumnDelegate(QStyledItemDelegate):
             
         """        
         model.setData(index, QVariant(editor.text()))
+    
+
+class IDLineEditDelegate(QStyledItemDelegate):
+    """Implements delegate to Line Edit display widgets."""
+    
+    def __init__(self, table, display, field, parent=None):
+        super(IDLineEditDelegate, self).__init__(parent)
+        self.table = table
+        self.display = display
+        self.field = field
+        self.local_id = parent.local_id
+        
+    def setEditorData(self, editor, index):
+        """Writes current entry from model into editor. 
+        
+        Arguments:
+            editor -- LineEdit widget
+            index -- current index of database table model
+            
+        """        
+        value = index.model().data(index, Qt.DisplayRole).toString()
+        if not value.toInt()[0]:
+            value = self.local_id
+        
+        query = QSqlQuery()
+        query.prepare(QString("SELECT %1 FROM %2 WHERE %3=?").arg(self.display).arg(self.table).arg(self.field))
+        query.addBindValue(value)
+        query.exec_()
+        if query.next():
+            str = query.value(0).toString()
+        editor.setText(str)
+        
+    def setModelData(self, editor, model, index):
+        """Writes current text from editor to current entry in database model.
+        
+        Arguments:
+            editor -- LineEdit widget
+            model -- underlying database table model
+            index -- current index of database table model
+            
+        """
+        query = QSqlQuery()
+        query.prepare(QString("SELECT %1 FROM %2 WHERE %3=?").arg(self.field).arg(self.table).arg(self.display))
+        query.addBindValue(editor.text())
+        query.exec_()
+        if query.next():
+            value = query.value(0).toString()
+        
+        model.setData(index, QVariant(value))
     
 
 class GenericDelegate(QSqlRelationalDelegate):
