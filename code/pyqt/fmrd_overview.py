@@ -984,107 +984,266 @@ class VenueHistoryDlg(QDialog, ui_venuehistoryentry.Ui_VenueHistoryDlg):
     
     """
     
-    HISTORY_ID, VENUE_ID, EFFDATE, SURFACE_ID, PITCH_LENGTH, PITCH_WIDTH, CAPACITY, SEATS = range(8)
+    ID, VENUE_ID, EFFDATE, SURFACE_ID, PITCH_LENGTH, PITCH_WIDTH, CAPACITY, SEATS = range(8)
     
     def __init__(self, venue_id, parent=None):
         """Constructor for VenueHistoryDlg class"""
         super(VenueHistoryDlg, self).__init__(parent)
         self.setupUi(self)
-        self.venue_id = venue_id
+        self.local_id = venue_id
     
+        SURF_NAME = 1
+        
         # define underlying database model (tbl_venuehistory)
-        sourceModel = QSqlRelationalTableModel(self)
-        sourceModel.setTable("tbl_venuehistory")
-        sourceModel.setRelation(VenueHistoryDlg.VENUE_ID, QSqlRelation("tbl_venues", "venue_id", "ven_name"))
-        sourceModel.setRelation(VenueHistoryDlg.SURFACE_ID, QSqlRelation("tbl_venuesurfaces", "venuesurface_id", "vensurf_desc"))
+        self.model = QSqlRelationalTableModel(self)
+        self.model.setTable("tbl_venuehistory")
+        self.model.setRelation(VenueHistoryDlg.SURFACE_ID, QSqlRelation("tbl_venuesurfaces", "venuesurface_id", "vensurf_desc"))
+        self.model.setFilter(QString("venue_id = %1").arg(venue_id))
+        self.model.setSort(VenueHistoryDlg.ID, Qt.AscendingOrder)
+        self.model.select()
         
-        # set header data for table view
-        sourceModel.setHeaderData(VenueHistoryDlg.EFFDATE, Qt.Horizontal, QVariant("Effective Date"))
-        sourceModel.setHeaderData(VenueHistoryDlg.SURFACE_ID, Qt.Horizontal, QVariant("Playing Surface"))
-        sourceModel.setHeaderData(VenueHistoryDlg.PITCH_LENGTH, Qt.Horizontal, QVariant("Pitch Length (m)"))
-        sourceModel.setHeaderData(VenueHistoryDlg.PITCH_WIDTH, Qt.Horizontal, QVariant("Pitch Width (m)"))
-        sourceModel.setHeaderData(VenueHistoryDlg.CAPACITY, Qt.Horizontal, QVariant("Capacity"))
-        sourceModel.setHeaderData(VenueHistoryDlg.SEATS, Qt.Horizontal, QVariant("Seats"))
-        sourceModel.select()
-
-        # set venue name
-        query = QSqlQuery()
-        query.exec_(QString("SELECT ven_name FROM tbl_venues WHERE venue_id = %1").arg(self.venue_id))
-        if query.isActive():
-            query.next()
-            venueName = query.value(0).toString()
-        else:
-            return
-        self.venueName_display.setText(venueName)
-                
-        # define proxy model
-        self.proxyModel = QSortFilterProxyModel()
-        self.proxyModel.setSourceModel(sourceModel)
-        # define filter on venue name
-        self.proxyModel.setFilterRegExp(QRegExp(venueName, Qt.CaseSensitive, QRegExp.FixedString))
-        self.proxyModel.setFilterKeyColumn(VenueHistoryDlg.VENUE_ID)
-        # define sort on effective date
-        self.proxyModel.sort(VenueHistoryDlg.EFFDATE, Qt.AscendingOrder)        
+        # set up validators
+        self.venueLengthEdit.setInputMask("000")
+        self.venueLengthEdit.setValidator(QIntValidator(90, 120, self.layoutWidget))
         
-        # define table view
-        self.venueHistory.setModel(self.proxyModel)
-        # form GenericDelegate
-        venueDelegate = GenericDelegate(self)
-        venueDelegate.insertColumnDelegate(VenueHistoryDlg.EFFDATE, DateColumnDelegate())
-        venueDelegate.insertColumnDelegate(VenueHistoryDlg.SURFACE_ID, SurfaceColumnDelegate())
-        venueDelegate.insertColumnDelegate(VenueHistoryDlg.PITCH_LENGTH, NumericColumnDelegate(90, 120, "000"))
-        venueDelegate.insertColumnDelegate(VenueHistoryDlg.PITCH_WIDTH, NumericColumnDelegate(45, 90, "00"))
-        venueDelegate.insertColumnDelegate(VenueHistoryDlg.CAPACITY, NumericColumnDelegate(0, 999999, "000000"))
-        venueDelegate.insertColumnDelegate(VenueHistoryDlg.SEATS, NumericColumnDelegate(0, 999999, "000000"))
-        self.venueHistory.setItemDelegate(venueDelegate)
+        self.venueWidthEdit.setInputMask("00")
+        self.venueWidthEdit.setValidator(QIntValidator(45, 90, self.layoutWidget))
+        
+        self.venueCapacityEdit.setInputMask("000000")
+        self.venueCapacityEdit.setValidator(QIntValidator(0, 999999, self.layoutWidget))
+        
+        self.venueSeatsEdit.setInputMask("000000")
+        self.venueSeatsEdit.setValidator(QIntValidator(0, 999999, self.layoutWidget))
+        
+        # define mapper
+        # establish ties between underlying database model and data widgets on form
+        self.mapper = QDataWidgetMapper(self)
+        self.mapper.setSubmitPolicy(QDataWidgetMapper.ManualSubmit)
+        self.mapper.setModel(self.model)
+        localDelegate = GenericDelegate(self)
+        localDelegate.insertColumnDelegate(VenueHistoryDlg.VENUE_ID, IDLineEditDelegate("tbl_venues", "ven_name", "venue_id", self))
+        self.mapper.setItemDelegate(localDelegate)
+        self.mapper.addMapping(self.historyID_display, VenueHistoryDlg.ID)
+        self.mapper.addMapping(self.venueName_display, VenueHistoryDlg.VENUE_ID)
+        self.mapper.addMapping(self.venueDateEdit, VenueHistoryDlg.EFFDATE)
+        
+        # relation model for Playing Surface combobox
+        self.surfaceModel = self.model.relationModel(VenueHistoryDlg.SURFACE_ID)
+        self.surfaceModel.setSort(SURF_NAME, Qt.AscendingOrder)
+        self.venueSurfaceSelect.setModel(self.surfaceModel)
+        self.venueSurfaceSelect.setModelColumn(self.surfaceModel.fieldIndex("vensurf_desc"))
+        self.venueSurfaceSelect.setCurrentIndex(-1)
+        self.mapper.addMapping(self.venueSurfaceSelect, VenueHistoryDlg.SURFACE_ID)
+        
+        # map other widgets on form
+        self.mapper.addMapping(self.venueLengthEdit, VenueHistoryDlg.PITCH_LENGTH)
+        self.mapper.addMapping(self.venueWidthEdit, VenueHistoryDlg.PITCH_WIDTH)
+        self.mapper.addMapping(self.venueCapacityEdit, VenueHistoryDlg.CAPACITY)
+        self.mapper.addMapping(self.venueSeatsEdit, VenueHistoryDlg.SEATS)
+        self.mapper.toFirst()
+        
+        # disable First and Previous Entry buttons
+        self.firstEntry.setDisabled(True)
+        self.prevEntry.setDisabled(True)
 
-        self.venueHistory.setSelectionMode(QTableView.SingleSelection)
-        self.venueHistory.setSelectionBehavior(QTableView.SelectRows)
-        self.venueHistory.setColumnHidden(VenueHistoryDlg.HISTORY_ID, True)
-        self.venueHistory.setColumnHidden(VenueHistoryDlg.VENUE_ID, True)
-        self.venueHistory.resizeColumnsToContents()
-        self.venueHistory.horizontalHeader().setStretchLastSection(True)
-                
+        # disable Next and Last Entry buttons if less than two records
+        if self.model.rowCount() < 2:
+            self.nextEntry.setDisabled(True)
+            self.lastEntry.setDisabled(True)
+
+        # disable all fields and History button if no records in database table
+        if not self.model.rowCount():
+            self.historyID_display.setDisabled(True)
+            self.venueDateEdit.setDisabled(True)
+            self.venueSurfaceSelect.setDisabled(True)
+            self.venueLengthEdit.setDisabled(True)
+            self.venueWidthEdit.setDisabled(True)
+            self.venueCapacityEdit.setDisabled(True)
+            self.venueSeatsEdit.setDisabled(True)
+            # disable save and delete entry buttons
+            self.saveEntry.setDisabled(True)
+            self.deleteEntry.setDisabled(True)
+        
         # configure signal/slot        
+        self.connect(self.firstEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.FIRST))
+        self.connect(self.prevEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.PREV))
+        self.connect(self.nextEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.NEXT))
+        self.connect(self.lastEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.LAST))
+        self.connect(self.saveEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.NULL))
         self.connect(self.addEntry, SIGNAL("clicked()"), self.addRecord)
         self.connect(self.deleteEntry, SIGNAL("clicked()"), self.deleteRecord)        
         self.connect(self.closeButton, SIGNAL("clicked()"), self.accept)
         
     def accept(self):
-        """Commits changes to database and closes dialog."""
-        index = self.venueHistory.currentIndex()
-        row = index.row()
-        idIndex = self.proxyModel.index(row, VenueHistoryDlg.VENUE_ID)
-        self.proxyModel.setData(idIndex, QVariant(self.venue_id))
-        self.proxyModel.submit()
+        """Submits changes to database and closes window upon confirmation from user."""
+        row = self.mapper.currentIndex()
+        if self.isDirty(row):
+            if MsgPrompts.SaveDiscardOptionPrompt(self):
+                if not self.mapper.submit():
+                    MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
         QDialog.accept(self)
+    
+    def saveRecord(self, where):
+        """Submits changes to database and navigates through form."""
+        row = self.mapper.currentIndex()
+        if self.isDirty(row):
+            if MsgPrompts.SaveDiscardOptionPrompt(self):
+                if not self.mapper.submit():
+                    MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+            else:
+                self.mapper.revert()
+                return
+        
+        if where == Constants.FIRST:
+            self.firstEntry.setDisabled(True)
+            self.prevEntry.setDisabled(True)
+            if not self.nextEntry.isEnabled():
+                self.nextEntry.setEnabled(True)
+                self.lastEntry.setEnabled(True)
+            row = 0
+        elif where == Constants.PREV:
+            row -= 1
+            if not self.nextEntry.isEnabled():
+                    self.nextEntry.setEnabled(True)
+                    self.lastEntry.setEnabled(True)   
+            if row == 0:
+                self.firstEntry.setDisabled(True)
+                self.prevEntry.setDisabled(True)                
+        elif where == Constants.NEXT:
+            row += 1
+            if not self.prevEntry.isEnabled():
+                self.prevEntry.setEnabled(True)
+                self.firstEntry.setEnabled(True)
+            if row == self.model.rowCount() - 1:
+                self.nextEntry.setDisabled(True)
+                self.lastEntry.setDisabled(True)
+        elif where == Constants.LAST:
+            self.nextEntry.setDisabled(True)
+            self.lastEntry.setDisabled(True)
+            if not self.prevEntry.isEnabled():
+                self.prevEntry.setEnabled(True)
+                self.firstEntry.setEnabled(True)
+            row = self.model.rowCount() - 1
+        self.mapper.setCurrentIndex(row)
+        
+        # enable Delete button if at least one record
+        if self.model.rowCount():
+            self.deleteEntry.setEnabled(True)
         
     def addRecord(self):
-        """Inserts a new record in the database and focuses on the effective date field in table view."""
-        index = self.venueHistory.currentIndex()
-        row = index.row()
-        if index.isValid():
-            idIndex = self.proxyModel.index(row, VenueHistoryDlg.VENUE_ID)
-            self.proxyModel.setData(idIndex, QVariant(self.venue_id))
-            self.proxyModel.submit()
-        row = self.proxyModel.rowCount()
-        self.proxyModel.insertRow(row)
-        index = self.proxyModel.index(row, VenueHistoryDlg.EFFDATE)
-        self.venueHistory.setCurrentIndex(index)
-        self.venueHistory.edit(index)
+        """Adds new record at end of entry list."""        
         
+        # save current index if valid
+        row = self.mapper.currentIndex()
+        if row != -1:
+            if self.isDirty(row):
+                if MsgPrompts.SaveDiscardOptionPrompt(self):
+                    if not self.mapper.submit():
+                        MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+                else:
+                    self.mapper.revert()
+                    return
+        
+        row = self.model.rowCount()
+        
+        query = QSqlQuery()
+        query.exec_(QString("SELECT MAX(venuehistory_id) FROM tbl_venuehistory"))
+        if query.next():
+            maxVenueHistoryID = query.value(0).toInt()[0]
+            if not maxVenueHistoryID:
+                venuehistory_id = Constants.MinVenueHistoryID
+            else:
+                venuehistory_id= QString()
+                venuehistory_id.setNum(maxVenueHistoryID+1)
+    
+        self.model.insertRow(row)
+        self.mapper.setCurrentIndex(row)
+
+        # assign value to playerhistoryID field
+        self.historyID_display.setText(venuehistory_id)
+        
+        # disable next/last navigation buttons
+        self.nextEntry.setDisabled(True)
+        self.lastEntry.setDisabled(True)
+        # enable first/previous navigation buttons
+        if self.model.rowCount() > 1:
+            self.prevEntry.setEnabled(True)
+            self.firstEntry.setEnabled(True)
+            # enable Delete button if at least one record
+            self.deleteEntry.setEnabled(True)
+        
+        # enable Save button
+        if not self.saveEntry.isEnabled():
+            self.saveEntry.setEnabled(True)
+        
+        # enable form widgets and History button
+        self.historyID_display.setEnabled(True)
+        self.venueDateEdit.setEnabled(True)
+        self.venueSurfaceSelect.setEnabled(True)
+        self.venueLengthEdit.setEnabled(True)
+        self.venueWidthEdit.setEnabled(True)
+        self.venueCapacityEdit.setEnabled(True)
+        self.venueSeatsEdit.setEnabled(True)
+        
+        # initialize form widgets
+        self.venueLengthEdit.setText("105")
+        self.venueWidthEdit.setText("68")
+        self.venueCapacityEdit.setText("0")
+        self.venueSeatsEdit.setText("0")
+        self.venueDateEdit.setFocus()
+    
     def deleteRecord(self):
-        """Deletes current row in table view from database.
+        """Deletes record from database upon user confirmation."""
         
-        Deletion is handled at the model level.
-        """
-        index = self.venueHistory.currentIndex()
-        if not index.isValid():
-            return
         if QMessageBox.question(self, QString("Delete Record"), 
                                             QString("Delete current record?"), 
                                             QMessageBox.Yes|QMessageBox.No) == QMessageBox.No:
             return
-        else:        
-            self.proxyModel.removeRow(index.row())
-            self.proxyModel.submit()
+        else:
+            # delete records in Player History table
+            row = self.mapper.currentIndex()
+            self.model.removeRow(row)
+            if not self.model.submitAll():
+                MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+                return
+            if row + 1 >= self.model.rowCount():
+                row = self.model.rowCount() - 1
+            self.mapper.setCurrentIndex(row) 
+            # disable Delete button if no records in database
+            if not self.model.rowCount():
+                self.deleteEntry.setDisabled(True)
+                
+    def isDirty(self, row):
+        """Compares current state of data entry form to current record in database, and returns a boolean.
+        
+        Arguments:
+            row: current record in mapper and model
+        
+        Returns:
+            TRUE: there are changes between data entry form and current record in database,
+                      or new record in database
+            FALSE: no changes between data entry form and current record in database
+                      or no records in database
+        """
+        
+        if not self.model.rowCount():
+            return False
+            
+        # line edit fields
+        editorList = (self.venueDateEdit, self.venueLengthEdit, self.venueWidthEdit, self.venueCapacityEdit, self.venueSeatsEdit)
+        columnList = (VenueHistoryDlg.EFFDATE, VenueHistoryDlg.PITCH_LENGTH, VenueHistoryDlg.PITCH_WIDTH, 
+                              VenueHistoryDlg.CAPACITY, VenueHistoryDlg.SEATS)
+        for editor, column in zip(editorList, columnList):
+            index = self.model.index(row, column)        
+            if editor.text() != self.model.data(index).toString():
+                return True
+                
+        # combobox fields
+        editorList = (self.venueSurfaceSelect, )
+        columnList = (VenueHistoryDlg.SURFACE_ID, )
+        for editor, column in zip(editorList, columnList):
+            index = self.model.index(row, column)        
+            if editor.currentText() != self.model.data(index).toString():
+                return True
+        
+        return False
