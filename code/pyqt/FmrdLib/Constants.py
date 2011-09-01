@@ -31,26 +31,27 @@ SQL_VERSION = "1.1.1"
 # #############
 
 # personnel table IDs
-MinManagerID = "1000"
-MinRefereeID   = "1000"
-MinPlayerID     = "100000"
-MinLineupID    = "1000000"
+MinManagerID       = "1000"
+MinRefereeID       = "1000"
+MinPlayerID        = "100000"
+MinLineupID        = "1000000"
+MinPlayerHistoryID = "1000000"
 
 # match overview table IDs
 MinCompetitionID  = "100"
-MinTimeZoneID      = "100"
-MinVenueID           = "1000"
-MinTeamID            = "10000"
-MinEnviroID           = "1000000"
-MinMatchID           = "1000000"
-MinPlayerHistoryID = "1000000"
+MinTimeZoneID     = "100"
+MinVenueID        = "1000"
+MinTeamID         = "10000"
+MinVenueHistoryID = "10000"
+MinEnviroID       = "1000000"
+MinMatchID        = "1000000"
 
 # match event table IDs
-MinPenaltyID         = "10000"
-MinGoalID             = "100000"
-MinOffenseID        = "100000"
+MinPenaltyID      = "10000"
+MinGoalID         = "100000"
+MinOffenseID      = "100000"
 MinSubstitutionID = "100000"
-MinSwitchID         = "100000"
+MinSwitchID       = "100000"
 
 # auxiliary table IDs
 MinCardID             = "1"
