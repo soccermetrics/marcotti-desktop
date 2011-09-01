@@ -1,0 +1,28 @@
+FMRD-Desktop Version 1.1.0
+==========================
+
+(+) - external changes to user
+(*) - internal changes
+
+Changes relative to Version 1.0.3
+---------------------------------
+
+* Ensure FMRD resource file added to all UI dialogs
+* Make About dialog a function
+* Add FMRD-Desktop and FMRD-SQL version tags to Constants module
+* Write custom isDirty() method for data entry dialogs
+* Check against duplicate entries in validation tables
+
++ Implement country selection in Clubs dialog
++ Create time zone UI
++ Implement time zone in Venues dialog
++ Create playing surface data entry UI
++ Add playing surface/stadium capacity tracking to Venues dialog
++ Add height/weight tracking to Players dialog
++ Add match attendance tracking to Matches dialog
++ Fix database authentication after initial failed login
++ Correct reference error when deleting validation table entries
++ Implement Save record logic in data entry dialogs
++ Debug navigation logic in data entry dialogs
++ Debug widget activation in data entry dialogs
++ Update save/discard option in data entry dialogs

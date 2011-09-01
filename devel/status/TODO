@@ -11,7 +11,7 @@ TO DO list for FMRD
 	- Round ID
 	- Matchday ID
 	- tblPenaltyShootouts table	
-* Linking table for playing surfaces in venues
+* (COMPLETED) Linking table for playing surfaces in venues
 	- Competition ID
 	- Venue ID
 	- Playing Surface Type
