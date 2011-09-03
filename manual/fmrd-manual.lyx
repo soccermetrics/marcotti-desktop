@@ -103,22 +103,15 @@ Requires:
 \end_layout
 
 \begin_layout Itemize
-Python up to version 2.7 (3.0 not supported)
+Python 2.6-2.7 (3.0 not supported)
 \end_layout
 
 \begin_layout Itemize
-PostgreSQL (Any version in last 2-3 years should work, but 7.0+ preferred)
+PostgreSQL 8.x
 \end_layout
 
 \begin_layout Itemize
 Perl (DBI package)
-\end_layout
-
-\begin_layout Standard
-FMRD was originally coded on a 64-bit Linux operating system (Ubuntu Lucid
- Lynx), but was built using the Qt and PyQt libraries, so it should be able
- to function across Windows and Mac platforms.
- This has not been tested, however.
 \end_layout
 
 \begin_layout Section
@@ -136,12 +129,17 @@ Check out FMRD from the Downloads section of the website located at
 \begin_layout Standard
 
 \family typewriter
-http://www.fmrd-site.org/downloads/
+http://hhamilton-src.github.com/fmrd-desktop/
 \end_layout
 
 \begin_layout Standard
 \noindent
-Will add information about binary executable.
+The binary executable files for the Windows and Linux platforms are located
+ in the 
+\family typewriter
+dist/
+\family default
+ folder.
 \end_layout
 
 \begin_layout Subsection
@@ -149,8 +147,9 @@ Database setup
 \end_layout
 
 \begin_layout Standard
-Will have to work with system administrator to run a local Postgres server.
- Should be given a username and password for access.
+FMRD applications require a Postgres server installation.
+ To setup such a server, you may have to work with your system administrator,
+ who will then give you a username and password for access.
 \end_layout
 
 \begin_layout Standard
@@ -171,33 +170,52 @@ installdb-fmrd
 \begin_layout Standard
 
 \family typewriter
-> installdb-fmrd.sh
+> installdb-fmrd.sh <db_name>
 \end_layout
 
 \begin_layout Standard
 \noindent
-The following information is required:
-\end_layout
-
-\begin_layout Itemize
-Database name
-\end_layout
-
-\begin_layout Itemize
-User name
-\end_layout
-
-\begin_layout Itemize
-User password
-\end_layout
-
-\begin_layout Itemize
-Maximum number of rounds in league competition
+where 
+\family typewriter
+<db_name>
+\family default
+ is the database name.
 \end_layout
 
 \begin_layout Standard
-The script will create a database with tables and views from the FMRD template
- and populate the base tables.
+The script will create a database with tables and views from the FMRD template.
+ You will then be challenged to provide the username and password into the
+ database:
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+Enter username: user 
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+Enter password: ****** 
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+Database authentication confirmed.
+ 
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+Enter number of rounds: ##
+\end_layout
+
+\begin_layout Standard
+After entering the maximum number of rounds in the league competition, the
+ script will populate the base tables.
  These tables support the main tables of the database and will be altered
  very seldom by the user.
  
@@ -210,7 +228,12 @@ Logging In
 \begin_layout Standard
 The user can populate the main tables of the FMRD with the data-entry applicatio
 n.
- To run the data-entry application, enter the following at the command prompt:
+ You can run the data-entry application in one of two ways: by double-clicking
+ on the appropriate executable in the 
+\family typewriter
+dist/
+\family default
+ folder, or by either entering the following at the command prompt:
 \end_layout
 
 \begin_layout Standard
@@ -229,7 +252,7 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename /home/howard/research/soccermetrics/SoccerResultDB/trunk/docs/screenshots/fmrd-login.png
+	filename /home/howard/research/soccermetrics/SoccerResultDB/fmrd-desktop/docs/screenshots/fmrd-login.png
 	scale 50
 
 \end_inset
@@ -312,7 +335,7 @@ status open
 
 \begin_layout Plain Layout
 \begin_inset Graphics
-	filename /home/howard/research/soccermetrics/SoccerResultDB/trunk/docs/screenshots/fmrd-user-switchboard.png
+	filename /home/howard/research/soccermetrics/SoccerResultDB/fmrd-desktop/docs/screenshots/fmrd-user-switchboard.png
 	scale 50
 
 \end_inset
@@ -327,7 +350,7 @@ status open
 
 \begin_layout Plain Layout
 \begin_inset Graphics
-	filename /home/howard/research/soccermetrics/SoccerResultDB/trunk/docs/screenshots/fmrd-admin-switchboard.png
+	filename /home/howard/research/soccermetrics/SoccerResultDB/fmrd-desktop/docs/screenshots/fmrd-admin-switchboard.png
 	scale 50
 
 \end_inset
@@ -443,6 +466,7 @@ This section describes the data entry dialogs on the application.
  record and fields that populate the underlying database table by entering
  data or selecting from a data list.
  Unless stated otherwise, the fields cannot be left blank or unselected.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -473,6 +497,15 @@ Add
 \begin_layout Itemize
 a "
 \series bold
+Save
+\series default
+" (Alt-S) button that saves the current record to the database without navigatin
+g to another record,
+\end_layout
+
+\begin_layout Itemize
+a "
+\series bold
 Delete
 \series default
 " (Alt-D) button that erases the current record (subject to permission by
@@ -484,8 +517,16 @@ a "
 \series bold
 Close
 \series default
-" (Alt-C) button that saves the current record to the database and closes
- the dialog.
+" (Alt-C) button that saves the current record to the database upon user
+ confirmation and closes the dialog.
+\end_layout
+
+\begin_layout Standard
+The fields are disabled if there are no records in the underlying database.
+ To insert a new record in the database, click on the Add button to enter
+ a blank record, enter information into the enabled data fields, then click
+ on any button (other than Delete) to save the current entry.
+ 
 \end_layout
 
 \begin_layout Subsection
@@ -521,7 +562,7 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename /home/howard/research/soccermetrics/SoccerResultDB/trunk/docs/screenshots/fmrd-competitions.png
+	filename /home/howard/research/soccermetrics/SoccerResultDB/fmrd-desktop/docs/screenshots/fmrd-competitions.png
 	scale 50
 
 \end_inset
@@ -555,18 +596,10 @@ Teams
 \end_layout
 
 \begin_layout Standard
-The Teams dialog allows entry of the team name.
- Match venues can be associated with a home team, while matches, match lineups,
- and match events must be associated with teams.
- There is only one field that can be accessed by the user, which is the
- Teams field.
- This field cannot be left blank.
-\end_layout
-
-\begin_layout Standard
-Users typically enter the official name of the team or its popular name.
- Of course, the entry is at the discretion of the user, but it should be
- distinctive from other names in the database.
+The Teams dialog allows entry of the team name and its home country.
+ Match venues, matches, match lineups, and match events must be associated
+ with teams.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -579,7 +612,7 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename /home/howard/research/soccermetrics/SoccerResultDB/trunk/docs/screenshots/fmrd-teams.png
+	filename /home/howard/research/soccermetrics/SoccerResultDB/fmrd-desktop/docs/screenshots/fmrd-teams.png
 	scale 50
 
 \end_inset
@@ -608,6 +641,35 @@ Team data entry dialog.
 
 \end_layout
 
+\begin_layout Standard
+The following fields are in the Teams dialog:
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Team Name
+\series default
+ (Alt-T): The official name of the team or its popular name.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Region
+\series default
+ (Alt-R): The football confederation of the country in which the team resides.
+ This field is used to filter the list of countries to be selected.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Country
+\series default
+ (Alt-C): The country (or national association) in which the team resides.
+\end_layout
+
 \begin_layout Subsubsection
 Venues
 \end_layout
@@ -628,7 +690,7 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename /home/howard/research/soccermetrics/SoccerResultDB/trunk/docs/screenshots/fmrd-venues.png
+	filename /home/howard/research/soccermetrics/SoccerResultDB/fmrd-desktop/docs/screenshots/fmrd-venues.png
 	scale 50
 
 \end_inset
@@ -680,7 +742,8 @@ Confederation
 \series default
  (Alt-F): The confederation in which the venue resides (AFC, CAF, CONCACAF,
  CONMEBOL, OFC, UEFA).
- This is not stored in the database but used to filter the Country field.
+ This is not stored in the database but used to filter the Country and Time
+ Zone fields.
 \end_layout
 
 \begin_layout Itemize
@@ -689,6 +752,16 @@ Confederation
 Country
 \series default
  (Alt-N): The country in which the venue resides.
+ This field is disabled until the Confederation field is selected.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Time Zone
+\series default
+ (Alt-Z): The time zone in which the venue resides.
+ This field is disabled until the Confederation field is selected.
 \end_layout
 
 \begin_layout Itemize
@@ -724,6 +797,116 @@ Longitude
 : The geographical longitude of the venue, in decimal degrees.
 \end_layout
 
+\begin_layout Standard
+The 
+\series bold
+Surface/Capacity History
+\series default
+ button opens the Venue History subdialog for the current venue.
+\end_layout
+
+\begin_layout Subsubsection
+Venue History
+\end_layout
+
+\begin_layout Standard
+The Venue History dialog records information about the playing surface and
+ seating capacity of the current venue in the Venues dialog.
+ Both sets of information tend to change over the life of the venue, so
+ the effective date of these data is also collected.
+ Only data directly related to the current venue are available for editing
+ in the Venue History dialog.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /home/howard/research/soccermetrics/SoccerResultDB/fmrd-desktop/docs/screenshots/fmrd-venue-history.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Venue History data entry dialog.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The following fields are in the Venue History dialog:
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Effective Date
+\series default
+: The date at which the field and capacity data are valid.
+ The latest date is the current date.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Playing Surface
+\series default
+: The type of playing surface.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Field Length
+\series default
+: The length of the football pitch, in meters.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Field Width
+\series default
+: The width of the football pitch, in meters.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Capacity
+\series default
+: The capacity of the venue, combining standing and seated areas.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Seats
+\series default
+: The number of seats in the venue.
+ For "all-seater" stadiums, the number of seats will be equal to the capacity.
+\end_layout
+
 \begin_layout Subsubsection
 Players
 \end_layout
@@ -746,7 +929,7 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename /home/howard/research/soccermetrics/SoccerResultDB/trunk/docs/screenshots/fmrd-players.png
+	filename /home/howard/research/soccermetrics/SoccerResultDB/fmrd-desktop/docs/screenshots/fmrd-players.png
 	scale 50
 
 \end_inset
@@ -840,6 +1023,93 @@ Default Position
  initial index.
 \end_layout
 
+\begin_layout Standard
+The 
+\series bold
+Height/Weight History
+\series default
+ button opens the Player History subdialog for the current player in the
+ dialog.
+\end_layout
+
+\begin_layout Subsubsection
+Player History
+\end_layout
+
+\begin_layout Standard
+The Player History dialog allows the user to record height and weight data
+ for a football player.
+ Both sets of data tend to change over the career of the player, so the
+ effective date of these data is also collected.
+ Only data directly related to the current player are available for editing
+ in the Player History dialog.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /home/howard/research/soccermetrics/SoccerResultDB/fmrd-desktop/docs/screenshots/fmrd-player-history.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Player data entry dialog.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The following fields are in the Player History dialog:
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Effective Date
+\series default
+: The date at which the player height and weight data are valid.
+ The earliest date is the player's birth date; the latest date is the current
+ date.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Height
+\series default
+: The height of the player, in meters.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Weight
+\series default
+: The weight of the player, in kilograms.
+\end_layout
+
 \begin_layout Subsubsection
 Managers
 \end_layout
@@ -860,7 +1130,7 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename /home/howard/research/soccermetrics/SoccerResultDB/trunk/docs/screenshots/fmrd-managers.png
+	filename /home/howard/research/soccermetrics/SoccerResultDB/fmrd-desktop/docs/screenshots/fmrd-managers.png
 	scale 50
 
 \end_inset
@@ -962,7 +1232,7 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename /home/howard/research/soccermetrics/SoccerResultDB/trunk/docs/screenshots/fmrd-referees.png
+	filename /home/howard/research/soccermetrics/SoccerResultDB/fmrd-desktop/docs/screenshots/fmrd-referees.png
 	scale 50
 
 \end_inset
@@ -1085,7 +1355,7 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename /home/howard/research/soccermetrics/SoccerResultDB/trunk/docs/screenshots/fmrd-matches.png
+	filename /home/howard/research/soccermetrics/SoccerResultDB/fmrd-desktop/docs/screenshots/fmrd-matches.png
 	scale 50
 
 \end_inset
@@ -1191,6 +1461,15 @@ Match Time:
 
 \end_deeper
 \begin_layout Itemize
+
+\series bold
+Attendance
+\series default
+: The number of people who attended the football match.
+ Default attendance is 0.
+\end_layout
+
+\begin_layout Itemize
 Home/Away Teams:
 \end_layout
 
@@ -1270,7 +1549,7 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename /home/howard/research/soccermetrics/SoccerResultDB/trunk/docs/screenshots/fmrd-enviro.png
+	filename /home/howard/research/soccermetrics/SoccerResultDB/fmrd-desktop/docs/screenshots/fmrd-enviro.png
 	scale 50
 
 \end_inset
@@ -1384,7 +1663,7 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename /home/howard/research/soccermetrics/SoccerResultDB/trunk/docs/screenshots/fmrd-lineup.png
+	filename /home/howard/research/soccermetrics/SoccerResultDB/fmrd-desktop/docs/screenshots/fmrd-lineup.png
 	scale 50
 
 \end_inset
@@ -1456,7 +1735,7 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename /home/howard/research/soccermetrics/SoccerResultDB/trunk/docs/screenshots/error.png
+	filename /home/howard/research/soccermetrics/SoccerResultDB/fmrd-desktop/docs/screenshots/error.png
 	scale 50
 
 \end_inset
@@ -1565,7 +1844,7 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename /home/howard/research/soccermetrics/SoccerResultDB/trunk/docs/screenshots/fmrd-goals.png
+	filename /home/howard/research/soccermetrics/SoccerResultDB/fmrd-desktop/docs/screenshots/fmrd-goals.png
 	scale 50
 
 \end_inset
@@ -1661,7 +1940,7 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename /home/howard/research/soccermetrics/SoccerResultDB/trunk/docs/screenshots/fmrd-penalties.png
+	filename /home/howard/research/soccermetrics/SoccerResultDB/fmrd-desktop/docs/screenshots/fmrd-penalties.png
 	scale 50
 
 \end_inset
@@ -1758,7 +2037,7 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename /home/howard/research/soccermetrics/SoccerResultDB/trunk/docs/screenshots/fmrd-offenses.png
+	filename /home/howard/research/soccermetrics/SoccerResultDB/fmrd-desktop/docs/screenshots/fmrd-offenses.png
 	scale 50
 
 \end_inset
@@ -1856,7 +2135,7 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename /home/howard/research/soccermetrics/SoccerResultDB/trunk/docs/screenshots/fmrd-subs.png
+	filename /home/howard/research/soccermetrics/SoccerResultDB/fmrd-desktop/docs/screenshots/fmrd-subs.png
 	scale 50
 
 \end_inset
@@ -1959,7 +2238,7 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename /home/howard/research/soccermetrics/SoccerResultDB/trunk/docs/screenshots/fmrd-switches.png
+	filename /home/howard/research/soccermetrics/SoccerResultDB/fmrd-desktop/docs/screenshots/fmrd-switches.png
 	scale 50
 
 \end_inset
@@ -2071,7 +2350,7 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename /home/howard/research/soccermetrics/SoccerResultDB/trunk/docs/screenshots/switchboard-overview-setup.png
+	filename /home/howard/research/soccermetrics/SoccerResultDB/fmrd-desktop/docs/screenshots/switchboard-overview-setup.png
 	scale 50
 
 \end_inset
@@ -2097,15 +2376,17 @@ Overview submenu in Setup menu.
 \end_layout
 
 \begin_layout Subsubsection
-Competition Phase
+Field Surfaces
 \end_layout
 
 \begin_layout Standard
-The Competition Phase dialog allows the user to change the matchday descriptions
- in a league competition.
- In some leagues all of the teams play matches on the same day or weekend;
- in other leagues matches are spread out during the week.
- The Round Description field (Alt-R) is the only active field.
+The Field Surfaces dialog allows the user to change the description of the
+ playing surfaces of a football pitch.
+ The 
+\series bold
+Field Surface
+\series default
+ field (Alt-F) is the only active field.
 \end_layout
 
 \begin_layout Standard
@@ -2118,7 +2399,58 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename /home/howard/research/soccermetrics/SoccerResultDB/trunk/docs/screenshots/fmrd-setup-rounds.png
+	filename /home/howard/research/soccermetrics/SoccerResultDB/fmrd-desktop/docs/screenshots/fmrd-setup-surfaces.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Field Surfaces setup dialog.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Competition Phase
+\end_layout
+
+\begin_layout Standard
+The Competition Phase dialog allows the user to change the matchday descriptions
+ in a league competition.
+ In some leagues all of the teams play matches on the same day or weekend;
+ in other leagues matches are spread out during the week.
+ The 
+\series bold
+Round Description
+\series default
+ field (Alt-R) is the only active field.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /home/howard/research/soccermetrics/SoccerResultDB/fmrd-desktop/docs/screenshots/fmrd-setup-rounds.png
 	scale 50
 
 \end_inset
@@ -2148,15 +2480,14 @@ Competition Phase setup dialog.
 \end_layout
 
 \begin_layout Subsubsection
-Weather Conditions
+Time Zones
 \end_layout
 
 \begin_layout Standard
-The Weather Conditions dialog allows the user to edit the description of
- the predominate weather conditions in the football match.
- The descriptions are taken from NOAA's National Weather Service in the
- USA.
- The Weather Conditions field (Alt-W) is the only active field.
+The Time Zones dialog allows the user to edit the name of the geographical
+ region with common local clocks, the football confederation in which the
+ regions lie, and the time offset from Coordinated Universal Time (UTC).
+ Names and UTC offsets are obtained from the Olsen tz database.
 \end_layout
 
 \begin_layout Standard
@@ -2169,7 +2500,210 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename /home/howard/research/soccermetrics/SoccerResultDB/trunk/docs/screenshots/fmrd-setup-wxconds.png
+	filename /home/howard/research/soccermetrics/SoccerResultDB/fmrd-desktop/docs/screenshots/fmrd-setup-timezones.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Time Zones setup dialog.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The following fields are in the Time Zones dialog:
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Time Zone
+\series default
+ (Alt-Z): The name of the geographic time zone region, in 
+\emph on
+Area/Region
+\emph default
+ format.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Region
+\series default
+ (Alt-R): The name of the football confederation in which the geographic
+ regions reside.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+UTC Offset
+\series default
+ (Alt-O): The time offset from UTC, in decimal hours.
+ Conversion of minutes to decimal hours is given below:
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="5" columns="2">
+<features>
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+Minutes
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+Decimal
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+:00,:60
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+.00
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+:15
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+.25
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+:30
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+.50
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+:45
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+.75
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Weather Conditions
+\end_layout
+
+\begin_layout Standard
+The Weather Conditions dialog allows the user to edit the description of
+ the predominate weather conditions in the football match.
+ The descriptions are taken from NOAA's National Weather Service in the
+ USA.
+ The 
+\series bold
+Weather Conditions
+\series default
+ field (Alt-W) is the only active field.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /home/howard/research/soccermetrics/SoccerResultDB/fmrd-desktop/docs/screenshots/fmrd-setup-wxconds.png
 	scale 50
 
 \end_inset
@@ -2186,10 +2720,6 @@ Weather Conditions setup dialog.
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Plain Layout
 
 \end_layout
 
@@ -2212,12 +2742,12 @@ To access the personnel base tables, activate the Setup menu at the top
 placement H
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename /home/howard/research/soccermetrics/SoccerResultDB/trunk/docs/screenshots/switchboard-personnel-setup.png
+	filename /home/howard/research/soccermetrics/SoccerResultDB/fmrd-desktop/docs/screenshots/switchboard-personnel-setup.png
 	scale 50
 
 \end_inset
@@ -2253,7 +2783,11 @@ Confederations
 \begin_layout Standard
 The Confederations dialog allows the user to edit the acronyms of the confederat
 ions in international football.
- The Confederations field (Alt-N) is the only active field.
+ The 
+\series bold
+Confederations
+\series default
+ field (Alt-N) is the only active field.
 \end_layout
 
 \begin_layout Standard
@@ -2266,7 +2800,7 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename /home/howard/research/soccermetrics/SoccerResultDB/trunk/docs/screenshots/fmrd-setup-confederation.png
+	filename /home/howard/research/soccermetrics/SoccerResultDB/fmrd-desktop/docs/screenshots/fmrd-setup-confederation.png
 	scale 50
 
 \end_inset
@@ -2314,7 +2848,7 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename /home/howard/research/soccermetrics/SoccerResultDB/trunk/docs/screenshots/fmrd-setup-country.png
+	filename /home/howard/research/soccermetrics/SoccerResultDB/fmrd-desktop/docs/screenshots/fmrd-setup-country.png
 	scale 50
 
 \end_inset
@@ -2344,12 +2878,19 @@ The following fields are in the Country dialog:
 \end_layout
 
 \begin_layout Itemize
-Country (Alt-N): The popular name of the member association in FIFA.
+
+\series bold
+Country
+\series default
+ (Alt-N): The popular name of the member association in FIFA.
 \end_layout
 
 \begin_layout Itemize
-Confederation (Alt-F): The confederation to which the member association
- belongs.
+
+\series bold
+Confederation
+\series default
+ (Alt-F): The confederation to which the member association belongs.
 \end_layout
 
 \begin_layout Subsubsection
@@ -2362,7 +2903,11 @@ The Field Positions dialog allows the user to edit the generic descriptions
  These descriptions must not contain information about the field location,
  such as "left back" or "right winger"; field locations are handled in the
  Flank Position dialog and table.
- In this dialog the Field Position (Alt-F) is the only active field.
+ In this dialog the 
+\series bold
+Field Position
+\series default
+ (Alt-F) is the only active field.
 \end_layout
 
 \begin_layout Standard
@@ -2375,7 +2920,7 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename /home/howard/research/soccermetrics/SoccerResultDB/trunk/docs/screenshots/fmrd-setup-fieldpos.png
+	filename /home/howard/research/soccermetrics/SoccerResultDB/fmrd-desktop/docs/screenshots/fmrd-setup-fieldpos.png
 	scale 50
 
 \end_inset
@@ -2409,7 +2954,11 @@ The Flank Positions dialog allows the user to edit the flank description
  that modifies the football position.
  The default field locations are "left", "right", "center/centre", or a
  blank entry to designate a generic location.
- Only the Flank Position field (Alt-F) is active.
+ Only the 
+\series bold
+Flank Position
+\series default
+ field (Alt-F) is active.
 \end_layout
 
 \begin_layout Standard
@@ -2422,7 +2971,7 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename /home/howard/research/soccermetrics/SoccerResultDB/trunk/docs/screenshots/fmrd-setup-flankpos.png
+	filename /home/howard/research/soccermetrics/SoccerResultDB/fmrd-desktop/docs/screenshots/fmrd-setup-flankpos.png
 	scale 50
 
 \end_inset
@@ -2467,7 +3016,7 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename /home/howard/research/soccermetrics/SoccerResultDB/trunk/docs/screenshots/fmrd-setup-compositeposition.png
+	filename /home/howard/research/soccermetrics/SoccerResultDB/fmrd-desktop/docs/screenshots/fmrd-setup-compositeposition.png
 	scale 50
 
 \end_inset
@@ -2497,14 +3046,22 @@ The following fields are in the Positions dialog:
 \end_layout
 
 \begin_layout Itemize
-Flank Position (Alt-K): The sector of the football field, used as an adjective
- of the field position.
+
+\series bold
+Flank Position
+\series default
+ (Alt-K): The sector of the football field, used as an adjective of the
+ field position.
  To create a generic position such as "midfielder", select the blank description.
  Goalkeeper must have a blank flank position selected.
 \end_layout
 
 \begin_layout Itemize
-Field Position (Alt-F): The field position of the football player.
+
+\series bold
+Field Position
+\series default
+ (Alt-F): The field position of the football player.
 \end_layout
 
 \begin_layout Subsection
@@ -2526,7 +3083,7 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename /home/howard/research/soccermetrics/SoccerResultDB/trunk/docs/screenshots/switchboard-events-setup.png
+	filename /home/howard/research/soccermetrics/SoccerResultDB/fmrd-desktop/docs/screenshots/switchboard-events-setup.png
 	scale 50
 
 \end_inset
@@ -2562,7 +3119,11 @@ Goal Events
 \begin_layout Standard
 The Goal Events dialog allows the user to edit descriptions of the on-field
  actions that ended in a goal scored from open play.
- The Goal Events field (Alt-G) is the only active field.
+ The 
+\series bold
+Goal Events
+\series default
+ field (Alt-G) is the only active field.
 \end_layout
 
 \begin_layout Standard
@@ -2575,7 +3136,7 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename /home/howard/research/soccermetrics/SoccerResultDB/trunk/docs/screenshots/fmrd-setup-goalevents.png
+	filename /home/howard/research/soccermetrics/SoccerResultDB/fmrd-desktop/docs/screenshots/fmrd-setup-goalevents.png
 	scale 50
 
 \end_inset
@@ -2608,7 +3169,11 @@ Goal Strikes Table
 The Goal Strikes dialog allows the user to edit descriptions of the body
  parts with which the goal was scored.
  Examples include "left foot", "right foot", or "head".
- The Goal Strikes field (Alt-G) is the only active field.
+ The 
+\series bold
+Goal Strikes
+\series default
+ field (Alt-G) is the only active field.
 \end_layout
 
 \begin_layout Standard
@@ -2621,7 +3186,7 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename /home/howard/research/soccermetrics/SoccerResultDB/trunk/docs/screenshots/fmrd-setup-goalstrikes.png
+	filename /home/howard/research/soccermetrics/SoccerResultDB/fmrd-desktop/docs/screenshots/fmrd-setup-goalstrikes.png
 	scale 50
 
 \end_inset
@@ -2654,7 +3219,11 @@ Penalty Outcomes Table
 The Penalty Outcomes dialog allows the user to edit descriptions of penalty
  kick outcomes.
  Examples include "Goal" and "Hit Post".
- The Penalty Outcome field (Alt-P) is the only active field.
+ The 
+\series bold
+Penalty Outcome
+\series default
+ field (Alt-P) is the only active field.
 \end_layout
 
 \begin_layout Standard
@@ -2667,7 +3236,7 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename /home/howard/research/soccermetrics/SoccerResultDB/trunk/docs/screenshots/fmrd-setup-penoutcome.png
+	filename /home/howard/research/soccermetrics/SoccerResultDB/fmrd-desktop/docs/screenshots/fmrd-setup-penoutcome.png
 	scale 50
 
 \end_inset
@@ -2701,7 +3270,11 @@ The Fouls dialog allows the user to edit descriptions of actions that are
  often judged to be fouls.
  These data will be used to classify actions that led to penalty kicks and
  bookings.
- The Foul Description field (Alt-F) is the only active field.
+ The 
+\series bold
+Foul Description
+\series default
+ field (Alt-F) is the only active field.
 \end_layout
 
 \begin_layout Standard
@@ -2714,7 +3287,7 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename /home/howard/research/soccermetrics/SoccerResultDB/trunk/docs/screenshots/fmrd-setup-fouls.png
+	filename /home/howard/research/soccermetrics/SoccerResultDB/fmrd-desktop/docs/screenshots/fmrd-setup-fouls.png
 	scale 50
 
 \end_inset
@@ -2747,7 +3320,11 @@ Cards Table
 The Cards dialog allows the user to edit the color descriptions of the disciplin
 ary card.
  The only descriptions used are "Yellow", "Yellow/Red", and "Red".
- The Card Description field (Alt-R) is the only active field.
+ The 
+\series bold
+Card Description
+\series default
+ field (Alt-R) is the only active field.
 \end_layout
 
 \begin_layout Standard
@@ -2760,7 +3337,7 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename /home/howard/research/soccermetrics/SoccerResultDB/trunk/docs/screenshots/fmrd-setup-cards.png
+	filename /home/howard/research/soccermetrics/SoccerResultDB/fmrd-desktop/docs/screenshots/fmrd-setup-cards.png
 	scale 50
 
 \end_inset

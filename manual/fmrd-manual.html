@@ -4,7 +4,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 <meta name="generator" content="http://www.nongnu.org/elyxer/"/>
-<meta name="create-date" content="2011-07-21"/>
+<meta name="create-date" content="2011-09-02"/>
 <link rel="stylesheet" href="http://www.nongnu.org/elyxer/lyx.css" type="text/css" media="screen"/>
 <title>FMRD User Manual</title>
 </head>
@@ -50,18 +50,15 @@ Requires:
 <ul>
 
 <li>
-Python up to version 2.7 (3.0 not supported)
+Python 2.6-2.7 (3.0 not supported)
 </li>
 <li>
-PostgreSQL (Any version in last 2-3 years should work, but 7.0+ preferred)
+PostgreSQL 8.x
 </li>
 <li>
 Perl (DBI package)
 </li>
 </ul>
-<div class="Unindented">
-FMRD was originally coded on a 64-bit Linux operating system (Ubuntu Lucid Lynx), but was built using the Qt and PyQt libraries, so it should be able to function across Windows and Mac platforms. This has not been tested, however.
-</div>
 <h1 class="Section">
 <a class="toc" name="toc-Section-3">3</a> Installation
 </h1>
@@ -72,16 +69,16 @@ FMRD was originally coded on a 64-bit Linux operating system (Ubuntu Lucid Lynx)
 Check out FMRD from the Downloads section of the website located at 
 </div>
 <div class="Indented">
-<tt>http://www.fmrd-site.org/downloads/</tt>
+<tt>http://hhamilton-src.github.com/fmrd-desktop/</tt>
 </div>
 <div class="Indented">
-Will add information about binary executable.
+The binary executable files for the Windows and Linux platforms are located in the <tt>dist/</tt> folder.
 </div>
 <h2 class="Subsection">
 <a class="toc" name="toc-Subsection-3.2">3.2</a> Database setup
 </h2>
 <div class="Unindented">
-Will have to work with system administrator to run a local Postgres server. Should be given a username and password for access.
+FMRD applications require a Postgres server installation. To setup such a server, you may have to work with your system administrator, who will then give you a username and password for access.
 </div>
 <div class="Indented">
 Go to sql/ directory and run the <tt>installdb-fmrd</tt> shell script to create and set up FMRD:
@@ -90,34 +87,34 @@ Go to sql/ directory and run the <tt>installdb-fmrd</tt> shell script to create 
 <tt>&gt; cd sql/</tt>
 </div>
 <div class="Indented">
-<tt>&gt; installdb-fmrd.sh</tt>
+<tt>&gt; installdb-fmrd.sh &lt;db_name&gt;</tt>
 </div>
 <div class="Indented">
-The following information is required:
+where <tt>&lt;db_name&gt;</tt> is the database name.
 </div>
-<ul>
-
-<li>
-Database name
-</li>
-<li>
-User name
-</li>
-<li>
-User password
-</li>
-<li>
-Maximum number of rounds in league competition
-</li>
-</ul>
-<div class="Unindented">
-The script will create a database with tables and views from the FMRD template and populate the base tables. These tables support the main tables of the database and will be altered very seldom by the user. 
+<div class="Indented">
+The script will create a database with tables and views from the FMRD template. You will then be challenged to provide the username and password into the database:
+</div>
+<div class="Indented">
+<tt>Enter username: user </tt>
+</div>
+<div class="Indented">
+<tt>Enter password: ****** </tt>
+</div>
+<div class="Indented">
+<tt>Database authentication confirmed. </tt>
+</div>
+<div class="Indented">
+<tt>Enter number of rounds: ##</tt>
+</div>
+<div class="Indented">
+After entering the maximum number of rounds in the league competition, the script will populate the base tables. These tables support the main tables of the database and will be altered very seldom by the user. 
 </div>
 <h1 class="Section">
 <a class="toc" name="toc-Section-4">4</a> Logging In
 </h1>
 <div class="Unindented">
-The user can populate the main tables of the FMRD with the data-entry application. To run the data-entry application, enter the following at the command prompt:
+The user can populate the main tables of the FMRD with the data-entry application. You can run the data-entry application in one of two ways: by double-clicking on the appropriate executable in the <tt>dist/</tt> folder, or by either entering the following at the command prompt:
 </div>
 <div class="Indented">
 <tt>&gt;./fmrd-main.py</tt>
@@ -228,7 +225,7 @@ Help menu (Alt-H)
 <a class="toc" name="toc-Section-6">6</a> Getting Started with Data Entry
 </h1>
 <div class="Unindented">
-This section describes the data entry dialogs on the application. For each dialog there is a read-only field for the ID number of the current record and fields that populate the underlying database table by entering data or selecting from a data list. Unless stated otherwise, the fields cannot be left blank or unselected.
+This section describes the data entry dialogs on the application. For each dialog there is a read-only field for the ID number of the current record and fields that populate the underlying database table by entering data or selecting from a data list. Unless stated otherwise, the fields cannot be left blank or unselected. 
 </div>
 <div class="Indented">
 It is important to remember that the database builds on itself. The data entry application is designed so that the user cannot enter match information before entering information about the players involved, to give one example. The match overview and personnel tables must be populated with a minimum number of records before the match detail dialogs are enabled.
@@ -242,12 +239,18 @@ All of the dialogs, with the exception of the Environmental Conditions dialog, h
 an "<b>Add</b>" (Alt-A) button that allows the user to append a new record to the end of the underlying table, 
 </li>
 <li>
+a "<b>Save</b>" (Alt-S) button that saves the current record to the database without navigating to another record,
+</li>
+<li>
 a "<b>Delete</b>" (Alt-D) button that erases the current record (subject to permission by the database), and 
 </li>
 <li>
-a "<b>Close</b>" (Alt-C) button that saves the current record to the database and closes the dialog.
+a "<b>Close</b>" (Alt-C) button that saves the current record to the database upon user confirmation and closes the dialog.
 </li>
 </ul>
+<div class="Unindented">
+The fields are disabled if there are no records in the underlying database. To insert a new record in the database, click on the Add button to enter a blank record, enter information into the enabled data fields, then click on any button (other than Delete) to save the current entry. 
+</div>
 <h2 class="Subsection">
 <a class="toc" name="toc-Subsection-6.1">6.1</a> Pre-Competition Data
 </h2>
@@ -267,7 +270,7 @@ If data from multiple league seasons are to be contained in a single database, i
 <div class="figure">
 
 <div class="center">
-<img class="embedded" src="images/fmrd-competitions.png" alt="figure fmrd-competitions.png" style="width: 306px; max-width: 613px; height: 92px; max-height: 184px; "/>
+<img class="embedded" src="images/fmrd-competitions.png" alt="figure fmrd-competitions.png" style="width: 362px; max-width: 725px; height: 88px; max-height: 177px; "/>
 
 </div>
 <div class="caption">
@@ -280,10 +283,7 @@ Figure 3 Competition data entry dialog.
 <a class="toc" name="toc-Subsubsection-6.1.2">6.1.2</a> Teams
 </h3>
 <div class="Unindented">
-The Teams dialog allows entry of the team name. Match venues can be associated with a home team, while matches, match lineups, and match events must be associated with teams. There is only one field that can be accessed by the user, which is the Teams field. This field cannot be left blank.
-</div>
-<div class="Indented">
-Users typically enter the official name of the team or its popular name. Of course, the entry is at the discretion of the user, but it should be distinctive from other names in the database.
+The Teams dialog allows entry of the team name and its home country. Match venues, matches, match lineups, and match events must be associated with teams. 
 </div>
 <div class="Indented">
 
@@ -292,7 +292,7 @@ Users typically enter the official name of the team or its popular name. Of cour
 <div class="figure">
 
 <div class="center">
-<img class="embedded" src="images/fmrd-teams.png" alt="figure fmrd-teams.png" style="width: 308px; max-width: 617px; height: 93px; max-height: 187px; "/>
+<img class="embedded" src="images/fmrd-teams.png" alt="figure fmrd-teams.png" style="width: 293px; max-width: 586px; height: 148px; max-height: 296px; "/>
 
 </div>
 <div class="caption">
@@ -301,6 +301,21 @@ Figure 4 Team data entry dialog.
 </div>
 </div>
 </div>
+<div class="Indented">
+The following fields are in the Teams dialog:
+</div>
+<ul>
+
+<li>
+<b>Team Name</b> (Alt-T): The official name of the team or its popular name.
+</li>
+<li>
+<b>Region</b> (Alt-R): The football confederation of the country in which the team resides. This field is used to filter the list of countries to be selected.
+</li>
+<li>
+<b>Country</b> (Alt-C): The country (or national association) in which the team resides.
+</li>
+</ul>
 <h3 class="Subsubsection">
 <a class="toc" name="toc-Subsubsection-6.1.3">6.1.3</a> Venues
 </h3>
@@ -314,7 +329,7 @@ The Venues dialog allows for entry of data associated with football venues. This
 <div class="figure">
 
 <div class="center">
-<img class="embedded" src="images/fmrd-venues.png" alt="figure fmrd-venues.png" style="width: 367px; max-width: 734px; height: 204px; max-height: 408px; "/>
+<img class="embedded" src="images/fmrd-venues.png" alt="figure fmrd-venues.png" style="width: 382px; max-width: 765px; height: 208px; max-height: 416px; "/>
 
 </div>
 <div class="caption">
@@ -335,10 +350,13 @@ The following fields are in the Venues dialog:
 <b>Venue City</b> (Alt-C): Self-explanatory editable text entry
 </li>
 <li>
-<b>Confederation</b> (Alt-F): The confederation in which the venue resides (AFC, CAF, CONCACAF, CONMEBOL, OFC, UEFA). This is not stored in the database but used to filter the Country field.
+<b>Confederation</b> (Alt-F): The confederation in which the venue resides (AFC, CAF, CONCACAF, CONMEBOL, OFC, UEFA). This is not stored in the database but used to filter the Country and Time Zone fields.
 </li>
 <li>
-<b>Country</b> (Alt-N): The country in which the venue resides.
+<b>Country</b> (Alt-N): The country in which the venue resides. This field is disabled until the Confederation field is selected.
+</li>
+<li>
+<b>Time Zone</b> (Alt-Z): The time zone in which the venue resides. This field is disabled until the Confederation field is selected.
 </li>
 <li>
 <b>Home Team</b> (Alt-T): The team that plays the majority of its matches at the venue. This field can be left unselected.
@@ -353,8 +371,57 @@ The following fields are in the Venues dialog:
 <b>Longitude</b>: The geographical longitude of the venue, in decimal degrees.
 </li>
 </ul>
+<div class="Unindented">
+The <b>Surface/Capacity History</b> button opens the Venue History subdialog for the current venue.
+</div>
 <h3 class="Subsubsection">
-<a class="toc" name="toc-Subsubsection-6.1.4">6.1.4</a> Players
+<a class="toc" name="toc-Subsubsection-6.1.4">6.1.4</a> Venue History
+</h3>
+<div class="Unindented">
+The Venue History dialog records information about the playing surface and seating capacity of the current venue in the Venues dialog. Both sets of information tend to change over the life of the venue, so the effective date of these data is also collected. Only data directly related to the current venue are available for editing in the Venue History dialog.
+</div>
+<div class="Indented">
+
+<div class="float">
+
+<div class="figure">
+
+<div class="center">
+<img class="embedded" src="images/fmrd-venue-history.png" alt="figure fmrd-venue-history.png" style="width: 402px; max-width: 804px; height: 167px; max-height: 335px; "/>
+
+</div>
+<div class="caption">
+Figure 6 Venue History data entry dialog.
+</div>
+</div>
+</div>
+</div>
+<div class="Indented">
+The following fields are in the Venue History dialog:
+</div>
+<ul>
+
+<li>
+<b>Effective Date</b>: The date at which the field and capacity data are valid. The latest date is the current date.
+</li>
+<li>
+<b>Playing Surface</b>: The type of playing surface.
+</li>
+<li>
+<b>Field Length</b>: The length of the football pitch, in meters.
+</li>
+<li>
+<b>Field Width</b>: The width of the football pitch, in meters.
+</li>
+<li>
+<b>Capacity</b>: The capacity of the venue, combining standing and seated areas.
+</li>
+<li>
+<b>Seats</b>: The number of seats in the venue. For "all-seater" stadiums, the number of seats will be equal to the capacity.
+</li>
+</ul>
+<h3 class="Subsubsection">
+<a class="toc" name="toc-Subsubsection-6.1.5">6.1.5</a> Players
 </h3>
 <div class="Unindented">
 The Players dialog allows for entry of player data. One thing that might be surprising to users who use other sports databases is that the team associated with the player is not entered here; rather, the association is handled via the match lineups. Thus the Players table is easier to maintain over time.
@@ -366,11 +433,11 @@ The Players dialog allows for entry of player data. One thing that might be surp
 <div class="figure">
 
 <div class="center">
-<img class="embedded" src="images/fmrd-players.png" alt="figure fmrd-players.png" style="width: 406px; max-width: 813px; height: 147px; max-height: 295px; "/>
+<img class="embedded" src="images/fmrd-players.png" alt="figure fmrd-players.png" style="width: 402px; max-width: 805px; height: 167px; max-height: 335px; "/>
 
 </div>
 <div class="caption">
-Figure 6 Player data entry dialog.
+Figure 7 Player data entry dialog.
 </div>
 </div>
 </div>
@@ -402,8 +469,48 @@ The following fields are in the Players dialog:
 <b>Default Position</b> (Alt-P): The default position of the player. This is used to set the Position field in the Match Lineups dialog to an initial index.
 </li>
 </ul>
+<div class="Unindented">
+The <b>Height/Weight History</b> button opens the Player History subdialog for the current player in the dialog.
+</div>
 <h3 class="Subsubsection">
-<a class="toc" name="toc-Subsubsection-6.1.5">6.1.5</a> Managers
+<a class="toc" name="toc-Subsubsection-6.1.6">6.1.6</a> Player History
+</h3>
+<div class="Unindented">
+The Player History dialog allows the user to record height and weight data for a football player. Both sets of data tend to change over the career of the player, so the effective date of these data is also collected. Only data directly related to the current player are available for editing in the Player History dialog.
+</div>
+<div class="Indented">
+
+<div class="float">
+
+<div class="figure">
+
+<div class="center">
+<img class="embedded" src="images/fmrd-player-history.png" alt="figure fmrd-player-history.png" style="width: 242px; max-width: 485px; height: 167px; max-height: 335px; "/>
+
+</div>
+<div class="caption">
+Figure 8 Player data entry dialog.
+</div>
+</div>
+</div>
+</div>
+<div class="Indented">
+The following fields are in the Player History dialog:
+</div>
+<ul>
+
+<li>
+<b>Effective Date</b>: The date at which the player height and weight data are valid. The earliest date is the player’s birth date; the latest date is the current date.
+</li>
+<li>
+<b>Height</b>: The height of the player, in meters.
+</li>
+<li>
+<b>Weight</b>: The weight of the player, in kilograms.
+</li>
+</ul>
+<h3 class="Subsubsection">
+<a class="toc" name="toc-Subsubsection-6.1.7">6.1.7</a> Managers
 </h3>
 <div class="Unindented">
 The Managers dialog allows the user to enter manager data. As in the Player dialog, the team associated with the manager is not selected here but instead handled by the Match dialog.
@@ -415,11 +522,11 @@ The Managers dialog allows the user to enter manager data. As in the Player dial
 <div class="figure">
 
 <div class="center">
-<img class="embedded" src="images/fmrd-managers.png" alt="figure fmrd-managers.png" style="width: 409px; max-width: 819px; height: 151px; max-height: 302px; "/>
+<img class="embedded" src="images/fmrd-managers.png" alt="figure fmrd-managers.png" style="width: 402px; max-width: 805px; height: 132px; max-height: 264px; "/>
 
 </div>
 <div class="caption">
-Figure 7 Manager data entry dialog.
+Figure 9 Manager data entry dialog.
 </div>
 </div>
 </div>
@@ -449,7 +556,7 @@ The following fields are in the Managers dialog:
 </li>
 </ul>
 <h3 class="Subsubsection">
-<a class="toc" name="toc-Subsubsection-6.1.6">6.1.6</a> Referees
+<a class="toc" name="toc-Subsubsection-6.1.8">6.1.8</a> Referees
 </h3>
 <div class="Unindented">
 The Referees dialog allows the user to enter data on the central referee.
@@ -461,11 +568,11 @@ The Referees dialog allows the user to enter data on the central referee.
 <div class="figure">
 
 <div class="center">
-<img class="embedded" src="images/fmrd-referees.png" alt="figure fmrd-referees.png" style="width: 410px; max-width: 820px; height: 151px; max-height: 302px; "/>
+<img class="embedded" src="images/fmrd-referees.png" alt="figure fmrd-referees.png" style="width: 402px; max-width: 804px; height: 142px; max-height: 285px; "/>
 
 </div>
 <div class="caption">
-Figure 8 Referee data entry dialog.
+Figure 10 Referee data entry dialog.
 </div>
 </div>
 </div>
@@ -525,11 +632,11 @@ At least two entries in Teams table
 <div class="figure">
 
 <div class="center">
-<img class="embedded" src="images/fmrd-matches.png" alt="figure fmrd-matches.png" style="width: 437px; max-width: 875px; height: 244px; max-height: 488px; "/>
+<img class="embedded" src="images/fmrd-matches.png" alt="figure fmrd-matches.png" style="width: 464px; max-width: 929px; height: 229px; max-height: 459px; "/>
 
 </div>
 <div class="caption">
-Figure 9 Match data entry dialog.
+Figure 11 Match data entry dialog.
 </div>
 </div>
 </div>
@@ -571,6 +678,9 @@ Match Time:
 <b>2nd half</b>: The elapsed time of the second half (including stoppage time), in minutes. Time must be nonnegative (zero minutes permitted). Default elapsed time is 45.
 </li>
 </ul>
+</li>
+<li>
+<b>Attendance</b>: The number of people who attended the football match. Default attendance is 0.
 </li>
 <li>
 Home/Away Teams:
@@ -617,7 +727,7 @@ The Environmental Conditions subdialog records atmospheric conditions of the mat
 
 </div>
 <div class="caption">
-Figure 10 Environmental Conditions data entry dialog.
+Figure 12 Environmental Conditions data entry dialog.
 </div>
 </div>
 </div>
@@ -665,11 +775,11 @@ To assist the user there are status boxes along the bottom of the dialog that ta
 <div class="figure">
 
 <div class="center">
-<img class="embedded" src="images/fmrd-lineup.png" alt="figure fmrd-lineup.png" style="width: 263px; max-width: 527px; height: 218px; max-height: 436px; "/>
+<img class="embedded" src="images/fmrd-lineup.png" alt="figure fmrd-lineup.png" style="width: 251px; max-width: 502px; height: 204px; max-height: 409px; "/>
 
 </div>
 <div class="caption">
-Figure 11 Match Lineup data entry dialog.
+Figure 13 Match Lineup data entry dialog.
 </div>
 </div>
 </div>
@@ -709,7 +819,7 @@ The following dialogs allow the user to input data on the match details. There m
 
 </div>
 <div class="caption">
-Figure 12 Error message for insufficient Match Lineup table.
+Figure 14 Error message for insufficient Match Lineup table.
 </div>
 </div>
 </div>
@@ -763,11 +873,11 @@ The Goals dialog records goals scored in open play, including own goals. Goals s
 <div class="figure">
 
 <div class="center">
-<img class="embedded" src="images/fmrd-goals.png" alt="figure fmrd-goals.png" style="width: 270px; max-width: 541px; height: 257px; max-height: 514px; "/>
+<img class="embedded" src="images/fmrd-goals.png" alt="figure fmrd-goals.png" style="width: 302px; max-width: 604px; height: 248px; max-height: 496px; "/>
 
 </div>
 <div class="caption">
-Figure 13 (Open Play) Goals data entry dialog.
+Figure 15 (Open Play) Goals data entry dialog.
 </div>
 </div>
 </div>
@@ -806,11 +916,11 @@ The Penalties dialog records all penalty kick events in a match, regardless of o
 <div class="figure">
 
 <div class="center">
-<img class="embedded" src="images/fmrd-penalties.png" alt="figure fmrd-penalties.png" style="width: 291px; max-width: 582px; height: 251px; max-height: 502px; "/>
+<img class="embedded" src="images/fmrd-penalties.png" alt="figure fmrd-penalties.png" style="width: 322px; max-width: 644px; height: 247px; max-height: 495px; "/>
 
 </div>
 <div class="caption">
-Figure 14 Penalties data entry dialog.
+Figure 16 Penalties data entry dialog.
 </div>
 </div>
 </div>
@@ -849,11 +959,11 @@ The Offenses dialog records all fouls that resulted in a disciplinary card being
 <div class="figure">
 
 <div class="center">
-<img class="embedded" src="images/fmrd-offenses.png" alt="figure fmrd-offenses.png" style="width: 295px; max-width: 591px; height: 254px; max-height: 509px; "/>
+<img class="embedded" src="images/fmrd-offenses.png" alt="figure fmrd-offenses.png" style="width: 321px; max-width: 643px; height: 247px; max-height: 494px; "/>
 
 </div>
 <div class="caption">
-Figure 15 Offenses data entry dialog.
+Figure 17 Offenses data entry dialog.
 </div>
 </div>
 </div>
@@ -892,11 +1002,11 @@ The Substitutions dialog records all substitutions that occurred in the match.
 <div class="figure">
 
 <div class="center">
-<img class="embedded" src="images/fmrd-subs.png" alt="figure fmrd-subs.png" style="width: 281px; max-width: 563px; height: 253px; max-height: 507px; "/>
+<img class="embedded" src="images/fmrd-subs.png" alt="figure fmrd-subs.png" style="width: 292px; max-width: 584px; height: 247px; max-height: 495px; "/>
 
 </div>
 <div class="caption">
-Figure 16 Substitutions data entry dialog.
+Figure 18 Substitutions data entry dialog.
 </div>
 </div>
 </div>
@@ -941,11 +1051,11 @@ The Switch Position dialog is used to record on-field changes in position during
 <div class="figure">
 
 <div class="center">
-<img class="embedded" src="images/fmrd-switches.png" alt="figure fmrd-switches.png" style="width: 280px; max-width: 560px; height: 252px; max-height: 504px; "/>
+<img class="embedded" src="images/fmrd-switches.png" alt="figure fmrd-switches.png" style="width: 290px; max-width: 580px; height: 247px; max-height: 495px; "/>
 
 </div>
 <div class="caption">
-Figure 17 Position Switches data entry dialog.
+Figure 19 Position Switches data entry dialog.
 </div>
 </div>
 </div>
@@ -1000,16 +1110,16 @@ To access the match overview base tables, activate the Setup menu at the top of 
 
 </div>
 <div class="caption">
-Figure 18 Overview submenu in Setup menu.
+Figure 20 Overview submenu in Setup menu.
 </div>
 </div>
 </div>
 </div>
 <h3 class="Subsubsection">
-<a class="toc" name="toc-Subsubsection-7.1.1">7.1.1</a> Competition Phase
+<a class="toc" name="toc-Subsubsection-7.1.1">7.1.1</a> Field Surfaces
 </h3>
 <div class="Unindented">
-The Competition Phase dialog allows the user to change the matchday descriptions in a league competition. In some leagues all of the teams play matches on the same day or weekend; in other leagues matches are spread out during the week. The Round Description field (Alt-R) is the only active field.
+The Field Surfaces dialog allows the user to change the description of the playing surfaces of a football pitch. The <b>Field Surface</b> field (Alt-F) is the only active field.
 </div>
 <div class="Indented">
 
@@ -1018,20 +1128,20 @@ The Competition Phase dialog allows the user to change the matchday descriptions
 <div class="figure">
 
 <div class="center">
-<img class="embedded" src="images/fmrd-setup-rounds.png" alt="figure fmrd-setup-rounds.png" style="width: 313px; max-width: 627px; height: 99px; max-height: 198px; "/>
+<img class="embedded" src="images/fmrd-setup-surfaces.png" alt="figure fmrd-setup-surfaces.png" style="width: 322px; max-width: 644px; height: 87px; max-height: 174px; "/>
 
 </div>
 <div class="caption">
-Figure 19 Competition Phase setup dialog.
+Figure 21 Field Surfaces setup dialog.
 </div>
 </div>
 </div>
 </div>
 <h3 class="Subsubsection">
-<a class="toc" name="toc-Subsubsection-7.1.2">7.1.2</a> Weather Conditions
+<a class="toc" name="toc-Subsubsection-7.1.2">7.1.2</a> Competition Phase
 </h3>
 <div class="Unindented">
-The Weather Conditions dialog allows the user to edit the description of the predominate weather conditions in the football match. The descriptions are taken from NOAA’s National Weather Service in the USA. The Weather Conditions field (Alt-W) is the only active field.
+The Competition Phase dialog allows the user to change the matchday descriptions in a league competition. In some leagues all of the teams play matches on the same day or weekend; in other leagues matches are spread out during the week. The <b>Round Description</b> field (Alt-R) is the only active field.
 </div>
 <div class="Indented">
 
@@ -1040,11 +1150,124 @@ The Weather Conditions dialog allows the user to edit the description of the pre
 <div class="figure">
 
 <div class="center">
-<img class="embedded" src="images/fmrd-setup-wxconds.png" alt="figure fmrd-setup-wxconds.png" style="width: 313px; max-width: 627px; height: 99px; max-height: 198px; "/>
+<img class="embedded" src="images/fmrd-setup-rounds.png" alt="figure fmrd-setup-rounds.png" style="width: 311px; max-width: 623px; height: 87px; max-height: 175px; "/>
 
 </div>
 <div class="caption">
-Figure 20 Weather Conditions setup dialog.
+Figure 22 Competition Phase setup dialog.
+</div>
+</div>
+</div>
+</div>
+<h3 class="Subsubsection">
+<a class="toc" name="toc-Subsubsection-7.1.3">7.1.3</a> Time Zones
+</h3>
+<div class="Unindented">
+The Time Zones dialog allows the user to edit the name of the geographical region with common local clocks, the football confederation in which the regions lie, and the time offset from Coordinated Universal Time (UTC). Names and UTC offsets are obtained from the Olsen tz database.
+</div>
+<div class="Indented">
+
+<div class="float">
+
+<div class="figure">
+
+<div class="center">
+<img class="embedded" src="images/fmrd-setup-timezones.png" alt="figure fmrd-setup-timezones.png" style="width: 289px; max-width: 579px; height: 142px; max-height: 284px; "/>
+
+</div>
+<div class="caption">
+Figure 23 Time Zones setup dialog.
+</div>
+</div>
+</div>
+</div>
+<div class="Indented">
+The following fields are in the Time Zones dialog:
+</div>
+<ul>
+
+<li>
+<b>Time Zone</b> (Alt-Z): The name of the geographic time zone region, in <i>Area/Region</i> format.
+</li>
+<li>
+<b>Region</b> (Alt-R): The name of the football confederation in which the geographic regions reside.
+</li>
+<li>
+<b>UTC Offset</b> (Alt-O): The time offset from UTC, in decimal hours. Conversion of minutes to decimal hours is given below:
+</li>
+</ul>
+<div class="Unindented">
+
+<div class="center">
+
+<table>
+
+<tr>
+
+<td align="center" valign="top">
+<b>Minutes</b>
+</td>
+<td align="center" valign="top">
+<b>Decimal</b>
+</td>
+</tr>
+<tr>
+
+<td align="center" valign="top">
+:00,:60
+</td>
+<td align="center" valign="top">
+.00
+</td>
+</tr>
+<tr>
+
+<td align="center" valign="top">
+:15
+</td>
+<td align="center" valign="top">
+.25
+</td>
+</tr>
+<tr>
+
+<td align="center" valign="top">
+:30
+</td>
+<td align="center" valign="top">
+.50
+</td>
+</tr>
+<tr>
+
+<td align="center" valign="top">
+:45
+</td>
+<td align="center" valign="top">
+.75
+</td>
+</tr>
+</table>
+</div>
+</div>
+<h3 class="Subsubsection">
+<a class="toc" name="toc-Subsubsection-7.1.4">7.1.4</a> Weather Conditions
+</h3>
+<div class="Unindented">
+The Weather Conditions dialog allows the user to edit the description of the predominate weather conditions in the football match. The descriptions are taken from NOAA’s National Weather Service in the USA. The <b>Weather Conditions</b> field (Alt-W) is the only active field.
+</div>
+<div class="Indented">
+
+<div class="float">
+
+<div class="figure">
+
+<div class="center">
+<img class="embedded" src="images/fmrd-setup-wxconds.png" alt="figure fmrd-setup-wxconds.png" style="width: 322px; max-width: 645px; height: 87px; max-height: 174px; "/>
+
+</div>
+<div class="caption">
+Figure 24 Weather Conditions setup dialog.
 </div>
 </div>
 </div>
@@ -1066,7 +1289,7 @@ To access the personnel base tables, activate the Setup menu at the top of the A
 
 </div>
 <div class="caption">
-Figure 21 Personnel submenu in Setup menu.
+Figure 25 Personnel submenu in Setup menu.
 </div>
 </div>
 </div>
@@ -1075,7 +1298,7 @@ Figure 21 Personnel submenu in Setup menu.
 <a class="toc" name="toc-Subsubsection-7.2.1">7.2.1</a> Confederations
 </h3>
 <div class="Unindented">
-The Confederations dialog allows the user to edit the acronyms of the confederations in international football. The Confederations field (Alt-N) is the only active field.
+The Confederations dialog allows the user to edit the acronyms of the confederations in international football. The <b>Confederations</b> field (Alt-N) is the only active field.
 </div>
 <div class="Indented">
 
@@ -1084,11 +1307,11 @@ The Confederations dialog allows the user to edit the acronyms of the confederat
 <div class="figure">
 
 <div class="center">
-<img class="embedded" src="images/fmrd-setup-confederation.png" alt="figure fmrd-setup-confederation.png" style="width: 314px; max-width: 628px; height: 100px; max-height: 200px; "/>
+<img class="embedded" src="images/fmrd-setup-confederation.png" alt="figure fmrd-setup-confederation.png" style="width: 325px; max-width: 651px; height: 86px; max-height: 173px; "/>
 
 </div>
 <div class="caption">
-Figure 22 Confederations setup dialog.
+Figure 26 Confederations setup dialog.
 </div>
 </div>
 </div>
@@ -1106,11 +1329,11 @@ The Country dialog allows the user to edit the name of the country and pair the 
 <div class="figure">
 
 <div class="center">
-<img class="embedded" src="images/fmrd-setup-country.png" alt="figure fmrd-setup-country.png" style="width: 274px; max-width: 548px; height: 124px; max-height: 249px; "/>
+<img class="embedded" src="images/fmrd-setup-country.png" alt="figure fmrd-setup-country.png" style="width: 261px; max-width: 523px; height: 113px; max-height: 226px; "/>
 
 </div>
 <div class="caption">
-Figure 23 Country setup dialog.
+Figure 27 Country setup dialog.
 </div>
 </div>
 </div>
@@ -1121,17 +1344,17 @@ The following fields are in the Country dialog:
 <ul>
 
 <li>
-Country (Alt-N): The popular name of the member association in FIFA.
+<b>Country</b> (Alt-N): The popular name of the member association in FIFA.
 </li>
 <li>
-Confederation (Alt-F): The confederation to which the member association belongs.
+<b>Confederation</b> (Alt-F): The confederation to which the member association belongs.
 </li>
 </ul>
 <h3 class="Subsubsection">
 <a class="toc" name="toc-Subsubsection-7.2.3">7.2.3</a> Field Positions
 </h3>
 <div class="Unindented">
-The Field Positions dialog allows the user to edit the generic descriptions of the positions on a football pitch. These descriptions must not contain information about the field location, such as "left back" or "right winger"; field locations are handled in the Flank Position dialog and table. In this dialog the Field Position (Alt-F) is the only active field.
+The Field Positions dialog allows the user to edit the generic descriptions of the positions on a football pitch. These descriptions must not contain information about the field location, such as "left back" or "right winger"; field locations are handled in the Flank Position dialog and table. In this dialog the <b>Field Position</b> (Alt-F) is the only active field.
 </div>
 <div class="Indented">
 
@@ -1140,11 +1363,11 @@ The Field Positions dialog allows the user to edit the generic descriptions of t
 <div class="figure">
 
 <div class="center">
-<img class="embedded" src="images/fmrd-setup-fieldpos.png" alt="figure fmrd-setup-fieldpos.png" style="width: 313px; max-width: 626px; height: 99px; max-height: 199px; "/>
+<img class="embedded" src="images/fmrd-setup-fieldpos.png" alt="figure fmrd-setup-fieldpos.png" style="width: 312px; max-width: 624px; height: 86px; max-height: 173px; "/>
 
 </div>
 <div class="caption">
-Figure 24 Field Position setup dialog.
+Figure 28 Field Position setup dialog.
 </div>
 </div>
 </div>
@@ -1153,7 +1376,7 @@ Figure 24 Field Position setup dialog.
 <a class="toc" name="toc-Subsubsection-7.2.4">7.2.4</a> Flank Positions
 </h3>
 <div class="Unindented">
-The Flank Positions dialog allows the user to edit the flank description that modifies the football position. The default field locations are "left", "right", "center/centre", or a blank entry to designate a generic location. Only the Flank Position field (Alt-F) is active.
+The Flank Positions dialog allows the user to edit the flank description that modifies the football position. The default field locations are "left", "right", "center/centre", or a blank entry to designate a generic location. Only the <b>Flank Position</b> field (Alt-F) is active.
 </div>
 <div class="Indented">
 
@@ -1162,11 +1385,11 @@ The Flank Positions dialog allows the user to edit the flank description that mo
 <div class="figure">
 
 <div class="center">
-<img class="embedded" src="images/fmrd-setup-flankpos.png" alt="figure fmrd-setup-flankpos.png" style="width: 314px; max-width: 629px; height: 100px; max-height: 200px; "/>
+<img class="embedded" src="images/fmrd-setup-flankpos.png" alt="figure fmrd-setup-flankpos.png" style="width: 311px; max-width: 622px; height: 86px; max-height: 172px; "/>
 
 </div>
 <div class="caption">
-Figure 25 Flank position setup dialog.
+Figure 29 Flank position setup dialog.
 </div>
 </div>
 </div>
@@ -1184,11 +1407,11 @@ The Positions dialog allows the user to edit the composite position of a footbal
 <div class="figure">
 
 <div class="center">
-<img class="embedded" src="images/fmrd-setup-compositeposition.png" alt="figure fmrd-setup-compositeposition.png" style="width: 265px; max-width: 531px; height: 156px; max-height: 312px; "/>
+<img class="embedded" src="images/fmrd-setup-compositeposition.png" alt="figure fmrd-setup-compositeposition.png" style="width: 251px; max-width: 503px; height: 142px; max-height: 284px; "/>
 
 </div>
 <div class="caption">
-Figure 26 Positions setup dialog.
+Figure 30 Positions setup dialog.
 </div>
 </div>
 </div>
@@ -1199,10 +1422,10 @@ The following fields are in the Positions dialog:
 <ul>
 
 <li>
-Flank Position (Alt-K): The sector of the football field, used as an adjective of the field position. To create a generic position such as "midfielder", select the blank description. Goalkeeper must have a blank flank position selected.
+<b>Flank Position</b> (Alt-K): The sector of the football field, used as an adjective of the field position. To create a generic position such as "midfielder", select the blank description. Goalkeeper must have a blank flank position selected.
 </li>
 <li>
-Field Position (Alt-F): The field position of the football player.
+<b>Field Position</b> (Alt-F): The field position of the football player.
 </li>
 </ul>
 <h2 class="Subsection">
@@ -1222,7 +1445,7 @@ To access the match event base tables, activate the Setup menu at the top of the
 
 </div>
 <div class="caption">
-Figure 27 Events submenu in Setup menu.
+Figure 31 Events submenu in Setup menu.
 </div>
 </div>
 </div>
@@ -1231,7 +1454,7 @@ Figure 27 Events submenu in Setup menu.
 <a class="toc" name="toc-Subsubsection-7.3.1">7.3.1</a> Goal Events
 </h3>
 <div class="Unindented">
-The Goal Events dialog allows the user to edit descriptions of the on-field actions that ended in a goal scored from open play. The Goal Events field (Alt-G) is the only active field.
+The Goal Events dialog allows the user to edit descriptions of the on-field actions that ended in a goal scored from open play. The <b>Goal Events</b> field (Alt-G) is the only active field.
 </div>
 <div class="Indented">
 
@@ -1240,11 +1463,11 @@ The Goal Events dialog allows the user to edit descriptions of the on-field acti
 <div class="figure">
 
 <div class="center">
-<img class="embedded" src="images/fmrd-setup-goalevents.png" alt="figure fmrd-setup-goalevents.png" style="width: 314px; max-width: 628px; height: 99px; max-height: 198px; "/>
+<img class="embedded" src="images/fmrd-setup-goalevents.png" alt="figure fmrd-setup-goalevents.png" style="width: 312px; max-width: 625px; height: 87px; max-height: 175px; "/>
 
 </div>
 <div class="caption">
-Figure 28 Goal Events setup dialog.
+Figure 32 Goal Events setup dialog.
 </div>
 </div>
 </div>
@@ -1253,7 +1476,7 @@ Figure 28 Goal Events setup dialog.
 <a class="toc" name="toc-Subsubsection-7.3.2">7.3.2</a> Goal Strikes Table
 </h3>
 <div class="Unindented">
-The Goal Strikes dialog allows the user to edit descriptions of the body parts with which the goal was scored. Examples include "left foot", "right foot", or "head". The Goal Strikes field (Alt-G) is the only active field.
+The Goal Strikes dialog allows the user to edit descriptions of the body parts with which the goal was scored. Examples include "left foot", "right foot", or "head". The <b>Goal Strikes</b> field (Alt-G) is the only active field.
 </div>
 <div class="Indented">
 
@@ -1262,11 +1485,11 @@ The Goal Strikes dialog allows the user to edit descriptions of the body parts w
 <div class="figure">
 
 <div class="center">
-<img class="embedded" src="images/fmrd-setup-goalstrikes.png" alt="figure fmrd-setup-goalstrikes.png" style="width: 312px; max-width: 625px; height: 100px; max-height: 200px; "/>
+<img class="embedded" src="images/fmrd-setup-goalstrikes.png" alt="figure fmrd-setup-goalstrikes.png" style="width: 313px; max-width: 626px; height: 87px; max-height: 175px; "/>
 
 </div>
 <div class="caption">
-Figure 29 Goal Strikes setup dialog.
+Figure 33 Goal Strikes setup dialog.
 </div>
 </div>
 </div>
@@ -1275,7 +1498,7 @@ Figure 29 Goal Strikes setup dialog.
 <a class="toc" name="toc-Subsubsection-7.3.3">7.3.3</a> Penalty Outcomes Table
 </h3>
 <div class="Unindented">
-The Penalty Outcomes dialog allows the user to edit descriptions of penalty kick outcomes. Examples include "Goal" and "Hit Post". The Penalty Outcome field (Alt-P) is the only active field.
+The Penalty Outcomes dialog allows the user to edit descriptions of penalty kick outcomes. Examples include "Goal" and "Hit Post". The <b>Penalty Outcome</b> field (Alt-P) is the only active field.
 </div>
 <div class="Indented">
 
@@ -1284,11 +1507,11 @@ The Penalty Outcomes dialog allows the user to edit descriptions of penalty kick
 <div class="figure">
 
 <div class="center">
-<img class="embedded" src="images/fmrd-setup-penoutcome.png" alt="figure fmrd-setup-penoutcome.png" style="width: 313px; max-width: 627px; height: 99px; max-height: 199px; "/>
+<img class="embedded" src="images/fmrd-setup-penoutcome.png" alt="figure fmrd-setup-penoutcome.png" style="width: 302px; max-width: 604px; height: 86px; max-height: 173px; "/>
 
 </div>
 <div class="caption">
-Figure 30 Penalty Outcomes setup dialog.
+Figure 34 Penalty Outcomes setup dialog.
 </div>
 </div>
 </div>
@@ -1297,7 +1520,7 @@ Figure 30 Penalty Outcomes setup dialog.
 <a class="toc" name="toc-Subsubsection-7.3.4">7.3.4</a> Fouls Table
 </h3>
 <div class="Unindented">
-The Fouls dialog allows the user to edit descriptions of actions that are often judged to be fouls. These data will be used to classify actions that led to penalty kicks and bookings. The Foul Description field (Alt-F) is the only active field.
+The Fouls dialog allows the user to edit descriptions of actions that are often judged to be fouls. These data will be used to classify actions that led to penalty kicks and bookings. The <b>Foul Description</b> field (Alt-F) is the only active field.
 </div>
 <div class="Indented">
 
@@ -1306,11 +1529,11 @@ The Fouls dialog allows the user to edit descriptions of actions that are often 
 <div class="figure">
 
 <div class="center">
-<img class="embedded" src="images/fmrd-setup-fouls.png" alt="figure fmrd-setup-fouls.png" style="width: 312px; max-width: 624px; height: 99px; max-height: 198px; "/>
+<img class="embedded" src="images/fmrd-setup-fouls.png" alt="figure fmrd-setup-fouls.png" style="width: 321px; max-width: 643px; height: 87px; max-height: 174px; "/>
 
 </div>
 <div class="caption">
-Figure 31 Foul Description setup dialog.
+Figure 35 Foul Description setup dialog.
 </div>
 </div>
 </div>
@@ -1319,7 +1542,7 @@ Figure 31 Foul Description setup dialog.
 <a class="toc" name="toc-Subsubsection-7.3.5">7.3.5</a> Cards Table
 </h3>
 <div class="Unindented">
-The Cards dialog allows the user to edit the color descriptions of the disciplinary card. The only descriptions used are "Yellow", "Yellow/Red", and "Red". The Card Description field (Alt-R) is the only active field.
+The Cards dialog allows the user to edit the color descriptions of the disciplinary card. The only descriptions used are "Yellow", "Yellow/Red", and "Red". The <b>Card Description</b> field (Alt-R) is the only active field.
 </div>
 <div class="Indented">
 
@@ -1328,11 +1551,11 @@ The Cards dialog allows the user to edit the color descriptions of the disciplin
 <div class="figure">
 
 <div class="center">
-<img class="embedded" src="images/fmrd-setup-cards.png" alt="figure fmrd-setup-cards.png" style="width: 313px; max-width: 627px; height: 99px; max-height: 199px; "/>
+<img class="embedded" src="images/fmrd-setup-cards.png" alt="figure fmrd-setup-cards.png" style="width: 302px; max-width: 605px; height: 86px; max-height: 173px; "/>
 
 </div>
 <div class="caption">
-Figure 32 Disciplinary Card setup dialog.
+Figure 36 Disciplinary Card setup dialog.
 </div>
 </div>
 </div>
