@@ -9,6 +9,8 @@
 .eric4project/
 # Build directory
 build/
+# Build spec files
+*.spec
 # Log files from build
 *.log
 # Warning files from build
