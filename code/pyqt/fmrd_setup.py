@@ -1137,6 +1137,26 @@ class GoalStrikeSetupDlg(QDialog, ui_goalstrikesetup.Ui_GoalStrikeSetupDlg):
         else:
             DeletionErrorPrompt(self)
         
+    def isDirty(self, row):
+        """Compares current state of data entry form to current record in database, and returns a boolean.
+        
+        Arguments:
+            row: current record in mapper and model
+        
+        Returns:
+            TRUE: there are changes between data entry form and current record in database,
+                      or new record in database
+            FALSE: no changes between data entry form and current record in database
+        """
+        if row == self.model.rowCount():
+            return True
+        else:
+            index = self.model.index(row, GoalStrikeSetupDlg.DESC)        
+            if self.goalstrikeEdit.text() != self.model.data(index).toString():
+                return True
+            else:
+                return False            
+        
 
 class FieldPosSetupDlg(QDialog, ui_fieldpossetup.Ui_FieldPosSetupDlg):
     """Implements field position data entry dialog, and accesses and writes to Field Names table."""
