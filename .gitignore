@@ -7,8 +7,9 @@
 *.prj
 # Eric project directory
 .eric4project/
-# Build directory
+# Build and dist directories
 build/
+dist/
 # Build spec files
 *.spec
 # Log files from build
