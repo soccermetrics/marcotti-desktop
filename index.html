@@ -61,14 +61,17 @@ database models league competitions. </p>
 
 <h2>License</h2>
 
-<p>The FMRD and its related data-entry applications are free software and are
-distributed according to the GNU General Public License (GPL).</p>
+<p>The FMRD and its related data-entry applications are developed by <a
+href="http://www.soccermetrics.net">Soccermetrics Research &amp; Consulting</a>
+and are released as free software. The applications are distributed according
+to the terms of the GNU General Public License (GPLv3).</p>
 
 <h2>Downloads</h2>
 
-<p>The current version of the application is 1.1.0. The 'master' branch
-contains the current version of the executables, most recent copy of the code
-repository, and links to the documentation and SQL submodules. </p>
+<p>The current version of the application is 1.1.0. </p>
+
+<p>The 'master' branch contains the most recent copy of the code repository and
+links to the documentation and SQL submodules. </p>
 
 <table border="5">
   <col />
@@ -87,6 +90,15 @@ repository, and links to the documentation and SQL submodules. </p>
   </tbody>
 </table>
 
+<p>The current and previous versions of the application executable are stored
+on the public FTP site (<a
+href="ftp://ftp.src-development.net">ftp://ftp.src-development.net</a>) and can
+be accessed by anonymous FTP:</p>
+
+<p><code>Username: anonymous@src-development.net</code></p>
+
+<p><code>Password: &lt;any text&gt;</code></p>
+
 <h2>Development</h2>
 
 <p>The code repository is located at <a
@@ -96,18 +108,21 @@ You can clone the project in Git with the following command:</p>
 <p><code>$ git clone git://github.com/hhamilton-src/fmrd-desktop</code></p>
 
 <p>The code and supporting documentation can be downloaded by all, but in order
-to contribute to code development you'll have to create a <a
+to contribute to code development you will have to create a <a
 href="http://github.com">Github</a> account.</p>
 
 <p></p>
 
 <h2>Installation</h2>
 <ul>
-  <li>Check out the most recent release of the application from the GitHub
+  <li>Check out the most recent release of the application from the Github code
     repository into a local working directory.</li>
+  <li>Also (or alternatively), download the most recent release of the
+    application executable from the FTP site and decompress into a local
+    working directory.</li>
   <li>Set up a local Postgres server on your machine, and obtain a username and
     password. Assistance from your system administrator may be required.</li>
-  <li>Go to the sql/ directory and run the following script: 
+  <li>Go to the <code>sql/</code> directory and run the following script: 
     <p><code>$ installdb-fmrd.sh db_name </code></p>
   </li>
   <li>After the database is formed you will be asked to enter username and
@@ -115,13 +130,12 @@ href="http://github.com">Github</a> account.</p>
     will be loaded.</li>
   <li>You can run the data-entry application in one of two ways: 
     <ul>
-      <li>From the command-line in the code/pyqt/ directory: 
+      <li>From the command-line in the <code>code/pyqt/</code> directory: 
         <p><code>$ ./fmrd-main.pyw</code></p>
       </li>
     </ul>
     <ul>
-      <li>Or, by clicking on the appropriate FMRD-Desktop program within the
-        dist/ folder.</li>
+      <li>Or, double-click on the appropriate FMRD-Desktop executable.</li>
     </ul>
   </li>
 </ul>
