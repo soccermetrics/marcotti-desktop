@@ -1,4 +1,6 @@
 # Filetypes to be ignored by git
+#
+# Python bytecodes
 *.pyc
 # Eric IDE files
 *.e4p
@@ -16,5 +18,7 @@ dist/
 *.log
 # Warning files from build
 warn*.txt
+# LyX autobackup files
+*.lyx~
 # SQL directory (handled by submodule)
 sql/
