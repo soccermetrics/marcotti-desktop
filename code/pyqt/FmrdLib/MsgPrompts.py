@@ -43,11 +43,6 @@ def SaveDiscardOptionPrompt(parent):
     else:
         return False    
 
-def VenueErrorPrompt(parent):
-    """Displays pop-up message box to alert user of insufficient number of teams in Venues table."""
-    QMessageBox.critical(parent, "Insufficient Teams Table", 
-                         """You need at least <b>ONE</b> entry in Teams table""", QMessageBox.Close)
-    
 def SubstitutesErrorPrompt(parent):
     """Displays pop-up message box to alert user of insufficient number of subs in Lineup table."""
     QMessageBox.critical(parent, "Insufficient Lineup Table", 
@@ -58,7 +53,6 @@ def MatchErrorPrompt(parent):
     QMessageBox.critical(parent, "Cannot enter Match data", 
                          """In order to enter data in Match table, please ensure the following:<br>
                          -- at least <b>ONE</b> entry in Competitions table<br>
-                         -- at least <b>TWO</b> entries in Teams table<br>
                          -- at least <b>ONE</b> entry in Venues table<br>
                          -- at least <b>TWO</b> entries in Managers table<br>
                          -- at least <b>ONE</b> entry in Referees table""", QMessageBox.Close)
