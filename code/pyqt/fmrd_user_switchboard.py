@@ -39,6 +39,7 @@ Instantiates objects that handle data entry interfaces for the
 setup and main tables.
 """
 
+
 class UserMainSwitchboard(QMainWindow, ui_usermainswitchboard.Ui_UserMainSwitchboard):
     """Implements switchboard console in FMRD data entry tool.
     
@@ -69,7 +70,6 @@ class UserMainSwitchboard(QMainWindow, ui_usermainswitchboard.Ui_UserMainSwitchb
 
         # configure signal/slot connections for buttons
         QObject.connect(self.compButton, SIGNAL("clicked()"), self.OpenCompetitions)
-#        QObject.connect(self.teamButton, SIGNAL("clicked()"), self.OpenTeams)
         QObject.connect(self.venueButton, SIGNAL("clicked()"), self.OpenVenues)
         QObject.connect(self.playerButton, SIGNAL("clicked()"), self.OpenPlayers)
         QObject.connect(self.managerButton, SIGNAL("clicked()"), self.OpenManagers)
@@ -96,12 +96,7 @@ class UserMainSwitchboard(QMainWindow, ui_usermainswitchboard.Ui_UserMainSwitchb
         """Opens Competitions window."""
         dialog = CompEntryDlg(self)
         dialog.exec_()
-                
-#    def OpenTeams(self):
-#        """Opens Teams window."""
-#        dialog = TeamEntryDlg(self)
-#        dialog.exec_()
-        
+
     def OpenPlayers(self):
         """Opens Players window."""
         dialog = PlayerEntryDlg(self)
