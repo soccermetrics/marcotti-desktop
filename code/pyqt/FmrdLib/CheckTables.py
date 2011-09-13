@@ -97,10 +97,9 @@ def CheckMinimumMatchCriteria():
         (3) at least one record in Venues table
         (4) at least one record in Competitions table    
     """
-    if CheckMinimumCompetitions():
-        if CheckMinimumVenueHosts() and CheckMinimumTeams():
-                if CheckMinimumManagers() and CheckMinimumReferees():
-                    return 1
+    if CheckMinimumCompetitions() and CheckMinimumVenues():
+        if CheckMinimumManagers() and CheckMinimumReferees():
+            return 1
                 
     return 0
 

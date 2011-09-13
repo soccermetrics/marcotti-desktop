@@ -123,9 +123,8 @@ class UserMainSwitchboard(QMainWindow, ui_usermainswitchboard.Ui_UserMainSwitchb
         Window opens only if all of the conditions are met:
             (1) at least one record in Referees table
             (2) at least two records in Managers table
-            (3) at least two records in Teams table
-            (4) at least one record in Venues table
-            (5) at least one record in Competitions table
+            (3) at least one record in Venues table
+            (4) at least one record in Competitions table
             
         """
         if not CheckMinimumMatchCriteria():
