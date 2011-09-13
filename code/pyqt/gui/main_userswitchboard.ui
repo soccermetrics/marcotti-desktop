@@ -43,20 +43,37 @@
         <layout class="QVBoxLayout" name="verticalLayout">
          <item>
           <widget class="QPushButton" name="compButton">
+           <property name="minimumSize">
+            <size>
+             <width>140</width>
+             <height>30</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>140</width>
+             <height>30</height>
+            </size>
+           </property>
            <property name="text">
             <string>Competitions</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="teamButton">
-           <property name="text">
-            <string>Teams</string>
-           </property>
-          </widget>
-         </item>
-         <item>
           <widget class="QPushButton" name="venueButton">
+           <property name="minimumSize">
+            <size>
+             <width>140</width>
+             <height>30</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>140</width>
+             <height>30</height>
+            </size>
+           </property>
            <property name="text">
             <string>Venues</string>
            </property>
@@ -89,6 +106,18 @@
         <layout class="QVBoxLayout" name="verticalLayout_2">
          <item>
           <widget class="QPushButton" name="playerButton">
+           <property name="minimumSize">
+            <size>
+             <width>140</width>
+             <height>30</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>140</width>
+             <height>30</height>
+            </size>
+           </property>
            <property name="text">
             <string>Players</string>
            </property>
@@ -96,6 +125,18 @@
          </item>
          <item>
           <widget class="QPushButton" name="refereeButton">
+           <property name="minimumSize">
+            <size>
+             <width>140</width>
+             <height>30</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>140</width>
+             <height>30</height>
+            </size>
+           </property>
            <property name="text">
             <string>Referees</string>
            </property>
@@ -103,6 +144,18 @@
          </item>
          <item>
           <widget class="QPushButton" name="managerButton">
+           <property name="minimumSize">
+            <size>
+             <width>140</width>
+             <height>30</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>140</width>
+             <height>30</height>
+            </size>
+           </property>
            <property name="text">
             <string>Managers</string>
            </property>
@@ -128,6 +181,18 @@
       <layout class="QVBoxLayout" name="verticalLayout_3">
        <item>
         <widget class="QPushButton" name="matchButton">
+         <property name="minimumSize">
+          <size>
+           <width>140</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>140</width>
+           <height>30</height>
+          </size>
+         </property>
          <property name="text">
           <string>Matches</string>
          </property>
@@ -135,6 +200,18 @@
        </item>
        <item>
         <widget class="QPushButton" name="goalButton">
+         <property name="minimumSize">
+          <size>
+           <width>140</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>140</width>
+           <height>30</height>
+          </size>
+         </property>
          <property name="text">
           <string>Goals</string>
          </property>
@@ -142,6 +219,18 @@
        </item>
        <item>
         <widget class="QPushButton" name="penButton">
+         <property name="minimumSize">
+          <size>
+           <width>140</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>140</width>
+           <height>30</height>
+          </size>
+         </property>
          <property name="text">
           <string>Penalties</string>
          </property>
@@ -149,6 +238,18 @@
        </item>
        <item>
         <widget class="QPushButton" name="offenseButton">
+         <property name="minimumSize">
+          <size>
+           <width>140</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>140</width>
+           <height>30</height>
+          </size>
+         </property>
          <property name="text">
           <string>Offenses</string>
          </property>
@@ -156,6 +257,18 @@
        </item>
        <item>
         <widget class="QPushButton" name="subButton">
+         <property name="minimumSize">
+          <size>
+           <width>140</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>140</width>
+           <height>30</height>
+          </size>
+         </property>
          <property name="text">
           <string>Substitutions</string>
          </property>
@@ -163,6 +276,18 @@
        </item>
        <item>
         <widget class="QPushButton" name="switchButton">
+         <property name="minimumSize">
+          <size>
+           <width>140</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>140</width>
+           <height>30</height>
+          </size>
+         </property>
          <property name="text">
           <string>Position Switches</string>
          </property>

@@ -73,7 +73,7 @@ class MainSwitchboard(QMainWindow, ui_mainswitchboard.Ui_MainSwitchboard):
         
         # configure signal/slot connections for buttons
         QObject.connect(self.compButton, SIGNAL("clicked()"), self.OpenCompetitions)
-        QObject.connect(self.teamButton, SIGNAL("clicked()"), self.OpenTeams)
+#        QObject.connect(self.teamButton, SIGNAL("clicked()"), self.OpenTeams)
         QObject.connect(self.venueButton, SIGNAL("clicked()"), self.OpenVenues)
         QObject.connect(self.playerButton, SIGNAL("clicked()"), self.OpenPlayers)
         QObject.connect(self.managerButton, SIGNAL("clicked()"), self.OpenManagers)
@@ -185,10 +185,10 @@ class MainSwitchboard(QMainWindow, ui_mainswitchboard.Ui_MainSwitchboard):
         dialog = CompEntryDlg(self)
         dialog.exec_()
                 
-    def OpenTeams(self):
-        """Opens Teams window."""
-        dialog = TeamEntryDlg(self)
-        dialog.exec_()
+#    def OpenTeams(self):
+#        """Opens Teams window."""
+#        dialog = TeamEntryDlg(self)
+#        dialog.exec_()
         
     def OpenPlayers(self):
         """Opens Players window."""
