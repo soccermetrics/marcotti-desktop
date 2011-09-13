@@ -25,6 +25,7 @@ from PyQt4.QtSql import *
 from FmrdMain import *
 from FmrdLib import (Constants, MsgPrompts)
 from FmrdLib.CustomDelegates import *
+from FmrdLib.CheckTables import *
 
 """Contains classes that implement match overview entry forms to main tables of FMRD.
 
@@ -264,7 +265,7 @@ class VenueEntryDlg(QDialog, ui_venueentry.Ui_VenueEntryDlg):
     
     """
     
-    ID,  TEAM_ID,  CTRY_ID, TZ_ID,  CITY, NAME, ALT, LAT, LONG = range(9)
+    ID,  CTRY_ID, TZ_ID,  CITY, NAME, ALT, LAT, LONG = range(8)
 
     def __init__(self, parent=None):
         super(VenueEntryDlg, self).__init__(parent)
@@ -285,7 +286,6 @@ class VenueEntryDlg(QDialog, ui_venueentry.Ui_VenueEntryDlg):
         # define relations to it
         self.model = QSqlRelationalTableModel(self)
         self.model.setTable("tbl_venues")
-        self.model.setRelation(VenueEntryDlg.TEAM_ID, QSqlRelation("tbl_teams", "team_id", "tm_name"))
         self.model.setRelation(VenueEntryDlg.CTRY_ID, QSqlRelation("tbl_countries", "country_id", "cty_name"))
         self.model.setRelation(VenueEntryDlg.TZ_ID, QSqlRelation("tbl_timezones", "timezone_id", "tz_name"))
         self.model.setSort(VenueEntryDlg.ID, Qt.AscendingOrder)
@@ -302,14 +302,6 @@ class VenueEntryDlg(QDialog, ui_venueentry.Ui_VenueEntryDlg):
         localDelegate.insertColumnDelegate(VenueEntryDlg.LONG, GeoCoordinateDelegate(self))
         self.mapper.setItemDelegate(localDelegate)
         self.mapper.addMapping(self.venueID_display, VenueEntryDlg.ID)
-        
-        # relation model for Home Team combobox
-        self.teamModel = self.model.relationModel(VenueEntryDlg.TEAM_ID)
-        self.teamModel.setSort(HOST_NAME, Qt.AscendingOrder)
-        self.venueTeamSelect.setModel(self.teamModel)
-        self.venueTeamSelect.setModelColumn(self.teamModel.fieldIndex("tm_name"))
-        self.venueTeamSelect.setCurrentIndex(-1)
-        self.mapper.addMapping(self.venueTeamSelect, VenueEntryDlg.TEAM_ID)        
         
         # relation model for Country combobox
         self.countryModel = self.model.relationModel(VenueEntryDlg.CTRY_ID)
@@ -359,7 +351,6 @@ class VenueEntryDlg(QDialog, ui_venueentry.Ui_VenueEntryDlg):
             self.venueCityEdit.setDisabled(True)
             self.venueConfedSelect.setDisabled(True)
             self.venueCountrySelect.setDisabled(True)
-            self.venueTeamSelect.setDisabled(True)
             self.venueTimezoneSelect.setDisabled(True)
             self.venueAltEdit.setDisabled(True)
             self.venueLatitudeEdit.setDisabled(True)
@@ -496,14 +487,12 @@ class VenueEntryDlg(QDialog, ui_venueentry.Ui_VenueEntryDlg):
         self.venueNameEdit.setEnabled(True)
         self.venueCityEdit.setEnabled(True)
         self.venueConfedSelect.setEnabled(True)
-        self.venueTeamSelect.setEnabled(True)
         self.venueAltEdit.setEnabled(True)
         self.venueLatitudeEdit.setEnabled(True)
         self.venueLongitudeEdit.setEnabled(True)
         self.venueHistoryButton.setEnabled(True)
         
         # initialization of data widgets
-        self.venueTeamSelect.setCurrentIndex(-1)
         self.venueTimezoneSelect.setCurrentIndex(-1)
         self.venueConfedSelect.setCurrentIndex(-1)
         self.venueAltEdit.setText("0")
@@ -573,8 +562,8 @@ class VenueEntryDlg(QDialog, ui_venueentry.Ui_VenueEntryDlg):
                 return True
                 
         # combobox fields
-        editorList = (self.venueTeamSelect, self.venueTimezoneSelect, self.venueCountrySelect)
-        columnList = (VenueEntryDlg.TEAM_ID, VenueEntryDlg.TZ_ID, VenueEntryDlg.CTRY_ID)
+        editorList = (self.venueTimezoneSelect, self.venueCountrySelect)
+        columnList = (VenueEntryDlg.TZ_ID, VenueEntryDlg.CTRY_ID)
         for editor, column in zip(editorList, columnList):
             index = self.model.index(row, column)        
             if editor.currentText() != self.model.data(index).toString():
