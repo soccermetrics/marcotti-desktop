@@ -200,16 +200,9 @@ class MainSwitchboard(QMainWindow, ui_mainswitchboard.Ui_MainSwitchboard):
         dialog.exec_()
 
     def OpenVenues(self):
-        """Opens Venues window.
-        
-        Window opens if there is at least one record in Teams table.
-        
-        """
-        if not CheckMinimumVenueHosts():
-            VenueErrorPrompt(self)
-        else:
-            dialog = VenueEntryDlg(self)
-            dialog.exec_()
+        """Opens Venues window."""
+        dialog = VenueEntryDlg(self)
+        dialog.exec_()
         
     def OpenMatches(self):
         """Opens Matches window.

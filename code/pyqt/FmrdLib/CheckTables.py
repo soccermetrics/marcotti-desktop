@@ -56,22 +56,6 @@ def CheckMinimumTeams():
     else:
         return 0
     
-def CheckMinimumVenueHosts():
-    """Check Teams table and returns True if there is at least one record in it."""
-    HostsQuery = QSqlQuery()
-    HostsQuery.prepare("SELECT COUNT(*) FROM tbl_teams")
-    HostsQuery.exec_()
-    
-    if HostsQuery.isActive():
-        HostsQuery.next()
-        numHosts = HostsQuery.value(0).toInt()[0]
-        if numHosts >= Constants.MIN_VENUEHOSTS:
-            return 1
-        else:
-            return 0
-    else:
-        return 0
-        
 def CheckMinimumManagers():
     """Check Managers table and returns True if there are at least two records in it."""
     ManagerQuery = QSqlQuery()
