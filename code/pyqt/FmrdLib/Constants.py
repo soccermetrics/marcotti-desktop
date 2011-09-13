@@ -91,9 +91,7 @@ MIN_MANAGERS = 2
 MIN_REFEREES = 1
 
 # Define minimum number of entities
-MIN_TEAMS = 2
 MIN_VENUES = 1
-MIN_VENUEHOSTS = 1
 MIN_COMPETITIONS = 1
 
 # Define maximum number of entities for a team lineup
