@@ -683,62 +683,6 @@ class GoalPlayerComboBoxDelegate(QSqlRelationalDelegate):
         editor.setCurrentIndex(editor.findText(playerText, Qt.MatchExactly))
 
 
-class LineupTeamDisplayDelegate(QSqlRelationalDelegate):
-    """ Implements custom delegate template for Team LineEdit display in Lineup dialog.
-    
-     Responsible for mapping displayed team name to team ID for insertion in Lineup table.
-    
-    For national team implementation of the FMRD, the team is the Country model.
-    
-    Inherits QSqlRelationalDelegate.
-    
-    """   
-
-    def __init__(self, parent=None):
-        """Constructor for LineupTeamDisplayDelegate class.
-        
-        Argument:
-        parent - parent class (default None)
-        
-        """
-        super(LineupTeamDisplayDelegate, self).__init__(parent)
-        self.teamName = parent.teamName
-        
-    def setEditorData(self, editor, index):
-        """Writes team name into editor. 
-        
-        Arguments:
-            editor -- ComboBox widget
-            index -- current index of database table model
-            
-        """
-        editor.setText(self.teamName)
-        
-    def setModelData(self, editor, model, index):
-        """Maps team name to ID number in Country model, and writes ID to the current entry in the database table.
-        
-        Arguments:
-            editor -- ComboBox widget
-            model -- underlying database table model
-            index -- current index of database table model
-            
-        """
-#        print "Calling setModelData() of LineupTeamDisplayDelegate"
-        # get team name
-        teamName = editor.text()
-        # get team ID from tbl_teams
-        query = QSqlQuery()
-        query.prepare("SELECT country_id FROM tbl_countries WHERE cty_name = ?")
-        query.addBindValue(QVariant(teamName))
-        query.exec_()        
-        if query.next():
-            countryID = query.value(0).toString()
-        else:
-            countryID = "-1"
-        
-        model.setData(index, QVariant(countryID))
-
-
 class LineupPlayerComboBoxDelegate(QSqlRelationalDelegate):
     """ Implements custom delegate template for Player ComboBox in Lineup dialog.
     
