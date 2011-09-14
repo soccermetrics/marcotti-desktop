@@ -1038,6 +1038,8 @@ class TeamComboBoxDelegateTemplate(QStyledItemDelegate):
     Sets index of combobox to correct index and filters combobox items.  This is used as a 
     base class for Team comboboxes in the Match Entrydialog.
     
+    For national team implementation of the FMRD, the team is the Country model.
+    
     Inherits QStyledItemDelegate.
     
     """
@@ -1061,21 +1063,26 @@ class TeamComboBoxDelegateTemplate(QStyledItemDelegate):
 #        print "Calling setEditorData() of TeamComboBoxDelegateTemplate"
         linkingModel = index.model()        
         teamModel = editor.model()
+        confedModel = self.confedSelect.model()
         
         editor.blockSignals(True)
         
         # flush filter on editor model
         teamModel.setFilter(QString())
         
+        # current index of Confederation combobox
+        boxIndex = self.confedSelect.currentIndex()
+        confed_id = confedModel().record(boxIndex).value("confed_id")
+        
 #        print "Index: %d" % index.row()
         if index.row() == -1:
             teamName = "-1"
         else:
-            # if current index in model is nonzero, find team_id from linking table
-            team_id = linkingModel.record(index.row()).value("team_id") .toString()
+            # if current index in model is nonzero, find country_id from linking table
+            team_id = linkingModel.record(index.row()).value("country_id") .toString()
             # make query on tbl_teams to find team name
             query = QSqlQuery()
-            query.exec_(QString("SELECT tm_name FROM tbl_teams WHERE team_id = %1").arg(team_id))
+            query.exec_(QString("SELECT cty_name FROM tbl_countries WHERE country_id = %1").arg(team_id))
             if query.next():
                 teamName = unicode(query.value(0).toString())
             else:
@@ -1083,10 +1090,10 @@ class TeamComboBoxDelegateTemplate(QStyledItemDelegate):
             
         # if opposingBox enabled, get id that corresponds to current item selected
         # otherwise, set id to -1
-        opposingModel_id = self.opposingModel.record(index.row()).value("team_id").toString()            
+        opposingModel_id = self.opposingModel.record(index.row()).value("country_id").toString()            
         
         # filter main Box so that opposingBox selection not included in main Box
-        teamModel.setFilter(QString("team_id NOT IN (%1)").arg(opposingModel_id))
+        teamModel.setFilter(QString("confed_id = %1 AND country_id NOT IN (%2)").arg(confed_id, opposingModel_id))
     
         # set current index to item that matches team name
         editor.setCurrentIndex(editor.findText(teamName, Qt.MatchExactly))
@@ -1104,7 +1111,7 @@ class TeamComboBoxDelegateTemplate(QStyledItemDelegate):
         """        
         # convert combobox selection to id number
         boxIndex = editor.currentIndex()
-        value = editor.model().record(boxIndex).value("team_id")
+        value = editor.model().record(boxIndex).value("country_id")
         
         # call setData()
         model.setData(index, value)
@@ -1191,6 +1198,7 @@ class HomeTeamComboBoxDelegate(TeamComboBoxDelegateTemplate):
     """ Implements custom delegate for Home Team ComboBox in Match dialog.  
     
     Sets opposingModel member to model corresponding to away team combobox.
+    Sets confedSelect member to home Confederation combobox.
     
     Inherits TeamComboBoxDelegateTemplate.
     
@@ -1202,12 +1210,14 @@ class HomeTeamComboBoxDelegate(TeamComboBoxDelegateTemplate):
 #        print "Calling init() in HomeTeamComboBoxDelegate"
         
         self.opposingModel = parent.awayteamModel
+        self.confedSelect = parent.homeconfedSelect
 
 
 class AwayTeamComboBoxDelegate(TeamComboBoxDelegateTemplate):
     """ Implements custom delegate for Away Team ComboBox in Match dialog.  
     
     Sets opposingModel member to model corresponding to home team combobox.
+    Sets confedSelect member to away Confederation combobox.
     
     Inherits TeamComboBoxDelegateTemplate.
     
@@ -1219,6 +1229,7 @@ class AwayTeamComboBoxDelegate(TeamComboBoxDelegateTemplate):
 #        print "Calling init() in AwayTeamComboBoxDelegate"
 
         self.opposingModel = parent.hometeamModel
+        self.confedSelect = parent.awayconfedSelect
 
 
 class HomeMgrComboBoxDelegate(MgrComboBoxDelegateTemplate):
@@ -1253,6 +1264,40 @@ class AwayMgrComboBoxDelegate(MgrComboBoxDelegateTemplate):
 #        print "Calling init() in AwayMgrComboBoxDelegate"
 
         self.opposingModel = parent.homemgrModel
+
+
+class HomeConfedComboBoxDelegate(ConfedComboBoxDelegateTemplate):
+    """Implements custom delegate for Home Confederation ComboBox in Matches dialog.  
+    
+    Sets countryBox member to Home Team combobox (which maps to Country table) 
+    in Manager dialog, which is used to set index of Home Confederation combobox.
+    
+    Inherits ConfedComboBoxDelegateTemplate.
+    
+    """
+
+    def __init__(self, parent=None):
+        """Constructor for MgrConfedComboBoxDelegate class."""
+        super(MgrConfedComboBoxDelegate, self).__init__(parent)
+        
+        self.countryBox = parent.hometeamSelect
+
+
+class AwayConfedComboBoxDelegate(ConfedComboBoxDelegateTemplate):
+    """Implements custom delegate for Away Confederation ComboBox in Matches dialog.  
+    
+    Sets countryBox member to Away Team combobox (which maps to Country table) 
+    in Manager dialog, which is used to set index of Away Confederation combobox.
+    
+    Inherits ConfedComboBoxDelegateTemplate.
+    
+    """
+
+    def __init__(self, parent=None):
+        """Constructor for MgrConfedComboBoxDelegate class."""
+        super(MgrConfedComboBoxDelegate, self).__init__(parent)
+        
+        self.countryBox = parent.awayteamSelect
 
 
 class MgrConfedComboBoxDelegate(ConfedComboBoxDelegateTemplate):
