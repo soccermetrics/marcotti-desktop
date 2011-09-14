@@ -1333,7 +1333,7 @@ class LineupEntryDlg(QDialog, ui_lineupentry.Ui_LineupEntryDlg):
     and the matches in which they participate.
    """
    
-    ID,  MATCH_ID, TEAM_ID, PLYR_ID, POS_ID, ST_FLAG, CAPT_FLAG = range(7)
+    ID,  MATCH_ID, PLYR_ID, POS_ID, ST_FLAG, CAPT_FLAG = range(6)
     
     def __init__(self, match_id, teamName, parent=None):
         """Constructor for LineupEntryDlg class."""
@@ -1345,13 +1345,21 @@ class LineupEntryDlg(QDialog, ui_lineupentry.Ui_LineupEntryDlg):
         # Set values to display fields
         self.matchID_display.setText(self.match_id)
         self.team_display.setText(self.teamName)
-                        
+        
+        # get country_id by querying tbl_countries with country name
+        self.country_id = "-1"
+        query = QSqlQuery()
+        query.prepare("SELECT country_id FROM tbl_countries WHERE cty_name = ?")
+        query.addBindValue(QVariant(self.teamName))
+        query.exec_()
+        if query.next():
+            self.country_id = query.value(0).toString()
+            
         # define underlying database model
         # because of foreign keys, instantiate QSqlRelationalTableModel and
         # define relations to it
         self.model = QSqlRelationalTableModel(self)
         self.model.setTable("tbl_lineups")
-        self.model.setRelation(LineupEntryDlg.TEAM_ID, QSqlRelation("tbl_teams", "team_id", "tm_name"))
         self.model.setRelation(LineupEntryDlg.PLYR_ID, QSqlRelation("players_list", "player_id", "full_name"))
         self.model.setRelation(LineupEntryDlg.POS_ID, QSqlRelation("positions_list", "position_id", "position_name"))
         self.model.setSort(LineupEntryDlg.ID, Qt.AscendingOrder)
@@ -1363,7 +1371,6 @@ class LineupEntryDlg(QDialog, ui_lineupentry.Ui_LineupEntryDlg):
         self.mapper.setSubmitPolicy(QDataWidgetMapper.ManualSubmit)
         self.mapper.setModel(self.model)       
         localDelegate = GenericDelegate(self)
-        localDelegate.insertColumnDelegate(LineupEntryDlg.TEAM_ID, LineupTeamDisplayDelegate(self))
         localDelegate.insertColumnDelegate(LineupEntryDlg.PLYR_ID, LineupPlayerComboBoxDelegate(self))
         localDelegate.insertColumnDelegate(LineupEntryDlg.POS_ID, LineupPositionComboBoxDelegate(self))
         localDelegate.insertColumnDelegate(LineupEntryDlg.ST_FLAG, CheckBoxDelegate(self))
@@ -1371,7 +1378,6 @@ class LineupEntryDlg(QDialog, ui_lineupentry.Ui_LineupEntryDlg):
         self.mapper.setItemDelegate(localDelegate)
         self.mapper.addMapping(self.lineupID_display, LineupEntryDlg.ID)
         self.mapper.addMapping(self.matchID_display, LineupEntryDlg.MATCH_ID)
-        self.mapper.addMapping(self.team_display, LineupEntryDlg.TEAM_ID)
         self.mapper.addMapping(self.startingButton, LineupEntryDlg.ST_FLAG)
         self.mapper.addMapping(self.captButton, LineupEntryDlg.CAPT_FLAG)
 
@@ -1393,7 +1399,8 @@ class LineupEntryDlg(QDialog, ui_lineupentry.Ui_LineupEntryDlg):
         self.positionSelect.setModel(self.positionModel)
         self.positionSelect.setModelColumn(self.positionModel.fieldIndex("position_name"))
         self.mapper.addMapping(self.positionSelect, LineupEntryDlg.POS_ID)
-        self.model.setFilter(QString("match_id = %1 AND tm_name = '%2'").arg(self.match_id).arg(teamName))         
+        self.model.setFilter(QString("match_id = %1 AND player_id IN (SELECT player_id FROM tbl_players WHERE country_id = %2)")
+                                                     .arg(self.match_id).arg(self.country_id))         
         self.mapper.toFirst()
         
         # get status report
@@ -1652,15 +1659,7 @@ class LineupEntryDlg(QDialog, ui_lineupentry.Ui_LineupEntryDlg):
         text = QString()
         
         match_id = self.match_id
-        
-        # get team_id by querying tbl_teams with team name
-        team_id = "-1"
-        query = QSqlQuery()
-        query.prepare("SELECT team_id FROM tbl_teams WHERE tm_name = ?")
-        query.addBindValue(QVariant(self.teamName))
-        query.exec_()
-        if query.next():
-            team_id = query.value(0).toString()
+        team_id = self.country_id
             
         #   - Number of starters
         numStarters = CountStarters(match_id, team_id)
