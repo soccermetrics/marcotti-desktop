@@ -187,24 +187,24 @@ class TeamLinkingModel(LinkingSqlModel):
     """
     
     def __init__(self, tbl_name, parent=None):
-        """Constructor for TeamLinkingModel class."""
+        """Constructor for TeamLinkingModel class for national teams."""
         super(TeamLinkingModel, self).__init__(parent)
 #        print "Calling init() in TeamLinkingModel"
         
         self.table = tbl_name
         self.primary_id = parent.matchID_display.text()
-        self.setQuery(QString("SELECT match_id, team_id FROM %1 WHERE match_id = %2").arg(self.table).arg(self.primary_id))
+        self.setQuery(QString("SELECT match_id, country_id FROM %1 WHERE match_id = %2").arg(self.table).arg(self.primary_id))
         
     def refresh(self):
         """Refreshes query model."""
-        self.setQuery(QString("SELECT match_id, team_id FROM %1 WHERE match_id = %2").arg(self.table).arg(self.primary_id))
+        self.setQuery(QString("SELECT match_id, country_id FROM %1 WHERE match_id = %2").arg(self.table).arg(self.primary_id))
      
-    def setCompositeKey(self, index,  match_id, team_id):
+    def setCompositeKey(self, index,  match_id, country_id):
         """Inserts or updates entry in database."""
 #        print "Calling setCompositeKey() in TeamLinkingModel"
         # setup SQL statements
-        insertString = QString("INSERT INTO %1 (match_id,team_id) VALUES (?,?)").arg(self.table)
-        updateString = QString("UPDATE %1 SET team_id = ? WHERE match_id = ?").arg(self.table)
+        insertString = QString("INSERT INTO %1 (match_id,country_id) VALUES (?,?)").arg(self.table)
+        updateString = QString("UPDATE %1 SET country_id = ? WHERE match_id = ?").arg(self.table)
         
         if index.row() == -1:
 #            print "No entries of ID %s in linking table" % match_id
@@ -212,14 +212,14 @@ class TeamLinkingModel(LinkingSqlModel):
             insertQuery = QSqlQuery()
             insertQuery.prepare(insertString)
             insertQuery.addBindValue(match_id)
-            insertQuery.addBindValue(team_id)
+            insertQuery.addBindValue(country_id)
             return insertQuery.exec_()
         elif index.row() == 0:
 #            print "Entry of ID %s in linking table" % match_id
             # update into table if there exists match_id record in linking table
             updateQuery = QSqlQuery()
             updateQuery.prepare(updateString)
-            updateQuery.addBindValue(team_id)
+            updateQuery.addBindValue(country_id)
             updateQuery.addBindValue(match_id)
             return updateQuery.exec_()
         else:
