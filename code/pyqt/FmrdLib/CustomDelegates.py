@@ -688,6 +688,8 @@ class LineupTeamDisplayDelegate(QSqlRelationalDelegate):
     
      Responsible for mapping displayed team name to team ID for insertion in Lineup table.
     
+    For national team implementation of the FMRD, the team is the Country model.
+    
     Inherits QSqlRelationalDelegate.
     
     """   
@@ -713,7 +715,7 @@ class LineupTeamDisplayDelegate(QSqlRelationalDelegate):
         editor.setText(self.teamName)
         
     def setModelData(self, editor, model, index):
-        """Maps team name to ID number in Teams model, and writes ID to the current entry in the database table.
+        """Maps team name to ID number in Country model, and writes ID to the current entry in the database table.
         
         Arguments:
             editor -- ComboBox widget
@@ -726,15 +728,15 @@ class LineupTeamDisplayDelegate(QSqlRelationalDelegate):
         teamName = editor.text()
         # get team ID from tbl_teams
         query = QSqlQuery()
-        query.prepare("SELECT team_id FROM tbl_teams WHERE tm_name = ?")
+        query.prepare("SELECT country_id FROM tbl_countries WHERE cty_name = ?")
         query.addBindValue(QVariant(teamName))
         query.exec_()        
         if query.next():
-            teamID = query.value(0).toString()
+            countryID = query.value(0).toString()
         else:
-            teamID = "-1"
+            countryID = "-1"
         
-        model.setData(index, QVariant(teamID))
+        model.setData(index, QVariant(countryID))
 
 
 class LineupPlayerComboBoxDelegate(QSqlRelationalDelegate):
