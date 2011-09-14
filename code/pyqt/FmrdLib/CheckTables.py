@@ -170,11 +170,12 @@ def CountStarters(match_id, team_id):
     Returns number of entries where starter = TRUE.
     Arguments:
         match_id - ID number from Matches table
-        team_id - ID number from Teams table
+        team_id - ID number from Countries table
         
     """
     StartersQuery = QSqlQuery()
-    StartersQuery.prepare("SELECT COUNT(*) FROM tbl_lineups WHERE match_id=? AND team_id=? AND lp_starting")
+    StartersQuery.prepare("SELECT COUNT(*) FROM tbl_lineups WHERE match_id=? AND lp_starting \
+                          AND player_id IN (SELECT player_id FROM tbl_players WHERE country_id=?)")
     StartersQuery.addBindValue(QVariant(match_id))
     StartersQuery.addBindValue(QVariant(team_id))
     StartersQuery.exec_()
@@ -190,11 +191,12 @@ def CountSubstitutes(match_id, team_id):
     Returns number of entries where starter = FALSE.
     Arguments:
         match_id - ID number from Matches table
-        team_id - ID number from Teams table
+        team_id - ID number from Countries table
         
     """
     SubstituteQuery = QSqlQuery()
-    SubstituteQuery.prepare("SELECT COUNT(*) FROM tbl_lineups WHERE match_id=? AND team_id=? AND NOT lp_starting")
+    SubstituteQuery.prepare("SELECT COUNT(*) FROM tbl_lineups WHERE match_id=? AND NOT lp_starting \
+                          AND player_id IN (SELECT player_id FROM tbl_players WHERE country_id=?)")
     SubstituteQuery.addBindValue(QVariant(match_id))
     SubstituteQuery.addBindValue(QVariant(team_id))
     SubstituteQuery.exec_()
@@ -210,11 +212,12 @@ def CountCaptains(match_id, team_id):
     Returns number of entries where captain = TRUE.
     Arguments:
         match_id - ID number from Matches table
-        team_id - ID number from Teams table
+        team_id - ID number from Countries table
     
     """
     CaptainQuery = QSqlQuery()
-    CaptainQuery.prepare("SELECT COUNT(*) FROM tbl_lineups WHERE match_id=? AND team_id=? AND lp_starting AND lp_captain")
+    CaptainQuery.prepare("SELECT COUNT(*) FROM tbl_lineups WHERE match_id=? AND lp_starting AND lp_captain \
+                          AND player_id IN (SELECT player_id FROM tbl_players WHERE country_id=?)")
     CaptainQuery.addBindValue(QVariant(match_id))
     CaptainQuery.addBindValue(QVariant(team_id))
     CaptainQuery.exec_()
@@ -230,12 +233,13 @@ def CountGoalkeepers(match_id, team_id):
     Returns number of entries where starter = TRUE and position ID corresponds to Goalkeeper.
     Arguments:
         match_id - ID number from Matches table
-        team_id - ID number from Teams table
+        team_id - ID number from Countries table
         
     """
     
     GoalkeeperQuery = QSqlQuery()
-    GoalkeeperQuery.prepare("SELECT COUNT(*) FROM tbl_lineups WHERE match_id=? AND team_id=? AND lp_starting \
+    GoalkeeperQuery.prepare("SELECT COUNT(*) FROM tbl_lineups WHERE match_id=? AND lp_starting \
+                        AND player_id IN (SELECT player_id FROM tbl_players WHERE country_id=?) \
                         AND position_id IN (SELECT position_id FROM positions_list WHERE position_name = ?)")
     GoalkeeperQuery.addBindValue(QVariant(match_id))
     GoalkeeperQuery.addBindValue(QVariant(team_id))
