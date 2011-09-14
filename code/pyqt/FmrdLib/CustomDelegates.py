@@ -686,8 +686,8 @@ class GoalPlayerComboBoxDelegate(QSqlRelationalDelegate):
 class LineupPlayerComboBoxDelegate(QSqlRelationalDelegate):
     """ Implements custom delegate template for Player ComboBox in Lineup dialog.
     
-    Filters combobox to list of players not already selected for match.  Also set
-    index of combobox to correct index.
+    Filters combobox to list of players on same national team not already selected for match.  
+    Also set index of combobox to correct index.
     
     Inherits QSqlRelationalDelegate.
     
@@ -697,12 +697,13 @@ class LineupPlayerComboBoxDelegate(QSqlRelationalDelegate):
         """Constructor for LineupPlayerComboBoxDelegate class."""
         super(LineupPlayerComboBoxDelegate, self).__init__(parent)
         self.matchID_display = parent.matchID_display
+        self.country_id = parent.country_id
 
     def setEditorData(self, editor, index):
         """Writes current data from model into editor. 
         
-        Filters contents of combobox so that only options are the players not already
-        selected for the match.
+        Filters contents of combobox so that only options are the players on same
+        national team not already selected for the match.
         
         Arguments:
             editor -- ComboBox widget
@@ -718,18 +719,19 @@ class LineupPlayerComboBoxDelegate(QSqlRelationalDelegate):
         # clear filters        
         playerModel.setFilter(QString())
         
-        # get match_id and lineup_id
+        # get country_id, match_id, and lineup_id
+        country_id = self.country_id
         match_id = self.matchID_display.text()
         lineup_id = lineupModel.record(index.row()).value("lineup_id").toString()
         
-        # filter out player_id already in tbl_lineups for match_id
+        # filter out player_id (of same national team) already in tbl_lineups for match_id
         # (exclusive of current lineup_id)
         if lineup_id.isEmpty():
-            playerModel.setFilter(QString("player_id NOT IN "
-                "(SELECT player_id FROM tbl_lineups WHERE match_id = %1)").arg(match_id))
+            playerModel.setFilter(QString("country_id = %1 AND player_id NOT IN "
+                "(SELECT player_id FROM tbl_lineups WHERE match_id = %2)").arg(country_id, match_id))
         else:
-            playerModel.setFilter(QString("player_id NOT IN "
-                "(SELECT player_id FROM tbl_lineups WHERE match_id = %1 AND lineup_id <> %2)").arg(match_id, lineup_id))
+            playerModel.setFilter(QString("country_id = %1 AND player_id NOT IN "
+                "(SELECT player_id FROM tbl_lineups WHERE match_id = %2 AND lineup_id <> %3)").arg(country_id, match_id, lineup_id))
             
         # get corresponding player name
         playerText =  lineupModel.data(index, Qt.DisplayRole).toString()
