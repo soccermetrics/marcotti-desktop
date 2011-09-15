@@ -144,12 +144,12 @@ class EventTeamComboBoxDelegate(QSqlRelationalDelegate):
 
         # filter team combobox
         # result: home and away teams for specific match
-        teamQueryString = QString("team_id IN"
-            "(SELECT team_id FROM tbl_hometeams WHERE match_id = %1"
-            "UNION SELECT team_id FROM tbl_awayteams WHERE match_id = %1)").arg(match_id)
+        teamQueryString = QString("country_id IN"
+            "(SELECT country_id FROM tbl_hometeams WHERE match_id = %1"
+            "UNION SELECT country_id FROM tbl_awayteams WHERE match_id = %1)").arg(match_id)
         teamModel.setFilter(teamQueryString)
         
-        # get team name from goals model
+        # get team name from match event model
         teamText = eventModel.data(index, Qt.DisplayRole).toString()
             
         # set current index of team combobox
@@ -222,8 +222,9 @@ class EventPlayerComboBoxDelegate(QSqlRelationalDelegate):
        
         # make query on tbl_lineups to find team
         teamQuery = QSqlQuery()
-        teamQuery.prepare("SELECT team_id FROM tbl_lineups WHERE lineup_id = ?")
-        teamQuery.addBindValue(QVariant(lineup_id))
+        teamQuery.prepare("SELECT country_id FROM tbl_countries WHERE cty_name IN"
+                                        " (SELECT team FROM lineups_list WHERE player = ?)")
+        teamQuery.addBindValue(QVariant(playerName))
         teamQuery.exec_()        
         if teamQuery.next():
             team_id = teamQuery.value(0).toString()
@@ -232,7 +233,8 @@ class EventPlayerComboBoxDelegate(QSqlRelationalDelegate):
         
         # filter lineup list model by match_id
         lineupListModel.setFilter(QString("lineup_id IN "
-                                                          "(SELECT lineup_id FROM tbl_lineups WHERE match_id = %1 AND team_id = %2)").arg(match_id, team_id))
+                                                          "(SELECT lineup_id FROM tbl_lineups WHERE match_id = %1 AND "
+                                                          "player_id IN (SELECT player_id FROM tbl_players WHERE country_id = %2))").arg(match_id, team_id))
 
         # set current index in player combobox by searching for player name
         editor.setCurrentIndex(editor.findText(playerName, Qt.MatchExactly))
@@ -261,7 +263,7 @@ class EventPlayerComboBoxDelegate(QSqlRelationalDelegate):
 class SwitchPlayerComboBoxDelegate(QSqlRelationalDelegate):
     """Implements custom delegate template for Player ComboBox in Switch Position dialogs.
     
-    Ensure that players in starting match lineup for same team who have not 
+    Ensure that players in starting match lineup for same national team who have not 
     already been substituted, and non-starting players who have been 
     substituted in, are listed in combobox.
     
@@ -280,7 +282,7 @@ class SwitchPlayerComboBoxDelegate(QSqlRelationalDelegate):
         """Writes current data from model into editor. 
         
         Filters contents of combobox so that only options are the eligible players in the 
-        match lineup for the same team and match.
+        match lineup for the same national team and match.
         
         Arguments:
             editor -- ComboBox widget
@@ -324,9 +326,10 @@ class SwitchPlayerComboBoxDelegate(QSqlRelationalDelegate):
         else:
            lineup_id = "-1"
            
-       # make query on tbl_lineups to find team associated with player
+       # make query on tbl_lineups and tbl_countries to find team associated with player
         teamQuery = QSqlQuery()
-        teamQuery.prepare("SELECT team_id FROM tbl_lineups WHERE lineup_id = ?")
+        teamQuery.prepare("SELECT country_id FROM tbl_countries WHERE cty_name IN "
+                                       "(SELECT team FROM lineups_list WHERE lineup_id = ?)")
         teamQuery.addBindValue(QVariant(lineup_id))
         teamQuery.exec_()        
         if teamQuery.next():
@@ -335,9 +338,11 @@ class SwitchPlayerComboBoxDelegate(QSqlRelationalDelegate):
             team_id = "-1"        
         
         filterString = QString("lineup_id NOT IN (SELECT lineup_id FROM tbl_outsubstitutions WHERE lineup_id <> %1) "
-                               "AND lineup_id IN (SELECT lineup_id FROM tbl_lineups WHERE lp_starting AND match_id = %2 AND team_id = %3) "
+                               "AND lineup_id IN (SELECT lineup_id FROM tbl_lineups WHERE lp_starting AND match_id = %2 AND player_id IN "
+                                   "(SELECT player_id FROM tbl_players WHERE country_id = %3)) "
                                "OR (lineup_id IN (SELECT lineup_id FROM tbl_insubstitutions WHERE lineup_id <> %1) AND "
-                               "lineup_id IN (SELECT lineup_id FROM tbl_lineups WHERE NOT lp_starting AND match_id = %2 AND team_id = %3))"
+                               "lineup_id IN (SELECT lineup_id FROM tbl_lineups WHERE NOT lp_starting AND match_id = %2 AND player_id IN "
+                                   "(SELECT player_id FROM tbl_players WHERE country_id = %3)))"
                                ).arg(lineup_id).arg(match_id).arg(team_id)
 
         # filter Player combobox
@@ -369,7 +374,7 @@ class SwitchPlayerComboBoxDelegate(QSqlRelationalDelegate):
 class SubOutComboBoxDelegate(QStyledItemDelegate):
     """ Implements custom delegate template for Out Substitutions combobox.
     
-     Ensure that players in starting match lineup for same team who have not 
+     Ensure that players in starting match lineup for same national team who have not 
      already been substituted, and non-starting players who have been 
      substituted in, are listed in combobox.
      
@@ -389,7 +394,7 @@ class SubOutComboBoxDelegate(QStyledItemDelegate):
         """Writes current data from model into editor. 
         
         Filters contents of combobox so that only options are the players eligible
-        to be substituted out who are in the match lineup for the same team and match.
+        to be substituted out who are in the match lineup for the same national team and match.
         
         Arguments:
             editor -- ComboBox widget
@@ -427,10 +432,12 @@ class SubOutComboBoxDelegate(QStyledItemDelegate):
         #    -- filter players who can be subbed out of match
         #    -- same match, same team, on lineup list, starting or already subbed in, not already subbed out
         #    SELECT player FROM tbl_lineups WHERE lineup_id NOT IN
-        #        (SELECT lineup_id FROM tbl_outsubstitutions) AND lp_starting AND match_id = ? AND team_id = ?
+        #        (SELECT lineup_id FROM tbl_outsubstitutions) AND lp_starting AND match_id = ? AND 
+        #        player_id IN (SELECT player_id FROM tbl_players WHERE country_id = ?)
         #    UNION
         #    SELECT player FROM tbl_lineups WHERE lineup_id IN
-        #        (SELECT lineup_id FROM tbl_insubstitutions) AND NOT lp_starting AND match_id = ? AND team_id = ?
+        #        (SELECT lineup_id FROM tbl_insubstitutions) AND NOT lp_starting AND match_id = ? AND 
+        #        player_id IN (SELECT player_id FROM tbl_players WHERE country_id = ?)
 
 #        print "Index: %d" % index.row()
         if index.row() == -1:
@@ -453,7 +460,8 @@ class SubOutComboBoxDelegate(QStyledItemDelegate):
                
            # make query on tbl_lineups to find team associated with player
             teamQuery = QSqlQuery()
-            teamQuery.prepare("SELECT team_id FROM tbl_lineups WHERE lineup_id = ?")
+            teamQuery.prepare("SELECT country_id FROM tbl_countries WHERE cty_name IN "
+                                           "(SELECT team FROM lineups_list WHERE lineup_id = ?)")
             teamQuery.addBindValue(QVariant(lineup_id))
             teamQuery.exec_()        
             if teamQuery.next():
@@ -467,9 +475,11 @@ class SubOutComboBoxDelegate(QStyledItemDelegate):
 #        print "Current (OUT) player: %s" % playerName
         
         filterString = QString("lineup_id NOT IN (SELECT lineup_id FROM tbl_outsubstitutions WHERE lineup_id <> %1) "
-                               "AND lineup_id IN (SELECT lineup_id FROM tbl_lineups WHERE lp_starting AND match_id = %2 AND team_id = %3) "
+                               "AND lineup_id IN (SELECT lineup_id FROM tbl_lineups WHERE lp_starting AND match_id = %2 AND player_id IN "
+                                   "(SELECT player_id FROM tbl_players WHERE country_id = %3)) "
                                "OR (lineup_id IN (SELECT lineup_id FROM tbl_insubstitutions WHERE lineup_id <> %1) AND "
-                               "lineup_id IN (SELECT lineup_id FROM tbl_lineups WHERE NOT lp_starting AND match_id = %2 AND team_id = %3))"
+                               "lineup_id IN (SELECT lineup_id FROM tbl_lineups WHERE NOT lp_starting AND match_id = %2 AND player_id IN "
+                                   "(SELECT player_id FROM tbl_players WHERE country_id = %3)))"
                                ).arg(lineup_id).arg(match_id).arg(team_id)
 
         # filter Player combobox
@@ -498,7 +508,7 @@ class SubOutComboBoxDelegate(QStyledItemDelegate):
 
 class SubInComboBoxDelegate(QStyledItemDelegate):
     """ Implements custom delegate template for In Substitutions combobox.
-     Ensure that players in match lineup for same team, who are not 
+     Ensure that players in match lineup for same national team, who are not 
      starting players and have not already been substituted, are listed 
      in combobox.
     
@@ -518,7 +528,7 @@ class SubInComboBoxDelegate(QStyledItemDelegate):
         """Writes current data from model into editor. 
         
         Filters contents of combobox so that only options are the players eligible 
-        to be substituted out who are in the match lineup for the same team and match.
+        to be substituted out who are in the match lineup for the same national team and match.
         
         Arguments:
             editor -- ComboBox widget
@@ -557,7 +567,8 @@ class SubInComboBoxDelegate(QStyledItemDelegate):
         #    -- same match, same team, not starting, not already subbed in
         #    SELECT lineup_id FROM tbl_lineups WHERE lineup_id NOT IN
         #        (SELECT lineup_id FROM tbl_insubstitutions) AND 
-        #        NOT lp_starting AND match_id = ? AND team_id = ?
+        #        NOT lp_starting AND match_id = ? AND player_id IN 
+        #        (SELECT player_id FROM tbl_players WHERE country_id = ?)
         
 #        print "Index: %d" % index.row()
         if index.row() == -1:
@@ -578,9 +589,10 @@ class SubInComboBoxDelegate(QStyledItemDelegate):
             else:
                playerName = "-1"
                
-           # make query on tbl_lineups to find team associated with player
+           # make query on tbl_lineups to find national team associated with player
             teamQuery = QSqlQuery()
-            teamQuery.prepare("SELECT team_id FROM tbl_lineups WHERE lineup_id = ?")
+            teamQuery.prepare("SELECT country_id FROM tbl_countries WHERE cty_name IN "
+                                           "(SELECT team FROM lineups_list WHERE lineup_id = ?)")
             teamQuery.addBindValue(QVariant(lineup_id))
             teamQuery.exec_()        
             if teamQuery.next():
@@ -596,7 +608,8 @@ class SubInComboBoxDelegate(QStyledItemDelegate):
         filterString = QString("lineup_id NOT IN "
                                    "(SELECT lineup_id FROM tbl_insubstitutions WHERE lineup_id <> %1) AND "
                                    "lineup_id IN (SELECT lineup_id from tbl_lineups WHERE "
-                                   "NOT lp_starting AND match_id = %2 AND team_id = %3)").arg(lineup_id).arg(match_id).arg(team_id)
+                                   "NOT lp_starting AND match_id = %2 AND player_id IN "
+                                   "(SELECT player_id FROM tbl_players WHERE country_id = %3))").arg(lineup_id).arg(match_id).arg(team_id)
 
         # filter Player combobox
         lineupListModel.setFilter(filterString)
@@ -628,7 +641,7 @@ class GoalPlayerComboBoxDelegate(QSqlRelationalDelegate):
     """ Implements custom delegate template for Player ComboBox in Goal dialogs.
     
      This is handled differently from other Match Event dialogs because of 
-     possibility of own goals, so cannot filter by team_id.
+     possibility of own goals, so cannot filter by country_id.
     
     Inherits QSqlRelationalDelegate.
     
