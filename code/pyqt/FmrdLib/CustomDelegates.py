@@ -1238,8 +1238,8 @@ class HomeConfedComboBoxDelegate(ConfedComboBoxDelegateTemplate):
     """
 
     def __init__(self, parent=None):
-        """Constructor for MgrConfedComboBoxDelegate class."""
-        super(MgrConfedComboBoxDelegate, self).__init__(parent)
+        """Constructor for HomeConfedComboBoxDelegate class."""
+        super(HomeConfedComboBoxDelegate, self).__init__(parent)
         
         self.countryBox = parent.hometeamSelect
 
@@ -1255,8 +1255,8 @@ class AwayConfedComboBoxDelegate(ConfedComboBoxDelegateTemplate):
     """
 
     def __init__(self, parent=None):
-        """Constructor for MgrConfedComboBoxDelegate class."""
-        super(MgrConfedComboBoxDelegate, self).__init__(parent)
+        """Constructor for AwayConfedComboBoxDelegate class."""
+        super(AwayConfedComboBoxDelegate, self).__init__(parent)
         
         self.countryBox = parent.awayteamSelect
 
