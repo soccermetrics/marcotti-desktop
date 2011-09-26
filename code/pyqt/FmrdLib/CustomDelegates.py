@@ -709,7 +709,7 @@ class LineupPlayerComboBoxDelegate(QSqlRelationalDelegate):
     def __init__(self, parent=None):
         """Constructor for LineupPlayerComboBoxDelegate class."""
         super(LineupPlayerComboBoxDelegate, self).__init__(parent)
-        self.matchID_display = parent.matchID_display
+        self.match_id = parent.matchID_display.text()
         self.country_id = parent.country_id
 
     def setEditorData(self, editor, index):
@@ -734,16 +734,16 @@ class LineupPlayerComboBoxDelegate(QSqlRelationalDelegate):
         
         # get country_id, match_id, and lineup_id
         country_id = self.country_id
-        match_id = self.matchID_display.text()
+        match_id = self.match_id
         lineup_id = lineupModel.record(index.row()).value("lineup_id").toString()
         
         # filter out player_id (of same national team) already in tbl_lineups for match_id
         # (exclusive of current lineup_id)
-        if lineup_id.isEmpty():
-            playerModel.setFilter(QString("country_id = %1 AND player_id NOT IN "
+        if not lineup_id:
+            playerModel.setFilter(QString("country IN (SELECT cty_name FROM tbl_countries WHERE country_id = %1) AND player_id NOT IN "
                 "(SELECT player_id FROM tbl_lineups WHERE match_id = %2)").arg(country_id, match_id))
         else:
-            playerModel.setFilter(QString("country_id = %1 AND player_id NOT IN "
+            playerModel.setFilter(QString("country IN (SELECT cty_name FROM tbl_countries WHERE country_id = %1) AND player_id NOT IN "
                 "(SELECT player_id FROM tbl_lineups WHERE match_id = %2 AND lineup_id <> %3)").arg(country_id, match_id, lineup_id))
             
         # get corresponding player name
@@ -912,11 +912,12 @@ class ConfedComboBoxDelegateTemplate(QStyledItemDelegate):
             editor -- ComboBox widget
             index -- current index of database table model (not used)
             
-        """        
+        """          
+        print "Calling setEditorData() of ConfedComboBoxDelegateTemplate"
         countryIndex = self.countryBox.currentIndex()
         countryModel = self.countryBox.model()
-        id = countryModel.record(countryIndex).value("confed_id").toString()
         
+        id = countryModel.record(countryIndex).value("confed_id").toString()
         # make query on tbl_confederations to extract confederation name 
         # corresponding to confederation ID
         # there will only be one confederation in query result
@@ -1024,34 +1025,31 @@ class TeamComboBoxDelegateTemplate(QStyledItemDelegate):
 #        print "Calling setEditorData() of TeamComboBoxDelegateTemplate"
         linkingModel = index.model()        
         teamModel = editor.model()
-        confedModel = self.confedSelect.model()
         
         editor.blockSignals(True)
         
         # flush filter on editor model
         teamModel.setFilter(QString())
-        
-        # current index of Confederation combobox
-        boxIndex = self.confedSelect.currentIndex()
-        confed_id = confedModel().record(boxIndex).value("confed_id")
-        
+    
 #        print "Index: %d" % index.row()
         if index.row() == -1:
             teamName = "-1"
         else:
             # if current index in model is nonzero, find country_id from linking table
             team_id = linkingModel.record(index.row()).value("country_id") .toString()
-            # make query on tbl_teams to find team name
+            # make query on tbl_countries to find team name and member confederation
             query = QSqlQuery()
-            query.exec_(QString("SELECT cty_name FROM tbl_countries WHERE country_id = %1").arg(team_id))
+            query.exec_(QString("SELECT cty_name, confed_id FROM tbl_countries WHERE country_id = %1").arg(team_id))
             if query.next():
                 teamName = unicode(query.value(0).toString())
+                confed_id = unicode(query.value(1).toString())
             else:
                teamName = "-1"
+               confed_id = "-1"
             
         # if opposingBox enabled, get id that corresponds to current item selected
         # otherwise, set id to -1
-        opposingModel_id = self.opposingModel.record(index.row()).value("country_id").toString()            
+        opposingModel_id = self.opposingModel.record(index.row()).value("country_id").toString()          
         
         # filter main Box so that opposingBox selection not included in main Box
         teamModel.setFilter(QString("confed_id = %1 AND country_id NOT IN (%2)").arg(confed_id, opposingModel_id))
@@ -1106,12 +1104,12 @@ class MgrComboBoxDelegateTemplate(QStyledItemDelegate):
         """
 #        print "Calling setEditorData() of MgrComboBoxDelegateTemplate"       
         linkingModel = index.model()
-        teamModel = editor.model()
+        managerModel = editor.model()
         
         editor.blockSignals(True)
         
         # flush filter on editor model
-        teamModel.setFilter(QString())
+        managerModel.setFilter(QString())
 
 #        print "Index: %d" % index.row()
         if index.row() == -1:
@@ -1119,7 +1117,7 @@ class MgrComboBoxDelegateTemplate(QStyledItemDelegate):
         else:
             # if current index in model is valid, find manager_id from linking table
             manager_id = linkingModel.record(index.row()).value("manager_id") .toString()
-            # make query on tbl_teams to find team name
+            # make query on mangers_list to find manager name
             query = QSqlQuery()
             query.exec_(QString("SELECT full_name FROM managers_list WHERE manager_id = %1").arg(manager_id))
             if query.isActive():
@@ -1131,11 +1129,10 @@ class MgrComboBoxDelegateTemplate(QStyledItemDelegate):
         # if opposingBox enabled, get id that corresponds to current item selected
         # otherwise, set id to -1
         opposingModel_id = self.opposingModel.record(index.row()).value("manager_id").toString()            
-        
         # filter main Box so that opposingBox selection not included in main Box
-        teamModel.setFilter(QString("manager_id NOT IN (%1)").arg(opposingModel_id))
+        managerModel.setFilter(QString("manager_id NOT IN (%1)").arg(opposingModel_id))
             
-        # find index in tbl_teams that corresponds to team_id
+        # find index in combobox that corresponds to manager name
         editor.setCurrentIndex(editor.findText(managerName, Qt.MatchExactly))
         
         editor.blockSignals(False)
@@ -1171,8 +1168,6 @@ class HomeTeamComboBoxDelegate(TeamComboBoxDelegateTemplate):
 #        print "Calling init() in HomeTeamComboBoxDelegate"
         
         self.opposingModel = parent.awayteamModel
-        self.confedSelect = parent.homeconfedSelect
-
 
 class AwayTeamComboBoxDelegate(TeamComboBoxDelegateTemplate):
     """ Implements custom delegate for Away Team ComboBox in Match dialog.  
@@ -1190,8 +1185,6 @@ class AwayTeamComboBoxDelegate(TeamComboBoxDelegateTemplate):
 #        print "Calling init() in AwayTeamComboBoxDelegate"
 
         self.opposingModel = parent.hometeamModel
-        self.confedSelect = parent.awayconfedSelect
-
 
 class HomeMgrComboBoxDelegate(MgrComboBoxDelegateTemplate):
     """ Implements custom delegate for Home Manager ComboBox in Match dialog.  
@@ -1239,6 +1232,7 @@ class HomeConfedComboBoxDelegate(ConfedComboBoxDelegateTemplate):
 
     def __init__(self, parent=None):
         """Constructor for HomeConfedComboBoxDelegate class."""
+        print "Calling init() in HomeConfedComboBoxDelegate"
         super(HomeConfedComboBoxDelegate, self).__init__(parent)
         
         self.countryBox = parent.hometeamSelect
@@ -1256,6 +1250,7 @@ class AwayConfedComboBoxDelegate(ConfedComboBoxDelegateTemplate):
 
     def __init__(self, parent=None):
         """Constructor for AwayConfedComboBoxDelegate class."""
+#        print "Calling init() in AwayConfedComboBoxDelegate"
         super(AwayConfedComboBoxDelegate, self).__init__(parent)
         
         self.countryBox = parent.awayteamSelect
