@@ -25,6 +25,7 @@ from FmrdMain import *
 from FmrdLib import (Constants, MsgPrompts)
 from FmrdLib.CustomDelegates import *
 from FmrdLib.CustomModels import *
+from FmrdLib.CheckTables import *
 
 from fmrd_personnel import LineupEntryDlg
 
@@ -53,6 +54,8 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
         
         # define local parameters
         HOME_ID = AWAY_ID = 1
+        TEAM_NAME = 1
+        COUNTRY = 2
         CMP_ID,  COMP_NAME = range(2)
         RND_ID,  ROUND_NAME = range(2)
         VEN_ID,  VENUE_NAME = range(2)
@@ -83,6 +86,7 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
         self.compModel.setSort(CMP_ID, Qt.AscendingOrder)
         self.matchCompSelect.setModel(self.compModel)
         self.matchCompSelect.setModelColumn(self.compModel.fieldIndex("comp_name"))
+        self.matchCompSelect.setCurrentIndex(-1)
         self.mapper.addMapping(self.matchCompSelect, MatchEntryDlg.COMP_ID)
         
         # relation model for Rounds combobox
@@ -90,6 +94,7 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
         self.roundModel.setSort(RND_ID, Qt.AscendingOrder)
         self.matchRoundSelect.setModel(self.roundModel)
         self.matchRoundSelect.setModelColumn(self.roundModel.fieldIndex("round_desc"))
+        self.matchRoundSelect.setCurrentIndex(-1)
         self.mapper.addMapping(self.matchRoundSelect, MatchEntryDlg.ROUND_ID)
         
         # relation model for Venues combobox
@@ -97,6 +102,7 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
         self.venueModel.setSort(VEN_ID, Qt.AscendingOrder)
         self.matchVenueSelect.setModel(self.venueModel)
         self.matchVenueSelect.setModelColumn(self.venueModel.fieldIndex("ven_name"))
+        self.matchVenueSelect.setCurrentIndex(-1)
         self.mapper.addMapping(self.matchVenueSelect, MatchEntryDlg.VENUE_ID)
         
         # relation model for Referees combobox
@@ -104,6 +110,7 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
         self.refereeModel.setSort(REF_SORT, Qt.AscendingOrder)
         self.matchRefSelect.setModel(self.refereeModel)
         self.matchRefSelect.setModelColumn(self.refereeModel.fieldIndex("full_name"))
+        self.matchRefSelect.setCurrentIndex(-1)
         self.mapper.addMapping(self.matchRefSelect, MatchEntryDlg.REF_ID)        
 
         # map other widgets on form
@@ -114,97 +121,56 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
         self.mapper.addMapping(self.attendanceEdit, MatchEntryDlg.ATTEND)
         self.mapper.toFirst()
         
-        # define models used in Confederation comboboxes
-        # these comboboxes are used to filter Country comboboxes
-        # we need multiple instantiations of Confederations tables
-        # so that there is no confusion in SQL logic
-        
-        # Home Confederation model
-        self.homeconfedModel = QSqlTableModel(self)
-        self.homeconfedModel.setTable("tbl_confederations")
-        self.homeconfedModel.setSort(CONFED_ID, Qt.AscendingOrder)
-        self.homeconfedModel.select()
-    
-        # Home Confederation combobox
-        self.homeconfedSelect.setModel(self.homeconfedModel)
-        self.homeconfedSelect.setModelColumn(self.homeconfedModel.fieldIndex("confed_name"))
-        self.homeconfedSelect.setCurrentIndex(-1)
-        
-        # Home Confederation mapper 
-        homeconfedMapper = QDataWidgetMapper(self)
-        homeconfedMapper.setModel(self.homeconfedModel)
-        homeconfedMapper.setItemDelegate(HomeConfedComboBoxDelegate(self))
-        homeconfedMapper.addMapping(self.homeconfedSelect, CONFED_NAME)
-        homeconfedMapper.toFirst()       
-        
-        # Away Confederation model
-        self.awayconfedModel = QSqlTableModel(self)
-        self.awayconfedModel.setTable("tbl_confederations")
-        self.awayconfedModel.setSort(CONFED_ID, Qt.AscendingOrder)
-        self.awayconfedModel.select()
-    
-        # Away Confederation combobox
-        self.awayconfedSelect.setModel(self.awayconfedModel)
-        self.awayconfedSelect.setModelColumn(self.awayconfedModel.fieldIndex("confed_name"))
-        self.awayconfedSelect.setCurrentIndex(-1)
-        
-        # Away Confederation mapper 
-        homeconfedMapper = QDataWidgetMapper(self)
-        homeconfedMapper.setModel(self.awayconfedModel)
-        homeconfedMapper.setItemDelegate(AwayConfedComboBoxDelegate(self))
-        homeconfedMapper.addMapping(self.awayconfedSelect, CONFED_NAME)
-        homeconfedMapper.toFirst()       
-
         # define models used in Team and Manager comboboxes
         # we need multiple instantiations of Teams and Managers tables
         # so that there is no confusion in SQL logic
         
-        homeTeamModel = QSqlTableModel(self)
-        homeTeamModel.setTable("tbl_countries")
-        homeTeamModel.setSort(TEAM_NAME, Qt.AscendingOrder)
-        homeTeamModel.select()
+        self.homeCountryModel = QSqlTableModel(self)
+        self.homeCountryModel.setTable("tbl_countries")
+        self.homeCountryModel.setSort(COUNTRY, Qt.AscendingOrder)
+        self.homeCountryModel.select()
         
-        awayTeamModel = QSqlTableModel(self)
-        awayTeamModel.setTable("tbl_countries")
-        awayTeamModel.setSort(TEAM_NAME, Qt.AscendingOrder)
-        awayTeamModel.select()
+        self.awayCountryModel = QSqlTableModel(self)
+        self.awayCountryModel.setTable("tbl_countries")
+        self.awayCountryModel.setSort(COUNTRY, Qt.AscendingOrder)
+        self.awayCountryModel.select()
 
-        homeManagerModel = QSqlTableModel(self)
-        homeManagerModel.setTable("managers_list")
-        homeManagerModel.setSort(MGR_SORT, Qt.AscendingOrder)
-        homeManagerModel.select()
+        self.homeManagerModel = QSqlTableModel(self)
+        self.homeManagerModel.setTable("managers_list")
+        self.homeManagerModel.setSort(MGR_SORT, Qt.AscendingOrder)
+        self.homeManagerModel.select()
         
-        awayManagerModel = QSqlTableModel(self)
-        awayManagerModel.setTable("managers_list")
-        awayManagerModel.setSort(MGR_SORT, Qt.AscendingOrder)
-        awayManagerModel.select()
+        self.awayManagerModel = QSqlTableModel(self)
+        self.awayManagerModel.setTable("managers_list")
+        self.awayManagerModel.setSort(MGR_SORT, Qt.AscendingOrder)
+        self.awayManagerModel.select()
         
         # set up Home Team linking table 
         # set up Home Team combobox with items from tbl_teams table
         self.hometeamModel = TeamLinkingModel("tbl_hometeams", self)
-        self.hometeamSelect.setModel(homeTeamModel)
-        self.hometeamSelect.setModelColumn(homeTeamModel.fieldIndex("cty_name"))
+        self.hometeamSelect.setModel(self.homeCountryModel)
+        self.hometeamSelect.setModelColumn(self.homeCountryModel.fieldIndex("cty_name"))
         self.hometeamSelect.setCurrentIndex(-1)
 
         # set up Away Team linking table
         # set up Away Team combobox with items from tbl_teams table
         self.awayteamModel = TeamLinkingModel("tbl_awayteams", self)
-        self.awayteamSelect.setModel(awayTeamModel)
-        self.awayteamSelect.setModelColumn(awayTeamModel.fieldIndex("cty_name"))
+        self.awayteamSelect.setModel(self.awayCountryModel)
+        self.awayteamSelect.setModelColumn(self.awayCountryModel.fieldIndex("cty_name"))
         self.awayteamSelect.setCurrentIndex(-1)
 
         # set up Home Manager linking table
         # set up Home Manager combobox with items from managers_list table
         self.homemgrModel = ManagerLinkingModel("tbl_homemanagers", self)
-        self.homemgrSelect.setModel(homeManagerModel)
-        self.homemgrSelect.setModelColumn(homeManagerModel.fieldIndex("full_name"))
+        self.homemgrSelect.setModel(self.homeManagerModel)
+        self.homemgrSelect.setModelColumn(self.homeManagerModel.fieldIndex("full_name"))
         self.homemgrSelect.setCurrentIndex(-1)
 
         # set up Away Manager linking table
         # set up Away Manager combobox with items from managers_list table
         self.awaymgrModel = ManagerLinkingModel("tbl_awaymanagers", self)
-        self.awaymgrSelect.setModel(awayManagerModel)
-        self.awaymgrSelect.setModelColumn(awayManagerModel.fieldIndex("full_name"))
+        self.awaymgrSelect.setModel(self.awayManagerModel)
+        self.awaymgrSelect.setModelColumn(self.awayManagerModel.fieldIndex("full_name"))
         self.awaymgrSelect.setCurrentIndex(-1)
 
         # Home Team mapper
@@ -247,6 +213,47 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
         self.awaymgrMapper.addMapping(self.awaymgrSelect, MGR_NAME)
         self.awaymgrMapper.toFirst()        
         
+        # define models used in Confederation comboboxes
+        # these comboboxes are used to filter Country comboboxes
+        # we need multiple instantiations of Confederations tables
+        # so that there is no confusion in SQL logic
+        
+        # Home Confederation model
+        self.homeconfedModel = QSqlTableModel(self)
+        self.homeconfedModel.setTable("tbl_confederations")
+        self.homeconfedModel.setSort(CONFED_ID, Qt.AscendingOrder)
+        self.homeconfedModel.select()
+    
+        # Home Confederation combobox
+        self.homeconfedSelect.setModel(self.homeconfedModel)
+        self.homeconfedSelect.setModelColumn(self.homeconfedModel.fieldIndex("confed_name"))
+        self.homeconfedSelect.setCurrentIndex(-1)
+        
+        # Home Confederation mapper 
+        homeconfedMapper = QDataWidgetMapper(self)
+        homeconfedMapper.setModel(self.homeconfedModel)
+        homeconfedMapper.setItemDelegate(HomeConfedComboBoxDelegate(self))
+        homeconfedMapper.addMapping(self.homeconfedSelect, CONFED_NAME)
+        homeconfedMapper.toFirst()       
+        
+        # Away Confederation model
+        self.awayconfedModel = QSqlTableModel(self)
+        self.awayconfedModel.setTable("tbl_confederations")
+        self.awayconfedModel.setSort(CONFED_ID, Qt.AscendingOrder)
+        self.awayconfedModel.select()
+    
+        # Away Confederation combobox
+        self.awayconfedSelect.setModel(self.awayconfedModel)
+        self.awayconfedSelect.setModelColumn(self.awayconfedModel.fieldIndex("confed_name"))
+        self.awayconfedSelect.setCurrentIndex(-1)
+        
+        # Away Confederation mapper 
+        awayconfedMapper = QDataWidgetMapper(self)
+        awayconfedMapper.setModel(self.awayconfedModel)
+        awayconfedMapper.setItemDelegate(AwayConfedComboBoxDelegate(self))
+        awayconfedMapper.addMapping(self.awayconfedSelect, CONFED_NAME)
+        awayconfedMapper.toFirst()       
+
         # disable all fields if no records in database table
         if not self.model.rowCount():
             self.matchID_display.setDisabled(True)
@@ -264,6 +271,11 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
             self.awayconfedSelect.setDisabled(True)
             self.awayteamSelect.setDisabled(True)
             self.awaymgrSelect.setDisabled(True)
+            
+            self.homeLineupButton.setDisabled(True)
+            self.awayLineupButton.setDisabled(True)
+            self.enviroButton.setDisabled(True)
+            
             # disable save and delete entry buttons
             self.saveEntry.setDisabled(True)
             self.deleteEntry.setDisabled(True)
@@ -285,7 +297,7 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
         self.connect(self.saveEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.NULL))
         self.connect(self.addEntry, SIGNAL("clicked()"), self.addRecord)
         self.connect(self.deleteEntry, SIGNAL("clicked()"), self.deleteRecord)           
-        self.connect(self.closeButton, SIGNAL("clicked()"), self, SLOT("close()"))
+        self.connect(self.closeButton, SIGNAL("clicked()"), self.accept)
         
         self.connect(self.mapper, SIGNAL("currentIndexChanged(int)"), 
                             lambda: self.updateConfed((self.homeconfedSelect, self.awayconfedSelect), (self.hometeamSelect, self.awayteamSelect)))
@@ -294,10 +306,10 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
                                                                       lambda: self.enableWidget(self.hometeamSelect))
         self.connect(self.awayconfedSelect, SIGNAL("currentIndexChanged(int)"), 
                                                                       lambda: self.enableWidget(self.awayteamSelect))
-                                                                      
-        self.connect(self.homeconfedSelect, SIGNAL("currentIndexChanged(int)"), 
+
+        self.connect(self.homeconfedSelect, SIGNAL("activated(int)"), 
                                                                         lambda: self.filterCountryBox(self.homeconfedSelect, self.hometeamSelect))
-        self.connect(self.awayconfedSelect, SIGNAL("currentIndexChanged(int)"), 
+        self.connect(self.awayconfedSelect, SIGNAL("activated(int)"), 
                                                                         lambda: self.filterCountryBox(self.awayconfedSelect, self.awayteamSelect))
 
         self.connect(self.hometeamSelect, SIGNAL("currentIndexChanged(int)"), 
@@ -338,6 +350,19 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
                     MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
         QDialog.accept(self)
     
+    def submitForms(self):
+        """Writes to main database table and linking tables and returns result boolean."""
+        
+        mapperList = [self.hometeamMapper, self.awayteamMapper, self.homemgrMapper, self.awaymgrMapper] 
+        editorList = [self.hometeamSelect, self.awayteamSelect, self.homemgrSelect, self.awaymgrSelect]
+        
+        if self.mapper.submit(): 
+            for mapper, editor in zip(mapperList, editorList):
+                if not self.updateLinkingTable(mapper, editor):
+                    return False
+        else:
+            return False
+    
     def saveRecord(self, where):
         """"Submits changes to database, navigates through form, and resets subforms."""
         row = self.mapper.currentIndex()
@@ -347,7 +372,6 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
                     MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
             else:
                 self.mapper.revert()
-                return
         
         if where == Constants.FIRST:
             self.firstEntry.setDisabled(True)
@@ -401,8 +425,9 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
         self.homemgrModel.refresh()
 
         self.awaymgrModel.setID(currentID)
-        self.homemgrModel.refresh()
+        self.awaymgrModel.refresh()
         
+        # go to first record of mapper
         self.hometeamMapper.toFirst()
         self.awayteamMapper.toFirst()
         self.homemgrMapper.toFirst()
@@ -455,6 +480,12 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
         if not self.saveEntry.isEnabled():
             self.saveEntry.setEnabled(True)
         
+        # flush filters
+        for widget in [self.homeCountryModel, self.homeManagerModel, self.awayCountryModel, self.awayManagerModel]:
+            widget.blockSignals(True)
+            widget.setFilter(QString())
+            widget.blockSignals(False)
+        
         # enable form widgets
         self.matchID_display.setEnabled(True)
         self.matchCompSelect.setEnabled(True)
@@ -465,6 +496,17 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
         self.firstHalfLengthEdit.setEnabled(True)
         self.secondHalfLengthEdit.setEnabled(True)
         self.attendanceEdit.setEnabled(True)
+        self.homeconfedSelect.setEnabled(True)
+        
+        # initialize form widgets
+        self.matchRefSelect.setCurrentIndex(-1)
+        self.matchVenueSelect.setCurrentIndex(-1)
+        self.homeconfedSelect.setCurrentIndex(-1)
+        self.homemgrSelect.setCurrentIndex(-1)
+        self.hometeamSelect.setCurrentIndex(-1)
+        self.awaymgrSelect.setCurrentIndex(-1)
+        self.awayteamSelect.setCurrentIndex(-1)
+        self.awayconfedSelect.setCurrentIndex(-1)
         
         # disable comboboxes in home/away section
         self.awayconfedSelect.setDisabled(True)
@@ -474,25 +516,16 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
         self.awaymgrSelect.setDisabled(True)
         self.homeLineupButton.setDisabled(True)
         self.awayLineupButton.setDisabled(True)
-        
-        # initialize form widgets
-        self.matchRefSelect.setCurrentIndex(-1)
-        self.matchVenueSelect.setCurrentIndex(-1)
-        self.homemgrSelect.setCurrentIndex(-1)
-        self.hometeamSelect.setCurrentIndex(-1)
-        self.homeconfedSelect.setCurrentIndex(-1)
-        self.awaymgrSelect.setCurrentIndex(-1)
-        self.awayteamSelect.setCurrentIndex(-1)
-        self.awayconfedSelect.setCurrentIndex(-1)
+        self.enviroButton.setDisabled(True)
         
         self.firstHalfLengthEdit.setText("45")
         self.secondHalfLengthEdit.setText("45")
-        self.matchDateEdit.setText("1856-01-01")
+        self.attendanceEdit.setText("0")
         self.matchDateEdit.setFocus()
         
         # refresh subforms
         self.refreshSubForms(match_id)        
-
+        
     def deleteRecord(self):
         """Deletes record from database upon user confirmation.
         
@@ -575,7 +608,8 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
         modelList = (self.hometeamModel, self.homemgrModel, self.awayteamModel, self.awaymgrModel)
         for editor, model in zip(editorList, modelList):
             index = model.index(0, 1)
-            if editor.currentText() != model.data(index).toString():
+            editIndex = editor.model().index(editor.currentIndex(), 0)
+            if editor.model().data(editIndex).toString() != model.data(index).toString():
                 return True
 
         return False                
@@ -586,8 +620,10 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
         Ensures consistency between confederation and selected nation in Country combobox.
         
         """
-        for confedSelect, countrySelect in zip(confedList, teamList):
+        print "Calling updateConfed()"
+        for confedSelect, countrySelect in zip(confedList, countryList):
             if confedSelect.isEnabled():
+                confedSelect.blockSignals(True)
                 # define underlying model
                 countryModel = countrySelect.model()
                 
@@ -615,23 +651,28 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
                 # update index of Country combobox to that of currCountry
                 self.filterCountryBox(confedSelect, countrySelect)
                 countrySelect.setCurrentIndex(countrySelect.findText(currCountry, Qt.MatchExactly))
+                confedSelect.blockSignals(False)
      
     def filterCountryBox(self, confedSelect, countrySelect):
         """Enables and filters Country combobox upon selection in Confederation combobox."""
+        print "Calling filterCountryBox()"
+        
+        countrySelect.blockSignals(True)
+        
         # define underlying models
         countryModel = countrySelect.model()
         confedModel = confedSelect.model()
         
         # flush filter
         countryModel.setFilter(QString())
-        countryModel.select()
         
         # filter tbl_countries based on confederation selection
         currIdx = confedSelect.currentIndex()
         id = confedModel.record(currIdx).value("confed_id").toString()
         countryModel.setFilter(QString("confed_id = %1").arg(id))
-        countryModel.select()
-
+        
+        countrySelect.blockSignals(False)
+        
     def deleteEnviroTables(self, match_id):
         """Deletes environmental conditions tables that reference a specific match.
         
@@ -647,33 +688,43 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
         if query.next():
             enviro_id = query.value(0).toInt()[0]
             
-        list = ["tbl_weatherkickoff", "tbl_weatherhalftime", "tbl_weatherfulltime",  "tbl_environments"]
-        deletionQuery = QSqlQuery()
-        for table in list:
-            deletionQuery.prepare("DELETE FROM %1 WHERE enviro_id = ?")
-            deletionQuery.addBindValue(QVariant(enviro_id))
-            deletionQuery.exec_()
+            list = ["tbl_weatherkickoff", "tbl_weatherhalftime", "tbl_weatherfulltime",  "tbl_environments"]
+            deletionQuery = QSqlQuery()
+            for table in list:
+                deletionQuery.prepare("DELETE FROM %1 WHERE enviro_id = ?")
+                deletionQuery.addBindValue(QVariant(enviro_id))
+                deletionQuery.exec_()
                 
     def updateLinkingTable(self, mapper, editor):
         """Updates custom linking table."""
         
-#        print "Calling updateLinkingTable()"
+        print "Calling updateLinkingTable()"
         # database table associated with mapper
         # get current index of model
         linkmodel = mapper.model()
         index = linkmodel.index(linkmodel.rowCount()-1, 0)
+        boxIndex = editor.currentIndex()
+        value = editor.model().record(boxIndex).value(0)
+        ok = linkmodel.setData(index, value)
+        return ok
         
-        # if no entries in model, call setData() directly
-        if not linkmodel.rowCount():
-            index = QModelIndex()
-            boxIndex = editor.currentIndex()
-            value = editor.model().record(boxIndex).value(0)
-            ok = linkmodel.setData(index, value)
+#        print linkmodel.rowCount()
+#        print "%d %d" % (index.row(), index.column())
+#        # if no entries in model, call setData() directly
+#        if not linkmodel.rowCount():
+#            index = QModelIndex()
+#            boxIndex = editor.currentIndex()
+#            value = editor.model().record(boxIndex).value(0)
+#            ok = linkmodel.setData(index, value)
+#            print ok
 
     def enableWidget(self, widget):
         """Enables widget passed in function parameter, if not already enabled."""
+        print "Call enableWidget()"
+        widget.blockSignals(True)
         if not widget.isEnabled():
             widget.setEnabled(True)
+        widget.blockSignals(False)
         
     def openEnviros(self, match_id):
         """Opens Environment subdialog for a specific match from Match dialog.
