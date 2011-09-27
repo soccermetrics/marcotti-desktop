@@ -620,7 +620,6 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
         Ensures consistency between confederation and selected nation in Country combobox.
         
         """
-        print "Calling updateConfed()"
         for confedSelect, countrySelect in zip(confedList, countryList):
             if confedSelect.isEnabled():
                 confedSelect.blockSignals(True)
@@ -654,9 +653,7 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
                 confedSelect.blockSignals(False)
      
     def filterCountryBox(self, confedSelect, countrySelect):
-        """Enables and filters Country combobox upon selection in Confederation combobox."""
-        print "Calling filterCountryBox()"
-        
+        """Enables and filters Country combobox upon selection in Confederation combobox."""        
         countrySelect.blockSignals(True)
         
         # define underlying models
@@ -698,7 +695,6 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
     def updateLinkingTable(self, mapper, editor):
         """Updates custom linking table."""
         
-        print "Calling updateLinkingTable()"
         # database table associated with mapper
         # get current index of model
         linkmodel = mapper.model()
@@ -720,7 +716,6 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
 
     def enableWidget(self, widget):
         """Enables widget passed in function parameter, if not already enabled."""
-        print "Call enableWidget()"
         widget.blockSignals(True)
         if not widget.isEnabled():
             widget.setEnabled(True)
