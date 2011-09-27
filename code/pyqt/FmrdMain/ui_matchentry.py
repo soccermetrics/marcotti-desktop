@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'gui/match_entry.ui'
 #
-# Created: Mon Sep 12 22:19:36 2011
+# Created: Fri Sep 16 17:28:26 2011
 #      by: PyQt4 UI code generator 4.7.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -297,17 +297,17 @@ class Ui_MatchEntryDlg(object):
         icon7.addPixmap(QtGui.QPixmap(":/images/last.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.lastEntry.setIcon(icon7)
         self.lastEntry.setObjectName("lastEntry")
-        self.widget = QtGui.QWidget(MatchEntryDlg)
-        self.widget.setGeometry(QtCore.QRect(9, 9, 399, 32))
-        self.widget.setObjectName("widget")
-        self.horizontalLayout_2 = QtGui.QHBoxLayout(self.widget)
+        self.layoutWidget1 = QtGui.QWidget(MatchEntryDlg)
+        self.layoutWidget1.setGeometry(QtCore.QRect(9, 0, 399, 51))
+        self.layoutWidget1.setObjectName("layoutWidget1")
+        self.horizontalLayout_2 = QtGui.QHBoxLayout(self.layoutWidget1)
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
-        self.label = QtGui.QLabel(self.widget)
+        self.label = QtGui.QLabel(self.layoutWidget1)
         self.label.setMinimumSize(QtCore.QSize(70, 20))
         self.label.setMaximumSize(QtCore.QSize(70, 20))
         self.label.setObjectName("label")
         self.horizontalLayout_2.addWidget(self.label)
-        self.matchID_display = QtGui.QLineEdit(self.widget)
+        self.matchID_display = QtGui.QLineEdit(self.layoutWidget1)
         self.matchID_display.setMinimumSize(QtCore.QSize(120, 30))
         self.matchID_display.setMaximumSize(QtCore.QSize(120, 30))
         self.matchID_display.setStyleSheet("background-color: rgb(194, 190, 186);")
@@ -317,12 +317,12 @@ class Ui_MatchEntryDlg(object):
         self.horizontalLayout_2.addWidget(self.matchID_display)
         spacerItem2 = QtGui.QSpacerItem(13, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
         self.horizontalLayout_2.addItem(spacerItem2)
-        self.label_4 = QtGui.QLabel(self.widget)
+        self.label_4 = QtGui.QLabel(self.layoutWidget1)
         self.label_4.setMinimumSize(QtCore.QSize(50, 20))
         self.label_4.setMaximumSize(QtCore.QSize(50, 20))
         self.label_4.setObjectName("label_4")
         self.horizontalLayout_2.addWidget(self.label_4)
-        self.matchDateEdit = QtGui.QDateEdit(self.widget)
+        self.matchDateEdit = QtGui.QDateEdit(self.layoutWidget1)
         self.matchDateEdit.setMinimumSize(QtCore.QSize(120, 30))
         self.matchDateEdit.setMaximumSize(QtCore.QSize(120, 30))
         self.matchDateEdit.setMinimumDate(QtCore.QDate(1856, 1, 1))
