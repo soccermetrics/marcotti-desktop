@@ -1411,7 +1411,6 @@ class LineupEntryDlg(QDialog, ui_lineupentry.Ui_LineupEntryDlg):
         self.statusReport()
         
         # if mapper index is undefined, disable Position combobox
-        print self.mapper.currentIndex()
         if self.mapper.currentIndex() == -1:
             self.playerSelect.setDisabled(True)
             self.positionSelect.setDisabled(True)

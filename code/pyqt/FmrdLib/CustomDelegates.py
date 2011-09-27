@@ -913,7 +913,7 @@ class ConfedComboBoxDelegateTemplate(QStyledItemDelegate):
             index -- current index of database table model (not used)
             
         """          
-        print "Calling setEditorData() of ConfedComboBoxDelegateTemplate"
+#        print "Calling setEditorData() of ConfedComboBoxDelegateTemplate"
         countryIndex = self.countryBox.currentIndex()
         countryModel = self.countryBox.model()
         
@@ -1232,7 +1232,7 @@ class HomeConfedComboBoxDelegate(ConfedComboBoxDelegateTemplate):
 
     def __init__(self, parent=None):
         """Constructor for HomeConfedComboBoxDelegate class."""
-        print "Calling init() in HomeConfedComboBoxDelegate"
+#        print "Calling init() in HomeConfedComboBoxDelegate"
         super(HomeConfedComboBoxDelegate, self).__init__(parent)
         
         self.countryBox = parent.hometeamSelect
