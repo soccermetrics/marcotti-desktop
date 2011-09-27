@@ -1392,21 +1392,26 @@ class LineupEntryDlg(QDialog, ui_lineupentry.Ui_LineupEntryDlg):
         self.playerModel.setSort(PLYR_SORT_NAME, Qt.AscendingOrder)
         self.playerSelect.setModel(self.playerModel)
         self.playerSelect.setModelColumn(self.playerModel.fieldIndex("full_name"))
+        self.playerSelect.setCurrentIndex(-1)
         self.mapper.addMapping(self.playerSelect, LineupEntryDlg.PLYR_ID)
 
         self.positionModel = self.model.relationModel(LineupEntryDlg.POS_ID)
         self.positionModel.setSort(POSITION_NAME, Qt.AscendingOrder)
         self.positionSelect.setModel(self.positionModel)
         self.positionSelect.setModelColumn(self.positionModel.fieldIndex("position_name"))
+        self.positionSelect.setCurrentIndex(-1)
         self.mapper.addMapping(self.positionSelect, LineupEntryDlg.POS_ID)
-        self.model.setFilter(QString("match_id = %1 AND player_id IN (SELECT player_id FROM tbl_players WHERE country_id = %2)")
-                                                     .arg(self.match_id).arg(self.country_id))         
+                
+        self.model.setFilter(QString("match_id = %1 AND full_name IN "
+                        "(SELECT full_name FROM players_list WHERE country IN "
+                        "(SELECT cty_name FROM tbl_countries WHERE country_id = %2))").arg(self.match_id, self.country_id))                 
         self.mapper.toFirst()
         
         # get status report
         self.statusReport()
         
         # if mapper index is undefined, disable Position combobox
+        print self.mapper.currentIndex()
         if self.mapper.currentIndex() == -1:
             self.playerSelect.setDisabled(True)
             self.positionSelect.setDisabled(True)
@@ -1539,7 +1544,7 @@ class LineupEntryDlg(QDialog, ui_lineupentry.Ui_LineupEntryDlg):
         columnList = (LineupEntryDlg.PLYR_ID, LineupEntryDlg.POS_ID)
         for editor, column in zip(editorList, columnList):
             index = self.model.index(row, column)        
-            if editor.text() != self.model.data(index).toString():
+            if editor.currentText() != self.model.data(index).toString():
                 return True
                 
         # checkbox fields
