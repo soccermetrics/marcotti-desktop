@@ -386,7 +386,7 @@ p, li { white-space: pre-wrap; }
        </size>
       </property>
       <property name="toolTip">
-       <string>Team to which goal is credited</string>
+       <string>Team of substituted players</string>
       </property>
      </widget>
     </item>
@@ -426,6 +426,9 @@ p, li { white-space: pre-wrap; }
         <width>231</width>
         <height>31</height>
        </size>
+      </property>
+      <property name="toolTip">
+       <string>Player substituted out of match</string>
       </property>
      </widget>
     </item>
@@ -467,7 +470,7 @@ p, li { white-space: pre-wrap; }
        </size>
       </property>
       <property name="toolTip">
-       <string>Field event from which goal is scored</string>
+       <string>Player substituted into match</string>
       </property>
      </widget>
     </item>
