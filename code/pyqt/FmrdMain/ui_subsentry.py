@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'gui/subs_entry.ui'
 #
-# Created: Mon Aug  8 00:36:15 2011
+# Created: Wed Sep 28 02:13:57 2011
 #      by: PyQt4 UI code generator 4.7.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -247,18 +247,19 @@ class Ui_SubsEntryDlg(object):
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Team</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.teamSelect.setToolTip(QtGui.QApplication.translate("SubsEntryDlg", "Team to which goal is credited", None, QtGui.QApplication.UnicodeUTF8))
+        self.teamSelect.setToolTip(QtGui.QApplication.translate("SubsEntryDlg", "Team of substituted players", None, QtGui.QApplication.UnicodeUTF8))
         self.label_10.setText(QtGui.QApplication.translate("SubsEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Player Out</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
+        self.outplayerSelect.setToolTip(QtGui.QApplication.translate("SubsEntryDlg", "Player substituted out of match", None, QtGui.QApplication.UnicodeUTF8))
         self.label_7.setText(QtGui.QApplication.translate("SubsEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Player In</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.inplayerSelect.setToolTip(QtGui.QApplication.translate("SubsEntryDlg", "Field event from which goal is scored", None, QtGui.QApplication.UnicodeUTF8))
+        self.inplayerSelect.setToolTip(QtGui.QApplication.translate("SubsEntryDlg", "Player substituted into match", None, QtGui.QApplication.UnicodeUTF8))
         self.label_8.setText(QtGui.QApplication.translate("SubsEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
