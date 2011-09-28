@@ -223,7 +223,7 @@ class EventPlayerComboBoxDelegate(QSqlRelationalDelegate):
         # make query on tbl_lineups to find team
         teamQuery = QSqlQuery()
         teamQuery.prepare("SELECT country_id FROM tbl_countries WHERE cty_name IN"
-                                        " (SELECT team FROM lineups_list WHERE player = ?)")
+                                        " (SELECT team FROM lineup_list WHERE player = ?)")
         teamQuery.addBindValue(QVariant(playerName))
         teamQuery.exec_()        
         if teamQuery.next():
