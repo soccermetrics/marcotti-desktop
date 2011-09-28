@@ -194,7 +194,7 @@ class GoalEntryDlg(QDialog, ui_goalentry.Ui_GoalEntryDlg):
         self.connect(self.compSelect, SIGNAL("currentIndexChanged(int)"), lambda: self.enableAndFilterRounds(self.roundSelect))
         self.connect(self.roundSelect, SIGNAL("currentIndexChanged(int)"),  lambda: self.enableAndFilterMatches(self.matchSelect))
         self.connect(self.matchSelect, SIGNAL("currentIndexChanged(int)"), self.filterGoals)
-        self.connect(self.goaltimeEdit, SIGNAL("textChanged()"),  lambda: self.enableStoppageTime(self.stoppageEdit))
+        self.connect(self.goaltimeEdit, SIGNAL("editingFinished()"),  lambda: self.enableStoppageTime(self.stoppageEdit))
    
    
     def accept(self):
@@ -659,7 +659,7 @@ class PenaltyEntryDlg(QDialog, ui_penaltyentry.Ui_PenaltyEntryDlg):
         self.connect(self.roundSelect, SIGNAL("currentIndexChanged(int)"),  lambda: self.enableAndFilterMatches(self.matchSelect))
         self.connect(self.matchSelect, SIGNAL("currentIndexChanged(int)"), self.filterPenaltiesAndTeams)
         self.connect(self.teamSelect, SIGNAL("currentIndexChanged(int)"), self.filterPlayers)        
-        self.connect(self.pentimeEdit, SIGNAL("textChanged()"),  lambda: self.enableStoppageTime(self.stoppageEdit))
+        self.connect(self.pentimeEdit, SIGNAL("editingFinished()"),  lambda: self.enableStoppageTime(self.stoppageEdit))
 
     def accept(self):
         """Submits changes to database and closes window upon confirmation from user."""
@@ -1203,7 +1203,7 @@ class OffenseEntryDlg(QDialog, ui_offenseentry.Ui_OffenseEntryDlg):
         self.connect(self.roundSelect, SIGNAL("currentIndexChanged(int)"),  lambda: self.enableAndFilterMatches(self.matchSelect))
         self.connect(self.matchSelect, SIGNAL("currentIndexChanged(int)"), self.filterOffensesAndTeams)
         self.connect(self.teamSelect, SIGNAL("currentIndexChanged(int)"), self.filterPlayers)
-        self.connect(self.foultimeEdit, SIGNAL("textChanged()"),  lambda: self.enableStoppageTime(self.stoppageEdit))
+        self.connect(self.foultimeEdit, SIGNAL("editingFinished()"),  lambda: self.enableStoppageTime(self.stoppageEdit))
 
     def accept(self):
         """Submits changes to database and closes window upon confirmation from user."""
@@ -1762,7 +1762,7 @@ class SubsEntryDlg(QDialog, ui_subsentry.Ui_SubsEntryDlg):
                                                                       lambda: self.updateLinkingTable(self.inplayerMapper, self.inplayerSelect))
         self.connect(self.outplayerSelect, SIGNAL("currentIndexChanged(int)"), 
                                                                       lambda: self.updateLinkingTable(self.outplayerMapper, self.outplayerSelect))
-        self.connect(self.subtimeEdit, SIGNAL("textChanged()"),  lambda: self.enableStoppageTime(self.stoppageEdit))
+        self.connect(self.subtimeEdit, SIGNAL("editingFinished()"),  lambda: self.enableStoppageTime(self.stoppageEdit))
  
     def accept(self):
         """Submits changes to database and closes window upon confirmation from user."""
@@ -2484,7 +2484,7 @@ class SwitchEntryDlg(QDialog, ui_switchentry.Ui_SwitchEntryDlg):
         self.connect(self.roundSelect, SIGNAL("currentIndexChanged(int)"),  lambda: self.enableAndFilterMatches(self.matchSelect))        
         self.connect(self.matchSelect, SIGNAL("currentIndexChanged(int)"), self.filterSwitchesAndTeams)      
         self.connect(self.teamSelect, SIGNAL("currentIndexChanged(int)"), self.filterPlayers)                
-        self.connect(self.switchtimeEdit, SIGNAL("textChanged()"),  lambda: self.enableStoppageTime(self.stoppageEdit))        
+        self.connect(self.switchtimeEdit, SIGNAL("editingFinished()"),  lambda: self.enableStoppageTime(self.stoppageEdit))        
         
     def accept(self):
         """Submits changes to database and closes window upon confirmation from user."""
