@@ -686,7 +686,7 @@ class EnviroEntryDlg(QDialog, ui_enviroentry.Ui_EnviroEntryDlg):
 
         # define mapper for Kickoff Weather Conditions
         self.kickoffWeatherMapper = QDataWidgetMapper(self)
-        self.kickoffWeatherMapper.setSubmitPolicy(QDataWidgetMapper.AutoSubmit)
+        self.kickoffWeatherMapper.setSubmitPolicy(QDataWidgetMapper.ManualSubmit)
         self.kickoffWeatherMapper.setModel(self.kickoffWeatherModel)
         kickoffWeatherDelegate = GenericDelegate(self)
         kickoffWeatherDelegate.insertColumnDelegate(KICKOFF_WX, WeatherComboBoxDelegate(self))
@@ -696,7 +696,7 @@ class EnviroEntryDlg(QDialog, ui_enviroentry.Ui_EnviroEntryDlg):
         
         # define mapper for Halftime Weather Conditions
         self.halftimeWeatherMapper = QDataWidgetMapper(self)
-        self.halftimeWeatherMapper.setSubmitPolicy(QDataWidgetMapper.AutoSubmit)
+        self.halftimeWeatherMapper.setSubmitPolicy(QDataWidgetMapper.ManualSubmit)
         self.halftimeWeatherMapper.setModel(self.halftimeWeatherModel)
         halftimeWeatherDelegate = GenericDelegate(self)
         halftimeWeatherDelegate.insertColumnDelegate(HALFTIME_WX, WeatherComboBoxDelegate(self))
@@ -706,7 +706,7 @@ class EnviroEntryDlg(QDialog, ui_enviroentry.Ui_EnviroEntryDlg):
         
         # define mapper for Fulltime Weather Conditions
         self.fulltimeWeatherMapper = QDataWidgetMapper(self)
-        self.fulltimeWeatherMapper.setSubmitPolicy(QDataWidgetMapper.AutoSubmit)
+        self.fulltimeWeatherMapper.setSubmitPolicy(QDataWidgetMapper.ManualSubmit)
         self.fulltimeWeatherMapper.setModel(self.fulltimeWeatherModel)
         fulltimeWeatherDelegate = GenericDelegate(self)
         fulltimeWeatherDelegate.insertColumnDelegate(FULLTIME_WX, WeatherComboBoxDelegate(self))
@@ -716,12 +716,6 @@ class EnviroEntryDlg(QDialog, ui_enviroentry.Ui_EnviroEntryDlg):
 
         # configure signal/slot
         self.connect(self.closeButton, SIGNAL("clicked()"), self.accept)
-        self.connect(self.envKOWxSelect, SIGNAL("currentIndexChanged(int)"), 
-                                                                      lambda: self.updateLinkingTable(self.kickoffWeatherMapper, self.envKOWxSelect))
-        self.connect(self.envHTWxSelect, SIGNAL("currentIndexChanged(int)"), 
-                                                                      lambda: self.updateLinkingTable(self.halftimeWeatherMapper, self.envHTWxSelect))
-        self.connect(self.envFTWxSelect, SIGNAL("currentIndexChanged(int)"), 
-                                                                      lambda: self.updateLinkingTable(self.fulltimeWeatherMapper, self.envFTWxSelect))
         
     def accept(self):
         """Submits changes to database and closes window upon confirmation from user."""
@@ -730,6 +724,10 @@ class EnviroEntryDlg(QDialog, ui_enviroentry.Ui_EnviroEntryDlg):
             if MsgPrompts.SaveDiscardOptionPrompt(self):
                 if not self.mapper.submit():
                     MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+                else:
+                    self.updateLinkingTable(self.kickoffWeatherMapper, self.envKOWxSelect)
+                    self.updateLinkingTable(self.halftimeWeatherMapper, self.envHTWxSelect)
+                    self.updateLinkingTable(self.fulltimeWeatherMapper, self.envFTWxSelect)
         QDialog.accept(self)
 
     def isDirty(self, row):
@@ -773,9 +771,9 @@ class EnviroEntryDlg(QDialog, ui_enviroentry.Ui_EnviroEntryDlg):
         # get current index of model
         linkmodel = mapper.model()
         index = linkmodel.index(linkmodel.rowCount()-1, 0)
-        
-        # if no entries in model, call setData() directly
-        if not linkmodel.rowCount():
-            boxIndex = editor.currentIndex()
-            value = editor.model().record(boxIndex).value(0)
-            ok = linkmodel.setData(index, value)
+        boxIndex = editor.currentIndex()
+        value = editor.model().record(boxIndex).value(0)
+#        print value.toString()
+        ok = linkmodel.setData(index, value)
+#        print ok
+        return ok
