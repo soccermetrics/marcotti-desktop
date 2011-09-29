@@ -250,6 +250,12 @@ class GoalEntryDlg(QDialog, ui_goalentry.Ui_GoalEntryDlg):
             row = self.model.rowCount() - 1
             
         self.mapper.setCurrentIndex(row)
+        
+        # enable stoppage time field if there is an entry
+        if self.stoppageEdit.text() == "0":
+            self.stoppageEdit.setEnabled(False)
+        else:
+            self.stoppageEdit.setEnabled(True)
 
     def deleteRecord(self):
         """Deletes record from database upon user confirmation."""
@@ -265,6 +271,14 @@ class GoalEntryDlg(QDialog, ui_goalentry.Ui_GoalEntryDlg):
         if row + 1 >= self.model.rowCount():
             row = self.model.rowCount() - 1
         self.mapper.setCurrentIndex(row) 
+        
+        # enable stoppage time field if there is an entry
+        print self.stoppageEdit.text()
+        if self.stoppageEdit.text() == "0":
+            self.stoppageEdit.setEnabled(False)
+        else:
+            self.stoppageEdit.setEnabled(True)
+            
         # disable Delete button if no records in database
         if not self.model.rowCount():
             self.deleteEntry.setDisabled(True)
@@ -381,6 +395,10 @@ class GoalEntryDlg(QDialog, ui_goalentry.Ui_GoalEntryDlg):
             self.goaleventSelect.setEnabled(True)
             self.goaltypeSelect.setEnabled(True)
             self.goaltimeEdit.setEnabled(True)
+            if self.stoppageEdit.text() == "0":
+                self.stoppageEdit.setEnabled(False)
+            else:
+                self.stoppageEdit.setEnabled(True)
             
             self.firstEntry.setDisabled(True)
             self.prevEntry.setDisabled(True)
@@ -700,6 +718,12 @@ class PenaltyEntryDlg(QDialog, ui_penaltyentry.Ui_PenaltyEntryDlg):
         self.mapper.setCurrentIndex(row)
         self.refreshTeamBox()
         self.teamSelect.blockSignals(False)
+        
+        # enable stoppage time field if there is an entry
+        if self.stoppageEdit.text() == "0":
+            self.stoppageEdit.setEnabled(False)
+        else:
+            self.stoppageEdit.setEnabled(True)                
 
     def deleteRecord(self):
         """Deletes record from database upon user confirmation."""
@@ -715,6 +739,13 @@ class PenaltyEntryDlg(QDialog, ui_penaltyentry.Ui_PenaltyEntryDlg):
         if row + 1 >= self.model.rowCount():
             row = self.model.rowCount() - 1
         self.mapper.setCurrentIndex(row) 
+        
+        # enable stoppage time field if there is an entry
+        if self.stoppageEdit.text() == "0":
+            self.stoppageEdit.setEnabled(False)
+        else:
+            self.stoppageEdit.setEnabled(True)        
+        
         # disable Delete button if no records in database
         if not self.model.rowCount():
             self.deleteEntry.setDisabled(True)        
@@ -864,7 +895,11 @@ class PenaltyEntryDlg(QDialog, ui_penaltyentry.Ui_PenaltyEntryDlg):
         self.foulSelect.setEnabled(True)
         self.penoutcomeSelect.setEnabled(True)
         self.pentimeEdit.setEnabled(True)
-        self.stoppageEdit.setEnabled(True)
+        # enable stoppage time field if there is an entry
+        if self.stoppageEdit.text() == "0":
+            self.stoppageEdit.setEnabled(False)
+        else:
+            self.stoppageEdit.setEnabled(True)        
         
         # set current index to -1
         self.playerSelect.setCurrentIndex(-1)        
@@ -1005,7 +1040,7 @@ class PenaltyEntryDlg(QDialog, ui_penaltyentry.Ui_PenaltyEntryDlg):
         widget -- data widget object (stoppageEdit)
         
         """
-        minutes = self.goaltimeEdit.text().toInt()[0]
+        minutes = self.pentimeEdit.text().toInt()[0]
         if (minutes and not (minutes % 45)) or (minutes > 90 and not (minutes % 15)):
             widget.setEnabled(True)
         else:
@@ -1229,6 +1264,12 @@ class OffenseEntryDlg(QDialog, ui_offenseentry.Ui_OffenseEntryDlg):
         self.mapper.setCurrentIndex(row)
         self.refreshTeamBox()
         self.teamSelect.blockSignals(False)
+        
+        # enable stoppage time field if there is an entry
+        if self.stoppageEdit.text() == "0":
+            self.stoppageEdit.setEnabled(False)
+        else:
+            self.stoppageEdit.setEnabled(True)                
 
     def deleteRecord(self):
         """Deletes record from database upon user confirmation."""
@@ -1244,6 +1285,13 @@ class OffenseEntryDlg(QDialog, ui_offenseentry.Ui_OffenseEntryDlg):
         if row + 1 >= self.model.rowCount():
             row = self.model.rowCount() - 1
         self.mapper.setCurrentIndex(row) 
+        
+        # enable stoppage time field if there is an entry
+        if self.stoppageEdit.text() == "0":
+            self.stoppageEdit.setEnabled(False)
+        else:
+            self.stoppageEdit.setEnabled(True)        
+        
         # disable Delete button if no records in database
         if not self.model.rowCount():
             self.deleteEntry.setDisabled(True)
@@ -1446,7 +1494,11 @@ class OffenseEntryDlg(QDialog, ui_offenseentry.Ui_OffenseEntryDlg):
         self.foulSelect.setEnabled(True)
         self.cardSelect.setEnabled(True)
         self.foultimeEdit.setEnabled(True)
-        self.stoppageEdit.setEnabled(True)
+        # enable stoppage time field if there is an entry
+        if self.stoppageEdit.text() == "0":
+            self.stoppageEdit.setEnabled(False)
+        else:
+            self.stoppageEdit.setEnabled(True)        
         
         # set current index to -1
         self.playerSelect.setCurrentIndex(-1)        
@@ -1534,7 +1586,7 @@ class OffenseEntryDlg(QDialog, ui_offenseentry.Ui_OffenseEntryDlg):
         widget -- data widget object (stoppageEdit)
         
         """
-        minutes = self.goaltimeEdit.text().toInt()[0]
+        minutes = self.foultimeEdit.text().toInt()[0]
         if (minutes and not (minutes % 45)) or (minutes > 90 and not (minutes % 15)):
             widget.setEnabled(True)
         else:
@@ -1780,6 +1832,12 @@ class SubsEntryDlg(QDialog, ui_subsentry.Ui_SubsEntryDlg):
 
         self.refreshTeamBox()
         self.teamSelect.blockSignals(False)
+        
+        # enable stoppage time field if there is an entry
+        if self.stoppageEdit.text() == "0":
+            self.stoppageEdit.setEnabled(False)
+        else:
+            self.stoppageEdit.setEnabled(True)                
 
     def deleteRecord(self):
         """Deletes record from database upon user confirmation.
@@ -1809,6 +1867,13 @@ class SubsEntryDlg(QDialog, ui_subsentry.Ui_SubsEntryDlg):
         if row + 1 >= self.model.rowCount():
             row = self.model.rowCount() - 1
         self.mapper.setCurrentIndex(row) 
+        
+        # enable stoppage time field if there is an entry
+        if self.stoppageEdit.text() == "0":
+            self.stoppageEdit.setEnabled(False)
+        else:
+            self.stoppageEdit.setEnabled(True)        
+        
         # disable Delete button if no records in database
         if not self.model.rowCount():
             self.deleteEntry.setDisabled(True)
@@ -1930,6 +1995,12 @@ class SubsEntryDlg(QDialog, ui_subsentry.Ui_SubsEntryDlg):
         self.outplayerSelect.setEnabled(True)
         self.subtimeEdit.setEnabled(True)
         
+        # enable stoppage time field if there is an entry
+        if self.stoppageEdit.text() == "0":
+            self.stoppageEdit.setEnabled(False)
+        else:
+            self.stoppageEdit.setEnabled(True)        
+        
         self.filterInSubs()
         self.filterOutSubs()
         
@@ -1952,9 +2023,9 @@ class SubsEntryDlg(QDialog, ui_subsentry.Ui_SubsEntryDlg):
         index = linkmodel.index(linkmodel.rowCount()-1, 0)
         boxIndex = editor.currentIndex()
         value = editor.model().record(boxIndex).value(0)
-        print value.toString()
+#        print value.toString()
         ok = linkmodel.setData(index, value)
-        print ok
+#        print ok
         return ok
         
 #        linkmodel = mapper.model()
@@ -2492,6 +2563,12 @@ class SwitchEntryDlg(QDialog, ui_switchentry.Ui_SwitchEntryDlg):
         self.refreshTeamBox()
         self.teamSelect.blockSignals(False)
         
+        # enable stoppage time field if there is an entry
+        if self.stoppageEdit.text() == "0":
+            self.stoppageEdit.setEnabled(False)
+        else:
+            self.stoppageEdit.setEnabled(True)                
+        
     def deleteRecord(self):
         """Deletes record from database upon user confirmation."""
         if QMessageBox.question(self, QString("Delete Record"), 
@@ -2506,6 +2583,13 @@ class SwitchEntryDlg(QDialog, ui_switchentry.Ui_SwitchEntryDlg):
         if row + 1 >= self.model.rowCount():
             row = self.model.rowCount() - 1
         self.mapper.setCurrentIndex(row)
+        
+        # enable stoppage time field if there is an entry
+        if self.stoppageEdit.text() == "0":
+            self.stoppageEdit.setEnabled(False)
+        else:
+            self.stoppageEdit.setEnabled(True)        
+        
         # disable Delete button if no records in database
         if not self.model.rowCount():
             self.deleteEntry.setDisabled(True)
@@ -2692,6 +2776,11 @@ class SwitchEntryDlg(QDialog, ui_switchentry.Ui_SwitchEntryDlg):
         self.playerSelect.setEnabled(True)
         self.newPositionSelect.setEnabled(True)
         self.switchtimeEdit.setEnabled(True)
+        # enable stoppage time field if there is an entry
+        if self.stoppageEdit.text() == "0":
+            self.stoppageEdit.setEnabled(False)
+        else:
+            self.stoppageEdit.setEnabled(True)        
         
         # set current index to -1
         self.playerSelect.setCurrentIndex(-1)        
