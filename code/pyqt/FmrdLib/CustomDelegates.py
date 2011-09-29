@@ -329,7 +329,7 @@ class SwitchPlayerComboBoxDelegate(QSqlRelationalDelegate):
        # make query on tbl_lineups and tbl_countries to find team associated with player
         teamQuery = QSqlQuery()
         teamQuery.prepare("SELECT country_id FROM tbl_countries WHERE cty_name IN "
-                                       "(SELECT team FROM lineups_list WHERE lineup_id = ?)")
+                                       "(SELECT team FROM lineup_list WHERE lineup_id = ?)")
         teamQuery.addBindValue(QVariant(lineup_id))
         teamQuery.exec_()        
         if teamQuery.next():
@@ -461,7 +461,7 @@ class SubOutComboBoxDelegate(QStyledItemDelegate):
            # make query on tbl_lineups to find team associated with player
             teamQuery = QSqlQuery()
             teamQuery.prepare("SELECT country_id FROM tbl_countries WHERE cty_name IN "
-                                           "(SELECT team FROM lineups_list WHERE lineup_id = ?)")
+                                           "(SELECT team FROM lineup_list WHERE lineup_id = ?)")
             teamQuery.addBindValue(QVariant(lineup_id))
             teamQuery.exec_()        
             if teamQuery.next():
@@ -592,7 +592,7 @@ class SubInComboBoxDelegate(QStyledItemDelegate):
            # make query on tbl_lineups to find national team associated with player
             teamQuery = QSqlQuery()
             teamQuery.prepare("SELECT country_id FROM tbl_countries WHERE cty_name IN "
-                                           "(SELECT team FROM lineups_list WHERE lineup_id = ?)")
+                                           "(SELECT team FROM lineup_list WHERE lineup_id = ?)")
             teamQuery.addBindValue(QVariant(lineup_id))
             teamQuery.exec_()        
             if teamQuery.next():
