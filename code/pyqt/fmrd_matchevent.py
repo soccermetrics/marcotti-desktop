@@ -1763,7 +1763,7 @@ class SubsEntryDlg(QDialog, ui_subsentry.Ui_SubsEntryDlg):
         self.connect(self.compSelect, SIGNAL("currentIndexChanged(int)"), lambda: self.enableAndFilterRounds(self.roundSelect))
         self.connect(self.roundSelect, SIGNAL("currentIndexChanged(int)"),  lambda: self.enableAndFilterMatches(self.matchSelect))        
         self.connect(self.matchSelect, SIGNAL("currentIndexChanged(int)"), self.filterSubstitutionsAndTeams)      
-        self.connect(self.teamSelect, SIGNAL("currentIndexChanged(int)"), self.enablePlayerData)                
+        self.connect(self.teamSelect, SIGNAL("currentIndexChanged(int)"), self.filterPlayers)                
         self.connect(self.subtimeEdit, SIGNAL("editingFinished()"),  lambda: self.enableStoppageTime(self.stoppageEdit))
  
     def accept(self):
@@ -1988,7 +1988,7 @@ class SubsEntryDlg(QDialog, ui_subsentry.Ui_SubsEntryDlg):
         currentIndex = self.teamSelect.findText(teamName, Qt.MatchExactly)
         self.teamSelect.setCurrentIndex(currentIndex)
 
-    def enablePlayerData(self):
+    def filterPlayers(self):
         """Enables player, offense, and card comboboxes if not enabled already."""
         # enable data entry widgets if table is non-empty
         self.inplayerSelect.setEnabled(True)
