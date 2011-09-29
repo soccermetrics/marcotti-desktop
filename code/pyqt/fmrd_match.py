@@ -168,7 +168,7 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
 
         # Home Team mapper
         self.hometeamMapper = QDataWidgetMapper(self)
-        self.hometeamMapper.setSubmitPolicy(QDataWidgetMapper.AutoSubmit)
+        self.hometeamMapper.setSubmitPolicy(QDataWidgetMapper.ManualSubmit)
         self.hometeamMapper.setModel(self.hometeamModel)
         hometeamDelegate = GenericDelegate(self)
         hometeamDelegate.insertColumnDelegate(TEAM_NAME, HomeTeamComboBoxDelegate(self))
@@ -178,7 +178,7 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
         
         # Away Team mapper
         self.awayteamMapper = QDataWidgetMapper(self)
-        self.awayteamMapper.setSubmitPolicy(QDataWidgetMapper.AutoSubmit)
+        self.awayteamMapper.setSubmitPolicy(QDataWidgetMapper.ManualSubmit)
         self.awayteamMapper.setModel(self.awayteamModel)
         awayteamDelegate = GenericDelegate(self)
         awayteamDelegate.insertColumnDelegate(TEAM_NAME, AwayTeamComboBoxDelegate(self))
@@ -188,7 +188,7 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
 
         # Home Manager mapper
         self.homemgrMapper = QDataWidgetMapper(self)
-        self.homemgrMapper.setSubmitPolicy(QDataWidgetMapper.AutoSubmit)
+        self.homemgrMapper.setSubmitPolicy(QDataWidgetMapper.ManualSubmit)
         self.homemgrMapper.setModel(self.homemgrModel)
         homemgrDelegate = GenericDelegate(self)
         homemgrDelegate.insertColumnDelegate(MGR_NAME, HomeMgrComboBoxDelegate(self))
@@ -198,7 +198,7 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
         
         # Away Manager mapper
         self.awaymgrMapper = QDataWidgetMapper(self)
-        self.awaymgrMapper.setSubmitPolicy(QDataWidgetMapper.AutoSubmit)
+        self.awaymgrMapper.setSubmitPolicy(QDataWidgetMapper.ManualSubmit)
         self.awaymgrMapper.setModel(self.awaymgrModel)
         awaymgrDelegate = GenericDelegate(self)
         awaymgrDelegate.insertColumnDelegate(MGR_NAME, AwayMgrComboBoxDelegate(self))
@@ -253,15 +253,6 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
         self.connect(self.awaymgrSelect, SIGNAL("currentIndexChanged(int)"), 
                                                                      lambda: self.enableWidget(self.awayLineupButton))
 
-        self.connect(self.hometeamSelect, SIGNAL("currentIndexChanged(int)"), 
-                                                                      lambda: self.updateLinkingTable(self.hometeamMapper, self.hometeamSelect))
-        self.connect(self.awayteamSelect, SIGNAL("currentIndexChanged(int)"), 
-                                                                      lambda: self.updateLinkingTable(self.awayteamMapper, self.awayteamSelect))
-        self.connect(self.homemgrSelect, SIGNAL("currentIndexChanged(int)"), 
-                                                                     lambda: self.updateLinkingTable(self.homemgrMapper, self.homemgrSelect))
-        self.connect(self.awaymgrSelect, SIGNAL("currentIndexChanged(int)"), 
-                                                                     lambda: self.updateLinkingTable(self.awaymgrMapper, self.awaymgrSelect))
-
         self.connect(self.enviroButton, SIGNAL("clicked()"), lambda: self.openEnviros(self.matchID_display.text()))
         self.connect(self.homeLineupButton, SIGNAL("clicked()"), 
                                                                 lambda: self.openLineups(self.matchID_display.text(), self.hometeamSelect.currentText()))
@@ -275,6 +266,8 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
             if MsgPrompts.SaveDiscardOptionPrompt(self):
                 if not self.mapper.submit():
                     MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+                else:
+                    self.submitForms()
         QDialog.accept(self)
     
     def saveRecord(self, where):
@@ -284,6 +277,8 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
             if MsgPrompts.SaveDiscardOptionPrompt(self):
                 if not self.mapper.submit():
                     MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+                else:
+                    self.submitForms()
             else:
                 self.mapper.revert()
                 return
@@ -360,6 +355,8 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
                 if MsgPrompts.SaveDiscardOptionPrompt(self):
                     if not self.mapper.submit():
                         MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+                    else:
+                        self.submitForms()
                 else:
                     self.mapper.revert()
                     return
@@ -652,7 +649,7 @@ class EnviroEntryDlg(QDialog, ui_enviroentry.Ui_EnviroEntryDlg):
         # define mapper for Environments table
         # establish ties between underlying database model and data widgets on form
         self.mapper = QDataWidgetMapper(self)
-        self.mapper.setSubmitPolicy(QDataWidgetMapper.AutoSubmit)
+        self.mapper.setSubmitPolicy(QDataWidgetMapper.ManualSubmit)
         self.mapper.setModel(self.model)
         self.mapper.addMapping(self.enviroID_display, EnviroEntryDlg.ENVIRO_ID)
         self.mapper.addMapping(self.matchID_display, EnviroEntryDlg.MATCH_ID)
