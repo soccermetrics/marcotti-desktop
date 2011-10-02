@@ -24,7 +24,7 @@
 # #############
 
 DATAENTRY_VERSION = "1.2.0"
-SQL_VERSION = "1.2.0"
+SQL_VERSION = "1.2.1"
 
 # #############
 # Table IDs
