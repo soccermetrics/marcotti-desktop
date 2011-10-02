@@ -1,0 +1,37 @@
+FMRD-Desktop Version 1.2.0
+==========================
+
+The major change is that for the national team implementation of the
+FMRD-Desktop, the Country is equivalent to the Team.  The user interfaces
+and underlying code have been revised to reflect this.
+
+(+) - external changes to user
+(*) - internal changes
+
+Changes relative to Version 1.1.0
+---------------------------------
+
+* Remove OpenTeams() from Switchboard dialogs
+* Remove CheckMinimumVenueHosts() and CheckMinimumHosts()
+* Remove minimum club record requirement from CheckMinimumVenueCriteria()
+* Write CheckMinimumVenues()
+* Rewrite CountX() functions so that Country is equivalent to a Team
+* Remove TeamsEntryDlg class
+* Update SQL logic in Team-related delegate classes with Country references
+* Update SQL logic in TeamLinkingModel class with Country references
+* Update LineupPlayerComboBoxDelegate class - player's country is also his team
+* Update SQL logic Match Event delegates with Country references
+* Correct updateLinkingTable() in SubsEntryDlg
+* Correct procedures for inserting/updating in linking tables in 
+  Match, Environments, and Substitutions dialogs
+
++ Remove Teams button from Switchboard UIs
++ Remove Home Team field from Venue UI
++ Remove Team field from Lineup UI
++ Add Confederation combobox to Match UI
++ Revise tooltips in Substitutions UI
++ Update Home/Away Team logic in Match entry dialog
++ Update Teams logic in Goals entry dialog
++ Update Teams filtering in Match Event dialogs
++ Fix signal in Match Time fields that triggers EnableStoppageTime()
+
