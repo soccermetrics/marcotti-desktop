@@ -20,7 +20,16 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import os
+import sys
 import subprocess
+
+# check number of command line arguments
+if len(sys.argv) != 2:
+    print "Usage: python make_linux_exec.py <VERSION_TAG>"
+    raise SystemExit(1)
+    
+# Version tag comes from command-line argument    
+VERSIONTAG = sys.argv[1]
 
 # PyInstaller path and scripts
 PyInstaller = "/usr/local/src/pyinstaller-1.5/"
@@ -36,7 +45,6 @@ SourcePath = ".:FmrdAdmin/:FmrdLib/:FmrdMain/"
 
 # Executable filename fragments
 ExecPrefix = "fmrd-desktop-"
-VERSIONTAG = "v1.1.0"
 PLATFORM = "-linux"
 
 # Form commands
