@@ -50,7 +50,7 @@
 \begin_body
 
 \begin_layout Title
-FMRD v1.3.0: Desktop-Based Data Entry Application
+FMRD v1.2.0: Desktop-Based Data Entry Application
 \end_layout
 
 \begin_layout Author
@@ -64,7 +64,7 @@ Version
 \begin_layout Standard
 This manual refers to 
 \series bold
-v1.3.0
+v1.2.0
 \series default
  of the Football Match Result Database, which handles data entry for national
  team matches.
