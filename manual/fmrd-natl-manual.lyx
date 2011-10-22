@@ -50,11 +50,24 @@
 \begin_body
 
 \begin_layout Title
-FMRD: Desktop-Based Data Entry Application
+FMRD v1.3.0: Desktop-Based Data Entry Application
 \end_layout
 
 \begin_layout Author
 Howard Hamilton (hhamilton@soccermetrics.net)
+\end_layout
+
+\begin_layout Section*
+Version
+\end_layout
+
+\begin_layout Standard
+This manual refers to 
+\series bold
+v1.3.0
+\series default
+ of the Football Match Result Database, which handles data entry for national
+ team matches.
 \end_layout
 
 \begin_layout Section
@@ -107,7 +120,7 @@ Python 2.6-2.7 (3.0 not supported)
 \end_layout
 
 \begin_layout Itemize
-PostgreSQL 8.x
+PostgreSQL 8.x+
 \end_layout
 
 \begin_layout Itemize
@@ -592,92 +605,12 @@ Competition data entry dialog.
 \end_layout
 
 \begin_layout Subsubsection
-Teams
-\end_layout
-
-\begin_layout Standard
-The Teams dialog allows entry of the team name and its home country.
- Match venues, matches, match lineups, and match events must be associated
- with teams.
- 
-\end_layout
-
-\begin_layout Standard
-\begin_inset Float figure
-placement H
-wide false
-sideways false
-status open
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Graphics
-	filename /home/howard/research/soccermetrics/SoccerResultDB/fmrd-desktop/docs/screenshots/fmrd-teams.png
-	scale 50
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Caption
-
-\begin_layout Plain Layout
-Team data entry dialog.
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-The following fields are in the Teams dialog:
-\end_layout
-
-\begin_layout Itemize
-
-\series bold
-Team Name
-\series default
- (Alt-T): The official name of the team or its popular name.
-\end_layout
-
-\begin_layout Itemize
-
-\series bold
-Region
-\series default
- (Alt-R): The football confederation of the country in which the team resides.
- This field is used to filter the list of countries to be selected.
-\end_layout
-
-\begin_layout Itemize
-
-\series bold
-Country
-\series default
- (Alt-C): The country (or national association) in which the team resides.
-\end_layout
-
-\begin_layout Subsubsection
 Venues
 \end_layout
 
 \begin_layout Standard
 The Venues dialog allows for entry of data associated with football venues.
- This dialog is opened if there is more than one entry in the Teams database
- table.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -762,15 +695,6 @@ Time Zone
 \series default
  (Alt-Z): The time zone in which the venue resides.
  This field is disabled until the Confederation field is selected.
-\end_layout
-
-\begin_layout Itemize
-
-\series bold
-Home Team
-\series default
- (Alt-T): The team that plays the majority of its matches at the venue.
- This field can be left unselected.
 \end_layout
 
 \begin_layout Itemize
@@ -913,10 +837,9 @@ Players
 
 \begin_layout Standard
 The Players dialog allows for entry of player data.
- One thing that might be surprising to users who use other sports databases
- is that the team associated with the player is not entered here; rather,
- the association is handled via the match lineups.
- Thus the Players table is easier to maintain over time.
+ In contrast to the FMRD implementation for club teams, the player is tied
+ directly to the national team through his nationality in the Country field.
+ Therefore there is no need to implement a separate Teams dialog.
 \end_layout
 
 \begin_layout Standard
@@ -1010,7 +933,8 @@ Region
 \series bold
 Country
 \series default
- (Alt-N): The country for which the player holds FIFA eligibility.
+ (Alt-N): The country for which the player holds FIFA eligibility, which
+ is also the national team to which he belongs.
 \end_layout
 
 \begin_layout Itemize
@@ -1341,10 +1265,6 @@ At least one entry in Referees table
 At least two entries in Managers table
 \end_layout
 
-\begin_layout Itemize
-At least two entries in Teams table
-\end_layout
-
 \begin_layout Standard
 \begin_inset Float figure
 placement H
@@ -1474,6 +1394,17 @@ Home/Away Teams:
 \end_layout
 
 \begin_deeper
+\begin_layout Itemize
+
+\series bold
+Confederation
+\series default
+: The confederation listbox.
+ When a confederation from this listbox is selected, the corresponding Team
+ listbox is filtered so that only the nations listed are members of the
+ selected confederation.
+\end_layout
+
 \begin_layout Itemize
 
 \series bold
@@ -1648,8 +1579,9 @@ The Player Lineup subdialog is the second-most important dialog in the FMRD.
 
 \begin_layout Standard
 To assist the user there are status boxes along the bottom of the dialog
- that tabulate the number of starters, substitutes, captains and goalkeepers.
- The background of the boxes turn red if the number of players do not match
+ that tabulate the number of starters, substitutes, captains and goalkeepers
+ in the database that correspond to the specific team and match.
+ The background of the boxes are red if the number of players do not match
  requirements, and change to green when the requirements are met.
 \end_layout
 
@@ -1772,19 +1704,31 @@ The Match event dialogs use a series of listboxes to filter the database
 \end_layout
 
 \begin_layout Enumerate
-Upon opening the dialog, only the Competition listbox will be activated.
+Upon opening the dialog, only the 
+\series bold
+Competition
+\series default
+ listbox will be activated.
  Select the appropriate competition.
 \end_layout
 
 \begin_layout Enumerate
-The Rounds listbox will become active.
+The 
+\series bold
+Rounds
+\series default
+ listbox will become active.
  The listbox will be populated with the matchdays for which there exist
  a competition's matches in the database.
  Select the appropriate matchday.
 \end_layout
 
 \begin_layout Enumerate
-The Match listbox will become active.
+The 
+\series bold
+Match
+\series default
+ listbox will become active.
  It will be populated with the matches of the selected competition and matchday.
  Select the appropriate match.
 \end_layout
@@ -2742,12 +2686,12 @@ To access the personnel base tables, activate the Setup menu at the top
 placement H
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename /home/howard/research/soccermetrics/SoccerResultDB/trunk/docs/screenshots/switchboard-personnel-setup.png
+	filename /home/howard/research/soccermetrics/SoccerResultDB/fmrd-desktop/docs/screenshots/switchboard-personnel-setup.png
 	scale 50
 
 \end_inset
