@@ -1697,7 +1697,7 @@ class SubsEntryDlg(QDialog, ui_subsentry.Ui_SubsEntryDlg):
         
         # in substitution mapper
         self.inplayerMapper = QDataWidgetMapper(self)
-        self.inplayerMapper.setSubmitPolicy(QDataWidgetMapper.AutoSubmit)
+        self.inplayerMapper.setSubmitPolicy(QDataWidgetMapper.ManualSubmit)
         self.inplayerMapper.setModel(self.inplayerModel)
         inplayerDelegate = GenericDelegate(self)
         inplayerDelegate.insertColumnDelegate(IN_ID, SubInComboBoxDelegate(self))
@@ -1707,7 +1707,7 @@ class SubsEntryDlg(QDialog, ui_subsentry.Ui_SubsEntryDlg):
         
         # out substitution mapper
         self.outplayerMapper = QDataWidgetMapper(self)
-        self.outplayerMapper.setSubmitPolicy(QDataWidgetMapper.AutoSubmit)
+        self.outplayerMapper.setSubmitPolicy(QDataWidgetMapper.ManualSubmit)
         self.outplayerMapper.setModel(self.outplayerModel)
         outplayerDelegate = GenericDelegate(self)
         outplayerDelegate.insertColumnDelegate(OUT_ID, SubOutComboBoxDelegate(self))
@@ -1758,10 +1758,6 @@ class SubsEntryDlg(QDialog, ui_subsentry.Ui_SubsEntryDlg):
         self.connect(self.roundSelect, SIGNAL("currentIndexChanged(int)"),  lambda: self.enableAndFilterMatches(self.matchSelect))        
         self.connect(self.matchSelect, SIGNAL("currentIndexChanged(int)"), self.filterSubstitutionsAndTeams)      
         self.connect(self.teamSelect, SIGNAL("currentIndexChanged(int)"), self.enablePlayerData)                
-        self.connect(self.inplayerSelect, SIGNAL("currentIndexChanged(int)"), 
-                                                                      lambda: self.updateLinkingTable(self.inplayerMapper, self.inplayerSelect))
-        self.connect(self.outplayerSelect, SIGNAL("currentIndexChanged(int)"), 
-                                                                      lambda: self.updateLinkingTable(self.outplayerMapper, self.outplayerSelect))
         self.connect(self.subtimeEdit, SIGNAL("editingFinished()"),  lambda: self.enableStoppageTime(self.stoppageEdit))
  
     def accept(self):
@@ -1771,6 +1767,9 @@ class SubsEntryDlg(QDialog, ui_subsentry.Ui_SubsEntryDlg):
             if MsgPrompts.SaveDiscardOptionPrompt(self):
                 if not self.mapper.submit():
                     MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+                else:
+                    self.updateLinkingTable(self.inplayerMapper, self.inplayerSelect)
+                    self.updateLinkingTable(self.outplayerMapper, self.outplayerSelect)
         QDialog.accept(self)
    
     def saveRecord(self, where):
@@ -1780,6 +1779,9 @@ class SubsEntryDlg(QDialog, ui_subsentry.Ui_SubsEntryDlg):
             if MsgPrompts.SaveDiscardOptionPrompt(self):
                 if not self.mapper.submit():
                     MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+                else:
+                    self.updateLinkingTable(self.inplayerMapper, self.inplayerSelect)
+                    self.updateLinkingTable(self.outplayerMapper, self.outplayerSelect)                    
             else:
                 self.mapper.revert()
                 return
@@ -1908,6 +1910,9 @@ class SubsEntryDlg(QDialog, ui_subsentry.Ui_SubsEntryDlg):
                 if MsgPrompts.SaveDiscardOptionPrompt(self):
                     if not self.mapper.submit():
                         MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+                    else:
+                        self.updateLinkingTable(self.inplayerMapper, self.inplayerSelect)
+                        self.updateLinkingTable(self.outplayerMapper, self.outplayerSelect)                        
                 else:
                     self.mapper.revert()
                     return
