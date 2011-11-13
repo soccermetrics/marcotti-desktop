@@ -72,6 +72,22 @@ def CheckMinimumVenueHosts():
     else:
         return 0
         
+def CheckMinimumVenues():
+    """Check Venues table and returns True if there is at least one record in it."""
+    VenuesQuery = QSqlQuery()
+    VenuesQuery.prepare("SELECT COUNT(*) FROM tbl_venues")
+    VenuesQuery.exec_()
+    
+    if VenuesQuery.isActive():
+        VenuesQuery.next()
+        numVenues = VenuesQuery.value(0).toInt()[0]
+        if numVenues >= Constants.MIN_VENUES:
+            return 1
+        else:
+            return 0
+    else:
+        return 0
+    
 def CheckMinimumManagers():
     """Check Managers table and returns True if there are at least two records in it."""
     ManagerQuery = QSqlQuery()
@@ -115,7 +131,7 @@ def CheckMinimumMatchCriteria():
         (5) at least one record in Competitions table    
     """
     if CheckMinimumCompetitions():
-        if CheckMinimumVenueHosts() and CheckMinimumTeams():
+        if CheckMinimumVenues() and CheckMinimumTeams():
                 if CheckMinimumManagers() and CheckMinimumReferees():
                     return 1
                 
