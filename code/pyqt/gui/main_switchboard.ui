@@ -6,19 +6,19 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>360</width>
+    <width>420</width>
     <height>420</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>360</width>
+    <width>420</width>
     <height>420</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>360</width>
+    <width>420</width>
     <height>420</height>
    </size>
   </property>
@@ -43,6 +43,18 @@
         <layout class="QVBoxLayout" name="verticalLayout">
          <item>
           <widget class="QPushButton" name="compButton">
+           <property name="minimumSize">
+            <size>
+             <width>150</width>
+             <height>30</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>150</width>
+             <height>30</height>
+            </size>
+           </property>
            <property name="text">
             <string>Competitions</string>
            </property>
@@ -50,6 +62,18 @@
          </item>
          <item>
           <widget class="QPushButton" name="teamButton">
+           <property name="minimumSize">
+            <size>
+             <width>150</width>
+             <height>30</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>150</width>
+             <height>30</height>
+            </size>
+           </property>
            <property name="text">
             <string>Teams</string>
            </property>
@@ -57,6 +81,18 @@
          </item>
          <item>
           <widget class="QPushButton" name="venueButton">
+           <property name="minimumSize">
+            <size>
+             <width>150</width>
+             <height>30</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>150</width>
+             <height>30</height>
+            </size>
+           </property>
            <property name="text">
             <string>Venues</string>
            </property>
@@ -89,6 +125,18 @@
         <layout class="QVBoxLayout" name="verticalLayout_2">
          <item>
           <widget class="QPushButton" name="playerButton">
+           <property name="minimumSize">
+            <size>
+             <width>150</width>
+             <height>30</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>150</width>
+             <height>30</height>
+            </size>
+           </property>
            <property name="text">
             <string>Players</string>
            </property>
@@ -96,6 +144,18 @@
          </item>
          <item>
           <widget class="QPushButton" name="refereeButton">
+           <property name="minimumSize">
+            <size>
+             <width>150</width>
+             <height>30</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>150</width>
+             <height>30</height>
+            </size>
+           </property>
            <property name="text">
             <string>Referees</string>
            </property>
@@ -103,6 +163,18 @@
          </item>
          <item>
           <widget class="QPushButton" name="managerButton">
+           <property name="minimumSize">
+            <size>
+             <width>150</width>
+             <height>30</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>150</width>
+             <height>30</height>
+            </size>
+           </property>
            <property name="text">
             <string>Managers</string>
            </property>
@@ -128,6 +200,18 @@
       <layout class="QVBoxLayout" name="verticalLayout_3">
        <item>
         <widget class="QPushButton" name="matchButton">
+         <property name="minimumSize">
+          <size>
+           <width>150</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>150</width>
+           <height>30</height>
+          </size>
+         </property>
          <property name="text">
           <string>Matches</string>
          </property>
@@ -135,6 +219,18 @@
        </item>
        <item>
         <widget class="QPushButton" name="goalButton">
+         <property name="minimumSize">
+          <size>
+           <width>150</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>150</width>
+           <height>30</height>
+          </size>
+         </property>
          <property name="text">
           <string>Goals</string>
          </property>
@@ -142,6 +238,18 @@
        </item>
        <item>
         <widget class="QPushButton" name="penButton">
+         <property name="minimumSize">
+          <size>
+           <width>150</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>150</width>
+           <height>30</height>
+          </size>
+         </property>
          <property name="text">
           <string>Penalties</string>
          </property>
@@ -149,6 +257,18 @@
        </item>
        <item>
         <widget class="QPushButton" name="offenseButton">
+         <property name="minimumSize">
+          <size>
+           <width>150</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>150</width>
+           <height>30</height>
+          </size>
+         </property>
          <property name="text">
           <string>Offenses</string>
          </property>
@@ -156,6 +276,18 @@
        </item>
        <item>
         <widget class="QPushButton" name="subButton">
+         <property name="minimumSize">
+          <size>
+           <width>150</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>150</width>
+           <height>30</height>
+          </size>
+         </property>
          <property name="text">
           <string>Substitutions</string>
          </property>
@@ -163,8 +295,39 @@
        </item>
        <item>
         <widget class="QPushButton" name="switchButton">
+         <property name="minimumSize">
+          <size>
+           <width>150</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>150</width>
+           <height>30</height>
+          </size>
+         </property>
          <property name="text">
           <string>Position Switches</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="shootoutButton">
+         <property name="minimumSize">
+          <size>
+           <width>150</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>150</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Penalty Shootouts</string>
          </property>
         </widget>
        </item>
@@ -178,7 +341,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>360</width>
+     <width>420</width>
      <height>23</height>
     </rect>
    </property>
@@ -196,10 +359,14 @@
      <property name="title">
       <string>&amp;Overview</string>
      </property>
-     <addaction name="actionField_Surfaces"/>
+     <addaction name="actionPhases"/>
+     <addaction name="actionGroups"/>
      <addaction name="actionRounds"/>
+     <addaction name="actionKnockout_Rounds"/>
+     <addaction name="actionMatchdays"/>
      <addaction name="actionTime_Zones"/>
      <addaction name="actionWeather_Conditions"/>
+     <addaction name="actionField_Surfaces"/>
     </widget>
     <widget class="QMenu" name="menuPersonnel">
      <property name="title">
@@ -320,6 +487,26 @@
   <action name="actionField_Surfaces">
    <property name="text">
     <string>Field Surfaces</string>
+   </property>
+  </action>
+  <action name="actionKnockout_Rounds">
+   <property name="text">
+    <string>Knockout Rounds</string>
+   </property>
+  </action>
+  <action name="actionGroups">
+   <property name="text">
+    <string>Groups</string>
+   </property>
+  </action>
+  <action name="actionMatchdays">
+   <property name="text">
+    <string>Matchdays</string>
+   </property>
+  </action>
+  <action name="actionPhases">
+   <property name="text">
+    <string>Phases</string>
    </property>
   </action>
  </widget>
