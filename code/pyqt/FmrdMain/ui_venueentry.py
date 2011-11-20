@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'gui/venue_entry.ui'
 #
-# Created: Wed Aug 24 00:00:24 2011
+# Created: Sat Nov 19 20:17:19 2011
 #      by: PyQt4 UI code generator 4.7.2
 #
 # WARNING! All changes made in this file will be lost!
