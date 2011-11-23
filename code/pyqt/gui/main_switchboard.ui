@@ -362,6 +362,7 @@
      <addaction name="actionPhases"/>
      <addaction name="actionGroups"/>
      <addaction name="actionRounds"/>
+     <addaction name="actionGroup_Rounds"/>
      <addaction name="actionKnockout_Rounds"/>
      <addaction name="actionMatchdays"/>
      <addaction name="actionTime_Zones"/>
@@ -507,6 +508,11 @@
   <action name="actionPhases">
    <property name="text">
     <string>Phases</string>
+   </property>
+  </action>
+  <action name="actionGroup_Rounds">
+   <property name="text">
+    <string>Group Rounds</string>
    </property>
   </action>
  </widget>

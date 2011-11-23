@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'gui/main_switchboard.ui'
 #
-# Created: Sat Nov 19 20:05:42 2011
+# Created: Wed Nov 23 00:06:37 2011
 #      by: PyQt4 UI code generator 4.7.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -172,10 +172,13 @@ class Ui_MainSwitchboard(object):
         self.actionMatchdays.setObjectName("actionMatchdays")
         self.actionPhases = QtGui.QAction(MainSwitchboard)
         self.actionPhases.setObjectName("actionPhases")
+        self.actionGroup_Rounds = QtGui.QAction(MainSwitchboard)
+        self.actionGroup_Rounds.setObjectName("actionGroup_Rounds")
         self.menuMain.addAction(self.actionQuit)
         self.menuOverview.addAction(self.actionPhases)
         self.menuOverview.addAction(self.actionGroups)
         self.menuOverview.addAction(self.actionRounds)
+        self.menuOverview.addAction(self.actionGroup_Rounds)
         self.menuOverview.addAction(self.actionKnockout_Rounds)
         self.menuOverview.addAction(self.actionMatchdays)
         self.menuOverview.addAction(self.actionTime_Zones)
@@ -249,4 +252,5 @@ class Ui_MainSwitchboard(object):
         self.actionGroups.setText(QtGui.QApplication.translate("MainSwitchboard", "Groups", None, QtGui.QApplication.UnicodeUTF8))
         self.actionMatchdays.setText(QtGui.QApplication.translate("MainSwitchboard", "Matchdays", None, QtGui.QApplication.UnicodeUTF8))
         self.actionPhases.setText(QtGui.QApplication.translate("MainSwitchboard", "Phases", None, QtGui.QApplication.UnicodeUTF8))
+        self.actionGroup_Rounds.setText(QtGui.QApplication.translate("MainSwitchboard", "Group Rounds", None, QtGui.QApplication.UnicodeUTF8))
 
