@@ -43,7 +43,12 @@ FlankPosSetupDlg -- data entry to Flank Positions table
 FoulSetupDlg -- data entry to Fouls table
 GoalEventSetupDlg -- data entry to Goal Events table
 GoalStrikeSetupDlg -- data entry to Goal Strikes table
+GroupSetupDlg -- data entry to Groups table
+GroupRoundSetupDlg -- data entry to Group Rounds table
+KnockoutRoundSetupDlg -- data entry to Knockout Rounds table
+MatchdaySetupDlg -- data entry to Matchdays table
 PenSetupDlg -- data entry to Penalty Outcomes table
+PhaseSetupDlg -- data entry to Competition Phases table
 PosSetupDlg -- data entry to Positions table
 RoundSetupDlg -- data entry to Rounds table
 TimeZoneSetupDlg -- data entry to Time Zones table
@@ -494,6 +499,1106 @@ class FoulSetupDlg(QDialog, ui_foulsetup.Ui_FoulSetupDlg):
         else:
             index = self.model.index(row, FoulSetupDlg.DESC)        
             if self.foulDescEdit.text() != self.model.data(index).toString():
+                return True
+            else:
+                return False
+
+
+class GroupSetupDlg(QDialog, ui_groupsetup.Ui_GroupSetupDlg):
+    """Implement group name data entry dialog, and accesses and writes to Groups table."""
+    
+    ID,  DESC = range(2)
+
+    def __init__(self, parent=None):
+        """Constructor for GroupSetupDlg class."""
+        super(GroupSetupDlg, self).__init__(parent)
+        self.setupUi(self)
+        
+        # define model
+        # underlying database model
+        self.model = QSqlTableModel(self)
+        self.model.setTable("tbl_groups")
+        self.model.setSort(GroupSetupDlg.ID, Qt.AscendingOrder)
+        self.model.select()
+        
+        # define mapper
+        # establish ties between underlying database model and data widgets on form
+        self.mapper = QDataWidgetMapper(self)
+        self.mapper.setSubmitPolicy(QDataWidgetMapper.ManualSubmit)
+        self.mapper.setModel(self.model)
+        self.mapper.addMapping(self.groupID_display, GroupSetupDlg.ID)
+        self.mapper.addMapping(self.groupDescEdit, GroupSetupDlg.DESC)
+        self.mapper.toFirst()
+        
+        # disable all fields if no records in database table
+        if not self.model.rowCount():
+            self.groupID_display.setDisabled(True)
+            self.groupDescEdit.setDisabled(True)
+            # disable save and delete buttons
+            self.saveEntry.setDisabled(True)
+            self.deleteEntry.setDisabled(True)
+        
+        # disable First and Previous Entry buttons
+        self.firstEntry.setDisabled(True)
+        self.prevEntry.setDisabled(True)
+        
+        # disable Next and Last Entry buttons if less than two records
+        if self.model.rowCount() < 2:
+            self.nextEntry.setDisabled(True)
+            self.lastEntry.setDisabled(True)
+            
+        # configure signal/slot
+        self.connect(self.firstEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.FIRST))
+        self.connect(self.prevEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.PREV))
+        self.connect(self.nextEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.NEXT))
+        self.connect(self.lastEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.LAST))
+        self.connect(self.saveEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.NULL))
+        self.connect(self.addEntry, SIGNAL("clicked()"), self.addRecord)
+        self.connect(self.deleteEntry, SIGNAL("clicked()"), self.deleteRecord)        
+        self.connect(self.closeButton, SIGNAL("clicked()"), self.accept)
+
+    def accept(self):
+        """Submits changes to database and closes window upon confirmation from user."""
+        row = self.mapper.currentIndex()
+        if self.isDirty(row):
+            if not CheckDuplicateRecords("group_desc", self.model.tableName(), self.groupDescEdit.text()):        
+                if MsgPrompts.SaveDiscardOptionPrompt(self):
+                    if not self.mapper.submit():
+                        MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+            else:
+                MsgPrompts.DuplicateRecordErrorPrompt(self, self.model.tableName(), self.groupDescEdit.text())
+        QDialog.accept(self)
+    
+    def saveRecord(self, where):
+        """Submits changes to database and navigates through form."""
+        row = self.mapper.currentIndex()
+        if self.isDirty(row):
+            if not CheckDuplicateRecords("group_desc", self.model.tableName(), self.groupDescEdit.text()):        
+                if MsgPrompts.SaveDiscardOptionPrompt(self):
+                    if not self.mapper.submit():
+                        MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+            else:
+                MsgPrompts.DuplicateRecordErrorPrompt(self, self.model.tableName(), self.groupDescEdit.text())
+                self.mapper.revert()
+                return
+                
+        if where == Constants.FIRST:
+            self.firstEntry.setDisabled(True)
+            self.prevEntry.setDisabled(True)
+            if not self.nextEntry.isEnabled():
+                self.nextEntry.setEnabled(True)
+                self.lastEntry.setEnabled(True)
+            row = 0
+        elif where == Constants.PREV:
+            row -= 1
+            if not self.nextEntry.isEnabled():
+                    self.nextEntry.setEnabled(True)
+                    self.lastEntry.setEnabled(True)   
+            if row == 0:
+                self.firstEntry.setDisabled(True)
+                self.prevEntry.setDisabled(True)                
+        elif where == Constants.NEXT:
+            row += 1
+            if not self.prevEntry.isEnabled():
+                self.prevEntry.setEnabled(True)
+                self.firstEntry.setEnabled(True)
+            if row >= self.model.rowCount() - 1:
+                self.nextEntry.setDisabled(True)
+                self.lastEntry.setDisabled(True)
+                row = self.model.rowCount() - 1
+        elif where == Constants.LAST:
+            self.nextEntry.setDisabled(True)
+            self.lastEntry.setDisabled(True)
+            if not self.prevEntry.isEnabled():
+                self.prevEntry.setEnabled(True)
+                self.firstEntry.setEnabled(True)
+            row = self.model.rowCount() - 1
+        self.mapper.setCurrentIndex(row)
+        
+        # enable Delete button if at least one record
+        if self.model.rowCount():
+            self.deleteEntry.setEnabled(True)        
+        
+    def addRecord(self):
+        """Adds new record at end of entry list."""                        
+        # save current index if valid
+        row = self.mapper.currentIndex()
+        if row != -1:
+            if self.isDirty(row):
+                if not CheckDuplicateRecords("group_desc", self.model.tableName(), self.groupDescEdit.text()):        
+                    if MsgPrompts.SaveDiscardOptionPrompt(self):
+                        if not self.mapper.submit():
+                            MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+                else:
+                    MsgPrompts.DuplicateRecordErrorPrompt(self, self.model.tableName(), self.groupDescEdit.text())
+                    self.mapper.revert()
+                    return
+        
+        row = self.model.rowCount()
+        query = QSqlQuery()
+        query.exec_(QString("SELECT MAX(group_id) FROM tbl_groups"))
+        if query.next():
+            maxGroupID = query.value(0).toInt()[0]
+            if not maxGroupID:
+                outcome_id = Constants.MinGroupID
+            else:
+                outcome_id = QString()
+                outcome_id.setNum(maxGroupID+1)          
+        self.model.insertRow(row)
+        self.mapper.setCurrentIndex(row)
+
+        # assign value to GroupID field
+        self.groupID_display.setText(outcome_id)
+        
+        # disable next/last navigation buttons
+        self.nextEntry.setDisabled(True)
+        self.lastEntry.setDisabled(True)
+        # enable first/previous navigation buttons
+        if self.model.rowCount() > 1:
+            self.prevEntry.setEnabled(True)
+            self.firstEntry.setEnabled(True)
+            # enable Delete button if at least one record
+            self.deleteEntry.setEnabled(True)
+            
+        # enable Save button
+        if not self.saveEntry.isEnabled():
+            self.saveEntry.setEnabled(True)
+        
+        # enable form widgets
+        self.groupID_display.setEnabled(True)
+        self.groupDescEdit.setEnabled(True)
+        
+        # initialize form widgets
+        self.groupDescEdit.setFocus()
+    
+    def deleteRecord(self):
+        """Deletes record from database upon user confirmation.
+        
+        First, check that the group record is not being referenced in the Group Matches table.
+        If it is not being referenced in the dependent table, ask for user confirmation and delete 
+        record upon positive confirmation.  If it is being referenced by dependent table, alert user.
+        """
+        
+        childTableList = ["tbl_groupmatches"]
+        fieldName = "group_id"
+        group_id = self.groupID_display.text()
+        
+        if not CountChildRecords(childTableList, fieldName, group_id):
+            if QMessageBox.question(self, QString("Delete Record"), 
+                                                QString("Delete current record?"), 
+                                                QMessageBox.Yes|QMessageBox.No) == QMessageBox.No:
+                return
+            else:
+                row = self.mapper.currentIndex()
+                self.model.removeRow(row)
+                if not self.model.submitAll():
+                    MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+                    return
+                if row + 1 >= self.model.rowCount():
+                    row = self.model.rowCount() - 1
+                self.mapper.setCurrentIndex(row) 
+                # disable Delete button if no records in database
+                if not self.model.rowCount():
+                    self.deleteEntry.setDisabled(True)                
+        else:
+            DeletionErrorPrompt(self)
+            
+    def isDirty(self, row):
+        """Compares current state of data entry form to current record in database, and returns a boolean.
+        
+        Arguments:
+            row: current record in mapper and model
+        
+        Returns:
+            TRUE: there are changes between data entry form and current record in database,
+                      or new record in database
+            FALSE: no changes between data entry form and current record in database
+        """
+        if row == self.model.rowCount():
+            return True
+        else:
+            index = self.model.index(row, GroupSetupDlg.DESC)        
+            if self.groupDescEdit.text() != self.model.data(index).toString():
+                return True
+            else:
+                return False
+        
+
+class MatchdaySetupDlg(QDialog, ui_matchdaysetup.Ui_MatchdaySetupDlg):
+    """Implement matchday description (knockout stage) data entry dialog, and accesses and writes to Matchdays table."""
+    
+    ID,  DESC = range(2)
+
+    def __init__(self, parent=None):
+        """Constructor for MatchdaySetupDlg class."""
+        super(MatchdaySetupDlg, self).__init__(parent)
+        self.setupUi(self)
+        
+        # define model
+        # underlying database model
+        self.model = QSqlTableModel(self)
+        self.model.setTable("tbl_matchdays")
+        self.model.setSort(MatchdaySetupDlg.ID, Qt.AscendingOrder)
+        self.model.select()
+        
+        # define mapper
+        # establish ties between underlying database model and data widgets on form
+        self.mapper = QDataWidgetMapper(self)
+        self.mapper.setSubmitPolicy(QDataWidgetMapper.ManualSubmit)
+        self.mapper.setModel(self.model)
+        self.mapper.addMapping(self.matchdayID_display, MatchdaySetupDlg.ID)
+        self.mapper.addMapping(self.matchdayDescEdit, MatchdaySetupDlg.DESC)
+        self.mapper.toFirst()
+        
+        # disable all fields if no records in database table
+        if not self.model.rowCount():
+            self.matchdayID_display.setDisabled(True)
+            self.matchdayDescEdit.setDisabled(True)
+            # disable save and delete buttons
+            self.saveEntry.setDisabled(True)
+            self.deleteEntry.setDisabled(True)
+        
+        # disable First and Previous Entry buttons
+        self.firstEntry.setDisabled(True)
+        self.prevEntry.setDisabled(True)
+        
+        # disable Next and Last Entry buttons if less than two records
+        if self.model.rowCount() < 2:
+            self.nextEntry.setDisabled(True)
+            self.lastEntry.setDisabled(True)
+            
+        # configure signal/slot
+        self.connect(self.firstEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.FIRST))
+        self.connect(self.prevEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.PREV))
+        self.connect(self.nextEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.NEXT))
+        self.connect(self.lastEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.LAST))
+        self.connect(self.saveEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.NULL))
+        self.connect(self.addEntry, SIGNAL("clicked()"), self.addRecord)
+        self.connect(self.deleteEntry, SIGNAL("clicked()"), self.deleteRecord)        
+        self.connect(self.closeButton, SIGNAL("clicked()"), self.accept)
+
+    def accept(self):
+        """Submits changes to database and closes window upon confirmation from user."""
+        row = self.mapper.currentIndex()
+        if self.isDirty(row):
+            if not CheckDuplicateRecords("matchday_desc", self.model.tableName(), self.matchdayDescEdit.text()):        
+                if MsgPrompts.SaveDiscardOptionPrompt(self):
+                    if not self.mapper.submit():
+                        MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+            else:
+                MsgPrompts.DuplicateRecordErrorPrompt(self, self.model.tableName(), self.matchdayDescEdit.text())
+        QDialog.accept(self)
+    
+    def saveRecord(self, where):
+        """Submits changes to database and navigates through form."""
+        row = self.mapper.currentIndex()
+        if self.isDirty(row):
+            if not CheckDuplicateRecords("matchday_desc", self.model.tableName(), self.matchdayDescEdit.text()):        
+                if MsgPrompts.SaveDiscardOptionPrompt(self):
+                    if not self.mapper.submit():
+                        MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+            else:
+                MsgPrompts.DuplicateRecordErrorPrompt(self, self.model.tableName(), self.matchdayDescEdit.text())
+                self.mapper.revert()
+                return
+                
+        if where == Constants.FIRST:
+            self.firstEntry.setDisabled(True)
+            self.prevEntry.setDisabled(True)
+            if not self.nextEntry.isEnabled():
+                self.nextEntry.setEnabled(True)
+                self.lastEntry.setEnabled(True)
+            row = 0
+        elif where == Constants.PREV:
+            row -= 1
+            if not self.nextEntry.isEnabled():
+                    self.nextEntry.setEnabled(True)
+                    self.lastEntry.setEnabled(True)   
+            if row == 0:
+                self.firstEntry.setDisabled(True)
+                self.prevEntry.setDisabled(True)                
+        elif where == Constants.NEXT:
+            row += 1
+            if not self.prevEntry.isEnabled():
+                self.prevEntry.setEnabled(True)
+                self.firstEntry.setEnabled(True)
+            if row >= self.model.rowCount() - 1:
+                self.nextEntry.setDisabled(True)
+                self.lastEntry.setDisabled(True)
+                row = self.model.rowCount() - 1
+        elif where == Constants.LAST:
+            self.nextEntry.setDisabled(True)
+            self.lastEntry.setDisabled(True)
+            if not self.prevEntry.isEnabled():
+                self.prevEntry.setEnabled(True)
+                self.firstEntry.setEnabled(True)
+            row = self.model.rowCount() - 1
+        self.mapper.setCurrentIndex(row)
+        
+        # enable Delete button if at least one record
+        if self.model.rowCount():
+            self.deleteEntry.setEnabled(True)        
+        
+    def addRecord(self):
+        """Adds new record at end of entry list."""                        
+        # save current index if valid
+        row = self.mapper.currentIndex()
+        if row != -1:
+            if self.isDirty(row):
+                if not CheckDuplicateRecords("matchday_desc", self.model.tableName(), self.matchdayDescEdit.text()):        
+                    if MsgPrompts.SaveDiscardOptionPrompt(self):
+                        if not self.mapper.submit():
+                            MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+                else:
+                    MsgPrompts.DuplicateRecordErrorPrompt(self, self.model.tableName(), self.matchdayDescEdit.text())
+                    self.mapper.revert()
+                    return
+        
+        row = self.model.rowCount()
+        query = QSqlQuery()
+        query.exec_(QString("SELECT MAX(matchday_id) FROM tbl_matchdays"))
+        if query.next():
+            maxMatchdayID = query.value(0).toInt()[0]
+            if not maxMatchdayID:
+                outcome_id = Constants.MinMatchdayID
+            else:
+                outcome_id = QString()
+                outcome_id.setNum(maxMatchdayID+1)          
+        self.model.insertRow(row)
+        self.mapper.setCurrentIndex(row)
+
+        # assign value to MatchdayID field
+        self.matchdayID_display.setText(outcome_id)
+        
+        # disable next/last navigation buttons
+        self.nextEntry.setDisabled(True)
+        self.lastEntry.setDisabled(True)
+        # enable first/previous navigation buttons
+        if self.model.rowCount() > 1:
+            self.prevEntry.setEnabled(True)
+            self.firstEntry.setEnabled(True)
+            # enable Delete button if at least one record
+            self.deleteEntry.setEnabled(True)
+            
+        # enable Save button
+        if not self.saveEntry.isEnabled():
+            self.saveEntry.setEnabled(True)
+        
+        # enable form widgets
+        self.matchdayID_display.setEnabled(True)
+        self.matchdayDescEdit.setEnabled(True)
+        
+        # initialize form widgets
+        self.matchdayDescEdit.setFocus()
+    
+    def deleteRecord(self):
+        """Deletes record from database upon user confirmation.
+        
+        First, check that the matchday record is not being referenced in the Knockout Matches table.
+        If it is not being referenced in the dependent table, ask for user confirmation and delete 
+        record upon positive confirmation.  If it is being referenced by dependent table, alert user.
+        """
+        
+        childTableList = ["tbl_knockoutmatches"]
+        fieldName = "knockout_id"
+        matchday_id = self.matchdayID_display.text()
+        
+        if not CountChildRecords(childTableList, fieldName, matchday_id):
+            if QMessageBox.question(self, QString("Delete Record"), 
+                                                QString("Delete current record?"), 
+                                                QMessageBox.Yes|QMessageBox.No) == QMessageBox.No:
+                return
+            else:
+                row = self.mapper.currentIndex()
+                self.model.removeRow(row)
+                if not self.model.submitAll():
+                    MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+                    return
+                if row + 1 >= self.model.rowCount():
+                    row = self.model.rowCount() - 1
+                self.mapper.setCurrentIndex(row) 
+                # disable Delete button if no records in database
+                if not self.model.rowCount():
+                    self.deleteEntry.setDisabled(True)                
+        else:
+            DeletionErrorPrompt(self)
+            
+    def isDirty(self, row):
+        """Compares current state of data entry form to current record in database, and returns a boolean.
+        
+        Arguments:
+            row: current record in mapper and model
+        
+        Returns:
+            TRUE: there are changes between data entry form and current record in database,
+                      or new record in database
+            FALSE: no changes between data entry form and current record in database
+        """
+        if row == self.model.rowCount():
+            return True
+        else:
+            index = self.model.index(row, MatchdaySetupDlg.DESC)        
+            if self.matchdayDescEdit.text() != self.model.data(index).toString():
+                return True
+            else:
+                return False
+
+
+class GroupRoundSetupDlg(QDialog, ui_grproundsetup.Ui_GroupRoundSetupDlg):
+    """Implement round description (group stage) data entry dialog, and accesses and writes to Group Rounds table."""
+    
+    ID,  DESC = range(2)
+
+    def __init__(self, parent=None):
+        """Constructor for GroupRoundSetupDlg class."""
+        super(GroupRoundSetupDlg, self).__init__(parent)
+        self.setupUi(self)
+        
+        # define model
+        # underlying database model
+        self.model = QSqlTableModel(self)
+        self.model.setTable("tbl_grouprounds")
+        self.model.setSort(GroupRoundSetupDlg.ID, Qt.AscendingOrder)
+        self.model.select()
+        
+        # define mapper
+        # establish ties between underlying database model and data widgets on form
+        self.mapper = QDataWidgetMapper(self)
+        self.mapper.setSubmitPolicy(QDataWidgetMapper.ManualSubmit)
+        self.mapper.setModel(self.model)
+        self.mapper.addMapping(self.grproundID_display, GroupRoundSetupDlg.ID)
+        self.mapper.addMapping(self.grproundDescEdit, GroupRoundSetupDlg.DESC)
+        self.mapper.toFirst()
+        
+        # disable all fields if no records in database table
+        if not self.model.rowCount():
+            self.grproundID_display.setDisabled(True)
+            self.grproundDescEdit.setDisabled(True)
+            # disable save and delete buttons
+            self.saveEntry.setDisabled(True)
+            self.deleteEntry.setDisabled(True)
+        
+        # disable First and Previous Entry buttons
+        self.firstEntry.setDisabled(True)
+        self.prevEntry.setDisabled(True)
+        
+        # disable Next and Last Entry buttons if less than two records
+        if self.model.rowCount() < 2:
+            self.nextEntry.setDisabled(True)
+            self.lastEntry.setDisabled(True)
+            
+        # configure signal/slot
+        self.connect(self.firstEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.FIRST))
+        self.connect(self.prevEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.PREV))
+        self.connect(self.nextEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.NEXT))
+        self.connect(self.lastEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.LAST))
+        self.connect(self.saveEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.NULL))
+        self.connect(self.addEntry, SIGNAL("clicked()"), self.addRecord)
+        self.connect(self.deleteEntry, SIGNAL("clicked()"), self.deleteRecord)        
+        self.connect(self.closeButton, SIGNAL("clicked()"), self.accept)
+
+    def accept(self):
+        """Submits changes to database and closes window upon confirmation from user."""
+        row = self.mapper.currentIndex()
+        if self.isDirty(row):
+            if not CheckDuplicateRecords("grpround_desc", self.model.tableName(), self.grproundDescEdit.text()):        
+                if MsgPrompts.SaveDiscardOptionPrompt(self):
+                    if not self.mapper.submit():
+                        MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+            else:
+                MsgPrompts.DuplicateRecordErrorPrompt(self, self.model.tableName(), self.grproundDescEdit.text())
+        QDialog.accept(self)
+    
+    def saveRecord(self, where):
+        """Submits changes to database and navigates through form."""
+        row = self.mapper.currentIndex()
+        if self.isDirty(row):
+            if not CheckDuplicateRecords("grpround_desc", self.model.tableName(), self.grproundDescEdit.text()):        
+                if MsgPrompts.SaveDiscardOptionPrompt(self):
+                    if not self.mapper.submit():
+                        MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+            else:
+                MsgPrompts.DuplicateRecordErrorPrompt(self, self.model.tableName(), self.grproundDescEdit.text())
+                self.mapper.revert()
+                return
+                
+        if where == Constants.FIRST:
+            self.firstEntry.setDisabled(True)
+            self.prevEntry.setDisabled(True)
+            if not self.nextEntry.isEnabled():
+                self.nextEntry.setEnabled(True)
+                self.lastEntry.setEnabled(True)
+            row = 0
+        elif where == Constants.PREV:
+            row -= 1
+            if not self.nextEntry.isEnabled():
+                    self.nextEntry.setEnabled(True)
+                    self.lastEntry.setEnabled(True)   
+            if row == 0:
+                self.firstEntry.setDisabled(True)
+                self.prevEntry.setDisabled(True)                
+        elif where == Constants.NEXT:
+            row += 1
+            if not self.prevEntry.isEnabled():
+                self.prevEntry.setEnabled(True)
+                self.firstEntry.setEnabled(True)
+            if row >= self.model.rowCount() - 1:
+                self.nextEntry.setDisabled(True)
+                self.lastEntry.setDisabled(True)
+                row = self.model.rowCount() - 1
+        elif where == Constants.LAST:
+            self.nextEntry.setDisabled(True)
+            self.lastEntry.setDisabled(True)
+            if not self.prevEntry.isEnabled():
+                self.prevEntry.setEnabled(True)
+                self.firstEntry.setEnabled(True)
+            row = self.model.rowCount() - 1
+        self.mapper.setCurrentIndex(row)
+        
+        # enable Delete button if at least one record
+        if self.model.rowCount():
+            self.deleteEntry.setEnabled(True)        
+        
+    def addRecord(self):
+        """Adds new record at end of entry list."""                        
+        # save current index if valid
+        row = self.mapper.currentIndex()
+        if row != -1:
+            if self.isDirty(row):
+                if not CheckDuplicateRecords("grpround_desc", self.model.tableName(), self.grproundDescEdit.text()):        
+                    if MsgPrompts.SaveDiscardOptionPrompt(self):
+                        if not self.mapper.submit():
+                            MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+                else:
+                    MsgPrompts.DuplicateRecordErrorPrompt(self, self.model.tableName(), self.grproundDescEdit.text())
+                    self.mapper.revert()
+                    return
+        
+        row = self.model.rowCount()
+        query = QSqlQuery()
+        query.exec_(QString("SELECT MAX(grpround_id) FROM tbl_grouprounds"))
+        if query.next():
+            maxGroupRoundID = query.value(0).toInt()[0]
+            if not maxGroupRoundID:
+                outcome_id = Constants.MinGroupRoundID
+            else:
+                outcome_id = QString()
+                outcome_id.setNum(maxGroupRoundID+1)          
+        self.model.insertRow(row)
+        self.mapper.setCurrentIndex(row)
+
+        # assign value to grpRoundID field
+        self.grproundID_display.setText(outcome_id)
+        
+        # disable next/last navigation buttons
+        self.nextEntry.setDisabled(True)
+        self.lastEntry.setDisabled(True)
+        # enable first/previous navigation buttons
+        if self.model.rowCount() > 1:
+            self.prevEntry.setEnabled(True)
+            self.firstEntry.setEnabled(True)
+            # enable Delete button if at least one record
+            self.deleteEntry.setEnabled(True)
+            
+        # enable Save button
+        if not self.saveEntry.isEnabled():
+            self.saveEntry.setEnabled(True)
+        
+        # enable form widgets
+        self.grproundID_display.setEnabled(True)
+        self.grproundDescEdit.setEnabled(True)
+        
+        # initialize form widgets
+        self.grproundDescEdit.setFocus()
+    
+    def deleteRecord(self):
+        """Deletes record from database upon user confirmation.
+        
+        First, check that the group round name record is not being referenced in the Group Matches table.
+        If it is not being referenced in the dependent table, ask for user confirmation and delete 
+        record upon positive confirmation.  If it is being referenced by dependent table, alert user.
+        """
+        
+        childTableList = ["tbl_groupmatches"]
+        fieldName = "grpround_id"
+        grpround_id = self.grproundID_display.text()
+        
+        if not CountChildRecords(childTableList, fieldName, grpround_id):
+            if QMessageBox.question(self, QString("Delete Record"), 
+                                                QString("Delete current record?"), 
+                                                QMessageBox.Yes|QMessageBox.No) == QMessageBox.No:
+                return
+            else:
+                row = self.mapper.currentIndex()
+                self.model.removeRow(row)
+                if not self.model.submitAll():
+                    MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+                    return
+                if row + 1 >= self.model.rowCount():
+                    row = self.model.rowCount() - 1
+                self.mapper.setCurrentIndex(row) 
+                # disable Delete button if no records in database
+                if not self.model.rowCount():
+                    self.deleteEntry.setDisabled(True)                
+        else:
+            DeletionErrorPrompt(self)
+            
+    def isDirty(self, row):
+        """Compares current state of data entry form to current record in database, and returns a boolean.
+        
+        Arguments:
+            row: current record in mapper and model
+        
+        Returns:
+            TRUE: there are changes between data entry form and current record in database,
+                      or new record in database
+            FALSE: no changes between data entry form and current record in database
+        """
+        if row == self.model.rowCount():
+            return True
+        else:
+            index = self.model.index(row, GroupRoundSetupDlg.DESC)        
+            if self.grproundDescEdit.text() != self.model.data(index).toString():
+                return True
+            else:
+                return False
+
+
+class KnockoutRoundSetupDlg(QDialog, ui_koroundsetup.Ui_KnockoutRoundSetupDlg):
+    """Implement knockout round name data entry dialog, and accesses and writes to Knockout Rounds table."""
+    
+    ID,  DESC = range(2)
+
+    def __init__(self, parent=None):
+        """Constructor for KnockoutRoundSetupDlg class."""
+        super(KnockoutRoundSetupDlg, self).__init__(parent)
+        self.setupUi(self)
+        
+        # define model
+        # underlying database model
+        self.model = QSqlTableModel(self)
+        self.model.setTable("tbl_knockoutrounds")
+        self.model.setSort(KnockoutRoundSetupDlg.ID, Qt.AscendingOrder)
+        self.model.select()
+        
+        # define mapper
+        # establish ties between underlying database model and data widgets on form
+        self.mapper = QDataWidgetMapper(self)
+        self.mapper.setSubmitPolicy(QDataWidgetMapper.ManualSubmit)
+        self.mapper.setModel(self.model)
+        self.mapper.addMapping(self.koroundID_display, KnockoutRoundSetupDlg.ID)
+        self.mapper.addMapping(self.koroundDescEdit, KnockoutRoundSetupDlg.DESC)
+        self.mapper.toFirst()
+        
+        # disable all fields if no records in database table
+        if not self.model.rowCount():
+            self.koroundID_display.setDisabled(True)
+            self.koroundDescEdit.setDisabled(True)
+            # disable save and delete buttons
+            self.saveEntry.setDisabled(True)
+            self.deleteEntry.setDisabled(True)
+        
+        # disable First and Previous Entry buttons
+        self.firstEntry.setDisabled(True)
+        self.prevEntry.setDisabled(True)
+        
+        # disable Next and Last Entry buttons if less than two records
+        if self.model.rowCount() < 2:
+            self.nextEntry.setDisabled(True)
+            self.lastEntry.setDisabled(True)
+            
+        # configure signal/slot
+        self.connect(self.firstEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.FIRST))
+        self.connect(self.prevEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.PREV))
+        self.connect(self.nextEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.NEXT))
+        self.connect(self.lastEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.LAST))
+        self.connect(self.saveEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.NULL))
+        self.connect(self.addEntry, SIGNAL("clicked()"), self.addRecord)
+        self.connect(self.deleteEntry, SIGNAL("clicked()"), self.deleteRecord)        
+        self.connect(self.closeButton, SIGNAL("clicked()"), self.accept)
+
+    def accept(self):
+        """Submits changes to database and closes window upon confirmation from user."""
+        row = self.mapper.currentIndex()
+        if self.isDirty(row):
+            if not CheckDuplicateRecords("koround_desc", self.model.tableName(), self.koroundDescEdit.text()):        
+                if MsgPrompts.SaveDiscardOptionPrompt(self):
+                    if not self.mapper.submit():
+                        MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+            else:
+                MsgPrompts.DuplicateRecordErrorPrompt(self, self.model.tableName(), self.koroundDescEdit.text())
+        QDialog.accept(self)
+    
+    def saveRecord(self, where):
+        """Submits changes to database and navigates through form."""
+        row = self.mapper.currentIndex()
+        if self.isDirty(row):
+            if not CheckDuplicateRecords("koround_desc", self.model.tableName(), self.koroundDescEdit.text()):        
+                if MsgPrompts.SaveDiscardOptionPrompt(self):
+                    if not self.mapper.submit():
+                        MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+            else:
+                MsgPrompts.DuplicateRecordErrorPrompt(self, self.model.tableName(), self.koroundDescEdit.text())
+                self.mapper.revert()
+                return
+                
+        if where == Constants.FIRST:
+            self.firstEntry.setDisabled(True)
+            self.prevEntry.setDisabled(True)
+            if not self.nextEntry.isEnabled():
+                self.nextEntry.setEnabled(True)
+                self.lastEntry.setEnabled(True)
+            row = 0
+        elif where == Constants.PREV:
+            row -= 1
+            if not self.nextEntry.isEnabled():
+                    self.nextEntry.setEnabled(True)
+                    self.lastEntry.setEnabled(True)   
+            if row == 0:
+                self.firstEntry.setDisabled(True)
+                self.prevEntry.setDisabled(True)                
+        elif where == Constants.NEXT:
+            row += 1
+            if not self.prevEntry.isEnabled():
+                self.prevEntry.setEnabled(True)
+                self.firstEntry.setEnabled(True)
+            if row >= self.model.rowCount() - 1:
+                self.nextEntry.setDisabled(True)
+                self.lastEntry.setDisabled(True)
+                row = self.model.rowCount() - 1
+        elif where == Constants.LAST:
+            self.nextEntry.setDisabled(True)
+            self.lastEntry.setDisabled(True)
+            if not self.prevEntry.isEnabled():
+                self.prevEntry.setEnabled(True)
+                self.firstEntry.setEnabled(True)
+            row = self.model.rowCount() - 1
+        self.mapper.setCurrentIndex(row)
+        
+        # enable Delete button if at least one record
+        if self.model.rowCount():
+            self.deleteEntry.setEnabled(True)        
+        
+    def addRecord(self):
+        """Adds new record at end of entry list."""                        
+        # save current index if valid
+        row = self.mapper.currentIndex()
+        if row != -1:
+            if self.isDirty(row):
+                if not CheckDuplicateRecords("koround_desc", self.model.tableName(), self.koroundDescEdit.text()):        
+                    if MsgPrompts.SaveDiscardOptionPrompt(self):
+                        if not self.mapper.submit():
+                            MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+                else:
+                    MsgPrompts.DuplicateRecordErrorPrompt(self, self.model.tableName(), self.koroundDescEdit.text())
+                    self.mapper.revert()
+                    return
+        
+        row = self.model.rowCount()
+        query = QSqlQuery()
+        query.exec_(QString("SELECT MAX(koround_id) FROM tbl_knockoutrounds"))
+        if query.next():
+            maxKnockoutRoundID = query.value(0).toInt()[0]
+            if not maxKnockoutRoundID:
+                outcome_id = Constants.MinKnockoutRoundID
+            else:
+                outcome_id = QString()
+                outcome_id.setNum(maxKnockoutRoundID+1)          
+        self.model.insertRow(row)
+        self.mapper.setCurrentIndex(row)
+
+        # assign value to penOutcomeID field
+        self.koroundID_display.setText(outcome_id)
+        
+        # disable next/last navigation buttons
+        self.nextEntry.setDisabled(True)
+        self.lastEntry.setDisabled(True)
+        # enable first/previous navigation buttons
+        if self.model.rowCount() > 1:
+            self.prevEntry.setEnabled(True)
+            self.firstEntry.setEnabled(True)
+            # enable Delete button if at least one record
+            self.deleteEntry.setEnabled(True)
+            
+        # enable Save button
+        if not self.saveEntry.isEnabled():
+            self.saveEntry.setEnabled(True)
+        
+        # enable form widgets
+        self.koroundID_display.setEnabled(True)
+        self.koroundDescEdit.setEnabled(True)
+        
+        # initialize form widgets
+        self.koroundDescEdit.setFocus()
+    
+    def deleteRecord(self):
+        """Deletes record from database upon user confirmation.
+        
+        First, check that the knockout round record is not being referenced in the Knockout Matches table.
+        If it is not being referenced in the dependent table, ask for user confirmation and delete 
+        record upon positive confirmation.  If it is being referenced by dependent table, alert user.
+        """
+        
+        childTableList = ["tbl_knockoutmatches"]
+        fieldName = "koround_id"
+        koround_id = self.koroundID_display.text()
+        
+        if not CountChildRecords(childTableList, fieldName, koround_id):
+            if QMessageBox.question(self, QString("Delete Record"), 
+                                                QString("Delete current record?"), 
+                                                QMessageBox.Yes|QMessageBox.No) == QMessageBox.No:
+                return
+            else:
+                row = self.mapper.currentIndex()
+                self.model.removeRow(row)
+                if not self.model.submitAll():
+                    MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+                    return
+                if row + 1 >= self.model.rowCount():
+                    row = self.model.rowCount() - 1
+                self.mapper.setCurrentIndex(row) 
+                # disable Delete button if no records in database
+                if not self.model.rowCount():
+                    self.deleteEntry.setDisabled(True)                
+        else:
+            DeletionErrorPrompt(self)
+            
+    def isDirty(self, row):
+        """Compares current state of data entry form to current record in database, and returns a boolean.
+        
+        Arguments:
+            row: current record in mapper and model
+        
+        Returns:
+            TRUE: there are changes between data entry form and current record in database,
+                      or new record in database
+            FALSE: no changes between data entry form and current record in database
+        """
+        if row == self.model.rowCount():
+            return True
+        else:
+            index = self.model.index(row, KnockoutRoundSetupDlg.DESC)        
+            if self.koroundDescEdit.text() != self.model.data(index).toString():
+                return True
+            else:
+                return False
+
+
+class PhaseSetupDlg(QDialog, ui_phasesetup.Ui_PhaseSetupDlg):
+    """Implement phase name data entry dialog, and accesses and writes to Phases table."""
+    
+    ID,  DESC = range(2)
+
+    def __init__(self, parent=None):
+        """Constructor for PhaseSetupDlg class."""
+        super(PhaseSetupDlg, self).__init__(parent)
+        self.setupUi(self)
+        
+        # define model
+        # underlying database model
+        self.model = QSqlTableModel(self)
+        self.model.setTable("tbl_phases")
+        self.model.setSort(PhaseSetupDlg.ID, Qt.AscendingOrder)
+        self.model.select()
+        
+        # define mapper
+        # establish ties between underlying database model and data widgets on form
+        self.mapper = QDataWidgetMapper(self)
+        self.mapper.setSubmitPolicy(QDataWidgetMapper.ManualSubmit)
+        self.mapper.setModel(self.model)
+        self.mapper.addMapping(self.phaseID_display, PhaseSetupDlg.ID)
+        self.mapper.addMapping(self.phaseDescEdit, PhaseSetupDlg.DESC)
+        self.mapper.toFirst()
+        
+        # disable all fields if no records in database table
+        if not self.model.rowCount():
+            self.phaseID_display.setDisabled(True)
+            self.phaseDescEdit.setDisabled(True)
+            # disable save and delete buttons
+            self.saveEntry.setDisabled(True)
+            self.deleteEntry.setDisabled(True)
+        
+        # disable First and Previous Entry buttons
+        self.firstEntry.setDisabled(True)
+        self.prevEntry.setDisabled(True)
+        
+        # disable Next and Last Entry buttons if less than two records
+        if self.model.rowCount() < 2:
+            self.nextEntry.setDisabled(True)
+            self.lastEntry.setDisabled(True)
+            
+        # configure signal/slot
+        self.connect(self.firstEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.FIRST))
+        self.connect(self.prevEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.PREV))
+        self.connect(self.nextEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.NEXT))
+        self.connect(self.lastEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.LAST))
+        self.connect(self.saveEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.NULL))
+        self.connect(self.addEntry, SIGNAL("clicked()"), self.addRecord)
+        self.connect(self.deleteEntry, SIGNAL("clicked()"), self.deleteRecord)        
+        self.connect(self.closeButton, SIGNAL("clicked()"), self.accept)
+
+    def accept(self):
+        """Submits changes to database and closes window upon confirmation from user."""
+        row = self.mapper.currentIndex()
+        if self.isDirty(row):
+            if not CheckDuplicateRecords("phase_desc", self.model.tableName(), self.phaseDescEdit.text()):        
+                if MsgPrompts.SaveDiscardOptionPrompt(self):
+                    if not self.mapper.submit():
+                        MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+            else:
+                MsgPrompts.DuplicateRecordErrorPrompt(self, self.model.tableName(), self.phaseDescEdit.text())
+        QDialog.accept(self)
+    
+    def saveRecord(self, where):
+        """Submits changes to database and navigates through form."""
+        row = self.mapper.currentIndex()
+        if self.isDirty(row):
+            if not CheckDuplicateRecords("phase_desc", self.model.tableName(), self.phaseDescEdit.text()):        
+                if MsgPrompts.SaveDiscardOptionPrompt(self):
+                    if not self.mapper.submit():
+                        MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+            else:
+                MsgPrompts.DuplicateRecordErrorPrompt(self, self.model.tableName(), self.phaseDescEdit.text())
+                self.mapper.revert()
+                return
+                
+        if where == Constants.FIRST:
+            self.firstEntry.setDisabled(True)
+            self.prevEntry.setDisabled(True)
+            if not self.nextEntry.isEnabled():
+                self.nextEntry.setEnabled(True)
+                self.lastEntry.setEnabled(True)
+            row = 0
+        elif where == Constants.PREV:
+            row -= 1
+            if not self.nextEntry.isEnabled():
+                    self.nextEntry.setEnabled(True)
+                    self.lastEntry.setEnabled(True)   
+            if row == 0:
+                self.firstEntry.setDisabled(True)
+                self.prevEntry.setDisabled(True)                
+        elif where == Constants.NEXT:
+            row += 1
+            if not self.prevEntry.isEnabled():
+                self.prevEntry.setEnabled(True)
+                self.firstEntry.setEnabled(True)
+            if row >= self.model.rowCount() - 1:
+                self.nextEntry.setDisabled(True)
+                self.lastEntry.setDisabled(True)
+                row = self.model.rowCount() - 1
+        elif where == Constants.LAST:
+            self.nextEntry.setDisabled(True)
+            self.lastEntry.setDisabled(True)
+            if not self.prevEntry.isEnabled():
+                self.prevEntry.setEnabled(True)
+                self.firstEntry.setEnabled(True)
+            row = self.model.rowCount() - 1
+        self.mapper.setCurrentIndex(row)
+        
+        # enable Delete button if at least one record
+        if self.model.rowCount():
+            self.deleteEntry.setEnabled(True)        
+        
+    def addRecord(self):
+        """Adds new record at end of entry list."""                        
+        # save current index if valid
+        row = self.mapper.currentIndex()
+        if row != -1:
+            if self.isDirty(row):
+                if not CheckDuplicateRecords("phase_desc", self.model.tableName(), self.phaseDescEdit.text()):        
+                    if MsgPrompts.SaveDiscardOptionPrompt(self):
+                        if not self.mapper.submit():
+                            MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+                else:
+                    MsgPrompts.DuplicateRecordErrorPrompt(self, self.model.tableName(), self.phaseDescEdit.text())
+                    self.mapper.revert()
+                    return
+        
+        row = self.model.rowCount()
+        query = QSqlQuery()
+        query.exec_(QString("SELECT MAX(phase_id) FROM tbl_phases"))
+        if query.next():
+            maxPhaseID = query.value(0).toInt()[0]
+            if not maxPhaseID:
+                outcome_id = Constants.MinPhaseID
+            else:
+                outcome_id = QString()
+                outcome_id.setNum(maxPhaseID+1)          
+        self.model.insertRow(row)
+        self.mapper.setCurrentIndex(row)
+
+        # assign value to phaseID field
+        self.phaseID_display.setText(outcome_id)
+        
+        # disable next/last navigation buttons
+        self.nextEntry.setDisabled(True)
+        self.lastEntry.setDisabled(True)
+        # enable first/previous navigation buttons
+        if self.model.rowCount() > 1:
+            self.prevEntry.setEnabled(True)
+            self.firstEntry.setEnabled(True)
+            # enable Delete button if at least one record
+            self.deleteEntry.setEnabled(True)
+            
+        # enable Save button
+        if not self.saveEntry.isEnabled():
+            self.saveEntry.setEnabled(True)
+        
+        # enable form widgets
+        self.phaseID_display.setEnabled(True)
+        self.phaseDescEdit.setEnabled(True)
+        
+        # initialize form widgets
+        self.phaseDescEdit.setFocus()
+    
+    def deleteRecord(self):
+        """Deletes record from database upon user confirmation.
+        
+        First, check that the phase record is not being referenced in the Matches table.
+        If it is not being referenced in the dependent table, ask for user confirmation and delete 
+        record upon positive confirmation.  If it is being referenced by dependent table, alert user.
+        """
+        
+        childTableList = ["tbl_matches"]
+        fieldName = "phase_id"
+        phase_id = self.phaseID_display.text()
+        
+        if not CountChildRecords(childTableList, fieldName, phase_id):
+            if QMessageBox.question(self, QString("Delete Record"), 
+                                                QString("Delete current record?"), 
+                                                QMessageBox.Yes|QMessageBox.No) == QMessageBox.No:
+                return
+            else:
+                row = self.mapper.currentIndex()
+                self.model.removeRow(row)
+                if not self.model.submitAll():
+                    MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+                    return
+                if row + 1 >= self.model.rowCount():
+                    row = self.model.rowCount() - 1
+                self.mapper.setCurrentIndex(row) 
+                # disable Delete button if no records in database
+                if not self.model.rowCount():
+                    self.deleteEntry.setDisabled(True)                
+        else:
+            DeletionErrorPrompt(self)
+            
+    def isDirty(self, row):
+        """Compares current state of data entry form to current record in database, and returns a boolean.
+        
+        Arguments:
+            row: current record in mapper and model
+        
+        Returns:
+            TRUE: there are changes between data entry form and current record in database,
+                      or new record in database
+            FALSE: no changes between data entry form and current record in database
+        """
+        if row == self.model.rowCount():
+            return True
+        else:
+            index = self.model.index(row, PhaseSetupDlg.DESC)        
+            if self.phaseDescEdit.text() != self.model.data(index).toString():
                 return True
             else:
                 return False
