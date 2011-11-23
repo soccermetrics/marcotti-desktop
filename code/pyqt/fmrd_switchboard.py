@@ -188,6 +188,11 @@ class MainSwitchboard(QMainWindow, ui_mainswitchboard.Ui_MainSwitchboard):
         dialog = KnockoutRoundSetupDlg(self)
         dialog.exec_()
         
+    def OpenMatchdays(self):
+        """Open Matchdays (Knockout phase) window."""
+        dialog = MatchdaySetupDlg(self)
+        dialog.exec_()
+        
     def OpenTimeZones(self):
         """Opens Time Zones window."""
         dialog = TimeZoneSetupDlg(self)
