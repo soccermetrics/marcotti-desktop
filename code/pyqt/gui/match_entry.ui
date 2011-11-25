@@ -996,7 +996,7 @@ p, li { white-space: pre-wrap; }
         <string>99; </string>
        </property>
        <property name="text">
-        <string>45</string>
+        <string>0</string>
        </property>
        <property name="maxLength">
         <number>2</number>
@@ -1050,7 +1050,7 @@ p, li { white-space: pre-wrap; }
         <string>99; </string>
        </property>
        <property name="text">
-        <string>45</string>
+        <string>0</string>
        </property>
        <property name="maxLength">
         <number>2</number>
