@@ -78,7 +78,7 @@ class DBLoginDlg(QDialog, ui_fmrdlogin.Ui_DBLoginDlg):
         db.setUserName(login)
         db.setPassword(password)
         
-        if not db.open():
+        if not db.open() or dbName.isEmpty():
             # Alert user of incorrect userid/password combo
             QMessageBox.warning(None,
                 "Login Incorrect",
