@@ -80,6 +80,7 @@ class UserMainSwitchboard(QMainWindow, ui_usermainswitchboard.Ui_UserMainSwitchb
         QObject.connect(self.offenseButton, SIGNAL("clicked()"), self.OpenOffenses)
         QObject.connect(self.subButton, SIGNAL("clicked()"), self.OpenSubstitutions)
         QObject.connect(self.switchButton, SIGNAL("clicked()"), self.OpenPosSwitches)
+        QObject.connect(self.shootoutButton, SIGNAL("clicked()"), self.OpenPenaltyShootouts)
         
         # signal/slot connections for menu actions
         QObject.connect(self.actionAbout, SIGNAL("triggered()"), self.OpenAbout)
@@ -217,6 +218,14 @@ class UserMainSwitchboard(QMainWindow, ui_usermainswitchboard.Ui_UserMainSwitchb
         else:        
             dialog = SwitchEntryDlg(self)
             dialog.exec_()
+            
+    def OpenPenaltyShootouts(self):
+        """Opens Penalty Kick Shootouts window.
+        
+        Window opens only if there is at least one record in KnockoutMatches table.
+        """
+        dialog = PenShootoutEntryDlg(self)
+        dialog.exec_()
         
     def close(self):
         """Hides Switchboard window and exits application."""
