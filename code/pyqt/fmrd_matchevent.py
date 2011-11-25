@@ -34,6 +34,7 @@ PenaltyEntryDlg -- data entry to Penalties table
 OffenseEntryDlg -- data entry to Offenses table
 SubsEntryDlg -- data entry to Substitutions table
 SwitchEntryDlg -- data entry to Switch Positions table
+PenShootoutEntryDlg -- data entry to Penalty Shootouts and Penalty Openers tables
 """
 
 class GoalEntryDlg(QDialog, ui_goalentry.Ui_GoalEntryDlg):
@@ -2908,3 +2909,24 @@ class SwitchEntryDlg(QDialog, ui_switchentry.Ui_SwitchEntryDlg):
             widget.setEnabled(True)
         else:
             widget.setDisabled(True)
+
+
+class PenShootoutEntryDlg(QDialog, ui_penshootoutentry.Ui_PenShootoutEntryDlg):
+    """Implements penalty shootout data entry dialog, and accesses and writes to PenaltyShootouts and PenShootoutOpeners tables.
+    
+   """
+   
+    def __init__(self, parent=None):
+        super(PenShootoutEntryDlg, self).__init__(parent)
+        self.setupUi(self)
+    
+        self.connect(self.closeButton, SIGNAL("clicked()"), self.accept)
+
+    def accept(self):
+        """Submits changes to database and closes window upon confirmation from user."""
+#        row = self.mapper.currentIndex()
+#        if self.isDirty(row):
+#            if MsgPrompts.SaveDiscardOptionPrompt(self):
+#                if not self.mapper.submit():
+#                    MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
+        QDialog.accept(self)
