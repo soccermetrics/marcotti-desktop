@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'gui/match_entry.ui'
 #
-# Created: Wed Nov 23 10:25:31 2011
+# Created: Fri Nov 25 01:59:20 2011
 #      by: PyQt4 UI code generator 4.7.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -499,7 +499,7 @@ class Ui_MatchEntryDlg(object):
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">1st ET</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
         self.firstExtraLengthEdit.setToolTip(QtGui.QApplication.translate("MatchEntryDlg", "Total playing time of first extra time period", None, QtGui.QApplication.UnicodeUTF8))
         self.firstExtraLengthEdit.setInputMask(QtGui.QApplication.translate("MatchEntryDlg", "99; ", None, QtGui.QApplication.UnicodeUTF8))
-        self.firstExtraLengthEdit.setText(QtGui.QApplication.translate("MatchEntryDlg", "45", None, QtGui.QApplication.UnicodeUTF8))
+        self.firstExtraLengthEdit.setText(QtGui.QApplication.translate("MatchEntryDlg", "0", None, QtGui.QApplication.UnicodeUTF8))
         self.label_16.setText(QtGui.QApplication.translate("MatchEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
@@ -507,7 +507,7 @@ class Ui_MatchEntryDlg(object):
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">2nd ET</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
         self.secondExtraLengthEdit.setToolTip(QtGui.QApplication.translate("MatchEntryDlg", "Total playing time of second extra time period", None, QtGui.QApplication.UnicodeUTF8))
         self.secondExtraLengthEdit.setInputMask(QtGui.QApplication.translate("MatchEntryDlg", "99; ", None, QtGui.QApplication.UnicodeUTF8))
-        self.secondExtraLengthEdit.setText(QtGui.QApplication.translate("MatchEntryDlg", "45", None, QtGui.QApplication.UnicodeUTF8))
+        self.secondExtraLengthEdit.setText(QtGui.QApplication.translate("MatchEntryDlg", "0", None, QtGui.QApplication.UnicodeUTF8))
         self.hometeamBox.setTitle(QtGui.QApplication.translate("MatchEntryDlg", "Home Team", None, QtGui.QApplication.UnicodeUTF8))
         self.label_8.setText(QtGui.QApplication.translate("MatchEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
