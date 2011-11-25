@@ -342,8 +342,11 @@ class MainSwitchboard(QMainWindow, ui_mainswitchboard.Ui_MainSwitchboard):
         
         Window opens only if there is at least one record in KnockoutMatches table.
         """
-        dialog = PenShootoutEntryDlg(self)
-        dialog.exec_()
+        if not CheckMinimumKnockoutMatches():
+            KnockoutMatchErrorPrompt(self)
+        else:
+            dialog = PenShootoutEntryDlg(self)
+            dialog.exec_()
         
     def close(self):
         """Hides Switchboard window and exits application."""
