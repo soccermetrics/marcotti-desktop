@@ -12,6 +12,7 @@ __all__ = ["ui_fmrdlogin",
 "ui_lineupentry",
 "ui_goalentry",
 "ui_penaltyentry",
+"ui_penshootoutentry", 
 "ui_offenseentry",
 "ui_subsentry",
 "ui_switchentry"]
