@@ -198,6 +198,27 @@ def CheckMinimumSubstitutes():
     else:
         return 0
 
+def CheckMinimumKnockoutMatches():
+    """Checks minimum criteria for penalty shootout entry.
+    
+    Returns TRUE if there is at least one record in Knockout Matches table.
+    
+    """
+    KnockoutQuery = QSqlQuery()
+    KnockoutQuery.prepare("SELECT COUNT(*) FROM tbl_knockoutmatches")
+    KnockoutQuery.exec_()
+    
+    if KnockoutQuery.isActive():
+        KnockoutQuery.next()
+        numKnockoutMatches = KnockoutQuery.value(0).toInt()[0]
+        
+        if numKnockoutMatches >= Constants.MIN_KNOCKOUT_MATCHES:
+            return 1
+        else:
+            return 0
+    else:
+        return 0
+
 def CountStarters(match_id, team_id):
     """Counts number of starters for a team in Lineup table and returns an integer.
     

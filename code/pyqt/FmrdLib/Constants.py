@@ -101,6 +101,7 @@ MIN_TEAMS = 2
 MIN_VENUES = 1
 MIN_VENUEHOSTS = 1
 MIN_COMPETITIONS = 1
+MIN_KNOCKOUT_MATCHES = 1
 
 # Define maximum number of entities for a team lineup
 MAX_TEAM_STARTERS = 11
