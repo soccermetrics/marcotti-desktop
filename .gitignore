@@ -22,3 +22,5 @@ warn*.txt
 *.lyx~
 # SQL directory (handled by submodule)
 sql/
+# test directories (will add later)
+ucltest/
