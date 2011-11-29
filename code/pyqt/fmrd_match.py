@@ -44,7 +44,7 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
     
     """
     
-    ID,  DATE, HALF1, HALF2, ATTEND, COMP_ID, ROUND_ID, VENUE_ID, REF_ID = range(9)
+    ID,  DATE, HALF1, HALF2, EXTRA1, EXTRA2, ATTEND, COMP_ID, PHASE_ID, VENUE_ID, REF_ID = range(11)
     
     def __init__(self, parent=None):
         """Constructor for MatchEntryDlg class."""
@@ -54,24 +54,30 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
         # define local parameters
         HOME_ID = AWAY_ID = 1
         CMP_ID,  COMP_NAME = range(2)
+        PHS_ID,  PHASE_NAME = range(2)
         RND_ID,  ROUND_NAME = range(2)
+        GRP_ID,  GROUP_NAME = range(2)
+        MCH_ID,  MATCHDAY_NAME = range(2)
         VEN_ID,  VENUE_NAME = range(2)
         RF_ID,  REF_NAME,  REF_SORT = range(3)
         TM_ID,  TEAM_NAME = range(2)
         MG_ID,  MGR_NAME,  MGR_SORT = range(3)
+        
+        GROUP,  GROUP_ROUND,  GROUP_MATCHDAY = range(1, 4)
+        KO_ROUND, KO_MATCHDAY = range(1, 3)
         
         # define underlying database model (tbl_matches)
         # because of foreign keys, instantiate QSqlRelationalTableModel and define relations to it
         self.model = QSqlRelationalTableModel(self)
         self.model.setTable("tbl_matches")
         self.model.setRelation(MatchEntryDlg.COMP_ID, QSqlRelation("tbl_competitions", "competition_id", "comp_name"))
-        self.model.setRelation(MatchEntryDlg.ROUND_ID, QSqlRelation("tbl_rounds", "round_id", "round_desc"))
+        self.model.setRelation(MatchEntryDlg.PHASE_ID, QSqlRelation("tbl_phases", "phase_id", "phase_desc"))
         self.model.setRelation(MatchEntryDlg.VENUE_ID, QSqlRelation("tbl_venues", "venue_id", "ven_name"))
         self.model.setRelation(MatchEntryDlg.REF_ID, QSqlRelation("referees_list", "referee_id", "full_name"))
         self.model.setSort(MatchEntryDlg.ID, Qt.AscendingOrder)
         self.model.select()
         
-        # define mapper
+        # define main mapper (Matches)
         # establish ties between underlying database model and data widgets on form
         self.mapper = QDataWidgetMapper(self)
         self.mapper.setSubmitPolicy(QDataWidgetMapper.ManualSubmit)
@@ -85,12 +91,12 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
         self.matchCompSelect.setModelColumn(self.compModel.fieldIndex("comp_name"))
         self.mapper.addMapping(self.matchCompSelect, MatchEntryDlg.COMP_ID)
         
-        # relation model for Rounds combobox
-        self.roundModel = self.model.relationModel(MatchEntryDlg.ROUND_ID)
-        self.roundModel.setSort(RND_ID, Qt.AscendingOrder)
-        self.matchRoundSelect.setModel(self.roundModel)
-        self.matchRoundSelect.setModelColumn(self.roundModel.fieldIndex("round_desc"))
-        self.mapper.addMapping(self.matchRoundSelect, MatchEntryDlg.ROUND_ID)
+        # relation model for Competition Phases combobox
+        self.phaseModel = self.model.relationModel(MatchEntryDlg.PHASE_ID)
+        self.phaseModel.setSort(PHS_ID, Qt.AscendingOrder)
+        self.phaseSelect.setModel(self.phaseModel)
+        self.phaseSelect.setModelColumn(self.phaseModel.fieldIndex("phase_desc"))
+        self.mapper.addMapping(self.phaseSelect, MatchEntryDlg.PHASE_ID)
         
         # relation model for Venues combobox
         self.venueModel = self.model.relationModel(MatchEntryDlg.VENUE_ID)
@@ -111,12 +117,115 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
         self.mapper.addMapping(self.matchDateEdit, MatchEntryDlg.DATE)
         self.mapper.addMapping(self.firstHalfLengthEdit, MatchEntryDlg.HALF1)
         self.mapper.addMapping(self.secondHalfLengthEdit, MatchEntryDlg.HALF2)
+        self.mapper.addMapping(self.firstExtraLengthEdit, MatchEntryDlg.EXTRA1)
+        self.mapper.addMapping(self.secondExtraLengthEdit, MatchEntryDlg.EXTRA2)
         self.mapper.addMapping(self.attendanceEdit, MatchEntryDlg.ATTEND)
         self.mapper.toFirst()
         
+        #
+        # define models used for League matches
+        #
+        
+        leagueRoundModel = QSqlTableModel(self)
+        leagueRoundModel.setTable("tbl_rounds")
+        leagueRoundModel.setSort(ROUND_NAME, Qt.AscendingOrder)
+        leagueRoundModel.select()
+        
+        # League Match linking model
+        self.leagueMatchModel = LeagueLinkingModel("tbl_leaguematches", self)
+        self.lgRoundSelect.setModel(leagueRoundModel)
+        self.lgRoundSelect.setModelColumn(leagueRoundModel.fieldIndex("round_desc"))
+        self.lgRoundSelect.setCurrentIndex(-1)
+        
+        # League Match mapper
+        self.leagueMatchMapper = QDataWidgetMapper(self)
+        self.leagueMatchMapper.setSubmitPolicy(QDataWidgetMapper.ManualSubmit)
+        self.leagueMatchMapper.setModel(self.leagueMatchModel)
+        leagueMatchDelegate = GenericDelegate(self)
+        self.leagueMatchMapper.setItemDelegate(leagueMatchDelegate)
+        self.leagueMatchMapper.addMapping(self.lgRoundSelect, ROUND_NAME)
+        self.leagueMatchMapper.toFirst()
+        
+        #
+        # define models used for Group matches
+        #
+        
+        groupNameModel = QSqlTableModel(self)
+        groupNameModel.setTable("tbl_groups")
+        groupNameModel.setSort(GROUP_NAME, Qt.AscendingOrder)
+        groupNameModel.select()
+        
+        groupRoundModel = QSqlTableModel(self)
+        groupRoundModel.setTable("tbl_grouprounds")
+        groupRoundModel.setSort(ROUND_NAME, Qt.AscendingOrder)
+        groupRoundModel.select()
+        
+        groupMatchdayModel = QSqlTableModel(self)
+        groupMatchdayModel.setTable("tbl_rounds")
+        groupMatchdayModel.setSort(ROUND_NAME, Qt.AscendingOrder)
+        groupMatchdayModel.select()
+        
+        # Group Match linking model
+        self.groupMatchModel = GroupLinkingModel("tbl_groupmatches", self)
+        self.groupSelect.setModel(groupNameModel)
+        self.groupSelect.setModelColumn(groupNameModel.fieldIndex("group_desc"))
+        self.groupSelect.setCurrentIndex(-1)
+        self.grpRoundSelect.setModel(groupRoundModel)
+        self.grpRoundSelect.setModelColumn(groupRoundModel.fieldIndex("grpround_desc"))
+        self.grpRoundSelect.setCurrentIndex(-1)
+        self.grpMatchdaySelect.setModel(groupMatchdayModel)
+        self.grpMatchdaySelect.setModelColumn(groupMatchdayModel.fieldIndex("round_desc"))
+        self.grpMatchdaySelect.setCurrentIndex(-1)
+        
+        # Group Match mapper
+        self.groupMatchMapper = QDataWidgetMapper(self)
+        self.groupMatchMapper.setSubmitPolicy(QDataWidgetMapper.ManualSubmit)
+        self.groupMatchMapper.setModel(self.groupMatchModel)
+        groupMatchDelegate = GenericDelegate(self)
+        self.groupMatchMapper.setItemDelegate(groupMatchDelegate)
+        self.groupMatchMapper.addMapping(self.groupSelect, GROUP)
+        self.groupMatchMapper.addMapping(self.grpRoundSelect, GROUP_ROUND)
+        self.groupMatchMapper.addMapping(self.grpMatchdaySelect, GROUP_MATCHDAY)
+        self.groupMatchMapper.toFirst()
+        
+        #
+        # define models used for Knockout matches
+        #
+
+        knockoutRoundModel = QSqlTableModel(self)
+        knockoutRoundModel.setTable("tbl_knockoutrounds")
+        knockoutRoundModel.setSort(ROUND_NAME, Qt.AscendingOrder)
+        knockoutRoundModel.select()
+        
+        knockoutMatchdayModel = QSqlTableModel(self)
+        knockoutMatchdayModel.setTable("tbl_matchdays")
+        knockoutMatchdayModel.setSort(MATCHDAY_NAME, Qt.AscendingOrder)
+        knockoutMatchdayModel.select()
+        
+        # Knockout Match linking model
+        self.knockoutMatchModel = KnockoutLinkingModel("tbl_knockoutmatches", self)
+        self.koRoundSelect.setModel(knockoutRoundModel)
+        self.koRoundSelect.setModelColumn(knockoutRoundModel.fieldIndex("koround_desc"))
+        self.koRoundSelect.setCurrentIndex(-1)
+        self.koMatchdaySelect.setModel(knockoutMatchdayModel)
+        self.koMatchdaySelect.setModelColumn(knockoutMatchdayModel.fieldIndex("matchday_desc"))
+        self.koMatchdaySelect.setCurrentIndex(-1)
+        
+        # Knockout Match mapper
+        self.knockoutMatchMapper = QDataWidgetMapper(self)
+        self.knockoutMatchMapper.setSubmitPolicy(QDataWidgetMapper.ManualSubmit)
+        self.knockoutMatchMapper.setModel(self.knockoutMatchModel)
+        knockoutMatchDelegate = GenericDelegate(self)
+        self.knockoutMatchMapper.setItemDelegate(knockoutMatchDelegate)
+        self.knockoutMatchMapper.addMapping(self.koRoundSelect, KO_ROUND)
+        self.knockoutMatchMapper.addMapping(self.koMatchdaySelect, KO_MATCHDAY)
+        self.knockoutMatchMapper.toFirst()
+
+        #
         # define models used in Team and Manager comboboxes
         # we need multiple instantiations of Teams and Managers tables
         # so that there is no confusion in SQL logic
+        #
         
         homeTeamModel = QSqlTableModel(self)
         homeTeamModel.setTable("tbl_teams")
@@ -209,18 +318,35 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
         # disable all fields if no records in database table
         if not self.model.rowCount():
             self.matchID_display.setDisabled(True)
-            self.matchCompSelect.setDisabled(True)
-            self.matchRoundSelect.setDisabled(True)
             self.matchDateEdit.setDisabled(True)
+            self.matchCompSelect.setDisabled(True)
+            self.phaseSelect.setDisabled(True)
             self.matchRefSelect.setDisabled(True)
             self.matchVenueSelect.setDisabled(True)
+            self.attendanceEdit.setDisabled(True)
             self.firstHalfLengthEdit.setDisabled(True)
             self.secondHalfLengthEdit.setDisabled(True)
-            self.attendanceEdit.setDisabled(True)
+            self.firstExtraLengthEdit.setDisabled(True)
+            self.secondExtraLengthEdit.setDisabled(True)
+            
+            # disable league phase combobox
+            self.lgRoundSelect.setDisabled(True)
+            
+            # disable knockout phase comboboxes
+            self.koRoundSelect.setDisabled(True)
+            self.koMatchdaySelect.setDisabled(True)
+            
+            # disable group phase comboboxes
+            self.groupSelect.setDisabled(True)
+            self.grpRoundSelect.setDisabled(True)
+            self.grpMatchdaySelect.setDisabled(True)
+            
+            # disable home/away comboboxes
             self.hometeamSelect.setDisabled(True)
             self.homemgrSelect.setDisabled(True)
             self.awayteamSelect.setDisabled(True)
             self.awaymgrSelect.setDisabled(True)
+            
             # disable save and delete entry buttons
             self.saveEntry.setDisabled(True)
             self.deleteEntry.setDisabled(True)
