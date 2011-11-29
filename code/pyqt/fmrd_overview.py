@@ -958,7 +958,6 @@ class VenueEntryDlg(QDialog, ui_venueentry.Ui_VenueEntryDlg):
         self.countryModel.select()
         self.timezoneModel.select()
         self.venueTimezoneSelect.setCurrentIndex(-1)
-        self.venueConfedSelect.setCurrentIndex(-1)        
     
     def openVenueHistory(self, venue_id):
         """Opens Venue History subdialog for a specific match from Match dialog.
