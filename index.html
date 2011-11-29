@@ -10,7 +10,7 @@
 
 <body
 style="font-family: Times New Roman,Times,serif; font-size: medium; font-style: normal; font-weight:normal; font-variant: normal; text-align: left; text-decoration: none; border: solid medium #0000ff;">
-<h1>FMRD-Desktop 1.1.0</h1>
+<h1>FMRD-Desktop 1.1.0/1.2.0</h1>
 
 <p>The Football Match Result Database (FMRD) stores and maintains the match
 result data needed to support football (soccer) research activities for the
@@ -20,12 +20,12 @@ database models league competitions. </p>
 <p>The Football Match Result Database has the following features: </p>
 <ul>
   <li>Maintains data on matches that occur within football league competitions,
-    whether among national teams or domestic clubs.</li>
+    whether among national teams or clubs.</li>
   <li>Maintains complete top-level data on the football match, including 
     <ul>
       <li>Match date</li>
       <li>Competition name</li>
-      <li>Competition stage</li>
+      <li>Competition matchday</li>
       <li>Participating teams</li>
       <li>Host venues</li>
       <li>Environmental conditions such as kickoff time, temperature, and
@@ -50,11 +50,15 @@ database models league competitions. </p>
   </li>
 </ul>
 
-<h2>Dependencies</h2>
+<h2>Build Dependencies</h2>
 <ul>
   <li>Python 2.5-2.7 (3.0 not supported)</li>
   <li>Nokia Qt 4 toolkit</li>
   <li>PyQt libraries</li>
+</ul>
+
+<h2>Database Dependencies</h2>
+<ul>
   <li>PostgreSQL 8.x</li>
   <li>Perl (DBI package)</li>
 </ul>
@@ -68,10 +72,15 @@ to the terms of the GNU General Public License (GPLv3).</p>
 
 <h2>Downloads</h2>
 
-<p>The current version of the application is 1.1.0. </p>
+<p>The current versions of the application are 1.1.0 (clubs) and 1.2.0
+(national teams). </p>
 
-<p>The 'master' branch contains the most recent copy of the code repository and
-links to the documentation and SQL submodules. </p>
+<p>The 'master' branch contains the most recent version of the code repository
+(club teams) and links to the documentation and SQL submodules. </p>
+
+<p>The 'national-teams' branch contains the most recent version of the code
+repository (national teams) and links to the documentation and related SQL
+submodule.</p>
 
 <table border="5">
   <col />
@@ -86,6 +95,13 @@ links to the documentation and SQL submodules. </p>
       <td><a
         href="http://github.com/hhamilton-src/fmrd-desktop/tarball/master">TAR</a>
         file</td>
+    </tr>
+    <tr>
+      <td>Current national-teams branch</td>
+      <td><a
+        href="http://github.com/hhamilton-src/fmrd-desktop/zipball/national-teams">ZIP</a>
+        file</td>
+      <td></td>
     </tr>
   </tbody>
 </table>
