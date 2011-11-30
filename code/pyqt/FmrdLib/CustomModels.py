@@ -104,7 +104,7 @@ class LinkingSqlModel(QSqlQueryModel):
     def delete(self, primary_id):
         """Deletes row with primary_id from the linking model.
         
-        This function always return False; must be implemented by subclass.
+        This function always returns False; must be implemented by subclass.
         Arguments:
             primary_id - key ID in linking table
         """
@@ -120,7 +120,7 @@ class LinkingSqlModel(QSqlQueryModel):
 
 
 class LeagueLinkingModel(LinkingSqlModel):
-    """Impements linking model for matches played in the league phase of a football competition.
+    """Implements linking model for matches played in the league phase of a football competition.
     
     Argument:
     tbl_name - SQL table name
@@ -148,7 +148,6 @@ class LeagueLinkingModel(LinkingSqlModel):
         updateString = QString("UPDATE %1 SET round_id = ? WHERE enviro_id = ?").arg(self.table)
         
         if index.row() == -1:
-#            print "No entries of ID %s in linking table" % enviro_id
             # insert into table if no existing match_id record in linking table
             insertQuery = QSqlQuery()
             insertQuery.prepare(insertString)
@@ -156,7 +155,6 @@ class LeagueLinkingModel(LinkingSqlModel):
             insertQuery.addBindValue(round_id)
             return insertQuery.exec_()
         elif index.row() == 0:
-#            print "Entry of ID %s in linking table" % enviro_id
             # update into table if there exists match_id record in linking table
             updateQuery = QSqlQuery()
             updateQuery.prepare(updateString)
