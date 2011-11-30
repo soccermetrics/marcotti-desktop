@@ -119,6 +119,91 @@ class LinkingSqlModel(QSqlQueryModel):
         return False
 
 
+class KnockoutLinkingModel(LinkingSqlModel):
+    """Implements linking model for matches played in the knockout phase of a football competition.
+    
+    Argument:
+    tbl_name - SQL table name
+        
+    """
+    
+    def __init__(self, tbl_name, parent=None):
+        """Constructor for LeagueLinkingModel class."""
+        super(KnockoutLinkingModel, self).__init__(parent)
+#        print "Calling init() in KnockoutLinkingModel"
+        
+        self.table = tbl_name
+        self.primary_id = parent.matchID_display.text()
+        self.koround_id = "0"
+        self.matchday_id = "0"
+        self.setQuery(QString("SELECT match_id, koround_id, matchday_id FROM %1 WHERE match_id = %2").arg(self.table).arg(self.primary_id))
+        
+    def refresh(self):
+        """Refreshes query model."""
+        self.setQuery(QString("SELECT match_id, koround_id, matchday_id FROM %1 WHERE match_id = %2").arg(self.table).arg(self.primary_id))
+    
+    def setData(self, index, value):
+        """Sets role data at index with value.  Calls setCompositeKey()."""
+        if index.row() == -1:
+            # setup for new row insertion
+            ok = True
+            if index.column() == 1:
+                self.koround_id = value
+            elif index.column() == 2:
+                self.matchday_id = value
+        elif index.row() == 0:
+            # update into existing row
+            if index.column() == 1:
+                ok = self.setKnockoutID(value)
+            elif index.column() == 2:
+                ok = self.setMatchdayID(value)
+        return ok
+
+    def setKnockoutID(self, koround_id):
+        """Sets knockout ID key in KnockoutMatches table."""
+        updateString = QString("UPDATE %1 SET koround_id = ? WHERE match_id = ?").arg(self.table)
+        updateQuery = QSqlQuery()
+        updateQuery.prepare(updateString)
+        updateQuery.addBindValue(koround_id)
+        updateQuery.addBindValue(self.primary_id)
+        return updateQuery.exec_()
+        
+    def setMatchdayID(self, matchday_id):
+        """Sets matchday ID key in KnockoutMatches table."""
+        updateString = QString("UPDATE %1 SET matchday_id = ? WHERE match_id = ?").arg(self.table)
+        updateQuery = QSqlQuery()
+        updateQuery.prepare(updateString)
+        updateQuery.addBindValue(matchday_id)
+        updateQuery.addBindValue(self.primary_id)
+        return updateQuery.exec_()
+        
+    def submitAll(self):
+        """Perhaps this could be a wrapper function"""
+        insertString = QString("INSERT INTO %1 (match_id, koround_id, matchday_id) VALUES (?,?,?)").arg(self.table)
+        
+        # include a test on already existing record in table .. if no prior record, insert new one
+        insertQuery = QSqlQuery()
+        insertQuery.prepare(insertString)
+        insertQuery.addBindValue(self.primary_id)
+        insertQuery.addBindValue(self.koround_id)
+        insertQuery.addBindValue(self.matchday_id)
+        return insertQuery.exec_()
+        
+    def delete(self, match_id):    
+        """Deletes entry in database.
+        
+        Argument:
+            match_id - primary key ID that links to Matches table
+            
+        """
+        deleteString = QString("DELETE FROM %1 WHERE match_id = ?").arg(self.table)
+        
+        deleteQuery = QSqlQuery()
+        deleteQuery.prepare(deleteString)
+        deleteQuery.addBindValue(match_id)
+        return deleteQuery.exec_()
+    
+    
 class LeagueLinkingModel(LinkingSqlModel):
     """Implements linking model for matches played in the league phase of a football competition.
     
