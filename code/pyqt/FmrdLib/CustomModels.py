@@ -81,9 +81,9 @@ class LinkingSqlModel(QSqlQueryModel):
 #        print "Calling init() in LinkingSqlModel"
         
     def flags(self, index):
-        """Defines item flags for index.  Make second element in table record editable."""
+        """Defines item flags for index.  Make all columns besides first in database table editable. """
         flags = QSqlQueryModel.flags(index)
-        if index.column() == 1:
+        if index.column() != 0:
             flags |= Qt.ItemIsEditable
         
         return flags
