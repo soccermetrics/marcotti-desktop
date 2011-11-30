@@ -687,19 +687,15 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
     def updateLinkingTable(self, mapper, editor):
         """Updates custom linking table."""
         
-#        print "Calling updateLinkingTable()"
         # database table associated with mapper
         # get current index of model
         linkmodel = mapper.model()
         index = linkmodel.index(linkmodel.rowCount()-1, 0)
+        boxIndex = editor.currentIndex()
+        value = editor.model().record(boxIndex).value(0)
+        ok = linkmodel.setData(index, value)
+        return ok
         
-        # if no entries in model, call setData() directly
-        if not linkmodel.rowCount():
-            index = QModelIndex()
-            boxIndex = editor.currentIndex()
-            value = editor.model().record(boxIndex).value(0)
-            ok = linkmodel.setData(index, value)
-
     def enableWidget(self, widget):
         """Enables widget passed in function parameter, if not already enabled."""
         if not widget.isEnabled():
