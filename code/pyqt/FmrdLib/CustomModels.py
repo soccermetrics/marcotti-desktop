@@ -26,6 +26,10 @@ from PyQt4.QtSql import *
 Classes:
 SqlRelationalProxyModel - proxy model for SQL relational table models
 LinkingSqlModel -- base editable linking table model
+
+GroupLinkingModel -- implement GroupMatches table
+KnockoutLinkingModel -- implement KnockoutMatches table
+LeagueLinkingModel -- implement LeagueMatches table
 ManagerLinkingModel -- implement HomeManagers and AwayManagers tables
 SubstituteLinkingModel -- implement InSubstitutions and OutSubstitutions tables
 TeamLinkingModel -- implement HomeTeams and AwayTeams tables
@@ -113,8 +117,72 @@ class LinkingSqlModel(QSqlQueryModel):
         """
 #        print "Calling base setCompositeKey()"
         return False
+
+
+class LeagueLinkingModel(LinkingSqlModel):
+    """Impements linking model for matches played in the league phase of a football competition.
+    
+    Argument:
+    tbl_name - SQL table name
         
+    """
+
+    def __init__(self, tbl_name, parent=None):
+        """Constructor for LeagueLinkingModel class."""
+        super(LeagueLinkingModel, self).__init__(parent)
+#        print "Calling init() in LeagueLinkingModel"
         
+        self.table = tbl_name
+        self.primary_id = parent.matchID_display.text()
+        self.setQuery(QString("SELECT match_id, round_id FROM %1 WHERE match_id = %2").arg(self.table).arg(self.primary_id))
+        
+    def refresh(self):
+        """Refreshes query model."""
+        self.setQuery(QString("SELECT match_id, round_id FROM %1 WHERE match_id = %2").arg(self.table).arg(self.primary_id))
+        
+    def setCompositeKey(self, index, match_id, round_id):
+        """Inserts or updates entry in database."""
+#        print "Calling setCompositeKey() in LeagueLinkingModel"
+        # setup SQL statements
+        insertString = QString("INSERT INTO %1 (match_id, round_id) VALUES (?,?)").arg(self.table)
+        updateString = QString("UPDATE %1 SET round_id = ? WHERE enviro_id = ?").arg(self.table)
+        
+        if index.row() == -1:
+#            print "No entries of ID %s in linking table" % enviro_id
+            # insert into table if no existing match_id record in linking table
+            insertQuery = QSqlQuery()
+            insertQuery.prepare(insertString)
+            insertQuery.addBindValue(match_id)
+            insertQuery.addBindValue(round_id)
+            return insertQuery.exec_()
+        elif index.row() == 0:
+#            print "Entry of ID %s in linking table" % enviro_id
+            # update into table if there exists match_id record in linking table
+            updateQuery = QSqlQuery()
+            updateQuery.prepare(updateString)
+            updateQuery.addBindValue(round_id)
+            updateQuery.addBindValue(match_id)
+            return updateQuery.exec_()
+        else:
+            # any other failure, return False
+            print "Error with entry Query"
+            return False
+        
+    def delete(self, match_id):    
+        """Deletes entry in database.
+        
+        Argument:
+            match_id - primary key ID that links to Matches table
+            
+        """
+        deleteString = QString("DELETE FROM %1 WHERE match_id = ?").arg(self.table)
+        
+        deleteQuery = QSqlQuery()
+        deleteQuery.prepare(deleteString)
+        deleteQuery.addBindValue(match_id)
+        return deleteQuery.exec_()
+
+
 class WeatherLinkingModel(LinkingSqlModel):
     """Implements linking models for weather conditions at different intervals of the match.
     
