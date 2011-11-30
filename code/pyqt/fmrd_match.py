@@ -347,6 +347,11 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
             self.awayteamSelect.setDisabled(True)
             self.awaymgrSelect.setDisabled(True)
             
+            # disable lineup/environment buttons
+            self.homeLineupButton.setDisabled(True)
+            self.awayLineupButton.setDisabled(True)
+            self.enviroButton.setDisabled(True)
+            
             # disable save and delete entry buttons
             self.saveEntry.setDisabled(True)
             self.deleteEntry.setDisabled(True)
@@ -368,7 +373,7 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
         self.connect(self.saveEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.NULL))
         self.connect(self.addEntry, SIGNAL("clicked()"), self.addRecord)
         self.connect(self.deleteEntry, SIGNAL("clicked()"), self.deleteRecord)           
-        self.connect(self.closeButton, SIGNAL("clicked()"), self, SLOT("close()"))
+        self.connect(self.closeButton, SIGNAL("clicked()"), self.accept)
 
         self.connect(self.hometeamSelect, SIGNAL("currentIndexChanged(int)"), 
                                                                       lambda: self.enableWidget(self.awayteamSelect))
@@ -396,6 +401,19 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
                     self.submitForms()
         QDialog.accept(self)
     
+    def submitForms(self):
+        """Writes to main database table and linking tables and returns result boolean."""
+        
+        mapperList = [self.hometeamMapper, self.awayteamMapper, self.homemgrMapper, self.awaymgrMapper]
+        editorList = [self.hometeamSelect, self.awayteamSelect, self.homemgrSelect, self.awaymgrSelect]
+        
+        if self.mapper.submit():
+            for mapper, editor in zip(mapperList, editorList):
+                if not self.updateLinkingTable(mapper, editor):
+                    return False
+        else:
+            return False
+            
     def saveRecord(self, where):
         """"Submits changes to database, navigates through form, and resets subforms."""
         row = self.mapper.currentIndex()
@@ -407,7 +425,6 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
                     self.submitForms()
             else:
                 self.mapper.revert()
-                return
         
         if where == Constants.FIRST:
             self.firstEntry.setDisabled(True)
@@ -461,7 +478,7 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
         self.homemgrModel.refresh()
 
         self.awaymgrModel.setID(currentID)
-        self.homemgrModel.refresh()
+        self.awaymgrModel.refresh()
         
         self.hometeamMapper.toFirst()
         self.awayteamMapper.toFirst()
@@ -517,6 +534,12 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
         if not self.saveEntry.isEnabled():
             self.saveEntry.setEnabled(True)
         
+        # flush filters
+        for widget in [self.homeCountryModel, self.homeManagerModel, self.awayCountryModel, self.awayManagerModel]:
+            widget.blockSignals(True)
+            widget.setFilter(QString())
+            widget.blockSignals(False)    
+    
         # enable form widgets
         self.matchID_display.setEnabled(True)
         self.matchCompSelect.setEnabled(True)
@@ -545,7 +568,7 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
         
         self.firstHalfLengthEdit.setText("45")
         self.secondHalfLengthEdit.setText("45")
-        self.matchDateEdit.setText("1901-01-01")
+        self.matchDateEdit.setDate(QDate(1856, 1, 1))
         self.matchDateEdit.setFocus()
         
         # refresh subforms
@@ -633,7 +656,8 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
         modelList = (self.hometeamModel, self.homemgrModel, self.awayteamModel, self.awaymgrModel)
         for editor, model in zip(editorList, modelList):
             index = model.index(0, 1)
-            if editor.currentText() != model.data(index).toString():
+            editIndex = editor.model().index(editor.currentIndex(), 0)
+            if editor.model().data(editIndex).toString() != model.data(index).toString():
                 return True
 
         return False                
