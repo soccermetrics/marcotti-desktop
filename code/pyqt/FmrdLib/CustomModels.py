@@ -119,6 +119,129 @@ class LinkingSqlModel(QSqlQueryModel):
         return False
 
 
+class GroupLinkingModel(LinkingSqlModel):
+    """Implements linking model for matches played in the group phase of a football competition.
+    
+    Argument:
+    tbl_name - SQL table name
+        
+    """
+    
+    def __init__(self, tbl_name, parent=None):
+        """Constructor for GroupLinkingModel class."""
+        super(GroupLinkingModel, self).__init__(parent)
+#        print "Calling init() in GroupLinkingModel"
+        
+        self.table = tbl_name
+        self.primary_id = parent.matchID_display.text()
+        self.grpround_id = "0"
+        self.group_id = "0"
+        self.round_id = "0"
+        self.setQuery(QString("SELECT match_id, grpround_id, group_id, round_id FROM %1 WHERE match_id = %2").arg(self.table).arg(self.primary_id))
+        
+    def refresh(self):
+        """Refreshes query model."""
+        self.setQuery(QString("SELECT match_id, grpround_id, group_id, round_id FROM %1 WHERE match_id = %2").arg(self.table).arg(self.primary_id))
+    
+    def resetID(self):
+        """Resets member variables in class."""
+        self.grpround_id = "0"
+        self.group_id = "0"
+        self.round_id = "0"
+        
+    def setData(self, index, value):
+        """Sets role data at index with value.  Calls setXXX()."""
+        if index.row() == -1:
+            # setup for new row insertion
+            ok = True
+            if index.column() == 1:
+                self.grpround_id = value
+            elif index.column() == 2:
+                self.group_id = value
+            elif index.column() == 3:
+                self.round_id = value
+        elif index.row() == 0:
+            # update into existing row
+            if index.column() == 1:
+                ok = self.setGroupRoundID(value)
+            elif index.column() == 2:
+                ok = self.setGroupID(value)
+            elif index.column() == 3:
+                ok = self.setRoundID(value)
+        return ok
+
+    def setGroupRoundID(self, grpround_id):
+        """Sets group round ID key in GroupMatches table."""
+        updateString = QString("UPDATE %1 SET grpround_id = ? WHERE match_id = ?").arg(self.table)
+        updateQuery = QSqlQuery()
+        updateQuery.prepare(updateString)
+        updateQuery.addBindValue(grpround_id)
+        updateQuery.addBindValue(self.primary_id)
+        return updateQuery.exec_()
+        
+    def setGroupID(self, group_id):
+        """Sets group ID key in GroupMatches table."""
+        updateString = QString("UPDATE %1 SET group_id = ? WHERE match_id = ?").arg(self.table)
+        updateQuery = QSqlQuery()
+        updateQuery.prepare(updateString)
+        updateQuery.addBindValue(group_id)
+        updateQuery.addBindValue(self.primary_id)
+        return updateQuery.exec_()
+
+    def setRoundID(self, round_id):
+        """Sets round ID key in GroupMatches table."""
+        updateString = QString("UPDATE %1 SET round_id = ? WHERE match_id = ?").arg(self.table)
+        updateQuery = QSqlQuery()
+        updateQuery.prepare(updateString)
+        updateQuery.addBindValue(round_id)
+        updateQuery.addBindValue(self.primary_id)
+        return updateQuery.exec_()
+        
+    def submit(self):
+        """Inserts new row into database if no prior record exists.  
+        
+        Row updates are handled by setGroupRoundID(), setGroupID(), setRoundID().
+        """
+        insertString = QString("INSERT INTO %1 (match_id, grpround_id, group_id, round_id) VALUES (?,?,?,?)").arg(self.table)
+        
+        # test for already existing record in table
+        query = QSqlQuery()
+        query.prepare(QString("SELECT COUNT(*) FROM %1 WHERE match_id = ?").arg(self.table))
+        query.addBindValue(self.primary_id)
+        query.exec_()
+        if query.isActive():
+            query.next()
+            numMatches = query.value(0).toInt()[0]
+            if not numMatches:
+                # no prior record...insert new row
+                insertQuery = QSqlQuery()
+                insertQuery.prepare(insertString)
+                insertQuery.addBindValue(self.primary_id)
+                insertQuery.addBindValue(self.grpround_id)
+                insertQuery.addBindValue(self.group_id)
+                insertQuery.addBindValue(self.round_id)
+                ok = insertQuery.exec_()
+                
+                self.resetID()
+        else:
+            ok = False
+        return ok
+        
+    def delete(self, match_id):    
+        """Deletes entry in database.
+        
+        Argument:
+            match_id - primary key ID that links to Matches table
+            
+        """
+        deleteString = QString("DELETE FROM %1 WHERE match_id = ?").arg(self.table)
+        
+        deleteQuery = QSqlQuery()
+        deleteQuery.prepare(deleteString)
+        deleteQuery.addBindValue(match_id)
+        return deleteQuery.exec_()
+
+
 class KnockoutLinkingModel(LinkingSqlModel):
     """Implements linking model for matches played in the knockout phase of a football competition.
     
