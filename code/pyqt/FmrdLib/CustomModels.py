@@ -271,7 +271,7 @@ class KnockoutLinkingModel(LinkingSqlModel):
         self.matchday_id = "0"
         
     def setData(self, index, value):
-        """Sets role data at index with value.  Calls setCompositeKey()."""
+        """Sets role data at index with value.  Calls setXXX()."""
         if index.row() == -1:
             # setup for new row insertion
             ok = True
@@ -314,7 +314,7 @@ class KnockoutLinkingModel(LinkingSqlModel):
         
         # test for already existing record in table
         query = QSqlQuery()
-        query.prepare("SELECT COUNT(*) FROM tbl_knockoutmatches WHERE match_id = ?")
+        query.prepare(QString("SELECT COUNT(*) FROM %1 WHERE match_id = ?").arg(self.table))
         query.addBindValue(self.primary_id)
         query.exec_()
         if query.isActive():
