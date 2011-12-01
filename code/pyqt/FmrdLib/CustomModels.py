@@ -142,6 +142,11 @@ class KnockoutLinkingModel(LinkingSqlModel):
         """Refreshes query model."""
         self.setQuery(QString("SELECT match_id, koround_id, matchday_id FROM %1 WHERE match_id = %2").arg(self.table).arg(self.primary_id))
     
+    def resetID(self):
+        """Resets member variables in class."""
+        self.koround_id = "0"
+        self.matchday_id = "0"
+        
     def setData(self, index, value):
         """Sets role data at index with value.  Calls setCompositeKey()."""
         if index.row() == -1:
@@ -177,17 +182,34 @@ class KnockoutLinkingModel(LinkingSqlModel):
         updateQuery.addBindValue(self.primary_id)
         return updateQuery.exec_()
         
-    def submitAll(self):
-        """Perhaps this could be a wrapper function"""
+    def submit(self):
+        """Inserts new row into database if no prior record exists.  
+        
+        Row updates are handled by setKnockoutID() and setMatchdayID().
+        """
         insertString = QString("INSERT INTO %1 (match_id, koround_id, matchday_id) VALUES (?,?,?)").arg(self.table)
         
-        # include a test on already existing record in table .. if no prior record, insert new one
-        insertQuery = QSqlQuery()
-        insertQuery.prepare(insertString)
-        insertQuery.addBindValue(self.primary_id)
-        insertQuery.addBindValue(self.koround_id)
-        insertQuery.addBindValue(self.matchday_id)
-        return insertQuery.exec_()
+        # test for already existing record in table
+        query = QSqlQuery()
+        query.prepare("SELECT COUNT(*) FROM tbl_knockoutmatches WHERE match_id = ?")
+        query.addBindValue(self.primary_id)
+        query.exec_()
+        if query.isActive():
+            query.next()
+            numMatches = query.value(0).toInt()[0]
+            if not numMatches:
+                # no prior record...insert new row
+                insertQuery = QSqlQuery()
+                insertQuery.prepare(insertString)
+                insertQuery.addBindValue(self.primary_id)
+                insertQuery.addBindValue(self.koround_id)
+                insertQuery.addBindValue(self.matchday_id)
+                ok = insertQuery.exec_()
+                
+                self.resetID()
+        else:
+            ok = False
+        return ok
         
     def delete(self, match_id):    
         """Deletes entry in database.
