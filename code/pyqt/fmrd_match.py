@@ -439,25 +439,20 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
                     return False
             
             # write to specific Phase linking tables
+            # update linking table, then call submit()
             phaseText = self.phaseSelect.currentText()
             if phaseText == "League":
-                # update linking table
                 self.updateLinkingTable(self.leagueMatchMapper, self.lgRoundSelect, 1)
-                # call submit
                 self.leagueMatchMapper.submit()
             elif phaseText == "Group":
-                # update linking table
                 editorList = [self.groupSelect, self.grpRoundSelect, self.grpMatchdaySelect]
                 for editor,  column in zip(editorList, range(1, 4)):
                     self.updateLinkingTable(self.groupMatchMapper, editor, column)
-                # call submit
                 self.groupMatchMapper.submit()
             elif phaseText == "Knockout":
-                # update linking table
                 editorList = [self.koRoundSelect, self.koMatchdaySelect]
                 for editor,  column in zip(editorList, range(1, 3)):
                     self.updateLinkingTable(self.knockoutMatchMapper, editor, column)                
-                # call submit
                 self.knockoutMatchMapper.submit()
         else:
             return False
@@ -655,9 +650,10 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
         itive confirmation, delete records in the following order:
             (1) HomeTeams and AwayTeams linking tables
             (2) HomeManagers and AwayManagers linking tables
-            (3) WeatherKickoff, WeatherHalftime, and WeatherFulltime linking tables
-            (4) Environments table
-            (5) Match table
+            (3) LeagueMatches, GroupMatches, and KnockoutMatches linking tables
+            (4) WeatherKickoff, WeatherHalftime, and WeatherFulltime linking tables
+            (5) Environments table
+            (6) Match table
         If match record is being referenced by Lineups, alert user.
         """
         
@@ -678,6 +674,12 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
                 # delete corresponding records in HomeManagers and AwayManagers
                 self.homemgrModel.delete(match_id)
                 self.awaymgrModel.delete(match_id)
+                
+                # delete corresponding records in LeagueMatches, GroupMatches, and KnockoutMatches
+                # (will be in one of either, but make a sweep through all three to make sure)
+                self.leagueMatchModel.delete(match_id)
+                self.groupMatchModel.delete(match_id)
+                self.knockoutMatchModel.delete(match_id)
                 
                 # find enviro_id in Environments table that contains match_id
                 self.deleteEnviroTables(match_id)
@@ -708,17 +710,28 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
                       or new record in database
             FALSE: no changes between data entry form and current record in database
         """
+        
+        # date field
+        dateList = (self.matchDateEdit, )
+        columnList = (MatchEntryDlg.DATE, )
+        for editor, column in zip(dateList, columnList):
+            index = self.model.index(row, column)
+            if editor.date().toString(Qt.ISODate) != self.model.data(index).toString():
+                return True
+                
         # line edit fields
-        editorList = (self.matchDateEdit, self.firstHalfLengthEdit, self.secondHalfLengthEdit, self.attendanceEdit)
-        columnList = (MatchEntryDlg.DATE, MatchEntryDlg.HALF1, MatchEntryDlg.HALF2, MatchEntryDlg.ATTEND)
+        editorList = (self.firstHalfLengthEdit, self.secondHalfLengthEdit, 
+                            self.firstExtraLengthEdit,  self.secondExtraLengthEdit, self.attendanceEdit)
+        columnList = (MatchEntryDlg.HALF1, MatchEntryDlg.HALF2, 
+                              MatchEntryDlg.EXTRA1, MatchEntryDlg.EXTRA2, MatchEntryDlg.ATTEND)
         for editor, column in zip(editorList, columnList):
             index = self.model.index(row, column)        
             if editor.text() != self.model.data(index).toString():
                 return True
                 
         # combobox fields
-        editorList = (self.matchCompSelect, self.matchRoundSelect, self.matchRefSelect, self.matchVenueSelect)
-        columnList = (MatchEntryDlg.COMP_ID, MatchEntryDlg.ROUND_ID, MatchEntryDlg.REF_ID, MatchEntryDlg.VENUE_ID)
+        editorList = (self.matchCompSelect, self.phaseSelect, self.matchRefSelect, self.matchVenueSelect)
+        columnList = (MatchEntryDlg.COMP_ID, MatchEntryDlg.PHASE_ID, MatchEntryDlg.REF_ID, MatchEntryDlg.VENUE_ID)
         for editor, column in zip(editorList, columnList):
             index = self.model.index(row, column)        
             if editor.currentText() != self.model.data(index).toString():
@@ -794,11 +807,12 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
             self.secondExtraLengthEdit.setDisabled(True)
             
         self.hometeamSelect.setEnabled(True)
+        self.enviroButton.setEnabled(True)
         
     def openEnviros(self, match_id):
         """Opens Environment subdialog for a specific match from Match dialog.
         
-        Saves current match record and instantiates EnviroEntryDlg object and opens window.
+        Saves current match record (but not subforms), instantiates EnviroEntryDlg object and opens window.
         Argument: 
         match_id -- primary key of current record in Matches table
         
