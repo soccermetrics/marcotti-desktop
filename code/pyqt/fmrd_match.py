@@ -453,7 +453,7 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
                 # call submit
                 self.groupMatchMapper.submit()
             elif phaseText == "Knockout":
-                # update linking table(
+                # update linking table
                 editorList = [self.koRoundSelect, self.koMatchdaySelect]
                 for editor,  column in zip(editorList, range(1, 3)):
                     self.updateLinkingTable(self.knockoutMatchMapper, editor, column)                
@@ -517,8 +517,9 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
         
         # refresh subforms
         currentID = self.matchID_display.text()
+        phaseText = self.phaseSelect.currentText()
         self.refreshSubForms(currentID)
-        self.refreshPhaseForms(currentID, self.phaseSelect.currentText())
+        self.refreshPhaseForms(currentID, phaseText)
 
     def refreshSubForms(self, currentID):
         """Sets match ID for linking models and refreshes models and mappers."""
@@ -618,12 +619,12 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
         for widget in self.upperFormWidgets:
             widget.setEnabled(True)
         
-        # disable remaining form widgets
-        for widget in self.lowerFormWidgets:
-            widget.setDisabled(True)
-            
         # disable phase-related widgets
         for widget in self.phaseWidgets:
+            widget.setDisabled(True)
+            
+        # disable remaining form widgets
+        for widget in self.lowerFormWidgets:
             widget.setDisabled(True)
             
         # disable home/away widgets
@@ -644,7 +645,7 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
         
         # refresh subforms
         self.refreshSubForms(match_id)    
-        self.refreshPhaseForms(currentID, self.phaseSelect.currentText())        
+        self.refreshPhaseForms(match_id, self.phaseSelect.currentText())        
 
     def deleteRecord(self):
         """Deletes record from database upon user confirmation.
