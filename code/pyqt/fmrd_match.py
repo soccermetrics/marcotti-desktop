@@ -433,9 +433,32 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
         editorList = [self.hometeamSelect, self.awayteamSelect, self.homemgrSelect, self.awaymgrSelect]
         
         if self.mapper.submit():
+            # write to home/away linking tables
             for mapper, editor in zip(mapperList, editorList):
-                if not self.updateLinkingTable(mapper, editor):
+                if not self.updateLinkingTable(mapper, editor, 0):
                     return False
+            
+            # write to specific Phase linking tables
+            phaseText = self.phaseSelect.currentText()
+            if phaseText == "League":
+                # update linking table
+                self.updateLinkingTable(self.leagueMatchMapper, self.lgRoundSelect, 1)
+                # call submit
+                self.leagueMatchMapper.submit()
+            elif phaseText == "Group":
+                # update linking table
+                editorList = [self.groupSelect, self.grpRoundSelect, self.grpMatchdaySelect]
+                for editor,  column in zip(editorList, range(1, 4)):
+                    self.updateLinkingTable(self.groupMatchMapper, editor, column)
+                # call submit
+                self.groupMatchMapper.submit()
+            elif phaseText == "Knockout":
+                # update linking table(
+                editorList = [self.koRoundSelect, self.koMatchdaySelect]
+                for editor,  column in zip(editorList, range(1, 3)):
+                    self.updateLinkingTable(self.knockoutMatchMapper, editor, column)                
+                # call submit
+                self.knockoutMatchMapper.submit()
         else:
             return False
             
@@ -733,13 +756,13 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
             deletionQuery.addBindValue(QVariant(enviro_id))
             deletionQuery.exec_()
                 
-    def updateLinkingTable(self, mapper, editor):
+    def updateLinkingTable(self, mapper, editor, column):
         """Updates custom linking table."""
         
         # database table associated with mapper
         # get current index of model
         linkmodel = mapper.model()
-        index = linkmodel.index(linkmodel.rowCount()-1, 0)
+        index = linkmodel.index(linkmodel.rowCount()-1, column)
         boxIndex = editor.currentIndex()
         value = editor.model().record(boxIndex).value(0)
         ok = linkmodel.setData(index, value)
