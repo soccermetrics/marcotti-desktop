@@ -66,6 +66,33 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
         GROUP,  GROUP_ROUND,  GROUP_MATCHDAY = range(1, 4)
         KO_ROUND, KO_MATCHDAY = range(1, 3)
         
+        # define lists of comboboxes
+        self.selectWidgets = (
+            self.matchCompSelect, self.phaseSelect, self.lgRoundSelect, self.groupSelect, 
+            self.grpRoundSelect, self.grpMatchdaySelect, self.koRoundSelect, self.koMatchdaySelect,  
+            self.matchRefSelect, self.matchVenueSelect, self.hometeamSelect, self.homemgrSelect, 
+            self.hometeamSelect, self.awaymgrSelect, self.awayteamSelect
+        )
+        
+        self.upperFormWidgets = (
+            self.matchCompSelect, self.matchDateEdit, self.phaseSelect
+        )
+        
+        self.lowerFormWidgets = (
+            self.matchRefSelect, self.matchVenueSelect, self.attendanceEdit, self.firstHalfLengthEdit, 
+            self.secondHalfLengthEdit, self.firstExtraLengthEdit, self.secondExtraLengthEdit,
+        )
+        
+        self.phaseWidgets = (
+            self.lgRoundSelect, self.koRoundSelect, self.koMatchdaySelect, self.groupSelect, 
+            self.grpRoundSelect, self.grpMatchdaySelect                             
+        )
+        
+        self.homeawayWidgets = (
+            self.hometeamSelect, self.homemgrSelect, self.awayteamSelect, self.awaymgrSelect, 
+            self.homeLineupButton, self.awayLineupButton
+        )
+        
         # define underlying database model (tbl_matches)
         # because of foreign keys, instantiate QSqlRelationalTableModel and define relations to it
         self.model = QSqlRelationalTableModel(self)
@@ -317,40 +344,22 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
         
         # disable all fields if no records in database table
         if not self.model.rowCount():
-            self.matchID_display.setDisabled(True)
-            self.matchDateEdit.setDisabled(True)
-            self.matchCompSelect.setDisabled(True)
-            self.phaseSelect.setDisabled(True)
-            self.matchRefSelect.setDisabled(True)
-            self.matchVenueSelect.setDisabled(True)
-            self.attendanceEdit.setDisabled(True)
-            self.firstHalfLengthEdit.setDisabled(True)
-            self.secondHalfLengthEdit.setDisabled(True)
-            self.firstExtraLengthEdit.setDisabled(True)
-            self.secondExtraLengthEdit.setDisabled(True)
             
-            # disable league phase combobox
-            self.lgRoundSelect.setDisabled(True)
+            # disable form widgets
+            for widget in self.upperFormWidgets:
+                widget.setDisabled(True)
             
-            # disable knockout phase comboboxes
-            self.koRoundSelect.setDisabled(True)
-            self.koMatchdaySelect.setDisabled(True)
-            
-            # disable group phase comboboxes
-            self.groupSelect.setDisabled(True)
-            self.grpRoundSelect.setDisabled(True)
-            self.grpMatchdaySelect.setDisabled(True)
-            
-            # disable home/away comboboxes
-            self.hometeamSelect.setDisabled(True)
-            self.homemgrSelect.setDisabled(True)
-            self.awayteamSelect.setDisabled(True)
-            self.awaymgrSelect.setDisabled(True)
-            
-            # disable lineup/environment buttons
-            self.homeLineupButton.setDisabled(True)
-            self.awayLineupButton.setDisabled(True)
-            self.enviroButton.setDisabled(True)
+            # disable remaining form widgets
+            for widget in self.lowerFormWidgets:
+                widget.setDisabled(True)
+                
+            # disable phase-related widgets
+            for widget in self.phaseWidgets:
+                widget.setDisabled(True)
+                
+            # disable home/away widgets
+            for widget in self.homeawayWidgets:
+                widget.setDisabled(True)
             
             # disable save and delete entry buttons
             self.saveEntry.setDisabled(True)
@@ -375,6 +384,22 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
         self.connect(self.deleteEntry, SIGNAL("clicked()"), self.deleteRecord)           
         self.connect(self.closeButton, SIGNAL("clicked()"), self.accept)
 
+        self.connect(self.phaseSelect, SIGNAL("currentIndexChanged(int)"), self.enablePhaseDetails)
+        
+        self.connect(self.lgRoundSelect, SIGNAL("currentIndexChanged(int)"), self.enableOverviewAndTime)
+        
+        self.connect(self.groupSelect, SIGNAL("currentIndexChanged(int)"), 
+                                                                lambda: self.enableWidget(self.grpRoundSelect))
+        self.connect(self.grpRoundSelect, SIGNAL("currentIndexChanged(int)"), 
+                                                                lambda: self.enableWidget(self.grpMatchdaySelect))
+        self.connect(self.grpMatchdaySelect, SIGNAL("currentIndexChanged(int)"),self.enableOverviewAndTime)
+
+        self.connect(self.koRoundSelect, SIGNAL("currentIndexChanged(int)"), 
+                                                                lambda: self.enableWidget(self.koMatchdaySelect))
+        self.connect(self.koMatchdaySelect, SIGNAL("currentIndexChanged(int)"),self.enableOverviewAndTime)
+        
+        self.connect(self.hometeamSelect, SIGNAL("currentIndexChanged(int)"), 
+                                                                      lambda: self.enableWidget(self.homemgrSelect))
         self.connect(self.hometeamSelect, SIGNAL("currentIndexChanged(int)"), 
                                                                       lambda: self.enableWidget(self.awayteamSelect))
         self.connect(self.homemgrSelect, SIGNAL("currentIndexChanged(int)"), 
@@ -458,6 +483,11 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
             row = self.model.rowCount() - 1
         self.mapper.setCurrentIndex(row)
         
+        # disable Phase comboboxes
+        self.phaseSelect.setDisabled(True)
+        for widget in self.phaseWidgets:
+            widget.setDisabled(True)
+            
         # enable Delete button if at least one record
         if self.model.rowCount():
             self.deleteEntry.setEnabled(True)        
@@ -465,6 +495,7 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
         # refresh subforms
         currentID = self.matchID_display.text()
         self.refreshSubForms(currentID)
+        self.refreshPhaseForms(currentID, self.phaseSelect.currentText())
 
     def refreshSubForms(self, currentID):
         """Sets match ID for linking models and refreshes models and mappers."""
@@ -485,6 +516,26 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
         self.homemgrMapper.toFirst()
         self.awaymgrMapper.toFirst()
 
+    def refreshPhaseForms(self, currentID, phaseText):
+        """Sets match ID for linking models and refreshed models and mappers.
+        
+        Parameters:
+        currentID: matchID key
+        phaseText: text associated with current index in Competition Phase combobox
+        """
+        if phaseText == "League":
+            self.leagueMatchModel.setID(currentID)
+            self.leagueMatchModel.refresh()
+            self.leagueMatchMapper.toFirst()
+        elif phaseText == "Group":
+            self.groupMatchModel.setID(currentID)
+            self.groupMatchModel.refresh()
+            self.groupMatchMapper.toFirst()
+        elif phaseText == "Knockout":
+            self.knockoutMatchModel.setID(currentID)
+            self.knockoutMatchModel.refresh()
+            self.knockoutMatchMapper.toFirst()
+        
     def addRecord(self):
         """Adds new record at end of entry list.
         
@@ -541,38 +592,36 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
             widget.blockSignals(False)    
     
         # enable form widgets
-        self.matchID_display.setEnabled(True)
-        self.matchCompSelect.setEnabled(True)
-        self.matchRoundSelect.setEnabled(True)
-        self.matchDateEdit.setEnabled(True)
-        self.matchRefSelect.setEnabled(True)
-        self.matchVenueSelect.setEnabled(True)
-        self.firstHalfLengthEdit.setEnabled(True)
-        self.secondHalfLengthEdit.setEnabled(True)
-        self.attendanceEdit.setEnabled(True)
+        for widget in self.upperFormWidgets:
+            widget.setEnabled(True)
         
-        # disable comboboxes in home/away team section
-        self.homemgrSelect.setDisabled(True)
-        self.awayteamSelect.setDisabled(True)
-        self.awaymgrSelect.setDisabled(True)
-        self.homeLineupButton.setDisabled(True)
-        self.awayLineupButton.setDisabled(True)
-        
+        # disable remaining form widgets
+        for widget in self.lowerFormWidgets:
+            widget.setDisabled(True)
+            
+        # disable phase-related widgets
+        for widget in self.phaseWidgets:
+            widget.setDisabled(True)
+            
+        # disable home/away widgets
+        for widget in self.homeawayWidgets:
+            widget.setDisabled(True)
+            
         # initialize form widgets
-        self.matchRefSelect.setCurrentIndex(-1)
-        self.matchVenueSelect.setCurrentIndex(-1)
-        self.homemgrSelect.setCurrentIndex(-1)
-        self.hometeamSelect.setCurrentIndex(-1)
-        self.awaymgrSelect.setCurrentIndex(-1)
-        self.awayteamSelect.setCurrentIndex(-1)
+        for widget in self.selectWidgets:
+            widget.setCurrentIndex(-1)
         
         self.firstHalfLengthEdit.setText("45")
         self.secondHalfLengthEdit.setText("45")
+        self.firstExtraLengthEdit.setText("0")
+        self.secondExtraLengthEdit.setText("0")
+        self.attendanceEdit.setText("0")
         self.matchDateEdit.setDate(QDate(1856, 1, 1))
         self.matchDateEdit.setFocus()
         
         # refresh subforms
-        self.refreshSubForms(match_id)        
+        self.refreshSubForms(match_id)    
+        self.refreshPhaseForms(currentID, self.phaseSelect.currentText())        
 
     def deleteRecord(self):
         """Deletes record from database upon user confirmation.
@@ -700,6 +749,27 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
         """Enables widget passed in function parameter, if not already enabled."""
         if not widget.isEnabled():
             widget.setEnabled(True)
+        
+    def enablePhaseDetails(self):
+        """Enables comboboxes associated with specific competition phase."""
+        phaseText = self.phaseSelect.currentText()
+        if phaseText == "League":
+            self.lgRoundSelect.setEnabled(True)
+        elif phaseText == "Group":
+            self.groupSelect.setEnabled(True)
+        elif phaseText == "Knockout":
+            self.koRoundSelect.setEnabled(True)
+            
+    def enableOverviewAndTime(self):
+        """Enables Overview, Time, and Home Team comboboxes."""
+        for widget in self.lowerFormWidgets:
+            widget.setEnabled(True)
+            
+        if self.phaseSelect.currentText() != "Knockout":
+            self.firstExtraLengthEdit.setDisabled(True)
+            self.secondExtraLengthEdit.setDisabled(True)
+            
+        self.hometeamSelect.setEnabled(True)
         
     def openEnviros(self, match_id):
         """Opens Environment subdialog for a specific match from Match dialog.
