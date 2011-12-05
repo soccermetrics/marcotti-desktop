@@ -68,14 +68,14 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
         
         # define lists of comboboxes
         self.selectWidgets = (
-            self.matchCompSelect, self.phaseSelect, self.lgRoundSelect, self.groupSelect, 
+            self.matchCompSelect, self.matchPhaseSelect, self.lgRoundSelect, self.groupSelect, 
             self.grpRoundSelect, self.grpMatchdaySelect, self.koRoundSelect, self.koMatchdaySelect,  
             self.matchRefSelect, self.matchVenueSelect, self.hometeamSelect, self.homemgrSelect, 
             self.hometeamSelect, self.awaymgrSelect, self.awayteamSelect
         )
         
         self.upperFormWidgets = (
-            self.matchCompSelect, self.matchDateEdit, self.phaseSelect
+            self.matchCompSelect, self.matchDateEdit, self.matchPhaseSelect
         )
         
         self.lowerFormWidgets = (
@@ -90,7 +90,7 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
         
         self.homeawayWidgets = (
             self.hometeamSelect, self.homemgrSelect, self.awayteamSelect, self.awaymgrSelect, 
-            self.homeLineupButton, self.awayLineupButton
+            self.homeLineupButton, self.awayLineupButton,  self.enviroButton
         )
         
         # define underlying database model (tbl_matches)
@@ -116,20 +116,23 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
         self.compModel.setSort(CMP_ID, Qt.AscendingOrder)
         self.matchCompSelect.setModel(self.compModel)
         self.matchCompSelect.setModelColumn(self.compModel.fieldIndex("comp_name"))
+        self.matchCompSelect.setCurrentIndex(-1)
         self.mapper.addMapping(self.matchCompSelect, MatchEntryDlg.COMP_ID)
         
         # relation model for Competition Phases combobox
         self.phaseModel = self.model.relationModel(MatchEntryDlg.PHASE_ID)
         self.phaseModel.setSort(PHS_ID, Qt.AscendingOrder)
-        self.phaseSelect.setModel(self.phaseModel)
-        self.phaseSelect.setModelColumn(self.phaseModel.fieldIndex("phase_desc"))
-        self.mapper.addMapping(self.phaseSelect, MatchEntryDlg.PHASE_ID)
+        self.matchPhaseSelect.setModel(self.phaseModel)
+        self.matchPhaseSelect.setModelColumn(self.phaseModel.fieldIndex("phase_desc"))
+        self.matchPhaseSelect.setCurrentIndex(-1)
+        self.mapper.addMapping(self.matchPhaseSelect, MatchEntryDlg.PHASE_ID)
         
         # relation model for Venues combobox
         self.venueModel = self.model.relationModel(MatchEntryDlg.VENUE_ID)
         self.venueModel.setSort(VEN_ID, Qt.AscendingOrder)
         self.matchVenueSelect.setModel(self.venueModel)
         self.matchVenueSelect.setModelColumn(self.venueModel.fieldIndex("ven_name"))
+        self.matchVenueSelect.setCurrentIndex(-1)
         self.mapper.addMapping(self.matchVenueSelect, MatchEntryDlg.VENUE_ID)
         
         # relation model for Referees combobox
@@ -137,6 +140,7 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
         self.refereeModel.setSort(REF_SORT, Qt.AscendingOrder)
         self.matchRefSelect.setModel(self.refereeModel)
         self.matchRefSelect.setModelColumn(self.refereeModel.fieldIndex("full_name"))
+        self.matchRefSelect.setCurrentIndex(-1)
         self.mapper.addMapping(self.matchRefSelect, MatchEntryDlg.REF_ID)        
 
         # map other widgets on form
@@ -390,7 +394,7 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
         self.connect(self.deleteEntry, SIGNAL("clicked()"), self.deleteRecord)           
         self.connect(self.closeButton, SIGNAL("clicked()"), self.accept)
 
-        self.connect(self.phaseSelect, SIGNAL("currentIndexChanged(int)"), self.enablePhaseDetails)
+        self.connect(self.matchPhaseSelect, SIGNAL("currentIndexChanged(int)"), self.enablePhaseDetails)
         
         self.connect(self.lgRoundSelect, SIGNAL("currentIndexChanged(int)"),
                                                                 lambda: self.enableWidget(self.matchVenueSelect))
@@ -453,7 +457,7 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
             
             # write to specific Phase linking tables
             # update linking table, then call submit()
-            phaseText = self.phaseSelect.currentText()
+            phaseText = self.matchPhaseSelect.currentText()
             if phaseText == "League":
                 self.updateLinkingTable(self.leagueMatchMapper, self.lgRoundSelect, 1)
                 self.leagueMatchMapper.submit()
@@ -516,7 +520,7 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
         
         # disable Phase comboboxes
         # prevent user from editing Competition Phase once record is saved
-        self.phaseSelect.setDisabled(True)
+        self.matchPhaseSelect.setDisabled(True)
         for widget in self.phaseWidgets:
             widget.setDisabled(True)
             
@@ -526,7 +530,7 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
         
         # enable time boxes and refresh subforms
         currentID = self.matchID_display.text()
-        phaseText = self.phaseSelect.currentText()
+        phaseText = self.matchPhaseSelect.currentText()
         self.enableTimes(phaseText)
         self.refreshSubForms(currentID)
         self.refreshPhaseForms(currentID, phaseText)
@@ -606,7 +610,7 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
         self.matchID_display.setText(match_id)
         
         # obtain Competition Phase of current record
-        phaseText = self.phaseSelect.currentText()
+        phaseText = self.matchPhaseSelect.currentText()
         
         # disable next/last navigation buttons
         self.nextEntry.setDisabled(True)
@@ -751,7 +755,7 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
                 return True
                 
         # combobox fields
-        editorList = (self.matchCompSelect, self.phaseSelect, self.matchRefSelect, self.matchVenueSelect)
+        editorList = (self.matchCompSelect, self.matchPhaseSelect, self.matchRefSelect, self.matchVenueSelect)
         columnList = (MatchEntryDlg.COMP_ID, MatchEntryDlg.PHASE_ID, MatchEntryDlg.REF_ID, MatchEntryDlg.VENUE_ID)
         for editor, column in zip(editorList, columnList):
             index = self.model.index(row, column)        
@@ -810,7 +814,7 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
         
     def enablePhaseDetails(self):
         """Enables comboboxes associated with specific competition phase."""
-        phaseText = self.phaseSelect.currentText()
+        phaseText = self.matchPhaseSelect.currentText()
         if phaseText == "League":
             self.lgRoundSelect.setEnabled(True)
         elif phaseText == "Group":
@@ -831,7 +835,7 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
         
     def enableDefaults(self):
         """Enables Time edit boxes, Home Team comboboxes and Enviroments button."""
-        self.enableTimes(self.phaseSelect.currentText())
+        self.enableTimes(self.matchPhaseSelect.currentText())
         self.hometeamSelect.setEnabled(True)
         self.enviroButton.setEnabled(True)
         
