@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'gui/match_entry.ui'
 #
-# Created: Fri Nov 25 01:59:20 2011
+# Created: Mon Dec  5 15:11:01 2011
 #      by: PyQt4 UI code generator 4.7.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -386,21 +386,21 @@ class Ui_MatchEntryDlg(object):
         self.label_13.setMaximumSize(QtCore.QSize(105, 30))
         self.label_13.setObjectName("label_13")
         self.horizontalLayout.addWidget(self.label_13)
-        self.compSelect = QtGui.QComboBox(self.layoutWidget3)
-        self.compSelect.setMinimumSize(QtCore.QSize(330, 30))
-        self.compSelect.setMaximumSize(QtCore.QSize(330, 30))
-        self.compSelect.setObjectName("compSelect")
-        self.horizontalLayout.addWidget(self.compSelect)
+        self.matchCompSelect = QtGui.QComboBox(self.layoutWidget3)
+        self.matchCompSelect.setMinimumSize(QtCore.QSize(330, 30))
+        self.matchCompSelect.setMaximumSize(QtCore.QSize(330, 30))
+        self.matchCompSelect.setObjectName("matchCompSelect")
+        self.horizontalLayout.addWidget(self.matchCompSelect)
         self.label_14 = QtGui.QLabel(self.layoutWidget3)
         self.label_14.setMinimumSize(QtCore.QSize(50, 30))
         self.label_14.setMaximumSize(QtCore.QSize(50, 30))
         self.label_14.setObjectName("label_14")
         self.horizontalLayout.addWidget(self.label_14)
-        self.phaseSelect = QtGui.QComboBox(self.layoutWidget3)
-        self.phaseSelect.setMinimumSize(QtCore.QSize(180, 30))
-        self.phaseSelect.setMaximumSize(QtCore.QSize(180, 30))
-        self.phaseSelect.setObjectName("phaseSelect")
-        self.horizontalLayout.addWidget(self.phaseSelect)
+        self.matchPhaseSelect = QtGui.QComboBox(self.layoutWidget3)
+        self.matchPhaseSelect.setMinimumSize(QtCore.QSize(180, 30))
+        self.matchPhaseSelect.setMaximumSize(QtCore.QSize(180, 30))
+        self.matchPhaseSelect.setObjectName("matchPhaseSelect")
+        self.horizontalLayout.addWidget(self.matchPhaseSelect)
         self.label.setBuddy(self.matchID_display)
         self.label_11.setBuddy(self.firstHalfLengthEdit)
         self.label_12.setBuddy(self.secondHalfLengthEdit)
@@ -571,12 +571,12 @@ class Ui_MatchEntryDlg(object):
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Competition</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.compSelect.setToolTip(QtGui.QApplication.translate("MatchEntryDlg", "Competition Name", None, QtGui.QApplication.UnicodeUTF8))
+        self.matchCompSelect.setToolTip(QtGui.QApplication.translate("MatchEntryDlg", "Competition Name", None, QtGui.QApplication.UnicodeUTF8))
         self.label_14.setText(QtGui.QApplication.translate("MatchEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Phase</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.phaseSelect.setToolTip(QtGui.QApplication.translate("MatchEntryDlg", "Competition Phase", None, QtGui.QApplication.UnicodeUTF8))
+        self.matchPhaseSelect.setToolTip(QtGui.QApplication.translate("MatchEntryDlg", "Competition Phase", None, QtGui.QApplication.UnicodeUTF8))
 
 import fmrd_resources_rc

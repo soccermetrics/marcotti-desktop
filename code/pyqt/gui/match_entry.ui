@@ -1613,7 +1613,7 @@ p, li { white-space: pre-wrap; }
      </widget>
     </item>
     <item>
-     <widget class="QComboBox" name="compSelect">
+     <widget class="QComboBox" name="matchCompSelect">
       <property name="minimumSize">
        <size>
         <width>330</width>
@@ -1655,7 +1655,7 @@ p, li { white-space: pre-wrap; }
      </widget>
     </item>
     <item>
-     <widget class="QComboBox" name="phaseSelect">
+     <widget class="QComboBox" name="matchPhaseSelect">
       <property name="minimumSize">
        <size>
         <width>180</width>
