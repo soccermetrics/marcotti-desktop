@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'gui/match_entry.ui'
 #
-# Created: Mon Dec  5 15:11:01 2011
+# Created: Mon Dec  5 15:29:34 2011
 #      by: PyQt4 UI code generator 4.7.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -327,7 +327,7 @@ class Ui_MatchEntryDlg(object):
         self.enviroButton.setDefault(False)
         self.enviroButton.setObjectName("enviroButton")
         self.layoutWidget2 = QtGui.QWidget(MatchEntryDlg)
-        self.layoutWidget2.setGeometry(QtCore.QRect(10, 250, 458, 121))
+        self.layoutWidget2.setGeometry(QtCore.QRect(10, 240, 481, 141))
         self.layoutWidget2.setObjectName("layoutWidget2")
         self.gridLayout_5 = QtGui.QGridLayout(self.layoutWidget2)
         self.gridLayout_5.setObjectName("gridLayout_5")
@@ -570,13 +570,13 @@ class Ui_MatchEntryDlg(object):
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Competition</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\"> Competition</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
         self.matchCompSelect.setToolTip(QtGui.QApplication.translate("MatchEntryDlg", "Competition Name", None, QtGui.QApplication.UnicodeUTF8))
         self.label_14.setText(QtGui.QApplication.translate("MatchEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Phase</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\"> Phase</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
         self.matchPhaseSelect.setToolTip(QtGui.QApplication.translate("MatchEntryDlg", "Competition Phase", None, QtGui.QApplication.UnicodeUTF8))
 
 import fmrd_resources_rc
