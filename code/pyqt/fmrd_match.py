@@ -392,17 +392,24 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
 
         self.connect(self.phaseSelect, SIGNAL("currentIndexChanged(int)"), self.enablePhaseDetails)
         
-        self.connect(self.lgRoundSelect, SIGNAL("currentIndexChanged(int)"), self.enableOverviewAndTime)
+        self.connect(self.lgRoundSelect, SIGNAL("currentIndexChanged(int)"),
+                                                                lambda: self.enableWidget(self.matchVenueSelect))
         
         self.connect(self.groupSelect, SIGNAL("currentIndexChanged(int)"), 
                                                                 lambda: self.enableWidget(self.grpRoundSelect))
         self.connect(self.grpRoundSelect, SIGNAL("currentIndexChanged(int)"), 
                                                                 lambda: self.enableWidget(self.grpMatchdaySelect))
-        self.connect(self.grpMatchdaySelect, SIGNAL("currentIndexChanged(int)"),self.enableOverviewAndTime)
+        self.connect(self.grpMatchdaySelect, SIGNAL("currentIndexChanged(int)"),
+                                                                lambda: self.enableWidget(self.matchVenueSelect))
 
         self.connect(self.koRoundSelect, SIGNAL("currentIndexChanged(int)"), 
                                                                 lambda: self.enableWidget(self.koMatchdaySelect))
-        self.connect(self.koMatchdaySelect, SIGNAL("currentIndexChanged(int)"),self.enableOverviewAndTime)
+        self.connect(self.koMatchdaySelect, SIGNAL("currentIndexChanged(int)"),
+                                                                lambda: self.enableWidget(self.matchVenueSelect))
+                                                                
+        self.connect(self.matchVenueSelect, SIGNAL("currentIndexChanged(int)"), 
+                                                                lambda: self.enableWidget(self.matchRefSelect))
+        self.connect(self.matchRefSelect, SIGNAL("currentIndexChanged(int)"), self.enableDefaults)
         
         self.connect(self.hometeamSelect, SIGNAL("currentIndexChanged(int)"), 
                                                                       lambda: self.enableWidget(self.homemgrSelect))
@@ -508,6 +515,7 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
         self.mapper.setCurrentIndex(row)
         
         # disable Phase comboboxes
+        # prevent user from editing Competition Phase once record is saved
         self.phaseSelect.setDisabled(True)
         for widget in self.phaseWidgets:
             widget.setDisabled(True)
@@ -516,9 +524,10 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
         if self.model.rowCount():
             self.deleteEntry.setEnabled(True)        
         
-        # refresh subforms
+        # enable time boxes and refresh subforms
         currentID = self.matchID_display.text()
         phaseText = self.phaseSelect.currentText()
+        self.enableTimes(phaseText)
         self.refreshSubForms(currentID)
         self.refreshPhaseForms(currentID, phaseText)
 
@@ -596,6 +605,9 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
         # assign value to matchID field
         self.matchID_display.setText(match_id)
         
+        # obtain Competition Phase of current record
+        phaseText = self.phaseSelect.currentText()
+        
         # disable next/last navigation buttons
         self.nextEntry.setDisabled(True)
         self.lastEntry.setDisabled(True)
@@ -636,6 +648,9 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
         for widget in self.selectWidgets:
             widget.setCurrentIndex(-1)
         
+        # enable Time edit boxes
+        self.enableTimes(phaseText)
+        
         self.firstHalfLengthEdit.setText("45")
         self.secondHalfLengthEdit.setText("45")
         self.firstExtraLengthEdit.setText("0")
@@ -646,7 +661,7 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
         
         # refresh subforms
         self.refreshSubForms(match_id)    
-        self.refreshPhaseForms(match_id, self.phaseSelect.currentText())        
+        self.refreshPhaseForms(match_id, phaseText)
 
     def deleteRecord(self):
         """Deletes record from database upon user confirmation.
@@ -803,15 +818,20 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
         elif phaseText == "Knockout":
             self.koRoundSelect.setEnabled(True)
             
-    def enableOverviewAndTime(self):
-        """Enables Overview, Time, and Home Team comboboxes."""
-        for widget in self.lowerFormWidgets:
-            widget.setEnabled(True)
-            
-        if self.phaseSelect.currentText() != "Knockout":
-            self.firstExtraLengthEdit.setDisabled(True)
-            self.secondExtraLengthEdit.setDisabled(True)
-            
+    def enableTimes(self, phaseText):
+        """Enables Time edit boxes according to Competition Phase.
+        
+        Enables 1st/2nd extra time edit boxes only if Knockout phase match.
+        """
+        self.firstHalfLengthEdit.setEnabled(True)
+        self.secondHalfLengthEdit.setEnabled(True)
+        if phaseText == "Knockout":
+            self.firstExtraLengthEdit.setEnabled(True)
+            self.secondExtraLengthEdit.setEnabled(True)
+        
+    def enableDefaults(self):
+        """Enables Time edit boxes, Home Team comboboxes and Enviroments button."""
+        self.enableTimes(self.phaseSelect.currentText())
         self.hometeamSelect.setEnabled(True)
         self.enviroButton.setEnabled(True)
         
