@@ -264,52 +264,52 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
         # so that there is no confusion in SQL logic
         #
         
-        homeTeamModel = QSqlTableModel(self)
-        homeTeamModel.setTable("tbl_teams")
-        homeTeamModel.setSort(TEAM_NAME, Qt.AscendingOrder)
-        homeTeamModel.select()
+        self.homeTeamModel = QSqlTableModel(self)
+        self.homeTeamModel.setTable("tbl_teams")
+        self.homeTeamModel.setSort(TEAM_NAME, Qt.AscendingOrder)
+        self.homeTeamModel.select()
         
-        awayTeamModel = QSqlTableModel(self)
-        awayTeamModel.setTable("tbl_teams")
-        awayTeamModel.setSort(TEAM_NAME, Qt.AscendingOrder)
-        awayTeamModel.select()
+        self.awayTeamModel = QSqlTableModel(self)
+        self.awayTeamModel.setTable("tbl_teams")
+        self.awayTeamModel.setSort(TEAM_NAME, Qt.AscendingOrder)
+        self.awayTeamModel.select()
 
-        homeManagerModel = QSqlTableModel(self)
-        homeManagerModel.setTable("managers_list")
-        homeManagerModel.setSort(MGR_SORT, Qt.AscendingOrder)
-        homeManagerModel.select()
+        self.homeManagerModel = QSqlTableModel(self)
+        self.homeManagerModel.setTable("managers_list")
+        self.homeManagerModel.setSort(MGR_SORT, Qt.AscendingOrder)
+        self.homeManagerModel.select()
         
-        awayManagerModel = QSqlTableModel(self)
-        awayManagerModel.setTable("managers_list")
-        awayManagerModel.setSort(MGR_SORT, Qt.AscendingOrder)
-        awayManagerModel.select()
+        self.awayManagerModel = QSqlTableModel(self)
+        self.awayManagerModel.setTable("managers_list")
+        self.awayManagerModel.setSort(MGR_SORT, Qt.AscendingOrder)
+        self.awayManagerModel.select()
         
         # set up Home Team linking table 
         # set up Home Team combobox with items from tbl_teams table
         self.hometeamModel = TeamLinkingModel("tbl_hometeams", self)
-        self.hometeamSelect.setModel(homeTeamModel)
-        self.hometeamSelect.setModelColumn(homeTeamModel.fieldIndex("tm_name"))
+        self.hometeamSelect.setModel(self.homeTeamModel)
+        self.hometeamSelect.setModelColumn(self.homeTeamModel.fieldIndex("tm_name"))
         self.hometeamSelect.setCurrentIndex(-1)
 
         # set up Away Team linking table
         # set up Away Team combobox with items from tbl_teams table
         self.awayteamModel = TeamLinkingModel("tbl_awayteams", self)
-        self.awayteamSelect.setModel(awayTeamModel)
-        self.awayteamSelect.setModelColumn(awayTeamModel.fieldIndex("tm_name"))
+        self.awayteamSelect.setModel(self.awayTeamModel)
+        self.awayteamSelect.setModelColumn(self.awayTeamModel.fieldIndex("tm_name"))
         self.awayteamSelect.setCurrentIndex(-1)
 
         # set up Home Manager linking table
         # set up Home Manager combobox with items from managers_list table
         self.homemgrModel = ManagerLinkingModel("tbl_homemanagers", self)
-        self.homemgrSelect.setModel(homeManagerModel)
-        self.homemgrSelect.setModelColumn(homeManagerModel.fieldIndex("full_name"))
+        self.homemgrSelect.setModel(self.homeManagerModel)
+        self.homemgrSelect.setModelColumn(self.homeManagerModel.fieldIndex("full_name"))
         self.homemgrSelect.setCurrentIndex(-1)
 
         # set up Away Manager linking table
         # set up Away Manager combobox with items from managers_list table
         self.awaymgrModel = ManagerLinkingModel("tbl_awaymanagers", self)
-        self.awaymgrSelect.setModel(awayManagerModel)
-        self.awaymgrSelect.setModelColumn(awayManagerModel.fieldIndex("full_name"))
+        self.awaymgrSelect.setModel(self.awayManagerModel)
+        self.awaymgrSelect.setModelColumn(self.awayManagerModel.fieldIndex("full_name"))
         self.awaymgrSelect.setCurrentIndex(-1)
 
         # Home Team mapper
@@ -627,7 +627,7 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
             self.saveEntry.setEnabled(True)
         
         # flush filters
-        for widget in [self.hometeamModel, self.homemgrModel, self.awayteamModel, self.awaymgrModel]:
+        for widget in [self.homeTeamModel, self.homeManagerModel, self.awayTeamModel, self.awayManagerModel]:
             widget.blockSignals(True)
             widget.setFilter(QString())
             widget.blockSignals(False)    
