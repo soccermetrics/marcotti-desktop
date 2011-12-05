@@ -627,7 +627,7 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
             self.saveEntry.setEnabled(True)
         
         # flush filters
-        for widget in [self.homeCountryModel, self.homeManagerModel, self.awayCountryModel, self.awayManagerModel]:
+        for widget in [self.hometeamModel, self.homemgrModel, self.awayteamModel, self.awaymgrModel]:
             widget.blockSignals(True)
             widget.setFilter(QString())
             widget.blockSignals(False)    
