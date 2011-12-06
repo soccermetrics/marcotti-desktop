@@ -22,7 +22,7 @@ from PyQt4.QtGui import *
 from PyQt4.QtSql import *
 
 from FmrdMain import *
-from FmrdLib import (Constants, MsgPrompts)
+from FmrdLib import (CheckTables, Constants, MsgPrompts)
 from FmrdLib.CustomDelegates import *
 from FmrdLib.CustomModels import *
 
@@ -444,35 +444,33 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
         QDialog.accept(self)
     
     def submitForms(self):
-        """Writes to main database table and linking tables and returns result boolean."""
+        """Writes to linking tables."""
         
         mapperList = [self.hometeamMapper, self.awayteamMapper, self.homemgrMapper, self.awaymgrMapper]
         editorList = [self.hometeamSelect, self.awayteamSelect, self.homemgrSelect, self.awaymgrSelect]
         
-        if self.mapper.submit():
-            # write to home/away linking tables
-            for mapper, editor in zip(mapperList, editorList):
-                if not self.updateLinkingTable(mapper, editor, 0):
-                    return False
-            
-            # write to specific Phase linking tables
-            # update linking table, then call submit()
-            phaseText = self.matchPhaseSelect.currentText()
-            if phaseText == "League":
-                self.updateLinkingTable(self.leagueMatchMapper, self.lgRoundSelect, 1)
-                self.leagueMatchMapper.submit()
-            elif phaseText == "Group":
-                editorList = [self.groupSelect, self.grpRoundSelect, self.grpMatchdaySelect]
-                for editor,  column in zip(editorList, range(1, 4)):
-                    self.updateLinkingTable(self.groupMatchMapper, editor, column)
-                self.groupMatchMapper.submit()
-            elif phaseText == "Knockout":
-                editorList = [self.koRoundSelect, self.koMatchdaySelect]
-                for editor,  column in zip(editorList, range(1, 3)):
-                    self.updateLinkingTable(self.knockoutMatchMapper, editor, column)                
-                self.knockoutMatchMapper.submit()
-        else:
-            return False
+        # write to home/away linking tables
+        for mapper, editor in zip(mapperList, editorList):
+            if not self.updateLinkingTable(mapper, editor, 0):
+                return
+        
+        # write to specific Phase linking tables
+        # update linking table, then call submit()
+        phaseText = self.matchPhaseSelect.currentText()
+        if phaseText == "League":
+            self.updateLinkingTable(self.leagueMatchMapper, self.lgRoundSelect, 1)
+            self.leagueMatchMapper.submit()
+        elif phaseText == "Group":
+            editorList = [self.groupSelect, self.grpRoundSelect, self.grpMatchdaySelect]
+            for editor,  column in zip(editorList, range(1, 4)):
+                self.updateLinkingTable(self.groupMatchMapper, editor, column)
+            self.groupMatchMapper.submit()
+        elif phaseText == "Knockout":
+            print "Entered Knockout branch"
+            editorList = [self.koRoundSelect, self.koMatchdaySelect]
+            for editor,  column in zip(editorList, range(1, 3)):
+                self.updateLinkingTable(self.knockoutMatchMapper, editor, column)                
+            self.knockoutMatchMapper.submit()
             
     def saveRecord(self, where):
         """"Submits changes to database, navigates through form, and resets subforms."""
@@ -678,12 +676,11 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
             (6) Match table
         If match record is being referenced by Lineups, alert user.
         """
-        
         childTableList = ["tbl_lineups"]
         fieldName = "match_id"
         match_id = self.matchID_display.text()
         
-        if not CountChildRecords(childTableList, fieldName, match_id):
+        if not CheckTables.CountChildRecords(childTableList, fieldName, match_id):
             if QMessageBox.question(self, QString("Delete Record"), 
                                                 QString("Delete current record?"), 
                                                 QMessageBox.Yes|QMessageBox.No) == QMessageBox.No:
@@ -715,9 +712,37 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
                 if row + 1 >= self.model.rowCount():
                     row = self.model.rowCount() - 1
                 self.mapper.setCurrentIndex(row) 
-                # disable Delete button if no records in database
                 if not self.model.rowCount():
+                    # disable Delete button if no records in database
                     self.deleteEntry.setDisabled(True)
+                    
+                    # enable form widgets
+                    for widget in self.upperFormWidgets:
+                        widget.setDisabled(True)
+                    
+                    # disable phase-related widgets
+                    for widget in self.phaseWidgets:
+                        widget.setDisabled(True)
+                        
+                    # disable remaining form widgets
+                    for widget in self.lowerFormWidgets:
+                        widget.setDisabled(True)
+                        
+                    # disable home/away widgets
+                    for widget in self.homeawayWidgets:
+                        widget.setDisabled(True)
+                        
+                    # initialize form widgets
+                    for widget in self.selectWidgets:
+                        widget.setCurrentIndex(-1)
+                    
+                    self.firstHalfLengthEdit.setText("45")
+                    self.secondHalfLengthEdit.setText("45")
+                    self.firstExtraLengthEdit.setText("0")
+                    self.secondExtraLengthEdit.setText("0")
+                    self.matchAttendanceEdit.setText("0")
+                    self.matchDateEdit.setDate(QDate(1856, 1, 1))
+                    self.matchDateEdit.setFocus()                    
         else:
                 DeletionErrorPrompt(self)
                 
@@ -788,7 +813,7 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
         list = ["tbl_weatherkickoff", "tbl_weatherhalftime", "tbl_weatherfulltime",  "tbl_environments"]
         deletionQuery = QSqlQuery()
         for table in list:
-            deletionQuery.prepare("DELETE FROM %1 WHERE enviro_id = ?")
+            deletionQuery.prepare(QString("DELETE FROM %1 WHERE enviro_id = ?").arg(table))
             deletionQuery.addBindValue(QVariant(enviro_id))
             deletionQuery.exec_()
                 
