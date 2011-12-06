@@ -79,7 +79,7 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
         )
         
         self.lowerFormWidgets = (
-            self.matchRefSelect, self.matchVenueSelect, self.attendanceEdit, self.firstHalfLengthEdit, 
+            self.matchRefSelect, self.matchVenueSelect, self.matchAttendanceEdit, self.firstHalfLengthEdit, 
             self.secondHalfLengthEdit, self.firstExtraLengthEdit, self.secondExtraLengthEdit,
         )
         
@@ -150,7 +150,7 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
         self.mapper.addMapping(self.secondHalfLengthEdit, MatchEntryDlg.HALF2)
         self.mapper.addMapping(self.firstExtraLengthEdit, MatchEntryDlg.EXTRA1)
         self.mapper.addMapping(self.secondExtraLengthEdit, MatchEntryDlg.EXTRA2)
-        self.mapper.addMapping(self.attendanceEdit, MatchEntryDlg.ATTEND)
+        self.mapper.addMapping(self.matchAttendanceEdit, MatchEntryDlg.ATTEND)
         self.mapper.toFirst()
         
         #
@@ -656,7 +656,7 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
         self.secondHalfLengthEdit.setText("45")
         self.firstExtraLengthEdit.setText("0")
         self.secondExtraLengthEdit.setText("0")
-        self.attendanceEdit.setText("0")
+        self.matchAttendanceEdit.setText("0")
         self.matchDateEdit.setDate(QDate(1856, 1, 1))
         self.matchDateEdit.setFocus()
         
@@ -743,7 +743,7 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
                 
         # line edit fields
         editorList = (self.firstHalfLengthEdit, self.secondHalfLengthEdit, 
-                            self.firstExtraLengthEdit,  self.secondExtraLengthEdit, self.attendanceEdit)
+                            self.firstExtraLengthEdit,  self.secondExtraLengthEdit, self.matchAttendanceEdit)
         columnList = (MatchEntryDlg.HALF1, MatchEntryDlg.HALF2, 
                               MatchEntryDlg.EXTRA1, MatchEntryDlg.EXTRA2, MatchEntryDlg.ATTEND)
         for editor, column in zip(editorList, columnList):
@@ -831,7 +831,8 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
             self.secondExtraLengthEdit.setEnabled(True)
         
     def enableDefaults(self):
-        """Enables Time edit boxes, Home Team comboboxes and Enviroments button."""
+        """Enables Attendance and Time edit boxes, Home Team comboboxes and Enviroments button."""
+        self.matchAttendanceEdit.setEnabled(True)
         self.enableTimes(self.matchPhaseSelect.currentText())
         self.hometeamSelect.setEnabled(True)
         self.enviroButton.setEnabled(True)
