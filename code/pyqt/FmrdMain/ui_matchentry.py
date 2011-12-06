@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'gui/match_entry.ui'
 #
-# Created: Mon Dec  5 15:29:34 2011
+# Created: Mon Dec  5 22:10:33 2011
 #      by: PyQt4 UI code generator 4.7.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -356,13 +356,13 @@ class Ui_MatchEntryDlg(object):
         self.label_22.setMaximumSize(QtCore.QSize(90, 30))
         self.label_22.setObjectName("label_22")
         self.gridLayout_5.addWidget(self.label_22, 2, 0, 1, 1)
-        self.attendanceEdit = QtGui.QLineEdit(self.layoutWidget2)
-        self.attendanceEdit.setMinimumSize(QtCore.QSize(120, 30))
-        self.attendanceEdit.setMaximumSize(QtCore.QSize(120, 30))
-        self.attendanceEdit.setText("")
-        self.attendanceEdit.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
-        self.attendanceEdit.setObjectName("attendanceEdit")
-        self.gridLayout_5.addWidget(self.attendanceEdit, 2, 1, 1, 1)
+        self.matchAttendanceEdit = QtGui.QLineEdit(self.layoutWidget2)
+        self.matchAttendanceEdit.setMinimumSize(QtCore.QSize(120, 30))
+        self.matchAttendanceEdit.setMaximumSize(QtCore.QSize(120, 30))
+        self.matchAttendanceEdit.setText("")
+        self.matchAttendanceEdit.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
+        self.matchAttendanceEdit.setObjectName("matchAttendanceEdit")
+        self.gridLayout_5.addWidget(self.matchAttendanceEdit, 2, 1, 1, 1)
         self.layoutWidget3 = QtGui.QWidget(MatchEntryDlg)
         self.layoutWidget3.setGeometry(QtCore.QRect(11, 50, 871, 51))
         self.layoutWidget3.setObjectName("layoutWidget3")
@@ -557,8 +557,8 @@ class Ui_MatchEntryDlg(object):
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Attendance</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.attendanceEdit.setToolTip(QtGui.QApplication.translate("MatchEntryDlg", "Match Attendance", None, QtGui.QApplication.UnicodeUTF8))
-        self.attendanceEdit.setInputMask(QtGui.QApplication.translate("MatchEntryDlg", "999999; ", None, QtGui.QApplication.UnicodeUTF8))
+        self.matchAttendanceEdit.setToolTip(QtGui.QApplication.translate("MatchEntryDlg", "Match Attendance", None, QtGui.QApplication.UnicodeUTF8))
+        self.matchAttendanceEdit.setInputMask(QtGui.QApplication.translate("MatchEntryDlg", "999999; ", None, QtGui.QApplication.UnicodeUTF8))
         self.label_4.setText(QtGui.QApplication.translate("MatchEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"

@@ -1488,7 +1488,7 @@ p, li { white-space: pre-wrap; }
      </widget>
     </item>
     <item row="2" column="1">
-     <widget class="QLineEdit" name="attendanceEdit">
+     <widget class="QLineEdit" name="matchAttendanceEdit">
       <property name="minimumSize">
        <size>
         <width>120</width>
