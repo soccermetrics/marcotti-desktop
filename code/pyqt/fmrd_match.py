@@ -652,9 +652,6 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
         for widget in self.selectWidgets:
             widget.setCurrentIndex(-1)
         
-        # enable Time edit boxes
-        self.enableTimes(phaseText)
-        
         self.firstHalfLengthEdit.setText("45")
         self.secondHalfLengthEdit.setText("45")
         self.firstExtraLengthEdit.setText("0")
