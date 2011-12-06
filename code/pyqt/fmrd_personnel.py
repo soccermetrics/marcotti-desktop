@@ -1534,7 +1534,7 @@ class LineupEntryDlg(QDialog, ui_lineupentry.Ui_LineupEntryDlg):
         columnList = (LineupEntryDlg.PLYR_ID, LineupEntryDlg.POS_ID)
         for editor, column in zip(editorList, columnList):
             index = self.model.index(row, column)        
-            if editor.text() != self.model.data(index).toString():
+            if editor.currentText() != self.model.data(index).toString():
                 return True
                 
         # checkbox fields
