@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'gui/match_entry.ui'
 #
-# Created: Mon Dec  5 22:10:33 2011
+# Created: Tue Dec  6 22:32:06 2011
 #      by: PyQt4 UI code generator 4.7.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -432,7 +432,7 @@ class Ui_MatchEntryDlg(object):
         self.addEntry.setText(QtGui.QApplication.translate("MatchEntryDlg", "&Add", None, QtGui.QApplication.UnicodeUTF8))
         self.deleteEntry.setToolTip(QtGui.QApplication.translate("MatchEntryDlg", "Delete Entry", None, QtGui.QApplication.UnicodeUTF8))
         self.deleteEntry.setText(QtGui.QApplication.translate("MatchEntryDlg", "&Delete", None, QtGui.QApplication.UnicodeUTF8))
-        self.saveEntry.setToolTip(QtGui.QApplication.translate("MatchEntryDlg", "Delete Entry", None, QtGui.QApplication.UnicodeUTF8))
+        self.saveEntry.setToolTip(QtGui.QApplication.translate("MatchEntryDlg", "Save Entry to Database", None, QtGui.QApplication.UnicodeUTF8))
         self.saveEntry.setText(QtGui.QApplication.translate("MatchEntryDlg", "&Save", None, QtGui.QApplication.UnicodeUTF8))
         self.closeButton.setToolTip(QtGui.QApplication.translate("MatchEntryDlg", "Close Window", None, QtGui.QApplication.UnicodeUTF8))
         self.closeButton.setText(QtGui.QApplication.translate("MatchEntryDlg", "&Close", None, QtGui.QApplication.UnicodeUTF8))
