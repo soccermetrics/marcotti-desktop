@@ -78,7 +78,6 @@ class LinkingSqlModel(QSqlQueryModel):
     def __init__(self, parent=None):
         """Constructor for LinkingSqlModel class."""
         super(LinkingSqlModel, self).__init__(parent)
-#        print "Calling init() in LinkingSqlModel"
         
     def flags(self, index):
         """Defines item flags for index.  Make all columns besides first in database table editable. """
@@ -95,8 +94,6 @@ class LinkingSqlModel(QSqlQueryModel):
     def setData(self, index, value):
         """Sets role data at index with value.  Calls setCompositeKey()."""
         ok = False
-#        print "Calling setData() in LinkingSqlModel"
-#        print "%d  %d" % (index.row(),  index.column())
         ok = self.setCompositeKey(index,  self.primary_id, value.toString())
         self.refresh()
         return ok
@@ -115,7 +112,6 @@ class LinkingSqlModel(QSqlQueryModel):
         This method returns false in class definition, must be implemented by subclass.
         
         """
-#        print "Calling base setCompositeKey()"
         return False
 
 
@@ -134,9 +130,10 @@ class GroupLinkingModel(LinkingSqlModel):
         
         self.table = tbl_name
         self.primary_id = parent.matchID_display.text()
-        self.grpround_id = "0"
-        self.group_id = "0"
-        self.round_id = "0"
+        self.grpround_id = QString()
+        self.group_id = QString()
+        self.round_id = QString()
+        self.calls = 0
         self.setQuery(QString("SELECT match_id, grpround_id, group_id, round_id FROM %1 WHERE match_id = %2").arg(self.table).arg(self.primary_id))
         
     def refresh(self):
@@ -145,62 +142,32 @@ class GroupLinkingModel(LinkingSqlModel):
     
     def resetID(self):
         """Resets member variables in class."""
-        self.grpround_id = "0"
-        self.group_id = "0"
-        self.round_id = "0"
+        self.grpround_id = QString()
+        self.group_id = QString()
+        self.round_id = QString()
+        self.calls = 0
         
     def setData(self, index, value):
-        """Sets role data at index with value.  Calls setXXX()."""
-        if index.row() == -1:
-            # setup for new row insertion
-            ok = True
-            if index.column() == 1:
-                self.grpround_id = value
-            elif index.column() == 2:
-                self.group_id = value
-            elif index.column() == 3:
-                self.round_id = value
-        elif index.row() == 0:
-            # update into existing row
-            if index.column() == 1:
-                ok = self.setGroupRoundID(value)
-            elif index.column() == 2:
-                ok = self.setGroupID(value)
-            elif index.column() == 3:
-                ok = self.setRoundID(value)
-        return ok
-
-    def setGroupRoundID(self, grpround_id):
-        """Sets group round ID key in GroupMatches table."""
-        updateString = QString("UPDATE %1 SET grpround_id = ? WHERE match_id = ?").arg(self.table)
-        updateQuery = QSqlQuery()
-        updateQuery.prepare(updateString)
-        updateQuery.addBindValue(grpround_id)
-        updateQuery.addBindValue(self.primary_id)
-        return updateQuery.exec_()
+        """Sets role data at index with value.  Calls setXXX().
         
-    def setGroupID(self, group_id):
-        """Sets group ID key in GroupMatches table."""
-        updateString = QString("UPDATE %1 SET group_id = ? WHERE match_id = ?").arg(self.table)
-        updateQuery = QSqlQuery()
-        updateQuery.prepare(updateString)
-        updateQuery.addBindValue(group_id)
-        updateQuery.addBindValue(self.primary_id)
-        return updateQuery.exec_()
+        This function must be called in order of the fields defined
+        in the database table.        
+        """
+        if self.calls == 0:
+            self.grpround_id = value
+            self.calls += 1
+        elif self.calls == 1:
+            self.group_id = value
+            self.calls += 1
+        elif self.calls == 2:
+            self.round_id = value
+            self.calls += 1
+        return True
 
-    def setRoundID(self, round_id):
-        """Sets round ID key in GroupMatches table."""
-        updateString = QString("UPDATE %1 SET round_id = ? WHERE match_id = ?").arg(self.table)
-        updateQuery = QSqlQuery()
-        updateQuery.prepare(updateString)
-        updateQuery.addBindValue(round_id)
-        updateQuery.addBindValue(self.primary_id)
-        return updateQuery.exec_()
-        
     def submit(self):
         """Inserts new row into database if no prior record exists.  
         
-        Row updates are handled by setGroupRoundID(), setGroupID(), setRoundID().
+        Updates row if record already exists..
         """
         insertString = QString("INSERT INTO %1 (match_id, grpround_id, group_id, round_id) VALUES (?,?,?,?)").arg(self.table)
         
@@ -209,23 +176,32 @@ class GroupLinkingModel(LinkingSqlModel):
         query.prepare(QString("SELECT COUNT(*) FROM %1 WHERE match_id = ?").arg(self.table))
         query.addBindValue(self.primary_id)
         query.exec_()
-        if query.isActive():
-            query.next()
-            numMatches = query.value(0).toInt()[0]
-            if not numMatches:
-                # no prior record...insert new row
-                insertQuery = QSqlQuery()
-                insertQuery.prepare(insertString)
-                insertQuery.addBindValue(self.primary_id)
-                insertQuery.addBindValue(self.grpround_id)
-                insertQuery.addBindValue(self.group_id)
-                insertQuery.addBindValue(self.round_id)
-                ok = insertQuery.exec_()
-                
+        if query.next():
+            if query.value(0).toInt()[0]:
+                # update current record
+                updateQuery = QSqlQuery()
+                varList = (self.grpround_id, self.group_id, self.round_id)
+                fieldList = ("grpround_id", "group_id", "round_id")
+                for field,  var in zip(fieldList, varList):
+                    updateString = QString("UPDATE %1 SET %2 = ? WHERE match_id = ?").arg(self.table, field)
+                    updateQuery.prepare(updateString)
+                    updateQuery.addBindValue(var)
+                    updateQuery.addBindValue(self.primary_id)
+                    updateQuery.exec_()
                 self.resetID()
-        else:
-            ok = False
-        return ok
+                return
+                
+        # no prior record...insert new row
+        insertQuery = QSqlQuery()
+        insertQuery.prepare(insertString)
+        insertQuery.addBindValue(self.primary_id)
+        insertQuery.addBindValue(self.grpround_id)
+        insertQuery.addBindValue(self.group_id)
+        insertQuery.addBindValue(self.round_id)
+        ok = insertQuery.exec_()
+        
+        self.resetID()
+
         
     def delete(self, match_id):    
         """Deletes entry in database.
@@ -253,12 +229,12 @@ class KnockoutLinkingModel(LinkingSqlModel):
     def __init__(self, tbl_name, parent=None):
         """Constructor for LeagueLinkingModel class."""
         super(KnockoutLinkingModel, self).__init__(parent)
-#        print "Calling init() in KnockoutLinkingModel"
         
         self.table = tbl_name
         self.primary_id = parent.matchID_display.text()
-        self.koround_id = "0"
-        self.matchday_id = "0"
+        self.koround_id = QString()
+        self.matchday_id = QString()
+        self.calls = 0
         self.setQuery(QString("SELECT match_id, koround_id, matchday_id FROM %1 WHERE match_id = %2").arg(self.table).arg(self.primary_id))
         
     def refresh(self):
@@ -267,49 +243,30 @@ class KnockoutLinkingModel(LinkingSqlModel):
     
     def resetID(self):
         """Resets member variables in class."""
-        self.koround_id = "0"
-        self.matchday_id = "0"
+        self.koround_id = QString()
+        self.matchday_id = QString()
+        self.calls = 0
         
     def setData(self, index, value):
-        """Sets role data at index with value.  Calls setXXX()."""
-        if index.row() == -1:
-            # setup for new row insertion
-            ok = True
-            if index.column() == 1:
-                self.koround_id = value
-            elif index.column() == 2:
-                self.matchday_id = value
-        elif index.row() == 0:
-            # update into existing row
-            if index.column() == 1:
-                ok = self.setKnockoutID(value)
-            elif index.column() == 2:
-                ok = self.setMatchdayID(value)
-        return ok
+        """Sets role data at index with value.
+        
+        This function must be called in order of the fields defined
+        in the database table.
+        """
+        if self.calls == 0:
+            self.koround_id = value.toString()
+            self.calls += 1
+        elif self.calls == 1:
+            self.matchday_id = value.toString()
+            self.calls += 1
+        return True
 
-    def setKnockoutID(self, koround_id):
-        """Sets knockout ID key in KnockoutMatches table."""
-        updateString = QString("UPDATE %1 SET koround_id = ? WHERE match_id = ?").arg(self.table)
-        updateQuery = QSqlQuery()
-        updateQuery.prepare(updateString)
-        updateQuery.addBindValue(koround_id)
-        updateQuery.addBindValue(self.primary_id)
-        return updateQuery.exec_()
-        
-    def setMatchdayID(self, matchday_id):
-        """Sets matchday ID key in KnockoutMatches table."""
-        updateString = QString("UPDATE %1 SET matchday_id = ? WHERE match_id = ?").arg(self.table)
-        updateQuery = QSqlQuery()
-        updateQuery.prepare(updateString)
-        updateQuery.addBindValue(matchday_id)
-        updateQuery.addBindValue(self.primary_id)
-        return updateQuery.exec_()
-        
     def submit(self):
         """Inserts new row into database if no prior record exists.  
         
-        Row updates are handled by setKnockoutID() and setMatchdayID().
+        Updates row if record already exists.
         """
+        print "Calling submit() in KnockoutLinkingModel"
         insertString = QString("INSERT INTO %1 (match_id, koround_id, matchday_id) VALUES (?,?,?)").arg(self.table)
         
         # test for already existing record in table
@@ -317,22 +274,30 @@ class KnockoutLinkingModel(LinkingSqlModel):
         query.prepare(QString("SELECT COUNT(*) FROM %1 WHERE match_id = ?").arg(self.table))
         query.addBindValue(self.primary_id)
         query.exec_()
-        if query.isActive():
-            query.next()
-            numMatches = query.value(0).toInt()[0]
-            if not numMatches:
-                # no prior record...insert new row
-                insertQuery = QSqlQuery()
-                insertQuery.prepare(insertString)
-                insertQuery.addBindValue(self.primary_id)
-                insertQuery.addBindValue(self.koround_id)
-                insertQuery.addBindValue(self.matchday_id)
-                ok = insertQuery.exec_()
-                
+        if query.next():
+            if query.value(0).toInt()[0]:
+                print "Updating current record"
+                updateQuery = QSqlQuery()
+                varList = (self.koround_id, self.matchday_id)
+                fieldList = ("koround_id", "matchday_id")
+                for field,  var in zip(fieldList, varList):
+                    updateString = QString("UPDATE %1 SET %2 = ? WHERE match_id = ?").arg(self.table, field)
+                    updateQuery.prepare(updateString)
+                    updateQuery.addBindValue(var)
+                    updateQuery.addBindValue(self.primary_id)
+                    updateQuery.exec_()
                 self.resetID()
-        else:
-            ok = False
-        return ok
+                return
+                
+        print "Inserting new record"
+        insertQuery = QSqlQuery()
+        insertQuery.prepare(insertString)
+        insertQuery.addBindValue(self.primary_id)
+        insertQuery.addBindValue(self.koround_id)
+        insertQuery.addBindValue(self.matchday_id)
+        insertQuery.exec_()
+        self.resetID()
+
         
     def delete(self, match_id):    
         """Deletes entry in database.
@@ -360,7 +325,6 @@ class LeagueLinkingModel(LinkingSqlModel):
     def __init__(self, tbl_name, parent=None):
         """Constructor for LeagueLinkingModel class."""
         super(LeagueLinkingModel, self).__init__(parent)
-#        print "Calling init() in LeagueLinkingModel"
         
         self.table = tbl_name
         self.primary_id = parent.matchID_display.text()
@@ -372,7 +336,6 @@ class LeagueLinkingModel(LinkingSqlModel):
         
     def setCompositeKey(self, index, match_id, round_id):
         """Inserts or updates entry in database."""
-#        print "Calling setCompositeKey() in LeagueLinkingModel"
         # setup SQL statements
         insertString = QString("INSERT INTO %1 (match_id, round_id) VALUES (?,?)").arg(self.table)
         updateString = QString("UPDATE %1 SET round_id = ? WHERE enviro_id = ?").arg(self.table)
@@ -393,7 +356,6 @@ class LeagueLinkingModel(LinkingSqlModel):
             return updateQuery.exec_()
         else:
             # any other failure, return False
-            print "Error with entry Query"
             return False
         
     def delete(self, match_id):    
