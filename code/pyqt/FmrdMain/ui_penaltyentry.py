@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'gui/penalty_entry.ui'
 #
-# Created: Sat Nov 19 20:05:44 2011
+# Created: Wed Dec  7 22:20:30 2011
 #      by: PyQt4 UI code generator 4.7.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -324,7 +324,7 @@ class Ui_PenaltyEntryDlg(object):
         self.addEntry.setText(QtGui.QApplication.translate("PenaltyEntryDlg", "&Add", None, QtGui.QApplication.UnicodeUTF8))
         self.deleteEntry.setToolTip(QtGui.QApplication.translate("PenaltyEntryDlg", "Delete Entry", None, QtGui.QApplication.UnicodeUTF8))
         self.deleteEntry.setText(QtGui.QApplication.translate("PenaltyEntryDlg", "&Delete", None, QtGui.QApplication.UnicodeUTF8))
-        self.saveEntry.setToolTip(QtGui.QApplication.translate("PenaltyEntryDlg", "Delete Entry", None, QtGui.QApplication.UnicodeUTF8))
+        self.saveEntry.setToolTip(QtGui.QApplication.translate("PenaltyEntryDlg", "Save Entry to Database", None, QtGui.QApplication.UnicodeUTF8))
         self.saveEntry.setText(QtGui.QApplication.translate("PenaltyEntryDlg", "&Save", None, QtGui.QApplication.UnicodeUTF8))
         self.closeButton.setToolTip(QtGui.QApplication.translate("PenaltyEntryDlg", "Close Window", None, QtGui.QApplication.UnicodeUTF8))
         self.closeButton.setText(QtGui.QApplication.translate("PenaltyEntryDlg", "&Close", None, QtGui.QApplication.UnicodeUTF8))

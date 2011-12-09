@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'gui/switchpos_entry.ui'
 #
-# Created: Sat Nov 19 20:17:17 2011
+# Created: Wed Dec  7 22:20:31 2011
 #      by: PyQt4 UI code generator 4.7.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -314,7 +314,7 @@ class Ui_SwitchEntryDlg(object):
         self.addEntry.setText(QtGui.QApplication.translate("SwitchEntryDlg", "&Add", None, QtGui.QApplication.UnicodeUTF8))
         self.deleteEntry.setToolTip(QtGui.QApplication.translate("SwitchEntryDlg", "Delete Entry", None, QtGui.QApplication.UnicodeUTF8))
         self.deleteEntry.setText(QtGui.QApplication.translate("SwitchEntryDlg", "&Delete", None, QtGui.QApplication.UnicodeUTF8))
-        self.saveEntry.setToolTip(QtGui.QApplication.translate("SwitchEntryDlg", "Delete Entry", None, QtGui.QApplication.UnicodeUTF8))
+        self.saveEntry.setToolTip(QtGui.QApplication.translate("SwitchEntryDlg", "Save Entry to Database", None, QtGui.QApplication.UnicodeUTF8))
         self.saveEntry.setText(QtGui.QApplication.translate("SwitchEntryDlg", "&Save", None, QtGui.QApplication.UnicodeUTF8))
         self.closeButton.setToolTip(QtGui.QApplication.translate("SwitchEntryDlg", "Close Window", None, QtGui.QApplication.UnicodeUTF8))
         self.closeButton.setText(QtGui.QApplication.translate("SwitchEntryDlg", "&Close", None, QtGui.QApplication.UnicodeUTF8))

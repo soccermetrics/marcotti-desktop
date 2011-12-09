@@ -138,7 +138,7 @@
      </size>
     </property>
     <property name="toolTip">
-     <string>Delete Entry</string>
+     <string>Save Entry to Database</string>
     </property>
     <property name="text">
      <string>&amp;Save</string>
