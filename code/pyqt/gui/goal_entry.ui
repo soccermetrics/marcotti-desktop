@@ -333,7 +333,7 @@
      </size>
     </property>
     <property name="toolTip">
-     <string>Delete Entry</string>
+     <string>Save Entry to Database</string>
     </property>
     <property name="text">
      <string>&amp;Save</string>
@@ -796,10 +796,10 @@ p, li { white-space: pre-wrap; }
          <string>Match time</string>
         </property>
         <property name="inputMask">
-         <string>00; </string>
+         <string/>
         </property>
         <property name="maxLength">
-         <number>2</number>
+         <number>3</number>
         </property>
        </widget>
       </item>
@@ -869,7 +869,7 @@ p, li { white-space: pre-wrap; }
     </item>
    </layout>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>10</x>
@@ -1077,11 +1077,6 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Matchday&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
       </widget>
-      <zorder>label_12</zorder>
-      <zorder>koRoundSelect</zorder>
-      <zorder>koMatchdaySelect</zorder>
-      <zorder>label_13</zorder>
-      <zorder>groupBox</zorder>
      </widget>
     </item>
     <item row="1" column="0" colspan="2">

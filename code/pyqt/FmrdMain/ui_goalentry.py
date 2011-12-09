@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'gui/goal_entry.ui'
 #
-# Created: Sat Nov 19 20:05:40 2011
+# Created: Wed Dec  7 22:20:28 2011
 #      by: PyQt4 UI code generator 4.7.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -217,7 +217,8 @@ class Ui_GoalEntryDlg(object):
         self.goaltimeEdit = QtGui.QLineEdit(self.layoutWidget1)
         self.goaltimeEdit.setMinimumSize(QtCore.QSize(41, 27))
         self.goaltimeEdit.setMaximumSize(QtCore.QSize(41, 27))
-        self.goaltimeEdit.setMaxLength(2)
+        self.goaltimeEdit.setInputMask("")
+        self.goaltimeEdit.setMaxLength(3)
         self.goaltimeEdit.setObjectName("goaltimeEdit")
         self.horizontalLayout.addWidget(self.goaltimeEdit)
         self.label_9 = QtGui.QLabel(self.layoutWidget1)
@@ -234,12 +235,12 @@ class Ui_GoalEntryDlg(object):
         self.gridLayout.addItem(spacerItem1, 3, 2, 1, 1)
         spacerItem2 = QtGui.QSpacerItem(398, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
         self.gridLayout.addItem(spacerItem2, 3, 3, 1, 2)
-        self.widget = QtGui.QWidget(GoalEntryDlg)
-        self.widget.setGeometry(QtCore.QRect(10, 60, 871, 131))
-        self.widget.setObjectName("widget")
-        self.gridLayout_2 = QtGui.QGridLayout(self.widget)
+        self.layoutWidget2 = QtGui.QWidget(GoalEntryDlg)
+        self.layoutWidget2.setGeometry(QtCore.QRect(10, 60, 871, 131))
+        self.layoutWidget2.setObjectName("layoutWidget2")
+        self.gridLayout_2 = QtGui.QGridLayout(self.layoutWidget2)
         self.gridLayout_2.setObjectName("gridLayout_2")
-        self.leagueBox = QtGui.QGroupBox(self.widget)
+        self.leagueBox = QtGui.QGroupBox(self.layoutWidget2)
         self.leagueBox.setMinimumSize(QtCore.QSize(270, 60))
         self.leagueBox.setMaximumSize(QtCore.QSize(270, 60))
         self.leagueBox.setObjectName("leagueBox")
@@ -254,7 +255,7 @@ class Ui_GoalEntryDlg(object):
         self.lgRoundSelect.setMaximumSize(QtCore.QSize(180, 30))
         self.lgRoundSelect.setObjectName("lgRoundSelect")
         self.gridLayout_2.addWidget(self.leagueBox, 0, 0, 1, 1)
-        self.knockoutBox = QtGui.QGroupBox(self.widget)
+        self.knockoutBox = QtGui.QGroupBox(self.layoutWidget2)
         self.knockoutBox.setMinimumSize(QtCore.QSize(330, 60))
         self.knockoutBox.setMaximumSize(QtCore.QSize(585, 100))
         self.knockoutBox.setObjectName("knockoutBox")
@@ -279,7 +280,7 @@ class Ui_GoalEntryDlg(object):
         self.label_13.setMaximumSize(QtCore.QSize(75, 30))
         self.label_13.setObjectName("label_13")
         self.gridLayout_2.addWidget(self.knockoutBox, 0, 1, 1, 1)
-        self.groupBox = QtGui.QGroupBox(self.widget)
+        self.groupBox = QtGui.QGroupBox(self.layoutWidget2)
         self.groupBox.setMinimumSize(QtCore.QSize(280, 50))
         self.groupBox.setMaximumSize(QtCore.QSize(940, 100))
         self.groupBox.setObjectName("groupBox")
@@ -328,7 +329,7 @@ class Ui_GoalEntryDlg(object):
         self.addEntry.setText(QtGui.QApplication.translate("GoalEntryDlg", "&Add", None, QtGui.QApplication.UnicodeUTF8))
         self.deleteEntry.setToolTip(QtGui.QApplication.translate("GoalEntryDlg", "Delete Entry", None, QtGui.QApplication.UnicodeUTF8))
         self.deleteEntry.setText(QtGui.QApplication.translate("GoalEntryDlg", "&Delete", None, QtGui.QApplication.UnicodeUTF8))
-        self.saveEntry.setToolTip(QtGui.QApplication.translate("GoalEntryDlg", "Delete Entry", None, QtGui.QApplication.UnicodeUTF8))
+        self.saveEntry.setToolTip(QtGui.QApplication.translate("GoalEntryDlg", "Save Entry to Database", None, QtGui.QApplication.UnicodeUTF8))
         self.saveEntry.setText(QtGui.QApplication.translate("GoalEntryDlg", "&Save", None, QtGui.QApplication.UnicodeUTF8))
         self.closeButton.setToolTip(QtGui.QApplication.translate("GoalEntryDlg", "Close Window", None, QtGui.QApplication.UnicodeUTF8))
         self.closeButton.setText(QtGui.QApplication.translate("GoalEntryDlg", "&Close", None, QtGui.QApplication.UnicodeUTF8))
@@ -385,7 +386,6 @@ class Ui_GoalEntryDlg(object):
 "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Match Time</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
         self.goaltimeEdit.setToolTip(QtGui.QApplication.translate("GoalEntryDlg", "Match time", None, QtGui.QApplication.UnicodeUTF8))
-        self.goaltimeEdit.setInputMask(QtGui.QApplication.translate("GoalEntryDlg", "00; ", None, QtGui.QApplication.UnicodeUTF8))
         self.label_9.setText(QtGui.QApplication.translate("GoalEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
