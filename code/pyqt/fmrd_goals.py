@@ -89,7 +89,7 @@ class GoalEntryDlg(QDialog, ui_goalentry.Ui_GoalEntryDlg):
         self.compSelect.setModelColumn(self.compModel.fieldIndex("comp_name"))
         self.compSelect.setCurrentIndex(-1)
                 
-        # relation model for Competition Phases combobox
+        # Competition Phases combobox
         self.phaseModel = QSqlTableModel(self)
         self.phaseModel.setTable("tbl_phases")
         self.phaseModel.setSort(PHS_ID, Qt.AscendingOrder)
@@ -429,8 +429,7 @@ class GoalEntryDlg(QDialog, ui_goalentry.Ui_GoalEntryDlg):
             self.deleteEntry.setEnabled(True)
         
         # enable Save button
-        if not self.saveEntry.isEnabled():
-            self.saveEntry.setEnabled(True)
+        self.enableWidget(self.saveEntry)
             
         # enable data entry widgets
         for widget in self.lowerFormWidgets:
@@ -526,15 +525,12 @@ class GoalEntryDlg(QDialog, ui_goalentry.Ui_GoalEntryDlg):
         phaseText = self.phaseSelect.currentText()
         if phaseText == "League":
             self.lgRoundSelect.setEnabled(True)
-            self.goaltimeEdit.setInputMask("00")
-            self.goaltimeEdit.setValidator(QIntValidator(0, Constants.MAX_MINUTES, self.layoutWidget1))
+            self.goaltimeEdit.setValidator(QIntValidator(0, Constants.MAX_MINUTES, self))
         elif phaseText == "Group":
             self.grpRoundSelect.setEnabled(True)
-            self.goaltimeEdit.setInputMask("00")
-            self.goaltimeEdit.setValidator(QIntValidator(0, Constants.MAX_MINUTES, self.layoutWidget1))
+            self.goaltimeEdit.setValidator(QIntValidator(0, Constants.MAX_MINUTES, self))
         elif phaseText == "Knockout":
             self.koRoundSelect.setEnabled(True)
-#            self.goaltimeEdit.setInputMask("000")
             self.goaltimeEdit.setValidator(QIntValidator(0, Constants.MAX_KO_MINUTES, self))
         self.filterRounds(phaseText)
  
@@ -542,7 +538,7 @@ class GoalEntryDlg(QDialog, ui_goalentry.Ui_GoalEntryDlg):
         """Enables Rounds combobox and filters its contents based on Competition and Competition Phase selections.
         
         Argument:
-        widget -- data widget object (roundSelect)
+        phaseText -- name of selected Competition Phase (phaseSelect)
         """
         # Competitions model
         compModel = self.compModel
@@ -600,8 +596,7 @@ class GoalEntryDlg(QDialog, ui_goalentry.Ui_GoalEntryDlg):
         self.groupSelect.blockSignals(True)
         
         # Enable group combobox
-        if not self.groupSelect.isEnabled():
-            self.groupSelect.setEnabled(True)
+        self.enableWidget(self.groupSelect)
         # Competition model
         compModel = self.compModel
         # get text from current index of Competition combobox
@@ -633,8 +628,7 @@ class GoalEntryDlg(QDialog, ui_goalentry.Ui_GoalEntryDlg):
             self.grpMatchdaySelect.blockSignals(True)
             
             # Activate matchday widget
-            if not self.grpMatchdaySelect.isEnabled():
-                self.grpMatchdaySelect.setEnabled(True)
+            self.enableWidget(self.grpMatchdaySelect)
             # Group round name
             roundName = self.grpRoundSelect.currentText()
             # Group name
@@ -654,8 +648,7 @@ class GoalEntryDlg(QDialog, ui_goalentry.Ui_GoalEntryDlg):
             self.koMatchdaySelect.blockSignals(True)
             
             # Activate matchday widget
-            if not self.koMatchdaySelect.isEnabled():
-                self.koMatchdaySelect.setEnabled(True)
+            self.enableWidget(self.koMatchdaySelect)
             # Knockout round name
             roundName = self.koRoundSelect.currentText()
             # model associated with combobox
@@ -732,9 +725,8 @@ class GoalEntryDlg(QDialog, ui_goalentry.Ui_GoalEntryDlg):
         self.matchSelect.setModelColumn(self.matchModel.fieldIndex("matchup"))
         self.matchSelect.setCurrentIndex(-1)
         
-        # enable matchSelect combobox if not enabled already        
-        if not self.matchSelect.isEnabled():
-            self.matchSelect.setEnabled(True)
+        # enable matchSelect combobox if not enabled already    
+        self.enableWidget(self.matchSelect)
         
         self.matchSelect.blockSignals(False)
  
