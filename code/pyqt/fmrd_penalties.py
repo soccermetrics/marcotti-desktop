@@ -46,9 +46,37 @@ class PenaltyEntryDlg(QDialog, ui_penaltyentry.Ui_PenaltyEntryDlg):
         super(PenaltyEntryDlg, self).__init__(parent)
         self.setupUi(self)
         
-        CMP_ID = RND_ID = MCH_ID = TM_ID = 0
-        TEAM = FOUL = OUTCOME = 1
+        CMP_ID = RND_ID = TM_ID = 0
+        MATCHDAY_NAME= TEAM = FOUL = OUTCOME = 1
         SORT_NAME = 4
+
+        CMP_ID,  COMP_NAME = range(2)
+        PHS_ID,  PHASE_NAME = range(2)
+        RND_ID,  ROUND_NAME = range(2)
+        GRP_ID,  GROUP_NAME = range(2)
+        
+        GROUP_ROUND,  GROUP,  GROUP_MATCHDAY = range(1, 4)
+        KO_ROUND, KO_MATCHDAY = range(1, 3)
+
+        # define lists of comboboxes
+        self.selectWidgets = (
+            self.compSelect, self.phaseSelect, self.lgRoundSelect, self.groupSelect, self.grpRoundSelect, 
+            self.grpMatchdaySelect, self.koRoundSelect, self.koMatchdaySelect, self.matchSelect, 
+            self.teamSelect, self.playerSelect, self.foulSelect, self.penoutcomeSelect
+        )
+        
+        self.upperFormWidgets = (
+            self.compSelect, self.phaseSelect
+        )
+        
+        self.lowerFormWidgets = (
+            self.playerSelect, self.foulSelect, self.penoutcomeSelect, self.pentimeEdit
+        )
+        
+        self.phaseWidgets = (
+            self.lgRoundSelect, self.koRoundSelect, self.koMatchdaySelect, self.groupSelect, 
+            self.grpRoundSelect, self.grpMatchdaySelect                             
+        )
 
         #
         # Define comboboxes used to filter Penalty table
@@ -63,24 +91,81 @@ class PenaltyEntryDlg(QDialog, ui_penaltyentry.Ui_PenaltyEntryDlg):
         self.compSelect.setModel(self.compModel)
         self.compSelect.setModelColumn(self.compModel.fieldIndex("comp_name"))
         self.compSelect.setCurrentIndex(-1)
+
+        # Competition Phases combobox
+        self.phaseModel = QSqlTableModel(self)
+        self.phaseModel.setTable("tbl_phases")
+        self.phaseModel.setSort(PHS_ID, Qt.AscendingOrder)
+        self.phaseModel.select()
+        self.phaseSelect.setModel(self.phaseModel)
+        self.phaseSelect.setModelColumn(self.phaseModel.fieldIndex("phase_desc"))
+        self.phaseSelect.setCurrentIndex(-1)
+
+        #
+        # define comboboxes used for League matches
+        #
         
-        # Round combobox
-        self.roundModel = QSqlTableModel(self)
-        self.roundModel.setTable("tbl_rounds")
-        self.roundModel.setSort(RND_ID, Qt.AscendingOrder)
-        self.roundModel.select()
-        self.roundSelect.setModel(self.roundModel)
-        self.roundSelect.setModelColumn(self.roundModel.fieldIndex("round_desc"))
-        self.roundSelect.setCurrentIndex(-1)
+        # League Rounds
+        leagueRoundModel = QSqlTableModel(self)
+        leagueRoundModel.setTable("tbl_rounds")
+        leagueRoundModel.setSort(ROUND_NAME, Qt.AscendingOrder)
+        leagueRoundModel.select()
+        self.lgRoundSelect.setModel(leagueRoundModel)
+        self.lgRoundSelect.setModelColumn(leagueRoundModel.fieldIndex("round_desc"))
+        self.lgRoundSelect.setCurrentIndex(-1)
         
-        # Match combobox
-        self.matchModel = QSqlTableModel(self)
-        self.matchModel.setTable("match_list")
-        self.matchModel.setSort(MCH_ID,  Qt.AscendingOrder)
-        self.matchModel.select()
-        self.matchSelect.setModel(self.matchModel)
-        self.matchSelect.setModelColumn(self.matchModel.fieldIndex("matchup"))
-        self.matchSelect.setCurrentIndex(-1)
+        #
+        # define comboboxes used for Group matches
+        #
+        
+        # Group Rounds
+        groupRoundModel = QSqlTableModel(self)
+        groupRoundModel.setTable("tbl_grouprounds")
+        groupRoundModel.setSort(RND_ID, Qt.AscendingOrder)
+        groupRoundModel.select()
+        self.grpRoundSelect.setModel(groupRoundModel)
+        self.grpRoundSelect.setModelColumn(groupRoundModel.fieldIndex("grpround_desc"))
+        self.grpRoundSelect.setCurrentIndex(-1)
+        
+        # Groups
+        groupNameModel = QSqlTableModel(self)
+        groupNameModel.setTable("tbl_groups")
+        groupNameModel.setSort(GROUP_NAME, Qt.AscendingOrder)
+        groupNameModel.select()
+        self.groupSelect.setModel(groupNameModel)
+        self.groupSelect.setModelColumn(groupNameModel.fieldIndex("group_desc"))
+        self.groupSelect.setCurrentIndex(-1)
+        
+        # Matchdays
+        groupMatchdayModel = QSqlTableModel(self)
+        groupMatchdayModel.setTable("tbl_rounds")
+        groupMatchdayModel.setSort(ROUND_NAME, Qt.AscendingOrder)
+        groupMatchdayModel.select()
+        self.grpMatchdaySelect.setModel(groupMatchdayModel)
+        self.grpMatchdaySelect.setModelColumn(groupMatchdayModel.fieldIndex("round_desc"))
+        self.grpMatchdaySelect.setCurrentIndex(-1)
+                
+        #
+        # define models used for Knockout matches
+        #
+
+        # Knockout Rounds
+        knockoutRoundModel = QSqlTableModel(self)
+        knockoutRoundModel.setTable("tbl_knockoutrounds")
+        knockoutRoundModel.setSort(RND_ID, Qt.AscendingOrder)
+        knockoutRoundModel.select()
+        self.koRoundSelect.setModel(knockoutRoundModel)
+        self.koRoundSelect.setModelColumn(knockoutRoundModel.fieldIndex("koround_desc"))
+        self.koRoundSelect.setCurrentIndex(-1)
+        
+        # Matchdays (Knockout phase)
+        knockoutMatchdayModel = QSqlTableModel(self)
+        knockoutMatchdayModel.setTable("tbl_matchdays")
+        knockoutMatchdayModel.setSort(MATCHDAY_NAME, Qt.AscendingOrder)
+        knockoutMatchdayModel.select()
+        self.koMatchdaySelect.setModel(knockoutMatchdayModel)
+        self.koMatchdaySelect.setModelColumn(knockoutMatchdayModel.fieldIndex("matchday_desc"))
+        self.koMatchdaySelect.setCurrentIndex(-1)
         
         #
         # Define Team combobox used to filter Lineup table
@@ -95,6 +180,14 @@ class PenaltyEntryDlg(QDialog, ui_penaltyentry.Ui_PenaltyEntryDlg):
         self.teamSelect.setModel(self.teamModel)
         self.teamSelect.setModelColumn(self.teamModel.fieldIndex("tm_name"))
         self.teamSelect.setCurrentIndex(-1)        
+        
+        #
+        # Match combobox
+        # Instantiate an object here, specific details will
+        # be set upon selection of Competition Phase
+        #
+        
+        self.matchModel = QSqlTableModel(self)
         
         #
         # Define Penalties data entry
@@ -155,16 +248,22 @@ class PenaltyEntryDlg(QDialog, ui_penaltyentry.Ui_PenaltyEntryDlg):
         
         # disable all comboboxes and line edits 
         # EXCEPT competition combobox upon opening
-        self.roundSelect.setDisabled(True)
+        
+        self.phaseSelect.setDisabled(True)
+        
+        # disable phase-related widgets
+        for widget in self.phaseWidgets:
+            widget.setDisabled(True)
+        
         self.matchSelect.setDisabled(True)
-        
         self.teamSelect.setDisabled(True)
-        self.playerSelect.setDisabled(True)
-        self.foulSelect.setDisabled(True)
-        self.penoutcomeSelect.setDisabled(True)
-        self.pentimeEdit.setDisabled(True)
-        self.stoppageEdit.setDisabled(True)
         
+        # disable remaining form widgets
+        for widget in self.lowerFormWidgets:
+            widget.setDisabled(True)
+            
+        self.stoppageEdit.setDisabled(True)
+
         # disable navigation buttons
         self.firstEntry.setDisabled(True)
         self.prevEntry.setDisabled(True)
@@ -189,8 +288,18 @@ class PenaltyEntryDlg(QDialog, ui_penaltyentry.Ui_PenaltyEntryDlg):
         self.connect(self.deleteEntry, SIGNAL("clicked()"), self.deleteRecord)        
         self.connect(self.closeButton, SIGNAL("clicked()"), self.accept)
         
-        self.connect(self.compSelect, SIGNAL("currentIndexChanged(int)"), lambda: self.enableAndFilterRounds(self.roundSelect))
-        self.connect(self.roundSelect, SIGNAL("currentIndexChanged(int)"),  lambda: self.enableAndFilterMatches(self.matchSelect))
+        self.connect(self.compSelect, SIGNAL("currentIndexChanged(int)"), lambda: self.enableWidget(self.phaseSelect))
+        self.connect(self.phaseSelect, SIGNAL("currentIndexChanged(int)"), self.enablePhaseDetails)
+        
+        self.connect(self.lgRoundSelect, SIGNAL("currentIndexChanged(int)"), self.enableAndFilterMatches)
+        
+        self.connect(self.grpRoundSelect, SIGNAL("currentIndexChanged(int)"), self.enableAndFilterGroups)
+        self.connect(self.groupSelect, SIGNAL("currentIndexChanged(int)"), self.enableAndFilterMatchdays)
+        self.connect(self.grpMatchdaySelect, SIGNAL("currentIndexChanged(int)"), self.enableAndFilterMatches)
+
+        self.connect(self.koRoundSelect, SIGNAL("currentIndexChanged(int)"), self.enableAndFilterMatchdays)
+        self.connect(self.koMatchdaySelect, SIGNAL("currentIndexChanged(int)"), self.enableAndFilterMatches)
+        
         self.connect(self.matchSelect, SIGNAL("currentIndexChanged(int)"), self.filterPenaltiesAndTeams)
         self.connect(self.teamSelect, SIGNAL("currentIndexChanged(int)"), self.filterPlayers)        
         self.connect(self.pentimeEdit, SIGNAL("editingFinished()"),  lambda: self.enableStoppageTime(self.stoppageEdit))
@@ -272,15 +381,25 @@ class PenaltyEntryDlg(QDialog, ui_penaltyentry.Ui_PenaltyEntryDlg):
             row = self.model.rowCount() - 1
         self.mapper.setCurrentIndex(row) 
         
+        # disable buttons and no widgets if no records in database
+        if not self.model.rowCount():
+            self.deleteEntry.setDisabled(True)
+            self.saveEntry.setDisabled(True)
+            for widget in self.selectWidgets:
+                widget.setDisabled(True)
+                widget.setCurrentIndex(-1)
+            self.goaltimeEdit.setText(QString())
+            self.stoppageEdit.setText("0")
+        else:
+            self.teamSelect.blockSignals(True)
+            self.refreshTeamBox()
+            self.teamSelect.blockSignals(False)
+        
         # enable stoppage time field if there is an entry
         if self.stoppageEdit.text() == "0":
             self.stoppageEdit.setEnabled(False)
         else:
             self.stoppageEdit.setEnabled(True)        
-        
-        # disable Delete button if no records in database
-        if not self.model.rowCount():
-            self.deleteEntry.setDisabled(True)        
         
     def isDirty(self, row):
         """Compares current state of data entry form to current record in database, and returns a boolean.
@@ -340,35 +459,40 @@ class PenaltyEntryDlg(QDialog, ui_penaltyentry.Ui_PenaltyEntryDlg):
         # assign value to goalID field
         self.penaltyID_display.setText(penalty_id)
         
-        # disable navigation button
-        self.prevEntry.setEnabled(True)
-        self.firstEntry.setEnabled(True)
+        # disable next/last navigation buttons
         self.nextEntry.setDisabled(True)
-        self.lastEntry.setDisabled(True)        
+        self.lastEntry.setDisabled(True)
+        # enable first/previous navigation buttons
+        if self.model.rowCount() > 1:
+            self.prevEntry.setEnabled(True)
+            self.firstEntry.setEnabled(True)
+            # enable Delete button if at least one record
+            self.deleteEntry.setEnabled(True)
         
-        # enable Team combobox
-        # set Team combobox to blank item
-        self.teamSelect.setEnabled(True)
+        # enable Save button
+        self.enableWidget(self.saveEntry)
+        # enable Team combobox, set Team combobox to blank item
+        self.enableWidget(self.teamSelect)
+        
+        # disable lower part of form
+        for widget in self.lowerFormWidgets:
+            widget.setDisabled(True)
+        # reset indices of comboboxes
         self.teamSelect.setCurrentIndex(-1)        
+        self.playerSelect.setCurrentIndex(-1)
+        self.foulSelect.setCurrentIndex(-1)
+        self.penoutcomeSelect.setCurrentIndex(-1)
         
-        # disable stoppage time edit box upon opening
-        # set default stoppage time
-        # clear match time
-        self.stoppageEdit.setDisabled(True)
+        # set default stoppage time, clear match time
         self.stoppageEdit.setText("0")
         self.pentimeEdit.setText(QString())
 
     def refreshTeamBox(self):
         """Sets index of team box so that it corresponds with selected player."""
-#        print "Calling refreshTeamBox()"
         
         compName = self.compSelect.currentText()
         roundName = self.roundSelect.currentText()
         playerName = self.playerSelect.currentText()
-        
-#        print "Competition: %s" % compName
-#        print "Round: %s" % roundName
-#        print "Player: %s" % playerName
         
         # look for team name
         query = QSqlQuery()
@@ -422,7 +546,6 @@ class PenaltyEntryDlg(QDialog, ui_penaltyentry.Ui_PenaltyEntryDlg):
                                                           "(SELECT lineup_id FROM tbl_lineups WHERE match_id = %1 AND team_id = %2)").arg(match_id, team_id))
                 
         # enable comboboxes if not enabled already
-        self.playerSelect.setEnabled(True)
         self.foulSelect.setEnabled(True)
         self.penoutcomeSelect.setEnabled(True)
         self.pentimeEdit.setEnabled(True)
@@ -439,11 +562,6 @@ class PenaltyEntryDlg(QDialog, ui_penaltyentry.Ui_PenaltyEntryDlg):
     def filterPenaltiesAndTeams(self):
         """Filters Penalties table to display all entries from selected match, and filters Teams combobox down to the two participants."""
         
-        # enable add, save, and delete entry buttons
-        self.addEntry.setEnabled(True)
-        self.saveEntry.setEnabled(True)
-        self.deleteEntry.setEnabled(True)
-
         # block signals from team combobox
         self.teamSelect.blockSignals(True)
 
@@ -457,7 +575,7 @@ class PenaltyEntryDlg(QDialog, ui_penaltyentry.Ui_PenaltyEntryDlg):
         match_id = self.matchModel.record(currentIndex).value("match_id").toString()
         
         # filter penalties taken by players who were in lineup for match (match_id)
-        self.model.setFilter(QString("player IN (SELECT player FROM lineup_list WHERE matchup IN "
+        self.model.setFilter(QString("tbl_penalties.lineup_id IN (SELECT lineup_id FROM lineup_list WHERE matchup IN "
                                                     "(SELECT matchup FROM match_list WHERE match_id = %1))").arg(match_id))
         self.mapper.toFirst()        
         
@@ -467,7 +585,6 @@ class PenaltyEntryDlg(QDialog, ui_penaltyentry.Ui_PenaltyEntryDlg):
         teamModel.setFilter(QString("team_id IN"
             "(SELECT team_id FROM tbl_hometeams WHERE match_id = %1"
             "UNION SELECT team_id FROM tbl_awayteams WHERE match_id = %1)").arg(match_id))
-
         self.teamSelect.setCurrentIndex(-1)            
         
         # refresh team select box
@@ -476,91 +593,252 @@ class PenaltyEntryDlg(QDialog, ui_penaltyentry.Ui_PenaltyEntryDlg):
         # unblock signals from team combobox
         self.teamSelect.blockSignals(False)
 
+        # enable Teams combobox
+        self.enableWidget(self.teamSelect)
+        
+        # enable add/delete buttons
+        self.addEntry.setEnabled(True)
+        if self.model.rowCount():
+            self.saveEntry.setEnabled(True)
+            self.deleteEntry.setEnabled(True)
+
         # enable navigation buttons and data entry widgets if table is non-empty
         if self.model.rowCount():
-            self.teamSelect.setEnabled(True)
-            self.playerSelect.setEnabled(True)
-            self.foulSelect.setEnabled(True)
-            self.penoutcomeSelect.setEnabled(True)
-            self.pentimeEdit.setEnabled(True)
+            for widget in self.lowerFormWidgets:
+                widget.setEnabled(True)
+            if self.stoppageEdit.text() == "0":
+                self.stoppageEdit.setEnabled(False)
+            else:
+                self.stoppageEdit.setEnabled(True)
             
             self.firstEntry.setDisabled(True)
             self.prevEntry.setDisabled(True)
-            self.nextEntry.setEnabled(True)
-            self.lastEntry.setEnabled(True)      
+            if self.model.rowCount() > 1:
+                self.nextEntry.setEnabled(True)
+                self.lastEntry.setEnabled(True)        
 
-    def enableAndFilterRounds(self, widget):
-        """Enables Rounds combobox and filters its contents based on Competition selection.
-        
-        Argument:
-        widget -- data widget object (roundSelect)
-        """
-        widget.blockSignals(True)
-
-        # enable widget if not enabled already
+    def enableWidget(self, widget):
+        """Enables widget passed in function parameter, if not already enabled."""
         if not widget.isEnabled():
             widget.setEnabled(True)
         
-        # widget model
-        widgetModel = widget.model()
+    def enablePhaseDetails(self):
+        """Enables comboboxes associated with specific competition phase.
+        
+        Sets validator for match time edit field.
+        Filters League/Group/Knockout Rounds combobox.
+        """
+        for widget in self.phaseWidgets:
+            widget.setCurrentIndex(-1)
+            
+        phaseText = self.phaseSelect.currentText()
+        if phaseText == "League":
+            self.lgRoundSelect.setEnabled(True)
+            self.pentimeEdit.setValidator(QIntValidator(0, Constants.MAX_MINUTES, self))
+        elif phaseText == "Group":
+            self.grpRoundSelect.setEnabled(True)
+            self.pentimeEdit.setValidator(QIntValidator(0, Constants.MAX_MINUTES, self))
+        elif phaseText == "Knockout":
+            self.koRoundSelect.setEnabled(True)
+            self.pentimeEdit.setValidator(QIntValidator(0, Constants.MAX_KO_MINUTES, self))
+        self.filterRounds(phaseText)
+ 
+    def filterRounds(self, phaseText):
+        """Enables Rounds combobox and filters its contents based on Competition and Competition Phase selections.
+        
+        Argument:
+        phaseText -- name of selected Competition Phase (phaseSelect)
+        """
         # Competitions model
         compModel = self.compModel
+        # get text from current index of Competition combobox
+        compName = self.compSelect.currentText()
         
-        # clear filter for widget model
-        widgetModel.setFilter(QString())
-        
-        # get current index from Competition combobox
-        # get competition ID
-        currentIndex = self.compSelect.currentIndex()
-        competition_id = compModel.record(currentIndex).value("competition_id").toString()
-        
-        # filter widget model on competition ID using match_list table
-        # therefore we only access matchdays currently entered in database
-        widgetModel.setFilter(QString("round_id IN "
-                "(SELECT round_id FROM match_list WHERE competition_id = %1)").arg(competition_id))
-        
-        # set current index of widget to -1
-        widget.setCurrentIndex(-1)
-        widget.blockSignals(False)
-                
-    def enableAndFilterMatches(self, widget):
-        """Enables Match combobox and filters its contents based on matchday (Rounds) selection.
-        
-        Argument:
-        widget -- data widget object (matchSelect)
-        """
-        widget.blockSignals(True)
-        
-        # enable widget if not enabled already        
-        if not widget.isEnabled():
-            widget.setEnabled(True)
+        if phaseText == "League":
+            self.lgRoundSelect.blockSignals(True)
             
-        # widget model
-        widgetModel = widget.model()
-        # Rounds model
-        roundModel = self.roundModel
+            # model associated with combobox
+            boxModel = self.lgRoundSelect.model()
+            # clear filter for combobox model
+            boxModel.setFilter(QString())
+            # filter combobox model on competition name using league_match_list table
+            # therefore we only access matchdays currently entered in database
+            boxModel.setFilter(QString("round_desc IN "
+                    "(SELECT round FROM league_match_list WHERE competition = '%1')").arg(compName))
+            # set current index of widget to -1
+            self.lgRoundSelect.setCurrentIndex(-1)
+            
+            self.lgRoundSelect.blockSignals(False)
+        elif phaseText == "Group":
+            self.grpRoundSelect.blockSignals(True)
+            
+            # model associated with combobox
+            boxModel = self.grpRoundSelect.model()
+            # clear filter for combobox model
+            boxModel.setFilter(QString())
+            # filter combobox model on competition name using group_match_list table
+            # therefore we only access rounds currently entered in database
+            boxModel.setFilter(QString("grpround_desc IN "
+                    "(SELECT round FROM group_match_list WHERE competition = '%1')").arg(compName))
+            # set current index of widget to -1
+            self.grpRoundSelect.setCurrentIndex(-1)
+            
+            self.grpRoundSelect.blockSignals(False)
+        elif phaseText == "Knockout":
+            self.koRoundSelect.blockSignals(True)
+            
+            # model associated with combobox
+            boxModel = self.koRoundSelect.model()
+            # clear filter for combobox model
+            boxModel.setFilter(QString())
+            # filter combobox model on competition name using knockout_match_list table
+            # therefore we only access rounds currently entered in database
+            boxModel.setFilter(QString("koround_desc IN "
+                    "(SELECT round FROM knockout_match_list WHERE competition = '%1')").arg(compName))
+            # set current index of widget to -1
+            self.koRoundSelect.setCurrentIndex(-1)
+            
+            self.koRoundSelect.blockSignals(False)
+    
+    def enableAndFilterGroups(self):
+        """Enables Groups combobox and filters its contents based on selections in Competition Phase, Group Round fields."""
+        self.groupSelect.blockSignals(True)
+        
+        # Enable group combobox
+        self.enableWidget(self.groupSelect)
+        # Competition model
         compModel = self.compModel
+        # get text from current index of Competition combobox
+        compName = self.compSelect.currentText()
+        # Group round name
+        roundName = self.grpRoundSelect.currentText()
+        # model associated with combobox
+        boxModel = self.groupSelect.model()
+        # clear filter for combobox model
+        boxModel.setFilter(QString())
+        # filter combobox model on competition and round names using group_match_list table
+        # therefore we only access groups currently entered in database
+        boxModel.setFilter(QString("group_desc IN "
+                "(SELECT group_name FROM group_match_list WHERE competition = '%1' AND round = '%2')").arg(compName, roundName))
+        self.groupSelect.setCurrentIndex(-1)
         
-        # clear filter for widget model
-        widgetModel.setFilter(QString())
+        self.groupSelect.blockSignals(False)
         
-        # get current index from Rounds combobox
-        # get round ID
-        currentIndex = self.roundSelect.currentIndex()
-        round_id = roundModel.record(currentIndex).value("round_id").toString()
+    def enableAndFilterMatchdays(self):
+        """Enables Matchdays combobox and filters its contents based on selections in Competition Phase and Knockout/Group fields."""
         
-        # get current index from Competition combobox
-        # get competition ID
-        currentIndex = self.compSelect.currentIndex()
-        competition_id = compModel.record(currentIndex).value("competition_id").toString()
+        # Competition model
+        compModel = self.compModel
+        # get text from current index of Competition combobox
+        compName = self.compSelect.currentText()
         
-        # filter widget model on round ID and competition ID
-        widgetModel.setFilter(QString("round_id = %1 AND competition_id = %2").arg(round_id, competition_id))
- 
-        # set current index of widget to -1
-        widget.setCurrentIndex(-1)
-        widget.blockSignals(False)
- 
+        phaseText = self.phaseSelect.currentText()
+        if phaseText == "Group":
+            self.grpMatchdaySelect.blockSignals(True)
+            
+            # Activate matchday widget
+            self.enableWidget(self.grpMatchdaySelect)
+            # Group round name
+            roundName = self.grpRoundSelect.currentText()
+            # Group name
+            groupName = self.groupSelect.currentText()
+            # model associated with combobox
+            boxModel = self.grpMatchdaySelect.model()
+            # clear filter for combobox model
+            boxModel.setFilter(QString())
+            # filter combobox model on competition, round, and group names using group_match_list table
+            # therefore we only access matchdays currently entered in database
+            boxModel.setFilter(QString("round_desc IN (SELECT matchday FROM group_match_list WHERE \
+                    competition = '%1' AND round = '%2' AND group_name = '%3')").arg(compName, roundName, groupName))
+            self.grpMatchdaySelect.setCurrentIndex(-1)
+            
+            self.grpMatchdaySelect.blockSignals(False)
+        elif phaseText == "Knockout":
+            self.koMatchdaySelect.blockSignals(True)
+            
+            # Activate matchday widget
+            self.enableWidget(self.koMatchdaySelect)
+            # Knockout round name
+            roundName = self.koRoundSelect.currentText()
+            # model associated with combobox
+            boxModel = self.koMatchdaySelect.model()
+            # clear filter for combobox model
+            boxModel.setFilter(QString())
+            # filter combobox model on competition and round names using knockout_match_list table
+            # therefore we only access matchdays currently entered in database
+            boxModel.setFilter(QString("matchday_desc IN (SELECT game FROM knockout_match_list WHERE \
+                    competition = '%1' AND round = '%2')").arg(compName, roundName))
+            self.koMatchdaySelect.setCurrentIndex(-1)
+            
+            self.koMatchdaySelect.blockSignals(False)
+        
+    def enableAndFilterMatches(self):
+        """Enables Match combobox and filters its contents based on selections in Competition Phase section of form."""
+        MCH_ID = 0
+        self.matchSelect.blockSignals(True)
+        
+        # Competition model
+        compModel = self.compModel
+        # get text from current index of Competition combobox
+        compName = self.compSelect.currentText()
+        
+        # reset Match model filter if there is a db table already assigned
+        if self.matchModel.tableName():
+            self.matchModel.setFilter(QString())
+            
+        # use Competition Phase text to set appropriate Match model 
+        phaseText = self.phaseSelect.currentText()
+        if phaseText == "League":
+            
+            # get text from current index of Rounds combobox
+            roundName = self.lgRoundSelect.currentText()
+            # set match model to LeagueMatchList
+            # filter match model on round name and competition name
+            self.matchModel.setTable("league_match_list")
+            self.matchModel.setSort(MCH_ID,  Qt.AscendingOrder)
+            self.matchModel.setFilter(QString("round = '%1' AND competition = '%2'").arg(roundName, compName))
+            self.matchModel.select()
+            
+        elif phaseText == "Group":
+            
+            # get text from current index of Group Rounds combobox
+            roundName = self.grpRoundSelect.currentText()
+            # get text from current index of Groups combobox
+            groupName = self.groupSelect.currentText()
+            # get text from current index of Rounds combobox
+            matchdayName = self.grpMatchdaySelect.currentText()
+            # set match model to GroupMatchList
+            # filter match model on competition, round, group, and matchday names
+            self.matchModel.setTable("group_match_list")
+            self.matchModel.setSort(MCH_ID,  Qt.AscendingOrder)
+            self.matchModel.setFilter(QString("competition = '%1' AND round = '%2' AND \
+            group_name = '%3' AND matchday = '%4'").arg(compName, roundName, groupName, matchdayName))
+            self.matchModel.select()
+            
+        elif phaseText == "Knockout":
+        
+            # get text from current index of Knockout Rounds combobox
+            roundName = self.koRoundSelect.currentText()
+            # get text from current index of Matchdays combobox
+            matchdayName = self.koMatchdaySelect.currentText()
+            # set match model to KnockoutMatchList
+            # filter match model on competition, round, and matchday names
+            self.matchModel.setTable("knockout_match_list")
+            self.matchModel.setSort(MCH_ID,  Qt.AscendingOrder)
+            self.matchModel.setFilter(QString("competition = '%1' AND round = '%2' AND \
+            game = '%3'").arg(compName, roundName, matchdayName))
+            self.matchModel.select()
+            
+        # define settings for matchSelect combobox
+        self.matchSelect.setModel(self.matchModel)
+        self.matchSelect.setModelColumn(self.matchModel.fieldIndex("matchup"))
+        self.matchSelect.setCurrentIndex(-1)
+        
+        # enable matchSelect combobox if not enabled already        
+        self.enableWidget(self.matchSelect)
+        
+        self.matchSelect.blockSignals(False)
+
     def enableStoppageTime(self, widget):
         """Enables stoppage time widget. 
         
