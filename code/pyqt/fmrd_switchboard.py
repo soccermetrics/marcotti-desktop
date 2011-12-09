@@ -30,7 +30,10 @@ from FmrdLib.Constants import *
 
 from fmrd_setup import *
 from fmrd_match import *
-from fmrd_matchevent import *
+from fmrd_goals import *
+from fmrd_penalties import *
+from fmrd_subs import *
+from fmrd_offenses import *
 from fmrd_overview import *
 from fmrd_personnel import *
 
