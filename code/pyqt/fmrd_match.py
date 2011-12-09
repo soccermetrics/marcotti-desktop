@@ -63,7 +63,7 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
         TM_ID,  TEAM_NAME = range(2)
         MG_ID,  MGR_NAME,  MGR_SORT = range(3)
         
-        GROUP,  GROUP_ROUND,  GROUP_MATCHDAY = range(1, 4)
+        GROUP_ROUND,  GROUP,  GROUP_MATCHDAY = range(1, 4)
         KO_ROUND, KO_MATCHDAY = range(1, 3)
         
         # define lists of comboboxes
@@ -406,9 +406,9 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
         self.connect(self.lgRoundSelect, SIGNAL("currentIndexChanged(int)"),
                                                                 lambda: self.enableWidget(self.matchVenueSelect))
         
-        self.connect(self.groupSelect, SIGNAL("currentIndexChanged(int)"), 
-                                                                lambda: self.enableWidget(self.grpRoundSelect))
         self.connect(self.grpRoundSelect, SIGNAL("currentIndexChanged(int)"), 
+                                                                lambda: self.enableWidget(self.groupSelect))
+        self.connect(self.groupSelect, SIGNAL("currentIndexChanged(int)"), 
                                                                 lambda: self.enableWidget(self.grpMatchdaySelect))
         self.connect(self.grpMatchdaySelect, SIGNAL("currentIndexChanged(int)"),
                                                                 lambda: self.enableWidget(self.matchVenueSelect))
@@ -859,7 +859,7 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
         if phaseText == "League":
             self.lgRoundSelect.setEnabled(True)
         elif phaseText == "Group":
-            self.groupSelect.setEnabled(True)
+            self.grpRoundSelect.setEnabled(True)
         elif phaseText == "Knockout":
             self.koRoundSelect.setEnabled(True)
             
