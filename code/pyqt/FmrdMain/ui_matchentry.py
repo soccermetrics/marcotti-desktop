@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'gui/match_entry.ui'
 #
-# Created: Tue Dec  6 22:32:06 2011
+# Created: Wed Dec  7 22:20:28 2011
 #      by: PyQt4 UI code generator 4.7.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -170,25 +170,15 @@ class Ui_MatchEntryDlg(object):
         self.groupBox.setMaximumSize(QtCore.QSize(940, 100))
         self.groupBox.setObjectName("groupBox")
         self.label_19 = QtGui.QLabel(self.groupBox)
-        self.label_19.setGeometry(QtCore.QRect(290, 20, 50, 30))
+        self.label_19.setGeometry(QtCore.QRect(20, 20, 50, 30))
         self.label_19.setMinimumSize(QtCore.QSize(50, 30))
         self.label_19.setMaximumSize(QtCore.QSize(50, 30))
         self.label_19.setObjectName("label_19")
         self.grpRoundSelect = QtGui.QComboBox(self.groupBox)
-        self.grpRoundSelect.setGeometry(QtCore.QRect(340, 20, 240, 30))
+        self.grpRoundSelect.setGeometry(QtCore.QRect(80, 20, 240, 30))
         self.grpRoundSelect.setMinimumSize(QtCore.QSize(240, 30))
         self.grpRoundSelect.setMaximumSize(QtCore.QSize(240, 30))
         self.grpRoundSelect.setObjectName("grpRoundSelect")
-        self.groupSelect = QtGui.QComboBox(self.groupBox)
-        self.groupSelect.setGeometry(QtCore.QRect(80, 20, 60, 30))
-        self.groupSelect.setMinimumSize(QtCore.QSize(60, 30))
-        self.groupSelect.setMaximumSize(QtCore.QSize(60, 30))
-        self.groupSelect.setObjectName("groupSelect")
-        self.label_20 = QtGui.QLabel(self.groupBox)
-        self.label_20.setGeometry(QtCore.QRect(20, 20, 50, 30))
-        self.label_20.setMinimumSize(QtCore.QSize(50, 30))
-        self.label_20.setMaximumSize(QtCore.QSize(50, 30))
-        self.label_20.setObjectName("label_20")
         self.grpMatchdaySelect = QtGui.QComboBox(self.groupBox)
         self.grpMatchdaySelect.setGeometry(QtCore.QRect(670, 20, 180, 30))
         self.grpMatchdaySelect.setMinimumSize(QtCore.QSize(180, 30))
@@ -199,6 +189,16 @@ class Ui_MatchEntryDlg(object):
         self.label_21.setMinimumSize(QtCore.QSize(75, 30))
         self.label_21.setMaximumSize(QtCore.QSize(75, 30))
         self.label_21.setObjectName("label_21")
+        self.label_20 = QtGui.QLabel(self.groupBox)
+        self.label_20.setGeometry(QtCore.QRect(390, 20, 50, 30))
+        self.label_20.setMinimumSize(QtCore.QSize(50, 30))
+        self.label_20.setMaximumSize(QtCore.QSize(50, 30))
+        self.label_20.setObjectName("label_20")
+        self.groupSelect = QtGui.QComboBox(self.groupBox)
+        self.groupSelect.setGeometry(QtCore.QRect(450, 20, 60, 30))
+        self.groupSelect.setMinimumSize(QtCore.QSize(60, 30))
+        self.groupSelect.setMaximumSize(QtCore.QSize(60, 30))
+        self.groupSelect.setObjectName("groupSelect")
         self.gridLayout_3.addWidget(self.groupBox, 1, 0, 1, 2)
         self.matchtimeBox = QtGui.QGroupBox(MatchEntryDlg)
         self.matchtimeBox.setGeometry(QtCore.QRect(550, 250, 291, 111))
@@ -463,18 +463,18 @@ class Ui_MatchEntryDlg(object):
 "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Round</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
         self.grpRoundSelect.setToolTip(QtGui.QApplication.translate("MatchEntryDlg", "Group Phase Round", None, QtGui.QApplication.UnicodeUTF8))
-        self.groupSelect.setToolTip(QtGui.QApplication.translate("MatchEntryDlg", "Group Name", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_20.setText(QtGui.QApplication.translate("MatchEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Group</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
         self.grpMatchdaySelect.setToolTip(QtGui.QApplication.translate("MatchEntryDlg", "Group Round Matchday", None, QtGui.QApplication.UnicodeUTF8))
         self.label_21.setText(QtGui.QApplication.translate("MatchEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Matchday</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_20.setText(QtGui.QApplication.translate("MatchEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Group</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
+        self.groupSelect.setToolTip(QtGui.QApplication.translate("MatchEntryDlg", "Group Name", None, QtGui.QApplication.UnicodeUTF8))
         self.matchtimeBox.setTitle(QtGui.QApplication.translate("MatchEntryDlg", "Match Time", None, QtGui.QApplication.UnicodeUTF8))
         self.label_11.setText(QtGui.QApplication.translate("MatchEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
