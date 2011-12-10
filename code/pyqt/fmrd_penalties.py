@@ -362,7 +362,7 @@ class PenaltyEntryDlg(QDialog, ui_penaltyentry.Ui_PenaltyEntryDlg):
         
         # enable stoppage time field if there is an entry
         if self.stoppageEdit.text() == "0":
-            self.stoppageEdit.setEnabled(False)
+            self.stoppageEdit.setDisabled(True)
         else:
             self.stoppageEdit.setEnabled(True)                
 
@@ -397,7 +397,7 @@ class PenaltyEntryDlg(QDialog, ui_penaltyentry.Ui_PenaltyEntryDlg):
         
         # enable stoppage time field if there is an entry
         if self.stoppageEdit.text() == "0":
-            self.stoppageEdit.setEnabled(False)
+            self.stoppageEdit.setDisabled(True)
         else:
             self.stoppageEdit.setEnabled(True)        
         
@@ -471,17 +471,16 @@ class PenaltyEntryDlg(QDialog, ui_penaltyentry.Ui_PenaltyEntryDlg):
         
         # enable Save button
         self.enableWidget(self.saveEntry)
-        # enable Team combobox, set Team combobox to blank item
+        # enable Team combobox
         self.enableWidget(self.teamSelect)
         
         # disable lower part of form
         for widget in self.lowerFormWidgets:
             widget.setDisabled(True)
-        # reset indices of comboboxes
-        self.teamSelect.setCurrentIndex(-1)        
-        self.playerSelect.setCurrentIndex(-1)
-        self.foulSelect.setCurrentIndex(-1)
-        self.penoutcomeSelect.setCurrentIndex(-1)
+        self.stoppageEdit.setDisabled(True)
+        # reset indices of lower comboboxes
+        for widget in (self.teamSelect, self.playerSelect, self.foulSelect, self.penoutcomeSelect):
+            widget.setCurrentIndex(-1)
         
         # set default stoppage time, clear match time
         self.stoppageEdit.setText("0")
@@ -491,16 +490,16 @@ class PenaltyEntryDlg(QDialog, ui_penaltyentry.Ui_PenaltyEntryDlg):
         """Sets index of team box so that it corresponds with selected player."""
         
         compName = self.compSelect.currentText()
-        roundName = self.roundSelect.currentText()
+        phaseText = self.phaseSelect.currentText()
         playerName = self.playerSelect.currentText()
         
         # look for team name
         query = QSqlQuery()
         query.prepare("SELECT team FROM lineup_list WHERE player = ? AND "
-                               "matchup IN (SELECT matchup FROM match_list WHERE competition = ? AND matchday = ?)")
+                               "matchup IN (SELECT matchup FROM match_list WHERE competition = ? AND phase = ?)")
         query.addBindValue(QVariant(playerName))
         query.addBindValue(QVariant(compName))
-        query.addBindValue(QVariant(roundName))
+        query.addBindValue(QVariant(phaseText))
         query.exec_()
         if query.next():
             teamName = query.value(0).toString()
@@ -545,10 +544,9 @@ class PenaltyEntryDlg(QDialog, ui_penaltyentry.Ui_PenaltyEntryDlg):
         lineupListModel.setFilter(QString("lineup_id IN "
                                                           "(SELECT lineup_id FROM tbl_lineups WHERE match_id = %1 AND team_id = %2)").arg(match_id, team_id))
                 
-        # enable comboboxes if not enabled already
-        self.foulSelect.setEnabled(True)
-        self.penoutcomeSelect.setEnabled(True)
-        self.pentimeEdit.setEnabled(True)
+        # enable remaining comboboxes on form
+        for widget in (self.playerSelect, self.foulSelect,  self.penoutcomeSelect, self.pentimeEdit):
+            widget.setEnabled(True)
         # enable stoppage time field if there is an entry
         if self.stoppageEdit.text() == "0":
             self.stoppageEdit.setEnabled(False)
@@ -593,24 +591,23 @@ class PenaltyEntryDlg(QDialog, ui_penaltyentry.Ui_PenaltyEntryDlg):
         # unblock signals from team combobox
         self.teamSelect.blockSignals(False)
 
-        # enable Teams combobox
-        self.enableWidget(self.teamSelect)
-        
-        # enable add/delete buttons
+        # enable Add button
         self.addEntry.setEnabled(True)
+        
+        # if table is not empty
         if self.model.rowCount():
+            # enable Save/Delete buttons
             self.saveEntry.setEnabled(True)
             self.deleteEntry.setEnabled(True)
-
-        # enable navigation buttons and data entry widgets if table is non-empty
-        if self.model.rowCount():
+            # enable data entry widgets on lower part of form
+            self.enableWidget(self.teamSelect)
             for widget in self.lowerFormWidgets:
                 widget.setEnabled(True)
             if self.stoppageEdit.text() == "0":
                 self.stoppageEdit.setEnabled(False)
             else:
                 self.stoppageEdit.setEnabled(True)
-            
+            # enable navigation buttons
             self.firstEntry.setDisabled(True)
             self.prevEntry.setDisabled(True)
             if self.model.rowCount() > 1:
