@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'gui/switchpos_entry.ui'
 #
-# Created: Wed Dec  7 22:20:31 2011
+# Created: Sat Dec 10 00:12:22 2011
 #      by: PyQt4 UI code generator 4.7.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -209,7 +209,8 @@ class Ui_SwitchEntryDlg(object):
         self.switchtimeEdit = QtGui.QLineEdit(self.layoutWidget1)
         self.switchtimeEdit.setMinimumSize(QtCore.QSize(45, 30))
         self.switchtimeEdit.setMaximumSize(QtCore.QSize(45, 30))
-        self.switchtimeEdit.setMaxLength(2)
+        self.switchtimeEdit.setInputMask("")
+        self.switchtimeEdit.setMaxLength(3)
         self.switchtimeEdit.setObjectName("switchtimeEdit")
         self.horizontalLayout.addWidget(self.switchtimeEdit)
         self.label_9 = QtGui.QLabel(self.layoutWidget1)
@@ -218,6 +219,7 @@ class Ui_SwitchEntryDlg(object):
         self.stoppageEdit = QtGui.QLineEdit(self.layoutWidget1)
         self.stoppageEdit.setMinimumSize(QtCore.QSize(45, 30))
         self.stoppageEdit.setMaximumSize(QtCore.QSize(45, 30))
+        self.stoppageEdit.setInputMask("")
         self.stoppageEdit.setMaxLength(2)
         self.stoppageEdit.setObjectName("stoppageEdit")
         self.horizontalLayout.addWidget(self.stoppageEdit)
@@ -368,14 +370,12 @@ class Ui_SwitchEntryDlg(object):
 "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Match Time</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
         self.switchtimeEdit.setToolTip(QtGui.QApplication.translate("SwitchEntryDlg", "Match time", None, QtGui.QApplication.UnicodeUTF8))
-        self.switchtimeEdit.setInputMask(QtGui.QApplication.translate("SwitchEntryDlg", "00; ", None, QtGui.QApplication.UnicodeUTF8))
         self.label_9.setText(QtGui.QApplication.translate("SwitchEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:14pt; font-weight:600;\">+</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
         self.stoppageEdit.setToolTip(QtGui.QApplication.translate("SwitchEntryDlg", "Stoppage time", None, QtGui.QApplication.UnicodeUTF8))
-        self.stoppageEdit.setInputMask(QtGui.QApplication.translate("SwitchEntryDlg", "00; ", None, QtGui.QApplication.UnicodeUTF8))
         self.leagueBox.setTitle(QtGui.QApplication.translate("SwitchEntryDlg", "League Phase", None, QtGui.QApplication.UnicodeUTF8))
         self.label_2.setText(QtGui.QApplication.translate("SwitchEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"

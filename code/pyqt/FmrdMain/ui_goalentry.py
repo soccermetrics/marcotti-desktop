@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'gui/goal_entry.ui'
 #
-# Created: Wed Dec  7 22:20:28 2011
+# Created: Sat Dec 10 00:12:19 2011
 #      by: PyQt4 UI code generator 4.7.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -227,6 +227,7 @@ class Ui_GoalEntryDlg(object):
         self.stoppageEdit = QtGui.QLineEdit(self.layoutWidget1)
         self.stoppageEdit.setMinimumSize(QtCore.QSize(41, 27))
         self.stoppageEdit.setMaximumSize(QtCore.QSize(41, 27))
+        self.stoppageEdit.setInputMask("")
         self.stoppageEdit.setMaxLength(2)
         self.stoppageEdit.setObjectName("stoppageEdit")
         self.horizontalLayout.addWidget(self.stoppageEdit)
@@ -392,7 +393,6 @@ class Ui_GoalEntryDlg(object):
 "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:14pt; font-weight:600;\">+</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
         self.stoppageEdit.setToolTip(QtGui.QApplication.translate("GoalEntryDlg", "Stoppage time", None, QtGui.QApplication.UnicodeUTF8))
-        self.stoppageEdit.setInputMask(QtGui.QApplication.translate("GoalEntryDlg", "00; ", None, QtGui.QApplication.UnicodeUTF8))
         self.leagueBox.setTitle(QtGui.QApplication.translate("GoalEntryDlg", "League Phase", None, QtGui.QApplication.UnicodeUTF8))
         self.label_2.setText(QtGui.QApplication.translate("GoalEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"

@@ -763,10 +763,10 @@ p, li { white-space: pre-wrap; }
          <string>Match time</string>
         </property>
         <property name="inputMask">
-         <string>00; </string>
+         <string/>
         </property>
         <property name="maxLength">
-         <number>2</number>
+         <number>3</number>
         </property>
        </widget>
       </item>
@@ -799,7 +799,7 @@ p, li { white-space: pre-wrap; }
          <string>Stoppage time</string>
         </property>
         <property name="inputMask">
-         <string>00; </string>
+         <string/>
         </property>
         <property name="maxLength">
          <number>2</number>
