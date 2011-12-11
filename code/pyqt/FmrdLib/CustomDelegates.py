@@ -307,7 +307,7 @@ class SwitchPlayerComboBoxDelegate(QSqlRelationalDelegate):
         
         # get current matchup
         matchup = self.matchSelect.currentText()
-                
+        
         # get match_id by making a query on match_list with matchup
         query = QSqlQuery()
         query.prepare("SELECT match_id FROM match_list WHERE matchup = ?")
@@ -330,7 +330,7 @@ class SwitchPlayerComboBoxDelegate(QSqlRelationalDelegate):
            lineup_id = playerQuery.value(0).toString()
         else:
            lineup_id = "-1"
-           
+        
        # make query on tbl_lineups to find team associated with player
         teamQuery = QSqlQuery()
         teamQuery.prepare("SELECT team_id FROM tbl_lineups WHERE lineup_id = ?")
@@ -341,11 +341,11 @@ class SwitchPlayerComboBoxDelegate(QSqlRelationalDelegate):
         else:
             team_id = "-1"        
         
-        filterString = QString("lineup_id NOT IN (SELECT lineup_id FROM tbl_outsubstitutions WHERE lineup_id <> %1) "
-                               "AND lineup_id IN (SELECT lineup_id FROM tbl_lineups WHERE lp_starting AND match_id = %2 AND team_id = %3) "
-                               "OR (lineup_id IN (SELECT lineup_id FROM tbl_insubstitutions WHERE lineup_id <> %1) AND "
-                               "lineup_id IN (SELECT lineup_id FROM tbl_lineups WHERE NOT lp_starting AND match_id = %2 AND team_id = %3))"
-                               ).arg(lineup_id).arg(match_id).arg(team_id)
+        filterString = QString("lineup_id NOT IN (SELECT lineup_id FROM tbl_outsubstitutions) "
+                               "AND lineup_id IN (SELECT lineup_id FROM tbl_lineups WHERE lp_starting AND match_id = %1 AND team_id = %2) "
+                               "OR (lineup_id IN (SELECT lineup_id FROM tbl_insubstitutions) AND "
+                               "lineup_id IN (SELECT lineup_id FROM tbl_lineups WHERE NOT lp_starting AND match_id = %1 AND team_id = %2))"
+                               ).arg(match_id).arg(team_id)
 
         # filter Player combobox
         lineupListModel.setFilter(filterString)
