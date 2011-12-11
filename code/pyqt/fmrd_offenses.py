@@ -369,6 +369,9 @@ class OffenseEntryDlg(QDialog, ui_offenseentry.Ui_OffenseEntryDlg):
         self.refreshTeamBox()
         self.teamSelect.blockSignals(False)
         
+        # enable Delete button
+        self.enableWidget(self.deleteEntry)
+        
         # enable stoppage time field if there is an entry
         if self.stoppageEdit.text() == "0":
             self.stoppageEdit.setEnabled(False)
