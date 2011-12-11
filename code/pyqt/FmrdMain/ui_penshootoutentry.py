@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'gui/penshootout_entry.ui'
 #
-# Created: Fri Nov 25 01:59:21 2011
+# Created: Sun Dec 11 02:02:08 2011
 #      by: PyQt4 UI code generator 4.7.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -12,11 +12,11 @@ from PyQt4 import QtCore, QtGui
 class Ui_PenShootoutEntryDlg(object):
     def setupUi(self, PenShootoutEntryDlg):
         PenShootoutEntryDlg.setObjectName("PenShootoutEntryDlg")
-        PenShootoutEntryDlg.resize(640, 460)
-        PenShootoutEntryDlg.setMinimumSize(QtCore.QSize(640, 460))
-        PenShootoutEntryDlg.setMaximumSize(QtCore.QSize(640, 460))
+        PenShootoutEntryDlg.resize(640, 500)
+        PenShootoutEntryDlg.setMinimumSize(QtCore.QSize(640, 500))
+        PenShootoutEntryDlg.setMaximumSize(QtCore.QSize(640, 500))
         self.layoutWidget_3 = QtGui.QWidget(PenShootoutEntryDlg)
-        self.layoutWidget_3.setGeometry(QtCore.QRect(80, 400, 381, 41))
+        self.layoutWidget_3.setGeometry(QtCore.QRect(80, 450, 381, 41))
         self.layoutWidget_3.setObjectName("layoutWidget_3")
         self.horizontalLayout_2 = QtGui.QHBoxLayout(self.layoutWidget_3)
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
@@ -57,17 +57,17 @@ class Ui_PenShootoutEntryDlg(object):
         self.lastEntry.setObjectName("lastEntry")
         self.horizontalLayout_2.addWidget(self.lastEntry)
         self.line = QtGui.QFrame(PenShootoutEntryDlg)
-        self.line.setGeometry(QtCore.QRect(10, 170, 521, 16))
+        self.line.setGeometry(QtCore.QRect(10, 220, 521, 16))
         self.line.setFrameShape(QtGui.QFrame.HLine)
         self.line.setFrameShadow(QtGui.QFrame.Sunken)
         self.line.setObjectName("line")
         self.line_2 = QtGui.QFrame(PenShootoutEntryDlg)
-        self.line_2.setGeometry(QtCore.QRect(520, 10, 20, 391))
+        self.line_2.setGeometry(QtCore.QRect(520, 0, 20, 441))
         self.line_2.setFrameShape(QtGui.QFrame.VLine)
         self.line_2.setFrameShadow(QtGui.QFrame.Sunken)
         self.line_2.setObjectName("line_2")
         self.layoutWidget = QtGui.QWidget(PenShootoutEntryDlg)
-        self.layoutWidget.setGeometry(QtCore.QRect(540, 140, 91, 251))
+        self.layoutWidget.setGeometry(QtCore.QRect(540, 110, 91, 251))
         self.layoutWidget.setObjectName("layoutWidget")
         self.verticalLayout = QtGui.QVBoxLayout(self.layoutWidget)
         self.verticalLayout.setObjectName("verticalLayout")
@@ -106,61 +106,16 @@ class Ui_PenShootoutEntryDlg(object):
         self.closeButton.setObjectName("closeButton")
         self.verticalLayout.addWidget(self.closeButton)
         self.layoutWidget1 = QtGui.QWidget(PenShootoutEntryDlg)
-        self.layoutWidget1.setGeometry(QtCore.QRect(20, 0, 511, 181))
+        self.layoutWidget1.setGeometry(QtCore.QRect(10, 230, 451, 211))
         self.layoutWidget1.setObjectName("layoutWidget1")
-        self.gridLayout = QtGui.QGridLayout(self.layoutWidget1)
-        self.gridLayout.setObjectName("gridLayout")
-        self.label = QtGui.QLabel(self.layoutWidget1)
-        self.label.setMinimumSize(QtCore.QSize(150, 30))
-        self.label.setMaximumSize(QtCore.QSize(150, 30))
-        self.label.setObjectName("label")
-        self.gridLayout.addWidget(self.label, 0, 0, 1, 1)
-        self.compSelect = QtGui.QComboBox(self.layoutWidget1)
-        self.compSelect.setMinimumSize(QtCore.QSize(330, 30))
-        self.compSelect.setMaximumSize(QtCore.QSize(330, 30))
-        self.compSelect.setObjectName("compSelect")
-        self.gridLayout.addWidget(self.compSelect, 0, 1, 1, 1)
-        self.label_2 = QtGui.QLabel(self.layoutWidget1)
-        self.label_2.setMinimumSize(QtCore.QSize(150, 30))
-        self.label_2.setMaximumSize(QtCore.QSize(150, 30))
-        self.label_2.setObjectName("label_2")
-        self.gridLayout.addWidget(self.label_2, 1, 0, 1, 1)
-        self.koroundSelect = QtGui.QComboBox(self.layoutWidget1)
-        self.koroundSelect.setMinimumSize(QtCore.QSize(180, 30))
-        self.koroundSelect.setMaximumSize(QtCore.QSize(180, 30))
-        self.koroundSelect.setObjectName("koroundSelect")
-        self.gridLayout.addWidget(self.koroundSelect, 1, 1, 1, 1)
-        self.label_3 = QtGui.QLabel(self.layoutWidget1)
-        self.label_3.setMinimumSize(QtCore.QSize(150, 30))
-        self.label_3.setMaximumSize(QtCore.QSize(150, 30))
-        self.label_3.setObjectName("label_3")
-        self.gridLayout.addWidget(self.label_3, 2, 0, 1, 1)
-        self.label_7 = QtGui.QLabel(self.layoutWidget1)
-        self.label_7.setMinimumSize(QtCore.QSize(150, 30))
-        self.label_7.setMaximumSize(QtCore.QSize(150, 30))
-        self.label_7.setObjectName("label_7")
-        self.gridLayout.addWidget(self.label_7, 3, 0, 1, 1)
-        self.penFirstSelect = QtGui.QComboBox(self.layoutWidget1)
-        self.penFirstSelect.setMinimumSize(QtCore.QSize(270, 30))
-        self.penFirstSelect.setMaximumSize(QtCore.QSize(270, 30))
-        self.penFirstSelect.setObjectName("penFirstSelect")
-        self.gridLayout.addWidget(self.penFirstSelect, 3, 1, 1, 1)
-        self.matchSelect = QtGui.QComboBox(self.layoutWidget1)
-        self.matchSelect.setMinimumSize(QtCore.QSize(330, 30))
-        self.matchSelect.setMaximumSize(QtCore.QSize(330, 30))
-        self.matchSelect.setObjectName("matchSelect")
-        self.gridLayout.addWidget(self.matchSelect, 2, 1, 1, 1)
-        self.layoutWidget2 = QtGui.QWidget(PenShootoutEntryDlg)
-        self.layoutWidget2.setGeometry(QtCore.QRect(20, 190, 451, 201))
-        self.layoutWidget2.setObjectName("layoutWidget2")
-        self.gridLayout_2 = QtGui.QGridLayout(self.layoutWidget2)
+        self.gridLayout_2 = QtGui.QGridLayout(self.layoutWidget1)
         self.gridLayout_2.setObjectName("gridLayout_2")
-        self.label_4 = QtGui.QLabel(self.layoutWidget2)
+        self.label_4 = QtGui.QLabel(self.layoutWidget1)
         self.label_4.setMinimumSize(QtCore.QSize(120, 30))
         self.label_4.setMaximumSize(QtCore.QSize(120, 30))
         self.label_4.setObjectName("label_4")
         self.gridLayout_2.addWidget(self.label_4, 0, 0, 1, 1)
-        self.shootoutID_display = QtGui.QLineEdit(self.layoutWidget2)
+        self.shootoutID_display = QtGui.QLineEdit(self.layoutWidget1)
         self.shootoutID_display.setMinimumSize(QtCore.QSize(120, 30))
         self.shootoutID_display.setMaximumSize(QtCore.QSize(120, 30))
         self.shootoutID_display.setStyleSheet("background-color: rgb(194, 190, 186);")
@@ -168,46 +123,101 @@ class Ui_PenShootoutEntryDlg(object):
         self.shootoutID_display.setReadOnly(True)
         self.shootoutID_display.setObjectName("shootoutID_display")
         self.gridLayout_2.addWidget(self.shootoutID_display, 0, 1, 1, 1)
-        self.label_8 = QtGui.QLabel(self.layoutWidget2)
+        self.label_8 = QtGui.QLabel(self.layoutWidget1)
         self.label_8.setMinimumSize(QtCore.QSize(150, 30))
         self.label_8.setMaximumSize(QtCore.QSize(150, 30))
         self.label_8.setObjectName("label_8")
         self.gridLayout_2.addWidget(self.label_8, 1, 0, 1, 1)
-        self.roundSelect = QtGui.QComboBox(self.layoutWidget2)
+        self.roundSelect = QtGui.QComboBox(self.layoutWidget1)
         self.roundSelect.setMinimumSize(QtCore.QSize(180, 30))
         self.roundSelect.setMaximumSize(QtCore.QSize(180, 30))
         self.roundSelect.setObjectName("roundSelect")
         self.gridLayout_2.addWidget(self.roundSelect, 1, 1, 1, 1)
-        self.label_5 = QtGui.QLabel(self.layoutWidget2)
+        self.label_5 = QtGui.QLabel(self.layoutWidget1)
         self.label_5.setMinimumSize(QtCore.QSize(120, 30))
         self.label_5.setMaximumSize(QtCore.QSize(120, 30))
         self.label_5.setObjectName("label_5")
         self.gridLayout_2.addWidget(self.label_5, 2, 0, 1, 1)
-        self.teamSelect = QtGui.QComboBox(self.layoutWidget2)
+        self.teamSelect = QtGui.QComboBox(self.layoutWidget1)
         self.teamSelect.setMinimumSize(QtCore.QSize(270, 30))
         self.teamSelect.setMaximumSize(QtCore.QSize(270, 30))
         self.teamSelect.setObjectName("teamSelect")
         self.gridLayout_2.addWidget(self.teamSelect, 2, 1, 1, 1)
-        self.label_10 = QtGui.QLabel(self.layoutWidget2)
+        self.label_10 = QtGui.QLabel(self.layoutWidget1)
         self.label_10.setMinimumSize(QtCore.QSize(120, 30))
         self.label_10.setMaximumSize(QtCore.QSize(120, 30))
         self.label_10.setObjectName("label_10")
         self.gridLayout_2.addWidget(self.label_10, 3, 0, 1, 1)
-        self.playerSelect = QtGui.QComboBox(self.layoutWidget2)
+        self.playerSelect = QtGui.QComboBox(self.layoutWidget1)
         self.playerSelect.setMinimumSize(QtCore.QSize(270, 30))
         self.playerSelect.setMaximumSize(QtCore.QSize(270, 30))
         self.playerSelect.setObjectName("playerSelect")
         self.gridLayout_2.addWidget(self.playerSelect, 3, 1, 1, 1)
-        self.label_6 = QtGui.QLabel(self.layoutWidget2)
+        self.label_6 = QtGui.QLabel(self.layoutWidget1)
         self.label_6.setMinimumSize(QtCore.QSize(130, 30))
         self.label_6.setMaximumSize(QtCore.QSize(130, 30))
         self.label_6.setObjectName("label_6")
         self.gridLayout_2.addWidget(self.label_6, 4, 0, 1, 1)
-        self.penoutcomeSelect = QtGui.QComboBox(self.layoutWidget2)
+        self.penoutcomeSelect = QtGui.QComboBox(self.layoutWidget1)
         self.penoutcomeSelect.setMinimumSize(QtCore.QSize(210, 30))
         self.penoutcomeSelect.setMaximumSize(QtCore.QSize(210, 30))
         self.penoutcomeSelect.setObjectName("penoutcomeSelect")
         self.gridLayout_2.addWidget(self.penoutcomeSelect, 4, 1, 1, 1)
+        self.widget = QtGui.QWidget(PenShootoutEntryDlg)
+        self.widget.setGeometry(QtCore.QRect(10, 0, 511, 221))
+        self.widget.setObjectName("widget")
+        self.gridLayout = QtGui.QGridLayout(self.widget)
+        self.gridLayout.setObjectName("gridLayout")
+        self.label = QtGui.QLabel(self.widget)
+        self.label.setMinimumSize(QtCore.QSize(150, 30))
+        self.label.setMaximumSize(QtCore.QSize(150, 30))
+        self.label.setObjectName("label")
+        self.gridLayout.addWidget(self.label, 0, 0, 1, 1)
+        self.compSelect = QtGui.QComboBox(self.widget)
+        self.compSelect.setMinimumSize(QtCore.QSize(330, 30))
+        self.compSelect.setMaximumSize(QtCore.QSize(330, 30))
+        self.compSelect.setObjectName("compSelect")
+        self.gridLayout.addWidget(self.compSelect, 0, 1, 1, 1)
+        self.label_2 = QtGui.QLabel(self.widget)
+        self.label_2.setMinimumSize(QtCore.QSize(150, 30))
+        self.label_2.setMaximumSize(QtCore.QSize(150, 30))
+        self.label_2.setObjectName("label_2")
+        self.gridLayout.addWidget(self.label_2, 1, 0, 1, 1)
+        self.koRoundSelect = QtGui.QComboBox(self.widget)
+        self.koRoundSelect.setMinimumSize(QtCore.QSize(180, 30))
+        self.koRoundSelect.setMaximumSize(QtCore.QSize(180, 30))
+        self.koRoundSelect.setObjectName("koRoundSelect")
+        self.gridLayout.addWidget(self.koRoundSelect, 1, 1, 1, 1)
+        self.label_9 = QtGui.QLabel(self.widget)
+        self.label_9.setMinimumSize(QtCore.QSize(150, 30))
+        self.label_9.setMaximumSize(QtCore.QSize(150, 30))
+        self.label_9.setObjectName("label_9")
+        self.gridLayout.addWidget(self.label_9, 2, 0, 1, 1)
+        self.koMatchdaySelect = QtGui.QComboBox(self.widget)
+        self.koMatchdaySelect.setMinimumSize(QtCore.QSize(330, 30))
+        self.koMatchdaySelect.setMaximumSize(QtCore.QSize(330, 30))
+        self.koMatchdaySelect.setObjectName("koMatchdaySelect")
+        self.gridLayout.addWidget(self.koMatchdaySelect, 2, 1, 1, 1)
+        self.label_3 = QtGui.QLabel(self.widget)
+        self.label_3.setMinimumSize(QtCore.QSize(150, 30))
+        self.label_3.setMaximumSize(QtCore.QSize(150, 30))
+        self.label_3.setObjectName("label_3")
+        self.gridLayout.addWidget(self.label_3, 3, 0, 1, 1)
+        self.matchSelect = QtGui.QComboBox(self.widget)
+        self.matchSelect.setMinimumSize(QtCore.QSize(330, 30))
+        self.matchSelect.setMaximumSize(QtCore.QSize(330, 30))
+        self.matchSelect.setObjectName("matchSelect")
+        self.gridLayout.addWidget(self.matchSelect, 3, 1, 1, 1)
+        self.label_7 = QtGui.QLabel(self.widget)
+        self.label_7.setMinimumSize(QtCore.QSize(150, 30))
+        self.label_7.setMaximumSize(QtCore.QSize(150, 30))
+        self.label_7.setObjectName("label_7")
+        self.gridLayout.addWidget(self.label_7, 4, 0, 1, 1)
+        self.penFirstSelect = QtGui.QComboBox(self.widget)
+        self.penFirstSelect.setMinimumSize(QtCore.QSize(270, 30))
+        self.penFirstSelect.setMaximumSize(QtCore.QSize(270, 30))
+        self.penFirstSelect.setObjectName("penFirstSelect")
+        self.gridLayout.addWidget(self.penFirstSelect, 4, 1, 1, 1)
 
         self.retranslateUi(PenShootoutEntryDlg)
         QtCore.QMetaObject.connectSlotsByName(PenShootoutEntryDlg)
@@ -222,34 +232,10 @@ class Ui_PenShootoutEntryDlg(object):
         self.addEntry.setText(QtGui.QApplication.translate("PenShootoutEntryDlg", "&Add", None, QtGui.QApplication.UnicodeUTF8))
         self.deleteEntry.setToolTip(QtGui.QApplication.translate("PenShootoutEntryDlg", "Delete Entry", None, QtGui.QApplication.UnicodeUTF8))
         self.deleteEntry.setText(QtGui.QApplication.translate("PenShootoutEntryDlg", "&Delete", None, QtGui.QApplication.UnicodeUTF8))
-        self.saveEntry.setToolTip(QtGui.QApplication.translate("PenShootoutEntryDlg", "Delete Entry", None, QtGui.QApplication.UnicodeUTF8))
+        self.saveEntry.setToolTip(QtGui.QApplication.translate("PenShootoutEntryDlg", "Save Record to Database", None, QtGui.QApplication.UnicodeUTF8))
         self.saveEntry.setText(QtGui.QApplication.translate("PenShootoutEntryDlg", "&Save", None, QtGui.QApplication.UnicodeUTF8))
         self.closeButton.setToolTip(QtGui.QApplication.translate("PenShootoutEntryDlg", "Close Window", None, QtGui.QApplication.UnicodeUTF8))
         self.closeButton.setText(QtGui.QApplication.translate("PenShootoutEntryDlg", "&Close", None, QtGui.QApplication.UnicodeUTF8))
-        self.label.setText(QtGui.QApplication.translate("PenShootoutEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Competition</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.compSelect.setToolTip(QtGui.QApplication.translate("PenShootoutEntryDlg", "Name of competition", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_2.setText(QtGui.QApplication.translate("PenShootoutEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Knockout Round</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.koroundSelect.setToolTip(QtGui.QApplication.translate("PenShootoutEntryDlg", "Knockout round", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_3.setText(QtGui.QApplication.translate("PenShootoutEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Match</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_7.setText(QtGui.QApplication.translate("PenShootoutEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Team Kicked First</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.penFirstSelect.setToolTip(QtGui.QApplication.translate("PenShootoutEntryDlg", "Team shooting first in penalty shootout", None, QtGui.QApplication.UnicodeUTF8))
-        self.matchSelect.setToolTip(QtGui.QApplication.translate("PenShootoutEntryDlg", "Match in knockout stage", None, QtGui.QApplication.UnicodeUTF8))
         self.label_4.setText(QtGui.QApplication.translate("PenShootoutEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
@@ -279,5 +265,35 @@ class Ui_PenShootoutEntryDlg(object):
 "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Penalty Outcome</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
         self.penoutcomeSelect.setToolTip(QtGui.QApplication.translate("PenShootoutEntryDlg", "Penalty kick outcome", None, QtGui.QApplication.UnicodeUTF8))
+        self.label.setText(QtGui.QApplication.translate("PenShootoutEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Competition</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
+        self.compSelect.setToolTip(QtGui.QApplication.translate("PenShootoutEntryDlg", "Name of competition", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_2.setText(QtGui.QApplication.translate("PenShootoutEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Knockout Round</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
+        self.koRoundSelect.setToolTip(QtGui.QApplication.translate("PenShootoutEntryDlg", "Knockout round", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_9.setText(QtGui.QApplication.translate("PenShootoutEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Matchday</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
+        self.koMatchdaySelect.setToolTip(QtGui.QApplication.translate("PenShootoutEntryDlg", "Knockout round matchday", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_3.setText(QtGui.QApplication.translate("PenShootoutEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Match</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
+        self.matchSelect.setToolTip(QtGui.QApplication.translate("PenShootoutEntryDlg", "Match in knockout stage", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_7.setText(QtGui.QApplication.translate("PenShootoutEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Team Kicked First</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
+        self.penFirstSelect.setToolTip(QtGui.QApplication.translate("PenShootoutEntryDlg", "Team shooting first in penalty shootout", None, QtGui.QApplication.UnicodeUTF8))
 
 import fmrd_resources_rc
