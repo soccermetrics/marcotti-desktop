@@ -857,12 +857,164 @@ class PenShootoutEntryDlg(QDialog, ui_penshootoutentry.Ui_PenShootoutEntryDlg):
     """Implements penalty shootout data entry dialog, and accesses and writes to PenaltyShootouts and PenShootoutOpeners tables.
     
    """
-   
+    ID, LINEUP_ID, ROUND_ID, OUTCOME_ID = range(4)
+    
     def __init__(self, parent=None):
         super(PenShootoutEntryDlg, self).__init__(parent)
         self.setupUi(self)
     
+        CMP_ID,  COMP_NAME = range(2)        
+        KO_ROUND, KO_MATCHDAY = range(1, 3)
+
+        # define lists of comboboxes
+        self.selectWidgets = (
+            self.compSelect, self.koRoundSelect, self.koMatchdaySelect, 
+            self.matchSelect, self.penFirstSelect, self.roundSelect,  
+            self.teamSelect, self.playerSelect,  self.penoutcomeSelect
+        )
+        
+        self.upperFormWidgets = (
+        )
+        
+        self.lowerFormWidgets = (
+            self.teamSelect, self.playerSelect,  self.penoutcomeSelect
+        )
+
+        #
+        # Define comboboxes used to filter Penalty Shootouts table
+        # Ensure that user only sees Penalty Shootouts for specific knockout match
+        #
+        
+        # Competition combobox
+        self.compModel = QSqlTableModel(self)
+        self.compModel.setTable("tbl_competitions")
+        self.compModel.setSort(CMP_ID, Qt.AscendingOrder)
+        self.compModel.select()
+        self.compSelect.setModel(self.compModel)
+        self.compSelect.setModelColumn(self.compModel.fieldIndex("comp_name"))
+        self.compSelect.setCurrentIndex(-1)
+
+        # Knockout Rounds
+        knockoutRoundModel = QSqlTableModel(self)
+        knockoutRoundModel.setTable("tbl_knockoutrounds")
+        knockoutRoundModel.setSort(RND_ID, Qt.AscendingOrder)
+        knockoutRoundModel.select()
+        self.koRoundSelect.setModel(knockoutRoundModel)
+        self.koRoundSelect.setModelColumn(knockoutRoundModel.fieldIndex("koround_desc"))
+        self.koRoundSelect.setCurrentIndex(-1)
+        
+        # Matchdays (Knockout phase)
+        knockoutMatchdayModel = QSqlTableModel(self)
+        knockoutMatchdayModel.setTable("tbl_matchdays")
+        knockoutMatchdayModel.setSort(MATCHDAY_NAME, Qt.AscendingOrder)
+        knockoutMatchdayModel.select()
+        self.koMatchdaySelect.setModel(knockoutMatchdayModel)
+        self.koMatchdaySelect.setModelColumn(knockoutMatchdayModel.fieldIndex("matchday_desc"))
+        self.koMatchdaySelect.setCurrentIndex(-1)
+        
+        # Knockout round matches
+        self.matchModel = QSqlTableModel(self)
+        self.matchModel.setTable("knockout_match_list")
+        self.matchModel.setSort(MCH_ID,  Qt.AscendingOrder)
+        self.matchModel.select()
+        self.matchSelect.setModel(self.matchModel)
+        self.matchSelect.setModelColumn(self.matchModel.fieldIndex("matchup"))
+        self.matchSelect.setCurrentIndex(-1)
+
+        #
+        # Define Penalty Shootouts data entry
+        #
+        
+        # 
+        # underlying database model (tbl_penaltyshootouts)
+        # because of foreign keys, instantiate QSqlRelationalTableModel and define relations to it        
+        self.model = QSqlRelationalTableModel(self)
+        self.model.setTable("tbl_penaltyshootouts")
+        self.model.setRelation(PenShootoutEntryDlg.ROUND_ID, QSqlRelation("tbl_rounds", "round_id", "round_desc"))
+        self.model.setRelation(PenShootoutEntryDlg.LINEUP_ID, QSqlRelation("lineup_list", "lineup_id", "player"))
+        self.model.setRelation(PenShootoutEntryDlg.OUTCOME_ID, QSqlRelation("tbl_penoutcomes", "penoutcome_id", "po_desc"))
+        self.model.setSort(PenShootoutEntryDlg.ID, Qt.AscendingOrder)
+        self.model.select()
+
+        # define mapper
+        # establish ties between underlying database model and data widgets on form
+        self.mapper = QDataWidgetMapper(self)
+        self.mapper.setSubmitPolicy(QDataWidgetMapper.ManualSubmit)
+        self.mapper.setModel(self.model)
+        penaltyDelegate = GenericDelegate(self)
+        penaltyDelegate.insertColumnDelegate(PenShootoutEntryDlg.LINEUP_ID, ShootoutPlayerComboBoxDelegate(self))
+        penaltyDelegate.insertColumnDelegate(PenShootoutEntryDlg.ROUND_ID, ShootoutRoundComboBoxDelegate(self))
+        self.mapper.setItemDelegate(penaltyDelegate)        
+
+        # set up Player combobox
+        self.playerModel = self.model.relationModel(PenShootoutEntryDlg.LINEUP_ID)
+        self.playerModel.setSort(SORT_NAME,  Qt.AscendingOrder)
+        self.playerSelect.setModel(self.playerModel)
+        self.playerSelect.setModelColumn(self.playerModel.fieldIndex("player"))
+        self.playerSelect.setCurrentIndex(-1)
+        self.mapper.addMapping(self.playerSelect, PenShootoutEntryDlg.LINEUP_ID)
+        
+        # set up Shootout Round combobox
+        self.roundModel = self.model.relationModel(PenShootoutEntryDlg.ROUND_ID)
+        self.roundModel.setSort(RND_ID,  Qt.AscendingOrder)
+        self.roundSelect.setModel(self.roundModel)
+        self.roundSelect.setModelColumn(self.roundModel.fieldIndex("round_desc"))
+        self.roundSelect.setCurrentIndex(-1)
+        self.mapper.addMapping(self.roundSelect, PenShootoutEntryDlg.ROUND_ID)
+        
+        # set up Penalty Outcome combobox
+        self.outcomeModel = self.model.relationModel(PenShootoutEntryDlg.OUTCOME_ID)
+        self.outcomeModel.setSort(OUTCOME, Qt.AscendingOrder)
+        self.penoutcomeSelect.setModel(self.outcomeModel)
+        self.penoutcomeSelect.setModelColumn(self.outcomeModel.fieldIndex("po_desc"))
+        self.penoutcomeSelect.setCurrentIndex(-1)
+        self.mapper.addMapping(self.penoutcomeSelect, PenShootoutEntryDlg.OUTCOME_ID)        
+        
+        #
+        # Definitions for PenShootoutOpeners linking table
+        #
+        
+        
+        #
+        # Disable data entry boxes
+        #
+        
+        # disable all comboboxes and line edits 
+        # EXCEPT competition combobox upon opening
+        
+        for widget in self.selectWidgets:
+            widget.setDisabled(True)
+        self.compSelect.setEnabled(True)
+
+        # disable navigation buttons
+        self.firstEntry.setDisabled(True)
+        self.prevEntry.setDisabled(True)
+        self.nextEntry.setDisabled(True)
+        self.lastEntry.setDisabled(True)
+        
+        # disable add,save, and delete entry buttons
+        self.addEntry.setDisabled(True)
+        self.saveEntry.setDisabled(True)
+        self.deleteEntry.setDisabled(True)
+        
+        #
+        # Signals/Slots configuration
+        #
+        
+        self.connect(self.firstEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.FIRST))
+        self.connect(self.prevEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.PREV))
+        self.connect(self.nextEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.NEXT))
+        self.connect(self.lastEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.LAST))
+        self.connect(self.saveEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.NULL))
+        self.connect(self.addEntry, SIGNAL("clicked()"), self.addRecord)        
+        self.connect(self.deleteEntry, SIGNAL("clicked()"), self.deleteRecord)        
         self.connect(self.closeButton, SIGNAL("clicked()"), self.accept)
+        
+        self.connect(self.compSelect, SIGNAL("currentIndexChanged(int)"), self.enableAndFilterKnockoutRounds)
+        self.connect(self.koRoundSelect, SIGNAL("currentIndexChanged(int)"), self.enableAndFilterMatchdays)
+        self.connect(self.koMatchdaySelect, SIGNAL("currentIndexChanged(int)"), self.enableAndFilterMatches)
+        self.connect(self.matchSelect, SIGNAL("currentIndexChanged(int)"), lambda: self.enableAndFilterTeams(self.penFirstSelect))
+
 
     def accept(self):
         """Submits changes to database and closes window upon confirmation from user."""
@@ -872,3 +1024,9 @@ class PenShootoutEntryDlg(QDialog, ui_penshootoutentry.Ui_PenShootoutEntryDlg):
 #                if not self.mapper.submit():
 #                    MsgPrompts.DatabaseCommitErrorPrompt(self, self.model.lastError())
         QDialog.accept(self)
+
+    def enableWidget(self, widget):
+        """Enables widget passed in function parameter, if not already enabled."""
+        if not widget.isEnabled():
+            widget.setEnabled(True)
+        
