@@ -43,7 +43,7 @@ class GoalEntryDlg(QDialog, ui_goalentry.Ui_GoalEntryDlg):
         super(GoalEntryDlg, self).__init__(parent)
         self.setupUi(self)
         
-        CMP_ID = RND_ID = 0
+        RND_ID = 0
         MATCHDAY_NAME= TEAM = PLAY = BODY = 1
         SORT_NAME = 4
         
