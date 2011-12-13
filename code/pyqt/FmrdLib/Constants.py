@@ -111,3 +111,6 @@ MAX_TEAM_STARTING_GOALKEEPERS = 1
 # Define maximum match time
 MAX_MINUTES = 90
 MAX_KO_MINUTES = 120
+
+# Define maximum participation in penalty shootout
+MAX_PARTICIPATION = 2
