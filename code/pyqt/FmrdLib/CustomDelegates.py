@@ -20,6 +20,7 @@
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 from PyQt4.QtSql import *
+from FmrdLib import Constants
 
 """Contains custom and generic delegates used by various dialogs of FMRD tool.
 
@@ -630,6 +631,206 @@ class SubInComboBoxDelegate(QStyledItemDelegate):
         
         model.setData(index, value)
         
+
+class ShootoutPlayerComboBoxDelegate(QSqlRelationalDelegate):
+    """Implements custom delegate for Player combobox in Penalty Shootout dialog.
+    
+    Filters player combobox on match, team, and participation in previous eleven rounds of shootout.
+    
+    Inherits QSqlRelationalDelegate.
+    """
+    
+    def __init__(self, parent=None):
+        """Constructor for ShootoutPlayerComboBoxDelegate class."""
+        super(ShootoutPlayerComboBoxDelegate, self).__init__(parent)
+        
+        # get current matchup
+        self.matchSelect = parent.matchSelect
+        
+    def setEditorData(self, editor, index):
+        """Writes current data from model into editor. 
+        
+        Filters contents of combobox so that only options are the players in the 
+        match lineup for the same match who have not participated in the previous
+        eleven rounds of the penalty shootout.
+        
+        Arguments:
+            editor -- ComboBox widget
+            index -- current index of database table model
+            
+        """
+        pass
+        
+    def setModelData(self, editor, model, index):
+        """Maps player name to ID number in Lineups model, and writes ID to the current entry in the database table.
+        
+        Arguments:
+            editor -- ComboBox widget
+            model -- underlying database table model
+            index -- current index of database table model
+            
+        """
+        pass
+
+
+class ShootoutRoundComboBoxDelegate(QSqlRelationalDelegate):
+    """Implements custom delegate for Shootout Round combobox in Penalty Shootout dialog.
+    
+    Filters shootout round combobox to show rounds not referenced twice in Penalty Shootout table.
+    
+    Inherits QSqlRelationalDelegate.
+    """
+
+    def __init__(self, parent=None):
+        """Constructor for ShootoutRoundComboBoxDelegate class."""
+        super(ShootoutRoundComboBoxDelegate, self).__init__(parent)
+        self.matchSelect = parent.matchSelect
+        
+    def setEditorData(self, editor, index):
+        """Writes current data from model into editor. 
+        
+        Filters contents of combobox so that only options are the shootout rounds not referenced
+        twice in the Penalty Shootout table.
+        
+        Arguments:
+            editor -- ComboBox widget
+            index -- current index of database table model
+            
+        """
+        shootoutModel = index.model()
+        roundModel = editor.model()
+        matchModel = self.matchSelect.model()
+        
+        # block signals from player combobox so that EnableWidget() is not called multiple times
+        editor.blockSignals(True)
+        
+        # clear filters        
+        roundModel.setFilter(QString())
+        
+        # get match_id
+        matchIndex = self.matchSelect.currentIndex()
+        match_id = matchModel.record(matchIndex).value("match_id").toString()
+        
+        # create round filter
+        roundList = countRounds(match_id)
+        roundFilterString = "round_id IN (" + ",".join((str(n) for n in roundList)) + ")"
+        roundModel.setFilter(roundFilterString)
+        
+        # get current round name and set current index 
+        roundName =  roundModel.data(index, Qt.DisplayRole).toString()
+        editor.setCurrentIndex(editor.findText(roundName, Qt.MatchExactly))
+        
+        # unblock signals from player combobox
+        editor.blockSignals(False)
+        
+    def setModelData(self, editor, model, index):
+        """Maps round name to ID number in Rounds model, and writes ID to the current entry in the database table.
+        
+        Arguments:
+            editor -- ComboBox widget
+            model -- underlying database table model
+            index -- current index of database table model
+            
+        """
+        pass
+
+    def countRounds(self, match_id):
+        """Returns rounds that have not had maximum participation in Penalty Shootout table.
+        
+        Argument:
+            match_id -- match ID from knockout_match_list"""
+        
+        roundIDList = []
+        
+        # define min/max round ID in table
+        minRoundID = Constants.MinRoundID.toInt()[0]
+        query = QSqlQuery()
+        query.exec_(QString("SELECT MAX(round_id) FROM tbl_rounds"))
+        if query.next():
+            maxRoundID = query.value(0).toInt()[0]
+            
+        # loop through round ID
+        # if round referenced less than twice in table, add it to list
+        for round_id in range(minRoundID, maxRoundID+1):
+            roundQuery = QSqlQuery()
+            query.exec_(QString("SELECT COUNT(*) FROM tbl_penaltyshootouts WHERE round_id = %1 "
+                                "AND lineup_id IN (SELECT lineup_id FROM tbl_lineups WHERE match_id = %2)").arg(round_id, match_id))
+            if query.next():
+                if query.value(0).toInt()[0] < Constants.MAX_PARTICIPATION:
+                    roundIDList.append(round_id)
+                    
+        return roundIDList
+
+class ShootoutOpenerComboBoxDelegate(QStyledItemDelegate):
+    """Implements custom delegate for Teams ComboBox related to Shootout Openers table.
+    
+    Inherits TeamComboBoxDelegateTemplate.
+    
+    """
+    
+    def __init__(self, parent=None):
+        """Constructor for ShootoutOpenerComboBoxDelegate class."""
+        super(ShootoutOpenerComboBoxDelegate, self).__init__(parent)
+        print "Calling init() of ShootoutOpenerComboBoxDelegate"
+        self.matchSelect = parent.matchSelect
+        
+    def setEditorData(self, editor, index):
+        """Writes current data from model into editor, or sets index to -1 if no record in model.
+        
+        Arguments:
+            editor -- ComboBox widget
+            index -- current index of database table model
+            
+        """
+        print "Calling setEditorData() of ShootoutOpenerComboBoxDelegate"
+        # shootout opener model
+        eventModel = index.model()
+        
+        # team model, reset filter on team model
+        teamModel = editor.model()
+        teamModel.setFilter(QString())
+
+        # current matchup
+        matchup = self.matchSelect.currentText()
+        
+        # get match_id by making a query on knockout_match_list
+        query = QSqlQuery()
+        query.prepare("SELECT match_id FROM knockout_match_list WHERE matchup = ?")
+        query.addBindValue(QVariant(matchup))
+        query.exec_()
+        if query.next():
+            match_id = query.value(0).toString()
+
+        # filter team combobox
+        # result: home and away teams for specific match
+        teamQueryString = QString("team_id IN"
+            "(SELECT team_id FROM tbl_hometeams WHERE match_id = %1"
+            "UNION SELECT team_id FROM tbl_awayteams WHERE match_id = %1)").arg(match_id)
+        teamModel.setFilter(teamQueryString)
+        
+        # get team name from shootout opener model
+        teamName = eventModel.data(index, Qt.DisplayRole).toString()
+            
+        # set current index of team combobox
+        editor.setCurrentIndex(editor.findText(teamName, Qt.MatchExactly))
+
+    def setModelData(self, editor, model, index):
+        """Maps selected index in editor to its model field, and writes to the current entry in the database table.
+        
+        Arguments:
+            editor -- ComboBox widget
+            model -- underlying database table model
+            index -- current index of database table model
+            
+        """        
+        print "Calling setModelData() of ShootoutOpenerComboBoxDelegate"
+        # convert combobox selection to id number
+        boxIndex = editor.currentIndex()
+        value = editor.model().record(boxIndex).value("team_id")
+        
+        # call setData()
+        model.setData(index, value)
+
 
 class GoalPlayerComboBoxDelegate(QSqlRelationalDelegate):
     """ Implements custom delegate template for Player ComboBox in Goal dialogs.
