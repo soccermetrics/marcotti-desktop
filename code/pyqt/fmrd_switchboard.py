@@ -34,6 +34,7 @@ from fmrd_goals import *
 from fmrd_penalties import *
 from fmrd_subs import *
 from fmrd_offenses import *
+from fmrd_shootouts import *
 from fmrd_overview import *
 from fmrd_personnel import *
 
