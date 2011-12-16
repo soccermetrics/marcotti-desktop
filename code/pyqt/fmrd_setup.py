@@ -1774,12 +1774,14 @@ class PenSetupDlg(QDialog, ui_penoutcomesetup.Ui_PenSetupDlg):
     def deleteRecord(self):
         """Deletes record from database upon user confirmation.
         
-        First, check that the penalty outcome record is not being referenced in the Penalties table.
-        If it is not being referenced in the dependent table, ask for user confirmation and delete 
+        First, check that the penalty outcome record is not being referenced in any of the following tables:
+            - Penalties table
+            - PenaltyShootouts table
+        If it is not being referenced in the dependent tables, ask for user confirmation and delete 
         record upon positive confirmation.  If it is being referenced by dependent table, alert user.
         """
         
-        childTableList = ["tbl_penalties"]
+        childTableList = ["tbl_penalties", "tbl_penaltyshootouts"]
         fieldName = "penoutcome_id"
         penoutcome_id = self.penoutcomeID_display.text()
         
@@ -4032,12 +4034,15 @@ class RoundSetupDlg(QDialog, ui_roundsetup.Ui_RoundSetupDlg):
     def deleteRecord(self):
         """Deletes record from database upon user confirmation.
         
-        First, check that the matchday record is not being referenced in the Matches table.
-        If it is not being referenced in the dependent table, ask for user confirmation and delete 
+        First, check that the matchday record is not being referenced in any of the following tables:
+            - LeagueMatches linking table
+            - GroupMatches linking table
+            - PenaltyShootouts table
+        If it is not being referenced in the dependent tables, ask for user confirmation and delete 
         record upon positive confirmation.  If it is being referenced by the dependent table, alert user.
         """
         
-        childTableList = ["tbl_matches"]
+        childTableList = ["tbl_leaguematches",  "tbl_groupmatches", "tbl_penaltyshootouts"]
         fieldName = "round_id"
         round_id = self.roundID_display.text()
         

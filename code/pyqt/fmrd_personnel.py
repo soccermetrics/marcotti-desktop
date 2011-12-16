@@ -1494,7 +1494,7 @@ class LineupEntryDlg(QDialog, ui_lineupentry.Ui_LineupEntryDlg):
         """
         
         childTableList = ["tbl_goals",  "tbl_penalties", "tbl_offenses", \
-        "tbl_insubstitutions", "tbl_outsubstitutions", "tbl_switchpositions"]
+        "tbl_insubstitutions", "tbl_outsubstitutions", "tbl_switchpositions",  "tbl_penaltyshootouts"]
         fieldName = "lineup_id"
         lineup_id = self.lineupID_display.text()
         

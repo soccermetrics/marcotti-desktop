@@ -673,8 +673,10 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
     def deleteRecord(self):
         """Deletes record from database upon user confirmation.
         
-        First, check that the match record is not being referenced in the Lineups table.
-        If it is not being referenced in Lineups, ask for user confirmation and upon pos-
+        First, check that the match record is not being referenced in any of the following tables:
+            - Lineups table
+            - PenShootoutOpeners linking table
+        If it is not being referenced in the child tables, ask for user confirmation and upon pos-
         itive confirmation, delete records in the following order:
             (1) HomeTeams and AwayTeams linking tables
             (2) HomeManagers and AwayManagers linking tables
@@ -684,7 +686,7 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
             (6) Match table
         If match record is being referenced by Lineups, alert user.
         """
-        childTableList = ["tbl_lineups"]
+        childTableList = ["tbl_lineups", "tbl_penshootoutopeners"]
         fieldName = "match_id"
         match_id = self.matchID_display.text()
         
@@ -759,6 +761,10 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
                         
                     # disable home/away widgets
                     for widget in self.homeawayWidgets:
+                        widget.setDisabled(True)
+                        
+                    # disable all navigation widgets
+                    for widget in (self.prevEntry, self.firstEntry, self.nextEntry, self.lastEntry):
                         widget.setDisabled(True)
         else:
                 DeletionErrorPrompt(self)

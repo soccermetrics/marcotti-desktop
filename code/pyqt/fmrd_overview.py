@@ -471,11 +471,12 @@ class TeamEntryDlg(QDialog, ui_teamentry.Ui_TeamEntryDlg):
             - Venues table
             - Lineups table
             - Goals table
+            - PenShootoutOpeners linking table
         If it is not being referenced in any of the child tables, ask for user confirmation and delete 
         record upon positive confirmation.  If it is being referenced by child tables, alert user.
         """
         
-        childTableList = ["tbl_hometeams", "tbl_awayteams", "tbl_venues", "tbl_lineups", "tbl_goals"]
+        childTableList = ["tbl_hometeams", "tbl_awayteams", "tbl_venues", "tbl_lineups", "tbl_goals", "tbl_penshootoutopeners"]
         fieldName = "team_id"
         team_id = self.teamID_display.text()
         
