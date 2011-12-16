@@ -177,20 +177,6 @@ class OffenseEntryDlg(QDialog, ui_offenseentry.Ui_OffenseEntryDlg):
         self.teamSelect.setCurrentIndex(-1)        
         
         #
-        # Define Team combobox used to filter Lineup table
-        # Ensure that user only sees Players for specific match and team
-        #
-        
-        # Team combobox
-        self.teamModel = QSqlTableModel(self)
-        self.teamModel.setTable("tbl_teams")
-        self.teamModel.setSort(TEAM,  Qt.AscendingOrder)
-        self.teamModel.select()
-        self.teamSelect.setModel(self.teamModel)
-        self.teamSelect.setModelColumn(self.teamModel.fieldIndex("tm_name"))
-        self.teamSelect.setCurrentIndex(-1)        
-        
-        #
         # Match combobox
         # Instantiate an object here, specific details will
         # be set upon selection of Competition Phase
