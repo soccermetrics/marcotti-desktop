@@ -50,6 +50,7 @@ MinMatchID        = "1000000"
 MinPenaltyID      = "10000"
 MinGoalID         = "100000"
 MinOffenseID      = "100000"
+MinShootoutID = "100000"
 MinSubstitutionID = "100000"
 MinSwitchID       = "100000"
 
