@@ -644,8 +644,10 @@ class ShootoutPlayerComboBoxDelegate(QSqlRelationalDelegate):
         """Constructor for ShootoutPlayerComboBoxDelegate class."""
         super(ShootoutPlayerComboBoxDelegate, self).__init__(parent)
         
-        # get current matchup
+        # matchup
         self.matchSelect = parent.matchSelect
+        # shootout round
+        self.roundSelect = parent.roundSelect
         
     def setEditorData(self, editor, index):
         """Writes current data from model into editor. 
@@ -659,7 +661,53 @@ class ShootoutPlayerComboBoxDelegate(QSqlRelationalDelegate):
             index -- current index of database table model
             
         """
-        pass
+        print "Calling setEditorData() of ShootoutPlayerComboBoxDelegate"
+        # define models
+        matchModel = self.matchSelect.model()
+        roundModel = self.roundSelect.model()
+        lineupModel = editor.model()
+        shootoutModel = index.model()
+        
+        # get current index from match combobox
+        matchIndex = self.matchSelect.currentIndex()
+        match_id = matchModel.record(matchIndex).value("match_id").toInt()[0]
+        
+        # get current shootout round
+        roundName = shootoutModel.record(index.row()).value("round_desc").toString()
+        if not roundName:
+            roundName = self.roundSelect.currentText()
+        roundIndex = self.roundSelect.findText(roundName, Qt.MatchExactly)
+        round_id = roundModel.record(roundIndex).value("round_id").toInt()[0]
+
+        # get player name from model
+        playerName = shootoutModel.data(index).toString()
+        playerIndex = editor.findText(playerName, Qt.MatchExactly)
+        lineup_id = lineupModel.record(playerIndex).value("lineup_id").toInt()[0]
+        
+        # get team_id from lineup player
+        team_id = 0
+        query = QSqlQuery()
+        query.prepare(QString("SELECT team_id FROM tbl_lineups WHERE lineup_id = ?"))
+        query.addBindValue(QVariant(lineup_id))
+        query.exec_()
+        if query.next():
+            team_id = query.value(0).toInt()[0]
+        
+        editor.blockSignals(True)
+        # get set of team players eligible to participate in penalty shootout
+        teamEligibleSet = set(self.getEligiblePlayers(match_id, team_id))
+        # get available players for current rotation of shootout round
+        playersUsedList = self.getUsedPlayers(match_id, team_id, round_id)
+        availableList = list(teamEligibleSet.difference(playersUsedList))
+        availableList.append(lineup_id)
+        availableList = list(set(availableList))
+        # filter players available for shootout
+        lineupModel.setFilter(QString())
+        filterString = "lineup_id IN (" + ",".join((str(n) for n in availableList)) + ")"
+        lineupModel.setFilter(filterString)
+        # set current index
+        editor.setCurrentIndex(editor.findText(playerName, Qt.MatchExactly))        
+        editor.blockSignals(False)
         
     def setModelData(self, editor, model, index):
         """Maps player name to ID number in Lineups model, and writes ID to the current entry in the database table.
@@ -670,9 +718,78 @@ class ShootoutPlayerComboBoxDelegate(QSqlRelationalDelegate):
             index -- current index of database table model
             
         """
-        pass
+        boxIndex = editor.currentIndex()
+        value = editor.model().record(boxIndex).value("lineup_id")
+        
+        model.setData(index, value)
 
+    def getEligiblePlayers(self, match_id, team_id):
+        """Returns list of players who are eligible to participate in penalty shootout.
+        
+        The list contains players who meet the following two criteria:
+            (1) Starting players on the same team who have not been substituted out of the match.
+            (2) Non-starting players on the same team who have been substituted into the match.
+        """
+        eligibleList = []
+        
+        lineupQuery = QSqlQuery()
+        eligibleQueryString = QString("SELECT lineup_id FROM tbl_lineups WHERE "
+                "lineup_id NOT IN (SELECT lineup_id FROM tbl_outsubstitutions) "
+                "AND lineup_id IN (SELECT lineup_id FROM tbl_lineups WHERE lp_starting AND match_id = %1 AND team_id = %2) "
+                "OR (lineup_id IN (SELECT lineup_id FROM tbl_insubstitutions) AND "
+                "lineup_id IN (SELECT lineup_id FROM tbl_lineups WHERE NOT lp_starting AND match_id = %1 AND team_id = %2))"
+                ).arg(match_id).arg(team_id)  
+        lineupQuery.prepare(eligibleQueryString)
+        lineupQuery.exec_()
+        while lineupQuery.next():
+            eligibleList.append(lineupQuery.value(0).toInt()[0])
+            
+        return eligibleList
+        
+    def getUsedPlayers(self, match_id, team_id, round_id):
+        """Returns players who have already participated in current rotation (11 round period) of penalty shootout. """
+        usedList = []
+        
+        # get rotation that contains current shootout round
+        rotationList = self.getShootoutRotation(round_id)
+        
+        # query players in match lineup who have already participated in a round of penalty shootout
+        participateQuery = QSqlQuery()
+        participateQuery.prepare(QString("SELECT lineup_id FROM tbl_lineups WHERE match_id = %1 AND team_id = %2 "
+                                 "INTERSECT SELECT lineup_id FROM tbl_penaltyshootouts WHERE round_id = ?").arg(match_id, team_id))
+        for round_id in rotationList:
+            participateQuery.addBindValue(round_id)
+            participateQuery.exec_()
+            while participateQuery.next():
+                usedList.append(participateQuery.value(0).toInt()[0])
+                
+        return usedList
 
+    def getShootoutRotation(self, round_id):
+        """Determine 11-round rotation in which current shootout round is a member."""
+        minRoundID = int(Constants.MinRoundID)
+        startRotationID = minRoundID
+
+        # get maximum Round ID
+        query = QSqlQuery()
+        query.exec_(QString("SELECT MAX(round_id) FROM tbl_rounds"))
+        if query.next():
+            maxRoundID = query.value(0).toInt()[0]
+        
+        if round_id < minRoundID:
+            if minRoundID + Constants.MAX_TEAM_STARTERS > maxRoundID:
+                endRotationID = maxRoundID + 1
+            else:
+                endRotationID = minRoundID + Constants.MAX_TEAM_STARTERS
+        else:
+            while round_id not in range(startRotationID, startRotationID+Constants.MAX_TEAM_STARTERS):
+                startRotationID += Constants.MAX_TEAM_STARTERS
+            endRotationID = startRotationID + Constants.MAX_TEAM_STARTERS
+        rotationList = range(startRotationID, endRotationID)
+
+        return rotationList
+        
+        
 class ShootoutRoundComboBoxDelegate(QSqlRelationalDelegate):
     """Implements custom delegate for Shootout Round combobox in Penalty Shootout dialog.
     
@@ -683,6 +800,7 @@ class ShootoutRoundComboBoxDelegate(QSqlRelationalDelegate):
 
     def __init__(self, parent=None):
         """Constructor for ShootoutRoundComboBoxDelegate class."""
+        print "Calling init() of ShootoutRoundComboBoxDelegate"
         super(ShootoutRoundComboBoxDelegate, self).__init__(parent)
         self.matchSelect = parent.matchSelect
         
@@ -697,6 +815,7 @@ class ShootoutRoundComboBoxDelegate(QSqlRelationalDelegate):
             index -- current index of database table model
             
         """
+        print "Calling setEditorData() of ShootoutRoundComboBoxDelegate"
         shootoutModel = index.model()
         roundModel = editor.model()
         matchModel = self.matchSelect.model()
@@ -704,20 +823,26 @@ class ShootoutRoundComboBoxDelegate(QSqlRelationalDelegate):
         # block signals from player combobox so that EnableWidget() is not called multiple times
         editor.blockSignals(True)
         
-        # clear filters        
-        roundModel.setFilter(QString())
+        # current round name and ID
+        roundName =  shootoutModel.data(index, Qt.DisplayRole).toString()
+        roundIndex = editor.findText(roundName, Qt.MatchExactly)
+        round_id = roundModel.record(roundIndex).value("round_id").toInt()[0]
         
         # get match_id
         matchIndex = self.matchSelect.currentIndex()
         match_id = matchModel.record(matchIndex).value("match_id").toString()
         
+        # clear filters        
+        roundModel.setFilter(QString())
+        
         # create round filter
-        roundList = countRounds(match_id)
+        roundList = self.getAvailableRounds(match_id)
+        roundList.append(round_id)
+        roundList = list(set(roundList))
         roundFilterString = "round_id IN (" + ",".join((str(n) for n in roundList)) + ")"
         roundModel.setFilter(roundFilterString)
         
         # get current round name and set current index 
-        roundName =  roundModel.data(index, Qt.DisplayRole).toString()
         editor.setCurrentIndex(editor.findText(roundName, Qt.MatchExactly))
         
         # unblock signals from player combobox
@@ -732,18 +857,22 @@ class ShootoutRoundComboBoxDelegate(QSqlRelationalDelegate):
             index -- current index of database table model
             
         """
-        pass
+        boxIndex = editor.currentIndex()
+        value = editor.model().record(boxIndex).value("round_id")
+        
+        model.setData(index, value)
 
-    def countRounds(self, match_id):
+    def getAvailableRounds(self, match_id):
         """Returns rounds that have not had maximum participation in Penalty Shootout table.
         
         Argument:
             match_id -- match ID from knockout_match_list"""
         
         roundIDList = []
+        roundStr = QString()
         
         # define min/max round ID in table
-        minRoundID = Constants.MinRoundID.toInt()[0]
+        minRoundID = int(Constants.MinRoundID)
         query = QSqlQuery()
         query.exec_(QString("SELECT MAX(round_id) FROM tbl_rounds"))
         if query.next():
@@ -753,10 +882,11 @@ class ShootoutRoundComboBoxDelegate(QSqlRelationalDelegate):
         # if round referenced less than twice in table, add it to list
         for round_id in range(minRoundID, maxRoundID+1):
             roundQuery = QSqlQuery()
-            query.exec_(QString("SELECT COUNT(*) FROM tbl_penaltyshootouts WHERE round_id = %1 "
-                                "AND lineup_id IN (SELECT lineup_id FROM tbl_lineups WHERE match_id = %2)").arg(round_id, match_id))
-            if query.next():
-                if query.value(0).toInt()[0] < Constants.MAX_PARTICIPATION:
+            roundStr.setNum(round_id)
+            roundQuery.exec_(QString("SELECT COUNT(*) FROM tbl_penaltyshootouts WHERE round_id = %1 "
+                                "AND lineup_id IN (SELECT lineup_id FROM tbl_lineups WHERE match_id = %2)").arg(roundStr, match_id))
+            if roundQuery.next():
+                if roundQuery.value(0).toInt()[0] < Constants.MAX_PARTICIPATION:
                     roundIDList.append(round_id)
                     
         return roundIDList
@@ -771,7 +901,6 @@ class ShootoutOpenerComboBoxDelegate(QStyledItemDelegate):
     def __init__(self, parent=None):
         """Constructor for ShootoutOpenerComboBoxDelegate class."""
         super(ShootoutOpenerComboBoxDelegate, self).__init__(parent)
-        print "Calling init() of ShootoutOpenerComboBoxDelegate"
         self.matchSelect = parent.matchSelect
         
     def setEditorData(self, editor, index):
@@ -782,17 +911,24 @@ class ShootoutOpenerComboBoxDelegate(QStyledItemDelegate):
             index -- current index of database table model
             
         """
-        print "Calling setEditorData() of ShootoutOpenerComboBoxDelegate"
+        print "Calling setEditorData() in ShootoutOpenerComboBoxDelegate"
         # shootout opener model
         eventModel = index.model()
         
-        # team model, reset filter on team model
+        # team model
         teamModel = editor.model()
-        teamModel.setFilter(QString())
 
+        # get team name from shootout opener model
+        team_id = eventModel.data(index, Qt.DisplayRole).toString()
+        query = QSqlQuery()
+        query.prepare("SELECT tm_name FROM tbl_teams WHERE team_id = ?")
+        query.addBindValue(QVariant(team_id))
+        query.exec_()
+        if query.next():
+            teamName = query.value(0).toString()
+        
         # current matchup
         matchup = self.matchSelect.currentText()
-        
         # get match_id by making a query on knockout_match_list
         query = QSqlQuery()
         query.prepare("SELECT match_id FROM knockout_match_list WHERE matchup = ?")
@@ -800,17 +936,15 @@ class ShootoutOpenerComboBoxDelegate(QStyledItemDelegate):
         query.exec_()
         if query.next():
             match_id = query.value(0).toString()
-
+            
         # filter team combobox
         # result: home and away teams for specific match
+        teamModel.setFilter(QString())
         teamQueryString = QString("team_id IN"
             "(SELECT team_id FROM tbl_hometeams WHERE match_id = %1"
             "UNION SELECT team_id FROM tbl_awayteams WHERE match_id = %1)").arg(match_id)
         teamModel.setFilter(teamQueryString)
         
-        # get team name from shootout opener model
-        teamName = eventModel.data(index, Qt.DisplayRole).toString()
-            
         # set current index of team combobox
         editor.setCurrentIndex(editor.findText(teamName, Qt.MatchExactly))
 
@@ -823,7 +957,6 @@ class ShootoutOpenerComboBoxDelegate(QStyledItemDelegate):
             index -- current index of database table model
             
         """        
-        print "Calling setModelData() of ShootoutOpenerComboBoxDelegate"
         # convert combobox selection to id number
         boxIndex = editor.currentIndex()
         value = editor.model().record(boxIndex).value("team_id")
