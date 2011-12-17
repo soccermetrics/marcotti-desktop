@@ -404,8 +404,6 @@ class SubOutComboBoxDelegate(QStyledItemDelegate):
             index -- current index of database table model
             
         """
-#        print "Calling setEditorData() of SubOutComboBoxDelegate"       
-        
         editor.blockSignals(True)
         
         # linking table
@@ -532,7 +530,6 @@ class SubInComboBoxDelegate(QStyledItemDelegate):
             index -- current index of database table model
             
         """
-        
         editor.blockSignals(True)
         
         # linking table
