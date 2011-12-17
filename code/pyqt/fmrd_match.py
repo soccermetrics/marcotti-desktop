@@ -491,6 +491,9 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
             else:
                 self.mapper.revert()
         
+        for widget in self.phaseWidgets:
+            widget.blockSignals(True)
+        
         if where == Constants.FIRST:
             self.firstEntry.setDisabled(True)
             self.prevEntry.setDisabled(True)
@@ -522,12 +525,10 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
                 self.firstEntry.setEnabled(True)
             row = self.model.rowCount() - 1
         self.mapper.setCurrentIndex(row)
-        
+                    
         # disable Phase comboboxes
         # prevent user from editing Competition Phase once record is saved
         self.matchPhaseSelect.setDisabled(True)
-        for widget in self.phaseWidgets:
-            widget.setDisabled(True)
             
         # enable Delete button if at least one record
         if self.model.rowCount():
@@ -537,8 +538,13 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
         currentID = self.matchID_display.text()
         phaseText = self.matchPhaseSelect.currentText()
         self.enableTimes(phaseText)
+        self.resetPhaseDetails(phaseText)
         self.refreshSubForms(currentID)
         self.refreshPhaseForms(currentID, phaseText)
+        
+        for widget in self.phaseWidgets:
+            widget.blockSignals(False)
+
 
     def refreshSubForms(self, currentID):
         """Sets match ID for linking models and refreshes models and mappers."""
@@ -854,6 +860,25 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
         ok = linkmodel.setData(index, value)
         return ok
         
+    def resetPhaseDetails(self, phaseText):
+        """Sets phase widgets not corresponding to selected competition phase to -1."""
+        if phaseText == "League":
+            for widget in (self.groupSelect, self.grpRoundSelect, self.grpMatchdaySelect):
+                widget.setCurrentIndex(-1)
+            for widget in (self.koRoundSelect, self.koMatchdaySelect):
+                widget.setCurrentIndex(-1)
+        elif phaseText == "Group":
+            self.lgRoundSelect.setCurrentIndex(-1)
+            for widget in (self.koRoundSelect, self.koMatchdaySelect):
+                widget.setCurrentIndex(-1)
+        elif phaseText == "Knockout":
+            self.lgRoundSelect.setCurrentIndex(-1)
+            for widget in (self.groupSelect, self.grpRoundSelect, self.grpMatchdaySelect):
+                widget.setCurrentIndex(-1)
+                
+        for widget in self.phaseWidgets:
+            widget.setDisabled(True)
+            
     def enableWidget(self, widget):
         """Enables widget passed in function parameter, if not already enabled."""
         if not widget.isEnabled():
