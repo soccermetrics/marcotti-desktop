@@ -286,9 +286,7 @@ class PenShootoutEntryDlg(QDialog, ui_penshootoutentry.Ui_PenShootoutEntryDlg):
                 
         row = self.model.rowCount()
         self.model.insertRow(row)
-        self.mapper.blockSignals(True)
         self.mapper.setCurrentIndex(row)
-        self.mapper.blockSignals(False)
         
         # assign value to shootoutID field
         self.shootoutID_display.setText(shootout_id)
@@ -316,6 +314,7 @@ class PenShootoutEntryDlg(QDialog, ui_penshootoutentry.Ui_PenShootoutEntryDlg):
         # disable remaining form widgets
         for widget in self.lowerFormWidgets:
             widget.setDisabled(True)
+            widget.setCurrentIndex(-1)
         self.enableWidget(self.roundSelect)        
         
     def refreshTeamBox(self):
@@ -512,11 +511,27 @@ class PenShootoutEntryDlg(QDialog, ui_penshootoutentry.Ui_PenShootoutEntryDlg):
 
     def getShootoutRotation(self, round_id):
         """Determine 11-round rotation in which current shootout round is a member."""
-        id = int(Constants.MinRoundID)
-        while round_id not in range(id, id+Constants.MAX_TEAM_STARTERS):
-            id += Constants.MAX_TEAM_STARTERS
-            
-        return range(id, id+Constants.MAX_TEAM_STARTERS)
+        minRoundID = int(Constants.MinRoundID)
+        startRotationID = minRoundID
+
+        # get maximum Round ID
+        query = QSqlQuery()
+        query.exec_(QString("SELECT MAX(round_id) FROM tbl_rounds"))
+        if query.next():
+            maxRoundID = query.value(0).toInt()[0]
+        
+        if round_id < minRoundID:
+            if minRoundID + Constants.MAX_TEAM_STARTERS > maxRoundID:
+                endRotationID = maxRoundID + 1
+            else:
+                endRotationID = minRoundID + Constants.MAX_TEAM_STARTERS
+        else:
+            while round_id not in range(startRotationID, startRotationID+Constants.MAX_TEAM_STARTERS):
+                startRotationID += Constants.MAX_TEAM_STARTERS
+            endRotationID = startRotationID + Constants.MAX_TEAM_STARTERS
+        rotationList = range(startRotationID, endRotationID)
+
+        return rotationList
         
     def getAvailableRounds(self, match_id):
         """Returns rounds that have not had maximum participation in Penalty Shootout table.
@@ -719,6 +734,7 @@ class PenShootoutEntryDlg(QDialog, ui_penshootoutentry.Ui_PenShootoutEntryDlg):
         augFilterString = "AND team_id IN (" + ",".join((str(n) for n in teamList)) + ")"
         teamFilterString = baseFilterString + augFilterString
         self.teamModel.setFilter(baseFilterString)
+        
         # reset teamSelect index
         self.teamSelect.setCurrentIndex(-1)    
         
@@ -730,24 +746,40 @@ class PenShootoutEntryDlg(QDialog, ui_penshootoutentry.Ui_PenShootoutEntryDlg):
         
         Also enable Add button in form."""
         
-        # get current index
+        row = self.mapper.currentIndex()
+        
+        # get current match_id of selected match
         currentIndex = self.matchSelect.currentIndex()
-        # get match_id
         match_id = self.matchModel.record(currentIndex).value("match_id").toString()
 
+        # shootout round in current record of penalty shootout model
+        roundName = self.model.record(row).value("round_desc").toString()
+        
         # enable Add button
         self.enableWidget(self.addEntry)
         
         # block signals from rounds combobox
         self.roundSelect.blockSignals(True)
         
+        # flush shootout round filter
+        self.roundModel.setFilter(QString())
+        
         # get available rounds in shootout
         roundList = self.getAvailableRounds(match_id)
+        # if there is a valid record, get round_id and add it to roundList
+        if roundName:
+            roundQuery = QSqlQuery()
+            roundQuery.prepare(QString("SELECT round_id FROM tbl_rounds WHERE round_desc = ?"))
+            roundQuery.addBindValue(roundName)
+            roundQuery.exec_()
+            if roundQuery.next():
+                round_id = roundQuery.value(0).toInt()[0]
+            roundList.append(round_id)
+            roundList = list(set(roundList))
+            
         # create filter on shootout rounds
         roundFilterString = "round_id IN (" + ",".join((str(n) for n in roundList)) + ")"
         self.roundModel.setFilter(roundFilterString)
-        # reset index of roundSelect
-#        self.roundSelect.setCurrentIndex(-1)
         
         # unblock signals from rounds combobox
         self.roundSelect.blockSignals(False)
