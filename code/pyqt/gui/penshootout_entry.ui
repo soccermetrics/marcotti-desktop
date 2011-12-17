@@ -524,7 +524,7 @@ p, li { white-space: pre-wrap; }
     </item>
    </layout>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>10</x>
@@ -603,13 +603,13 @@ p, li { white-space: pre-wrap; }
      <widget class="QComboBox" name="koRoundSelect">
       <property name="minimumSize">
        <size>
-        <width>180</width>
+        <width>270</width>
         <height>30</height>
        </size>
       </property>
       <property name="maximumSize">
        <size>
-        <width>180</width>
+        <width>270</width>
         <height>30</height>
        </size>
       </property>
