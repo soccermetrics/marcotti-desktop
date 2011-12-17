@@ -516,7 +516,6 @@ class SubInComboBoxDelegate(QStyledItemDelegate):
     
     def __init__(self, parent=None):
         """Constructor for SubInComboBoxDelegate class."""
-#        print "Calling init() of SubInComboBoxDelegate"
         super(SubInComboBoxDelegate, self).__init__(parent)
         
         self.match = parent.matchSelect
@@ -533,7 +532,6 @@ class SubInComboBoxDelegate(QStyledItemDelegate):
             index -- current index of database table model
             
         """
-#        print "Calling setEditorData() of SubInComboBoxDelegate"   
         
         editor.blockSignals(True)
         
@@ -567,7 +565,6 @@ class SubInComboBoxDelegate(QStyledItemDelegate):
         #        (SELECT lineup_id FROM tbl_insubstitutions) AND 
         #        NOT lp_starting AND match_id = ? AND team_id = ?
         
-#        print "Index: %d" % index.row()
         if index.row() == -1:
             # no entry --> invalid index
             playerName = "-1"
@@ -622,7 +619,6 @@ class SubInComboBoxDelegate(QStyledItemDelegate):
             index -- current index of database table model
             
         """
-#        print "Calling setModelData() of SubInComboBoxDelegate"
         
         boxIndex = editor.currentIndex()
         value = editor.model().record(boxIndex).value("lineup_id")
