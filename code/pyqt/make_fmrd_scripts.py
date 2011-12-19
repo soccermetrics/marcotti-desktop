@@ -26,6 +26,8 @@ guiDir = "gui/"
 
 GuiMainList = ["competition_entry.ui",
             	 "enviro_entry.ui",
+            	 "fmrd_dbfile.ui",
+            	 "fmrd_drivers.ui",
             	 "fmrd_login.ui",
             	 "goal_entry.ui",
             	 "lineup_select.ui",
@@ -46,7 +48,9 @@ GuiMainList = ["competition_entry.ui",
             	 "venuehistory_entry.ui"]   
             
 MainList = ["ui_competitionentry.py",           		
-            "ui_enviroentry.py", 
+            "ui_enviroentry.py",
+            "ui_fmrddbfile.py",
+            "ui_fmrddrivers.py", 
             "ui_fmrdlogin.py", 
             "ui_goalentry.py", 
             "ui_lineupentry.py", 
