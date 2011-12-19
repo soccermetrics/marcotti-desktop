@@ -21,14 +21,63 @@ from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 from PyQt4.QtSql import *
 
-from FmrdMain import ui_fmrdlogin
+from FmrdMain import (ui_fmrdlogin, ui_fmrddbfile)
 from FmrdLib import Constants
 
 """
 Contains implementation of login dialog for access to FMRD.
 
-Only class: DBLoginDlg
+Classes: 
+DBLoginDlg -- login dialog for database access (Postgres)
+DBFileLoadDlg -- dialog for opening SQLite database file
 """
+
+class DBFileLoadDlg(QDialog, ui_fmrddbfile.Ui_DBFileLoadDlg):
+    """Implements SQLite file selection dialog for access to database application.
+    
+    Inherits Ui_DBFileLoadDlg (ui_fmrddbfile)
+    """
+    
+    def __init__(self):
+        """ Constructor for DBFileLoadDlg class."""
+        super(DBFileLoadDlg, self).__init__()
+        self.setupUi(self)
+        
+        self.option = Constants.USER*self.userButton.isChecked() + Constants.ADMIN*self.adminButton.isChecked()
+        
+        # Define signals and slots
+        self.connect(self.openButton, SIGNAL("clicked()"), self.loadDatabaseFile)
+        self.connect(self.cancelButton, SIGNAL("clicked()"), self.reject)
+        
+    def loadDatabaseFile(self):
+        """Loads SQLite database file, starting in current directory of FMRD executable."""
+        
+        self.option = Constants.USER*self.userButton.isChecked() + Constants.ADMIN*self.adminButton.isChecked()
+        dbFileName = QFileDialog.getOpenFileName(self, "Open Database File", ".", "Database file (*.db)")
+        if dbFileName:
+            db = QSqlDatabase.addDatabase("QSQLITE")
+            db.setDatabaseName(dbFileName)
+            if not db.open():
+                QMessageBox.critical(None,
+                    "Database Error",
+                    "Unable to open or create database file. Please check your SQLite3 installation.", 
+                    QMessageBox.Close)
+                self.reject()
+            # set foreign key checking to ON
+            cmd = QSqlQuery()
+            cmd.exec_("PRAGMA foreign_key = ON")
+            self.accept()
+        else:
+            self.reject()
+            
+    def execute(self):
+        """Calls exec_() and returns a tuple.
+        
+        Returns two-member tuple that contains return value of exec_() and switchboard type.
+        
+        """
+        ok = self.exec_()
+        return (ok, self.option)
 
 
 class DBLoginDlg(QDialog, ui_fmrdlogin.Ui_DBLoginDlg):
