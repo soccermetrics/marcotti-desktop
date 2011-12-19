@@ -332,7 +332,7 @@ p, li { white-space: pre-wrap; }
    <widget class="QPushButton" name="deleteEntry">
     <property name="geometry">
      <rect>
-      <x>110</x>
+      <x>210</x>
       <y>10</y>
       <width>90</width>
       <height>30</height>
@@ -364,7 +364,7 @@ p, li { white-space: pre-wrap; }
    <widget class="QPushButton" name="saveEntry">
     <property name="geometry">
      <rect>
-      <x>210</x>
+      <x>110</x>
       <y>10</y>
       <width>90</width>
       <height>30</height>
@@ -383,7 +383,7 @@ p, li { white-space: pre-wrap; }
      </size>
     </property>
     <property name="toolTip">
-     <string>Save Entry to Database</string>
+     <string>Save Entry</string>
     </property>
     <property name="text">
      <string>&amp;Save</string>
@@ -1582,7 +1582,7 @@ p, li { white-space: pre-wrap; }
       </property>
       <property name="date">
        <date>
-        <year>1901</year>
+        <year>1856</year>
         <month>1</month>
         <day>1</day>
        </date>

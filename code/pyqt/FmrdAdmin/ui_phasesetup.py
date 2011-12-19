@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'gui/phase_setup.ui'
 #
-# Created: Sat Nov 19 20:17:22 2011
+# Created: Sun Dec 18 22:24:48 2011
 #      by: PyQt4 UI code generator 4.7.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -83,14 +83,14 @@ class Ui_PhaseSetupDlg(object):
         self.horizontalLayout_2.addWidget(self.lastEntry)
         spacerItem1 = QtGui.QSpacerItem(18, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
         self.horizontalLayout_2.addItem(spacerItem1)
-        self.widget = QtGui.QWidget(PhaseSetupDlg)
-        self.widget.setGeometry(QtCore.QRect(220, 70, 418, 51))
-        self.widget.setObjectName("widget")
-        self.horizontalLayout_3 = QtGui.QHBoxLayout(self.widget)
+        self.layoutWidget2 = QtGui.QWidget(PhaseSetupDlg)
+        self.layoutWidget2.setGeometry(QtCore.QRect(220, 70, 418, 51))
+        self.layoutWidget2.setObjectName("layoutWidget2")
+        self.horizontalLayout_3 = QtGui.QHBoxLayout(self.layoutWidget2)
         self.horizontalLayout_3.setObjectName("horizontalLayout_3")
         spacerItem2 = QtGui.QSpacerItem(13, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
         self.horizontalLayout_3.addItem(spacerItem2)
-        self.addEntry = QtGui.QPushButton(self.widget)
+        self.addEntry = QtGui.QPushButton(self.layoutWidget2)
         self.addEntry.setMinimumSize(QtCore.QSize(90, 30))
         self.addEntry.setMaximumSize(QtCore.QSize(90, 30))
         icon4 = QtGui.QIcon()
@@ -98,7 +98,7 @@ class Ui_PhaseSetupDlg(object):
         self.addEntry.setIcon(icon4)
         self.addEntry.setObjectName("addEntry")
         self.horizontalLayout_3.addWidget(self.addEntry)
-        self.saveEntry = QtGui.QPushButton(self.widget)
+        self.saveEntry = QtGui.QPushButton(self.layoutWidget2)
         self.saveEntry.setMinimumSize(QtCore.QSize(90, 30))
         self.saveEntry.setMaximumSize(QtCore.QSize(90, 30))
         icon5 = QtGui.QIcon()
@@ -106,7 +106,7 @@ class Ui_PhaseSetupDlg(object):
         self.saveEntry.setIcon(icon5)
         self.saveEntry.setObjectName("saveEntry")
         self.horizontalLayout_3.addWidget(self.saveEntry)
-        self.deleteEntry = QtGui.QPushButton(self.widget)
+        self.deleteEntry = QtGui.QPushButton(self.layoutWidget2)
         self.deleteEntry.setMinimumSize(QtCore.QSize(90, 30))
         self.deleteEntry.setMaximumSize(QtCore.QSize(90, 30))
         icon6 = QtGui.QIcon()
@@ -114,7 +114,7 @@ class Ui_PhaseSetupDlg(object):
         self.deleteEntry.setIcon(icon6)
         self.deleteEntry.setObjectName("deleteEntry")
         self.horizontalLayout_3.addWidget(self.deleteEntry)
-        self.closeButton = QtGui.QPushButton(self.widget)
+        self.closeButton = QtGui.QPushButton(self.layoutWidget2)
         self.closeButton.setMinimumSize(QtCore.QSize(90, 30))
         self.closeButton.setMaximumSize(QtCore.QSize(90, 30))
         icon7 = QtGui.QIcon()
@@ -149,7 +149,7 @@ class Ui_PhaseSetupDlg(object):
         self.lastEntry.setToolTip(QtGui.QApplication.translate("PhaseSetupDlg", "Last Entry", None, QtGui.QApplication.UnicodeUTF8))
         self.addEntry.setToolTip(QtGui.QApplication.translate("PhaseSetupDlg", "Add Entry", None, QtGui.QApplication.UnicodeUTF8))
         self.addEntry.setText(QtGui.QApplication.translate("PhaseSetupDlg", "&Add", None, QtGui.QApplication.UnicodeUTF8))
-        self.saveEntry.setToolTip(QtGui.QApplication.translate("PhaseSetupDlg", "Delete Entry", None, QtGui.QApplication.UnicodeUTF8))
+        self.saveEntry.setToolTip(QtGui.QApplication.translate("PhaseSetupDlg", "Save Entry", None, QtGui.QApplication.UnicodeUTF8))
         self.saveEntry.setText(QtGui.QApplication.translate("PhaseSetupDlg", "&Save", None, QtGui.QApplication.UnicodeUTF8))
         self.deleteEntry.setToolTip(QtGui.QApplication.translate("PhaseSetupDlg", "Delete Entry", None, QtGui.QApplication.UnicodeUTF8))
         self.deleteEntry.setText(QtGui.QApplication.translate("PhaseSetupDlg", "&Delete", None, QtGui.QApplication.UnicodeUTF8))

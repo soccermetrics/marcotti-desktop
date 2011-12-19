@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'gui/timezone_setup.ui'
 #
-# Created: Tue Aug 23 12:12:48 2011
+# Created: Sun Dec 18 22:24:50 2011
 #      by: PyQt4 UI code generator 4.7.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -183,7 +183,7 @@ class Ui_TimeZoneSetupDlg(object):
         TimeZoneSetupDlg.setWindowTitle(QtGui.QApplication.translate("TimeZoneSetupDlg", "Time Zone Setup", None, QtGui.QApplication.UnicodeUTF8))
         self.addEntry.setToolTip(QtGui.QApplication.translate("TimeZoneSetupDlg", "Add Entry", None, QtGui.QApplication.UnicodeUTF8))
         self.addEntry.setText(QtGui.QApplication.translate("TimeZoneSetupDlg", "&Add", None, QtGui.QApplication.UnicodeUTF8))
-        self.saveEntry.setToolTip(QtGui.QApplication.translate("TimeZoneSetupDlg", "Delete Entry", None, QtGui.QApplication.UnicodeUTF8))
+        self.saveEntry.setToolTip(QtGui.QApplication.translate("TimeZoneSetupDlg", "Save Entry", None, QtGui.QApplication.UnicodeUTF8))
         self.saveEntry.setText(QtGui.QApplication.translate("TimeZoneSetupDlg", "&Save", None, QtGui.QApplication.UnicodeUTF8))
         self.deleteEntry.setToolTip(QtGui.QApplication.translate("TimeZoneSetupDlg", "Delete Entry", None, QtGui.QApplication.UnicodeUTF8))
         self.deleteEntry.setText(QtGui.QApplication.translate("TimeZoneSetupDlg", "&Delete", None, QtGui.QApplication.UnicodeUTF8))

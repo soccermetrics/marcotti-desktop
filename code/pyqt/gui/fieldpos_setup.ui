@@ -106,7 +106,7 @@
     </item>
    </layout>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>13</x>
@@ -188,7 +188,7 @@ p, li { white-space: pre-wrap; }
     </item>
    </layout>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>201</x>
@@ -228,7 +228,7 @@ p, li { white-space: pre-wrap; }
     <item>
      <widget class="QPushButton" name="saveEntry">
       <property name="toolTip">
-       <string>Delete Entry</string>
+       <string>Save Entry</string>
       </property>
       <property name="text">
        <string>&amp;Save</string>

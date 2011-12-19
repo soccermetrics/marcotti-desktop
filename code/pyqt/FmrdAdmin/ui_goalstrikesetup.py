@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'gui/goalstrike_setup.ui'
 #
-# Created: Mon Aug  8 00:36:21 2011
+# Created: Sun Dec 18 22:24:45 2011
 #      by: PyQt4 UI code generator 4.7.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -127,7 +127,7 @@ class Ui_GoalStrikeSetupDlg(object):
         self.goalstrikeEdit.setToolTip(QtGui.QApplication.translate("GoalStrikeSetupDlg", "Body part used to score goal", None, QtGui.QApplication.UnicodeUTF8))
         self.addEntry.setToolTip(QtGui.QApplication.translate("GoalStrikeSetupDlg", "Add Entry", None, QtGui.QApplication.UnicodeUTF8))
         self.addEntry.setText(QtGui.QApplication.translate("GoalStrikeSetupDlg", "&Add", None, QtGui.QApplication.UnicodeUTF8))
-        self.saveEntry.setToolTip(QtGui.QApplication.translate("GoalStrikeSetupDlg", "Delete Entry", None, QtGui.QApplication.UnicodeUTF8))
+        self.saveEntry.setToolTip(QtGui.QApplication.translate("GoalStrikeSetupDlg", "Save Entry", None, QtGui.QApplication.UnicodeUTF8))
         self.saveEntry.setText(QtGui.QApplication.translate("GoalStrikeSetupDlg", "&Save", None, QtGui.QApplication.UnicodeUTF8))
         self.deleteEntry.setToolTip(QtGui.QApplication.translate("GoalStrikeSetupDlg", "Delete Entry", None, QtGui.QApplication.UnicodeUTF8))
         self.deleteEntry.setText(QtGui.QApplication.translate("GoalStrikeSetupDlg", "&Delete", None, QtGui.QApplication.UnicodeUTF8))

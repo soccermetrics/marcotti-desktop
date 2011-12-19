@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'gui/penshootout_entry.ui'
 #
-# Created: Sat Dec 17 17:42:22 2011
+# Created: Sun Dec 18 22:24:35 2011
 #      by: PyQt4 UI code generator 4.7.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -79,22 +79,22 @@ class Ui_PenShootoutEntryDlg(object):
         self.addEntry.setIcon(icon4)
         self.addEntry.setObjectName("addEntry")
         self.verticalLayout.addWidget(self.addEntry)
-        self.deleteEntry = QtGui.QPushButton(self.layoutWidget)
-        self.deleteEntry.setMinimumSize(QtCore.QSize(80, 33))
-        self.deleteEntry.setMaximumSize(QtCore.QSize(80, 33))
-        icon5 = QtGui.QIcon()
-        icon5.addPixmap(QtGui.QPixmap(":/images/delete.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.deleteEntry.setIcon(icon5)
-        self.deleteEntry.setObjectName("deleteEntry")
-        self.verticalLayout.addWidget(self.deleteEntry)
         self.saveEntry = QtGui.QPushButton(self.layoutWidget)
         self.saveEntry.setMinimumSize(QtCore.QSize(80, 33))
         self.saveEntry.setMaximumSize(QtCore.QSize(80, 33))
-        icon6 = QtGui.QIcon()
-        icon6.addPixmap(QtGui.QPixmap(":/images/save.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.saveEntry.setIcon(icon6)
+        icon5 = QtGui.QIcon()
+        icon5.addPixmap(QtGui.QPixmap(":/images/save.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.saveEntry.setIcon(icon5)
         self.saveEntry.setObjectName("saveEntry")
         self.verticalLayout.addWidget(self.saveEntry)
+        self.deleteEntry = QtGui.QPushButton(self.layoutWidget)
+        self.deleteEntry.setMinimumSize(QtCore.QSize(80, 33))
+        self.deleteEntry.setMaximumSize(QtCore.QSize(80, 33))
+        icon6 = QtGui.QIcon()
+        icon6.addPixmap(QtGui.QPixmap(":/images/delete.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.deleteEntry.setIcon(icon6)
+        self.deleteEntry.setObjectName("deleteEntry")
+        self.verticalLayout.addWidget(self.deleteEntry)
         spacerItem = QtGui.QSpacerItem(20, 168, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
         self.verticalLayout.addItem(spacerItem)
         self.closeButton = QtGui.QPushButton(self.layoutWidget)
@@ -230,10 +230,10 @@ class Ui_PenShootoutEntryDlg(object):
         self.lastEntry.setToolTip(QtGui.QApplication.translate("PenShootoutEntryDlg", "Last Entry", None, QtGui.QApplication.UnicodeUTF8))
         self.addEntry.setToolTip(QtGui.QApplication.translate("PenShootoutEntryDlg", "Add Entry", None, QtGui.QApplication.UnicodeUTF8))
         self.addEntry.setText(QtGui.QApplication.translate("PenShootoutEntryDlg", "&Add", None, QtGui.QApplication.UnicodeUTF8))
+        self.saveEntry.setToolTip(QtGui.QApplication.translate("PenShootoutEntryDlg", "Save Entry", None, QtGui.QApplication.UnicodeUTF8))
+        self.saveEntry.setText(QtGui.QApplication.translate("PenShootoutEntryDlg", "&Save", None, QtGui.QApplication.UnicodeUTF8))
         self.deleteEntry.setToolTip(QtGui.QApplication.translate("PenShootoutEntryDlg", "Delete Entry", None, QtGui.QApplication.UnicodeUTF8))
         self.deleteEntry.setText(QtGui.QApplication.translate("PenShootoutEntryDlg", "&Delete", None, QtGui.QApplication.UnicodeUTF8))
-        self.saveEntry.setToolTip(QtGui.QApplication.translate("PenShootoutEntryDlg", "Save Record to Database", None, QtGui.QApplication.UnicodeUTF8))
-        self.saveEntry.setText(QtGui.QApplication.translate("PenShootoutEntryDlg", "&Save", None, QtGui.QApplication.UnicodeUTF8))
         self.closeButton.setToolTip(QtGui.QApplication.translate("PenShootoutEntryDlg", "Close Window", None, QtGui.QApplication.UnicodeUTF8))
         self.closeButton.setText(QtGui.QApplication.translate("PenShootoutEntryDlg", "&Close", None, QtGui.QApplication.UnicodeUTF8))
         self.label_4.setText(QtGui.QApplication.translate("PenShootoutEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"

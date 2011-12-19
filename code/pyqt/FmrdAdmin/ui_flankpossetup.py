@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'gui/flankpos_setup.ui'
 #
-# Created: Mon Aug  8 00:36:19 2011
+# Created: Sun Dec 18 22:24:43 2011
 #      by: PyQt4 UI code generator 4.7.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -131,7 +131,7 @@ class Ui_FlankPosSetupDlg(object):
         self.lastEntry.setToolTip(QtGui.QApplication.translate("FlankPosSetupDlg", "Last Entry", None, QtGui.QApplication.UnicodeUTF8))
         self.addEntry.setToolTip(QtGui.QApplication.translate("FlankPosSetupDlg", "Add Entry", None, QtGui.QApplication.UnicodeUTF8))
         self.addEntry.setText(QtGui.QApplication.translate("FlankPosSetupDlg", "&Add", None, QtGui.QApplication.UnicodeUTF8))
-        self.saveEntry.setToolTip(QtGui.QApplication.translate("FlankPosSetupDlg", "Delete Entry", None, QtGui.QApplication.UnicodeUTF8))
+        self.saveEntry.setToolTip(QtGui.QApplication.translate("FlankPosSetupDlg", "Save Entry", None, QtGui.QApplication.UnicodeUTF8))
         self.saveEntry.setText(QtGui.QApplication.translate("FlankPosSetupDlg", "&Save", None, QtGui.QApplication.UnicodeUTF8))
         self.deleteEntry.setToolTip(QtGui.QApplication.translate("FlankPosSetupDlg", "Delete Entry", None, QtGui.QApplication.UnicodeUTF8))
         self.deleteEntry.setText(QtGui.QApplication.translate("FlankPosSetupDlg", "&Delete", None, QtGui.QApplication.UnicodeUTF8))

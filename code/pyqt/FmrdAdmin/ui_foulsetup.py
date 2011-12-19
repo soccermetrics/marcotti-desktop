@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'gui/fouls_setup.ui'
 #
-# Created: Mon Aug  8 00:36:20 2011
+# Created: Sun Dec 18 22:24:44 2011
 #      by: PyQt4 UI code generator 4.7.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -73,32 +73,32 @@ class Ui_FoulSetupDlg(object):
         self.horizontalLayout_2.addWidget(self.lastEntry)
         spacerItem1 = QtGui.QSpacerItem(18, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
         self.horizontalLayout_2.addItem(spacerItem1)
-        self.widget = QtGui.QWidget(FoulSetupDlg)
-        self.widget.setGeometry(QtCore.QRect(200, 70, 421, 51))
-        self.widget.setObjectName("widget")
-        self.horizontalLayout_3 = QtGui.QHBoxLayout(self.widget)
+        self.layoutWidget2 = QtGui.QWidget(FoulSetupDlg)
+        self.layoutWidget2.setGeometry(QtCore.QRect(200, 70, 421, 51))
+        self.layoutWidget2.setObjectName("layoutWidget2")
+        self.horizontalLayout_3 = QtGui.QHBoxLayout(self.layoutWidget2)
         self.horizontalLayout_3.setObjectName("horizontalLayout_3")
         spacerItem2 = QtGui.QSpacerItem(13, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
         self.horizontalLayout_3.addItem(spacerItem2)
-        self.addEntry = QtGui.QPushButton(self.widget)
+        self.addEntry = QtGui.QPushButton(self.layoutWidget2)
         icon4 = QtGui.QIcon()
         icon4.addPixmap(QtGui.QPixmap(":/images/add.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.addEntry.setIcon(icon4)
         self.addEntry.setObjectName("addEntry")
         self.horizontalLayout_3.addWidget(self.addEntry)
-        self.saveEntry = QtGui.QPushButton(self.widget)
+        self.saveEntry = QtGui.QPushButton(self.layoutWidget2)
         icon5 = QtGui.QIcon()
         icon5.addPixmap(QtGui.QPixmap(":/images/save.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.saveEntry.setIcon(icon5)
         self.saveEntry.setObjectName("saveEntry")
         self.horizontalLayout_3.addWidget(self.saveEntry)
-        self.deleteEntry = QtGui.QPushButton(self.widget)
+        self.deleteEntry = QtGui.QPushButton(self.layoutWidget2)
         icon6 = QtGui.QIcon()
         icon6.addPixmap(QtGui.QPixmap(":/images/delete.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.deleteEntry.setIcon(icon6)
         self.deleteEntry.setObjectName("deleteEntry")
         self.horizontalLayout_3.addWidget(self.deleteEntry)
-        self.closeButton = QtGui.QPushButton(self.widget)
+        self.closeButton = QtGui.QPushButton(self.layoutWidget2)
         icon7 = QtGui.QIcon()
         icon7.addPixmap(QtGui.QPixmap(":/images/quit.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.closeButton.setIcon(icon7)
@@ -131,7 +131,7 @@ class Ui_FoulSetupDlg(object):
         self.lastEntry.setToolTip(QtGui.QApplication.translate("FoulSetupDlg", "Last Entry", None, QtGui.QApplication.UnicodeUTF8))
         self.addEntry.setToolTip(QtGui.QApplication.translate("FoulSetupDlg", "Add Entry", None, QtGui.QApplication.UnicodeUTF8))
         self.addEntry.setText(QtGui.QApplication.translate("FoulSetupDlg", "&Add", None, QtGui.QApplication.UnicodeUTF8))
-        self.saveEntry.setToolTip(QtGui.QApplication.translate("FoulSetupDlg", "Delete Entry", None, QtGui.QApplication.UnicodeUTF8))
+        self.saveEntry.setToolTip(QtGui.QApplication.translate("FoulSetupDlg", "Save Entry", None, QtGui.QApplication.UnicodeUTF8))
         self.saveEntry.setText(QtGui.QApplication.translate("FoulSetupDlg", "&Save", None, QtGui.QApplication.UnicodeUTF8))
         self.deleteEntry.setToolTip(QtGui.QApplication.translate("FoulSetupDlg", "Delete Entry", None, QtGui.QApplication.UnicodeUTF8))
         self.deleteEntry.setText(QtGui.QApplication.translate("FoulSetupDlg", "&Delete", None, QtGui.QApplication.UnicodeUTF8))

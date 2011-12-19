@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'gui/confederation_setup.ui'
 #
-# Created: Mon Aug  8 12:04:17 2011
+# Created: Sun Dec 18 22:24:41 2011
 #      by: PyQt4 UI code generator 4.7.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -132,7 +132,7 @@ class Ui_ConfedSetupDlg(object):
         self.lastEntry.setToolTip(QtGui.QApplication.translate("ConfedSetupDlg", "Last Entry", None, QtGui.QApplication.UnicodeUTF8))
         self.addEntry.setToolTip(QtGui.QApplication.translate("ConfedSetupDlg", "Add Entry", None, QtGui.QApplication.UnicodeUTF8))
         self.addEntry.setText(QtGui.QApplication.translate("ConfedSetupDlg", "&Add", None, QtGui.QApplication.UnicodeUTF8))
-        self.saveEntry.setToolTip(QtGui.QApplication.translate("ConfedSetupDlg", "Delete Entry", None, QtGui.QApplication.UnicodeUTF8))
+        self.saveEntry.setToolTip(QtGui.QApplication.translate("ConfedSetupDlg", "Save Entry", None, QtGui.QApplication.UnicodeUTF8))
         self.saveEntry.setText(QtGui.QApplication.translate("ConfedSetupDlg", "&Save", None, QtGui.QApplication.UnicodeUTF8))
         self.deleteEntry.setToolTip(QtGui.QApplication.translate("ConfedSetupDlg", "Delete Entry", None, QtGui.QApplication.UnicodeUTF8))
         self.deleteEntry.setText(QtGui.QApplication.translate("ConfedSetupDlg", "&Delete", None, QtGui.QApplication.UnicodeUTF8))

@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'gui/switchpos_entry.ui'
 #
-# Created: Sat Dec 17 17:42:24 2011
+# Created: Sun Dec 18 22:24:38 2011
 #      by: PyQt4 UI code generator 4.7.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -31,7 +31,7 @@ class Ui_SwitchEntryDlg(object):
         self.addEntry.setIcon(icon)
         self.addEntry.setObjectName("addEntry")
         self.deleteEntry = QtGui.QPushButton(self.frame_2)
-        self.deleteEntry.setGeometry(QtCore.QRect(110, 10, 90, 30))
+        self.deleteEntry.setGeometry(QtCore.QRect(210, 10, 90, 30))
         self.deleteEntry.setMinimumSize(QtCore.QSize(90, 30))
         self.deleteEntry.setMaximumSize(QtCore.QSize(90, 30))
         icon1 = QtGui.QIcon()
@@ -39,7 +39,7 @@ class Ui_SwitchEntryDlg(object):
         self.deleteEntry.setIcon(icon1)
         self.deleteEntry.setObjectName("deleteEntry")
         self.saveEntry = QtGui.QPushButton(self.frame_2)
-        self.saveEntry.setGeometry(QtCore.QRect(210, 10, 90, 30))
+        self.saveEntry.setGeometry(QtCore.QRect(110, 10, 90, 30))
         self.saveEntry.setMinimumSize(QtCore.QSize(90, 30))
         self.saveEntry.setMaximumSize(QtCore.QSize(90, 30))
         icon2 = QtGui.QIcon()
@@ -316,7 +316,7 @@ class Ui_SwitchEntryDlg(object):
         self.addEntry.setText(QtGui.QApplication.translate("SwitchEntryDlg", "&Add", None, QtGui.QApplication.UnicodeUTF8))
         self.deleteEntry.setToolTip(QtGui.QApplication.translate("SwitchEntryDlg", "Delete Entry", None, QtGui.QApplication.UnicodeUTF8))
         self.deleteEntry.setText(QtGui.QApplication.translate("SwitchEntryDlg", "&Delete", None, QtGui.QApplication.UnicodeUTF8))
-        self.saveEntry.setToolTip(QtGui.QApplication.translate("SwitchEntryDlg", "Save Entry to Database", None, QtGui.QApplication.UnicodeUTF8))
+        self.saveEntry.setToolTip(QtGui.QApplication.translate("SwitchEntryDlg", "Save Entry", None, QtGui.QApplication.UnicodeUTF8))
         self.saveEntry.setText(QtGui.QApplication.translate("SwitchEntryDlg", "&Save", None, QtGui.QApplication.UnicodeUTF8))
         self.closeButton.setToolTip(QtGui.QApplication.translate("SwitchEntryDlg", "Close Window", None, QtGui.QApplication.UnicodeUTF8))
         self.closeButton.setText(QtGui.QApplication.translate("SwitchEntryDlg", "&Close", None, QtGui.QApplication.UnicodeUTF8))

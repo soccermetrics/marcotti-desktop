@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'gui/grpround_setup.ui'
 #
-# Created: Sat Nov 19 20:17:20 2011
+# Created: Sun Dec 18 22:24:46 2011
 #      by: PyQt4 UI code generator 4.7.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -149,7 +149,7 @@ class Ui_GroupRoundSetupDlg(object):
         self.lastEntry.setToolTip(QtGui.QApplication.translate("GroupRoundSetupDlg", "Last Entry", None, QtGui.QApplication.UnicodeUTF8))
         self.addEntry.setToolTip(QtGui.QApplication.translate("GroupRoundSetupDlg", "Add Entry", None, QtGui.QApplication.UnicodeUTF8))
         self.addEntry.setText(QtGui.QApplication.translate("GroupRoundSetupDlg", "&Add", None, QtGui.QApplication.UnicodeUTF8))
-        self.saveEntry.setToolTip(QtGui.QApplication.translate("GroupRoundSetupDlg", "Delete Entry", None, QtGui.QApplication.UnicodeUTF8))
+        self.saveEntry.setToolTip(QtGui.QApplication.translate("GroupRoundSetupDlg", "Save Entry", None, QtGui.QApplication.UnicodeUTF8))
         self.saveEntry.setText(QtGui.QApplication.translate("GroupRoundSetupDlg", "&Save", None, QtGui.QApplication.UnicodeUTF8))
         self.deleteEntry.setToolTip(QtGui.QApplication.translate("GroupRoundSetupDlg", "Delete Entry", None, QtGui.QApplication.UnicodeUTF8))
         self.deleteEntry.setText(QtGui.QApplication.translate("GroupRoundSetupDlg", "&Delete", None, QtGui.QApplication.UnicodeUTF8))

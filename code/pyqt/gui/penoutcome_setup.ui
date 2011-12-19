@@ -228,7 +228,7 @@ p, li { white-space: pre-wrap; }
     <item>
      <widget class="QPushButton" name="saveEntry">
       <property name="toolTip">
-       <string>Delete Entry</string>
+       <string>Save Entry</string>
       </property>
       <property name="text">
        <string>&amp;Save</string>

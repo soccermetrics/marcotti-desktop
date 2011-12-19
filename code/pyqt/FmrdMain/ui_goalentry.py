@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'gui/goal_entry.ui'
 #
-# Created: Sat Dec 17 17:42:20 2011
+# Created: Sun Dec 18 22:24:31 2011
 #      by: PyQt4 UI code generator 4.7.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -89,7 +89,7 @@ class Ui_GoalEntryDlg(object):
         self.addEntry.setIcon(icon4)
         self.addEntry.setObjectName("addEntry")
         self.deleteEntry = QtGui.QPushButton(self.frame_2)
-        self.deleteEntry.setGeometry(QtCore.QRect(110, 10, 90, 30))
+        self.deleteEntry.setGeometry(QtCore.QRect(210, 10, 90, 30))
         self.deleteEntry.setMinimumSize(QtCore.QSize(90, 30))
         self.deleteEntry.setMaximumSize(QtCore.QSize(90, 30))
         icon5 = QtGui.QIcon()
@@ -97,7 +97,7 @@ class Ui_GoalEntryDlg(object):
         self.deleteEntry.setIcon(icon5)
         self.deleteEntry.setObjectName("deleteEntry")
         self.saveEntry = QtGui.QPushButton(self.frame_2)
-        self.saveEntry.setGeometry(QtCore.QRect(210, 10, 90, 30))
+        self.saveEntry.setGeometry(QtCore.QRect(110, 10, 90, 30))
         self.saveEntry.setMinimumSize(QtCore.QSize(90, 30))
         self.saveEntry.setMaximumSize(QtCore.QSize(90, 30))
         icon6 = QtGui.QIcon()
@@ -330,7 +330,7 @@ class Ui_GoalEntryDlg(object):
         self.addEntry.setText(QtGui.QApplication.translate("GoalEntryDlg", "&Add", None, QtGui.QApplication.UnicodeUTF8))
         self.deleteEntry.setToolTip(QtGui.QApplication.translate("GoalEntryDlg", "Delete Entry", None, QtGui.QApplication.UnicodeUTF8))
         self.deleteEntry.setText(QtGui.QApplication.translate("GoalEntryDlg", "&Delete", None, QtGui.QApplication.UnicodeUTF8))
-        self.saveEntry.setToolTip(QtGui.QApplication.translate("GoalEntryDlg", "Save Entry to Database", None, QtGui.QApplication.UnicodeUTF8))
+        self.saveEntry.setToolTip(QtGui.QApplication.translate("GoalEntryDlg", "Save Entry", None, QtGui.QApplication.UnicodeUTF8))
         self.saveEntry.setText(QtGui.QApplication.translate("GoalEntryDlg", "&Save", None, QtGui.QApplication.UnicodeUTF8))
         self.closeButton.setToolTip(QtGui.QApplication.translate("GoalEntryDlg", "Close Window", None, QtGui.QApplication.UnicodeUTF8))
         self.closeButton.setText(QtGui.QApplication.translate("GoalEntryDlg", "&Close", None, QtGui.QApplication.UnicodeUTF8))
