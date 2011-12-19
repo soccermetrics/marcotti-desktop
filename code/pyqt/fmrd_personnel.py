@@ -249,7 +249,7 @@ class ManagerEntryDlg(QDialog, ui_managerentry.Ui_ManagerEntryDlg):
         self.mgrConfedSelect.setEnabled(True)
 
         # initialize some form widgets
-        self.mgrDOBEdit.setText("1901-01-01")        
+        self.mgrDOBEdit.setDate(QDate(1856, 1, 1))        
         self.mgrCountrySelect.setDisabled(True)
         self.mgrCountrySelect.setCurrentIndex(-1)
         self.mgrConfedSelect.setCurrentIndex(-1)
@@ -580,7 +580,7 @@ class RefereeEntryDlg(QDialog, ui_refereeentry.Ui_RefereeEntryDlg):
         self.refConfedSelect.setEnabled(True)
         
         # initialize data widgets
-        self.refDOBEdit.setText("1901-01-01")                
+        self.refDOBEdit.setDate(QDate(1856, 1, 1))                 
         self.refCountrySelect.setDisabled(True)
         self.refCountrySelect.setCurrentIndex(-1)
         self.refConfedSelect.setCurrentIndex(-1)
@@ -927,7 +927,7 @@ class PlayerEntryDlg(QDialog, ui_playerentry.Ui_PlayerEntryDlg):
         self.plyrHistoryButton.setEnabled(True)
         
         # initialize form widgets
-        self.plyrDOBEdit.setText("1901-01-01")        
+        self.plyrDOBEdit.setDate(QDate(1856, 1, 1))      
         self.plyrCountrySelect.setDisabled(True)
         self.plyrConfedSelect.setCurrentIndex(-1)
         self.plyrCountrySelect.setCurrentIndex(-1)
