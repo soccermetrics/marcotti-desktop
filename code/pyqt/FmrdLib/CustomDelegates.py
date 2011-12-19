@@ -1530,6 +1530,7 @@ class CountryComboBoxDelegate(QSqlRelationalDelegate):
         # obtain country table from combobox
         countryModel = editor.model()
         
+        editor.blockSignals(True)
         # clear filters
         countryModel.setFilter(QString())
         countryModel.select()
@@ -1546,6 +1547,7 @@ class CountryComboBoxDelegate(QSqlRelationalDelegate):
         # country's index in filtered combobox has changed, so search for country
         # and assign result to current index
         editor.setCurrentIndex(editor.findText(countryText, Qt.MatchExactly))
+        editor.blockSignals(False)
         
     def setModelData(self, editor, model, index):
         """Maps selected index in editor to its model field, and writes to the current entry in the database table.
