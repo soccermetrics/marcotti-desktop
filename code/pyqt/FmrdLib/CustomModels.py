@@ -268,7 +268,6 @@ class KnockoutLinkingModel(LinkingSqlModel):
         
         Updates row if record already exists.
         """
-        print "Calling submit() in KnockoutLinkingModel"
         insertString = QString("INSERT INTO %1 (match_id, koround_id, matchday_id) VALUES (?,?,?)").arg(self.table)
         
         # test for already existing record in table
@@ -278,7 +277,6 @@ class KnockoutLinkingModel(LinkingSqlModel):
         query.exec_()
         if query.next():
             if query.value(0).toInt()[0]:
-                print "Updating current record"
                 updateQuery = QSqlQuery()
                 varList = (self.koround_id, self.matchday_id)
                 fieldList = ("koround_id", "matchday_id")
@@ -291,7 +289,6 @@ class KnockoutLinkingModel(LinkingSqlModel):
                 self.resetID()
                 return
                 
-        print "Inserting new record"
         insertQuery = QSqlQuery()
         insertQuery.prepare(insertString)
         insertQuery.addBindValue(self.primary_id)
