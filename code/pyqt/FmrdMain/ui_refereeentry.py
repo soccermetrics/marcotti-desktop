@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'gui/referee_entry.ui'
 #
-# Created: Sun Dec 18 22:24:37 2011
+# Created: Sun Dec 18 23:57:27 2011
 #      by: PyQt4 UI code generator 4.7.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -98,7 +98,7 @@ class Ui_RefereeEntryDlg(object):
         self.refLastNameEdit.setObjectName("refLastNameEdit")
         self.gridLayout.addWidget(self.refLastNameEdit, 2, 1, 1, 1)
         self.layoutWidget1 = QtGui.QWidget(RefereeEntryDlg)
-        self.layoutWidget1.setGeometry(QtCore.QRect(410, 10, 371, 151))
+        self.layoutWidget1.setGeometry(QtCore.QRect(400, 10, 381, 151))
         self.layoutWidget1.setObjectName("layoutWidget1")
         self.gridLayout_2 = QtGui.QGridLayout(self.layoutWidget1)
         self.gridLayout_2.setObjectName("gridLayout_2")
@@ -176,6 +176,7 @@ class Ui_RefereeEntryDlg(object):
         self.label.setBuddy(self.refID_display)
         self.label_4.setBuddy(self.refFirstNameEdit)
         self.label_5.setBuddy(self.refLastNameEdit)
+        self.label_7.setBuddy(self.refDOBEdit)
         self.label_2.setBuddy(self.refConfedSelect)
         self.label_3.setBuddy(self.refCountrySelect)
 

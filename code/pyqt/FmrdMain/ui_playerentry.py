@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'gui/player_entry.ui'
 #
-# Created: Sun Dec 18 22:24:35 2011
+# Created: Sun Dec 18 23:57:26 2011
 #      by: PyQt4 UI code generator 4.7.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -218,6 +218,7 @@ class Ui_PlayerEntryDlg(object):
         self.label_4.setBuddy(self.plyrFirstNameEdit)
         self.label_5.setBuddy(self.plyrLastNameEdit)
         self.label_6.setBuddy(self.plyrNicknameEdit)
+        self.label_7.setBuddy(self.plyrDOBEdit)
         self.label_2.setBuddy(self.plyrConfedSelect)
         self.label_3.setBuddy(self.plyrCountrySelect)
         self.label_8.setBuddy(self.plyrPositionSelect)
