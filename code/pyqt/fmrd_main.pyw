@@ -26,13 +26,16 @@ from PyQt4.QtGui import *
 from FmrdLib import Constants
 
 from fmrd_login import *
+from fmrd_drivers import *
 from fmrd_switchboard import *
 from fmrd_user_switchboard import * 
 
 """
 This module is the entry point for the data entry tools.  
 
-Performs login verification and opens either user or admin switchboards.
+Opens database file (if SQLite database), performs login 
+verification (if PostgreSQL database), and opens either 
+user or admin switchboards.
 """
 
 # Function: main
@@ -41,26 +44,40 @@ Performs login verification and opens either user or admin switchboards.
 def main():
     """ Conducts database authentication and executes GUI loop if successful."""
         
-    # create app and login objects
+    # create app objects
     app = QApplication(sys.argv)
-    login = DBLoginDlg() 
-        
-    # open login window with wrapper function so that tuple is returned
+    
+    driver = DBDriverDlg()
+    # open driver window with wrapper function so that tuple is returned
     # status = (QDialog.DialogCode, ButtonState)
-    status = login.execute()
-        
-    # if login is successful (QDialog.DialogCode == QDialog.Accepted)
-    #    open switchboard based on return value of ButtonState
-    # if login unsuccessful or aborted (QDialog.DialogCode == QDialog.Rejected)
-    #    exit application
-    if status[0] == QDialog.Accepted:
-        if status[1] == Constants.USER:
-            userwindow = UserMainSwitchboard()
-            userwindow.show()
-        elif status[1] == Constants.ADMIN:
-            adminwindow = MainSwitchboard()
-            adminwindow.show()
-        sys.exit(app.exec_())
+    outcome = driver.execute()
+    
+    if outcome[0] == QDialog.Accepted:
+        if outcome[1] == Constants.SQLITE:
+            dbload = DBFileLoadDlg()
+            
+            # open file load window with wrapper function so that tuple is returned
+            # status = (QDialog.DialogCode, ButtonState)
+            status = dbload.execute()
+        elif outcome[1] == Constants.POSTGRES:
+            login = DBLoginDlg() 
+                
+            # open login window with wrapper function so that tuple is returned
+            # status = (QDialog.DialogCode, ButtonState)
+            status = login.execute()
+                
+        # if login is successful (QDialog.DialogCode == QDialog.Accepted)
+        #    open switchboard based on return value of ButtonState
+        # if login unsuccessful or aborted (QDialog.DialogCode == QDialog.Rejected)
+        #    exit application
+        if status[0] == QDialog.Accepted:
+            if status[1] == Constants.USER:
+                userwindow = UserMainSwitchboard()
+                userwindow.show()
+            elif status[1] == Constants.ADMIN:
+                adminwindow = MainSwitchboard()
+                adminwindow.show()
+            sys.exit(app.exec_())
 
 
 # ----------------------------------------------------------    
