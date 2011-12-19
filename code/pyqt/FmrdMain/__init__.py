@@ -1,4 +1,6 @@
-__all__ = ["ui_fmrdlogin",
+__all__ = ["ui_fmrddbfile",
+"ui_fmrddrivers", 
+"ui_fmrdlogin",
 "ui_matchentry",
 "ui_competitionentry",
 "ui_teamentry",
