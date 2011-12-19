@@ -328,6 +328,7 @@ class TeamEntryDlg(QDialog, ui_teamentry.Ui_TeamEntryDlg):
         # disable all fields if no records in database table
         if not self.model.rowCount():
             self.teamID_display.setDisabled(True)
+            self.teamNameEdit.setDisabled(True)
             self.teamConfedSelect.setDisabled(True)
             self.teamCountrySelect.setDisabled(True)
             # disable save and delete entry buttons
@@ -960,6 +961,7 @@ class VenueEntryDlg(QDialog, ui_venueentry.Ui_VenueEntryDlg):
         self.timezoneModel.setFilter(QString("confed_id = %1").arg(id))
         self.countryModel.select()
         self.timezoneModel.select()
+        self.venueCountrySelect.setCurrentIndex(-1)
         self.venueTimezoneSelect.setCurrentIndex(-1)
     
     def openVenueHistory(self, venue_id):
