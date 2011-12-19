@@ -331,8 +331,9 @@ class ManagerEntryDlg(QDialog, ui_managerentry.Ui_ManagerEntryDlg):
         """
         # look for current index on Country combobox
         # extract confed_id from underlying model
-        currIdx = self.mgrCountrySelect.currentIndex()
-        currCountry = self.mgrCountrySelect.currentText()
+        row = self.mapper.currentIndex()
+        currCountry = self.model.record(row).value("cty_name").toString()
+        currIdx = self.mgrCountrySelect.findText(currCountry, Qt.MatchExactly)
         id = self.countryModel.record(currIdx).value("confed_id").toString()
         
         # make query on tbl_confederations
@@ -660,8 +661,9 @@ class RefereeEntryDlg(QDialog, ui_refereeentry.Ui_RefereeEntryDlg):
         """
         # look for current index on Country combobox
         # extract confed_id from underlying model
-        currIdx = self.refCountrySelect.currentIndex()
-        currCountry = self.refCountrySelect.currentText()
+        row = self.mapper.currentIndex()
+        currCountry = self.model.record(row).value("cty_name").toString()
+        currIdx = self.refCountrySelect.findText(currCountry, Qt.MatchExactly)
         id = self.countryModel.record(currIdx).value("confed_id").toString()
         
         # make query on tbl_confederations
@@ -1022,8 +1024,9 @@ class PlayerEntryDlg(QDialog, ui_playerentry.Ui_PlayerEntryDlg):
         """
         # look for current index on Country combobox
         # extract confed_id from underlying model
-        currIdx = self.plyrCountrySelect.currentIndex()
-        currCountry = self.plyrCountrySelect.currentText()
+        row = self.mapper.currentIndex()
+        currCountry = self.model.record(row).value("cty_name").toString()
+        currIdx = self.plyrCountrySelect.findText(currCountry, Qt.MatchExactly)
         id = self.countryModel.record(currIdx).value("confed_id").toString()
         
         # make query on tbl_confederations
