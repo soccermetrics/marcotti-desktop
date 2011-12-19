@@ -79,6 +79,10 @@ MinCountryID        = "100"
 # Constants
 # #############
 
+# database type definition
+SQLITE = 1
+POSTGRES = 2
+
 # switchboard type definition
 USER = 1
 ADMIN = 2
