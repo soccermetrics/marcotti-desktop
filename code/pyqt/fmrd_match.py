@@ -473,7 +473,6 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
                 self.updateLinkingTable(self.groupMatchMapper, editor, column)
             self.groupMatchModel.submit()
         elif phaseText == "Knockout":
-            print "Entered Knockout branch"
             editorList = [self.koRoundSelect, self.koMatchdaySelect]
             for editor,  column in zip(editorList, range(1, 3)):
                 self.updateLinkingTable(self.knockoutMatchMapper, editor, column)                
@@ -644,6 +643,10 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
             widget.setFilter(QString())
             widget.blockSignals(False)    
     
+        # block all dropbox signals
+        for widget in self.selectWidgets:
+            widget.blockSignals(True)
+            
         # enable form widgets
         for widget in self.upperFormWidgets:
             widget.setEnabled(True)
@@ -664,6 +667,10 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
         for widget in self.selectWidgets:
             widget.setCurrentIndex(-1)
         
+        # unblock all dropbox signals
+        for widget in self.selectWidgets:
+            widget.blockSignals(False)
+            
         self.firstHalfLengthEdit.setText("45")
         self.secondHalfLengthEdit.setText("45")
         self.firstExtraLengthEdit.setText("0")
