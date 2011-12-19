@@ -10,12 +10,13 @@
 
 <body
 style="font-family: Times New Roman,Times,serif; font-size: medium; font-style: normal; font-weight:normal; font-variant: normal; text-align: left; text-decoration: none; border: solid medium #0000ff;">
-<h1>FMRD-Desktop 1.1.0/1.2.0</h1>
+<h1>FMRD-Desktop 1.3.0/1.2.0</h1>
 
 <p>The Football Match Result Database (FMRD) stores and maintains the match
 result data needed to support football (soccer) research activities for the
-benefit of the football analytics community. The current version of the
-database models league competitions. </p>
+benefit of the football analytics community. Version 1.2.0 of the database
+models league competitions for national teams, and Version 1.3.0 models league,
+knockout, and hybrid competitions for club teams. </p>
 
 <p>The Football Match Result Database has the following features: </p>
 <ul>
@@ -25,6 +26,14 @@ database models league competitions. </p>
     <ul>
       <li>Match date</li>
       <li>Competition name</li>
+      <li>Competition phase (v1.3.0 only)</li>
+      <li>Phase-specific identifiers (v1.3.0 only)
+        <ul>
+          <li>League phase: Matchday</li>
+          <li>Group phase: Round, Group, Matchday</li>
+          <li>Knockout phase: Round, Matchday</li>
+        </ul>
+      </li>
       <li>Competition matchday</li>
       <li>Participating teams</li>
       <li>Host venues</li>
@@ -46,6 +55,7 @@ database models league competitions. </p>
       <li>Disciplinary incidents</li>
       <li>Substitutions</li>
       <li>Forced or tactical position changes</li>
+      <li>Penalty kick shootouts (v1.3.0 only)</li>
     </ul>
   </li>
 </ul>
@@ -59,7 +69,7 @@ database models league competitions. </p>
 
 <h2>Database Dependencies</h2>
 <ul>
-  <li>PostgreSQL 8.x</li>
+  <li>PostgreSQL 8.x+ OR SQLite3 3.6.19+</li>
   <li>Perl (DBI package)</li>
 </ul>
 
@@ -72,7 +82,7 @@ to the terms of the GNU General Public License (GPLv3).</p>
 
 <h2>Downloads</h2>
 
-<p>The current versions of the application are 1.1.0 (clubs) and 1.2.0
+<p>The current versions of the application are 1.3.0 (clubs) and 1.2.0
 (national teams). </p>
 
 <p>The 'master' branch contains the most recent version of the code repository
@@ -129,21 +139,47 @@ href="http://github.com">Github</a> account.</p>
 
 <p></p>
 
-<h2>Installation</h2>
+<h2>Setup</h2>
 <ul>
   <li>Check out the most recent release of the application from the Github code
     repository into a local working directory.</li>
   <li>Also (or alternatively), download the most recent release of the
     application executable from the FTP site and decompress into a local
     working directory.</li>
-  <li>Set up a local Postgres server on your machine, and obtain a username and
-    password. Assistance from your system administrator may be required.</li>
-  <li>Go to the <code>sql/</code> directory and run the following script: 
-    <p><code>$ installdb-fmrd.sh db_name </code></p>
+  <li>The FMRD-Desktop application can be run with either a PostgreSQL or
+    SQLite backend.</li>
+  <li>For use with PostgreSQL:
+    <ul>
+      <li>Set up a local Postgres server on your machine, and obtain a username
+        and password. Assistance from your system administrator may be
+      required.</li>
+    </ul>
+    <ul>
+      <li>Go to the <code>sql/</code> directory and run the following script: 
+        <p><code>$ installdb-fmrd.sh db_name </code></p>
+      </li>
+    </ul>
+    <ul>
+      <li>After the database has been formed you will be asked to enter
+        username and password, followed by the maximum number of league or
+        shootout rounds and the type of group identifiers (alpha or numeric).
+        The script will then load the validation tables of the database will be
+        loaded.</li>
+    </ul>
   </li>
-  <li>After the database is formed you will be asked to enter username and
-    password. The script will then load the validation tables of the database
-    will be loaded.</li>
+  <li>For use with SQLite (v1.3.0 only): 
+    <ul>
+      <li>Go to the <code>sql/</code> directory and run the following script:
+        <p><code>$ installdb-fmrd-sqlite.sh db_name.db</code></p>
+        <p>The database file must have a <code>'*.db'</code> extension.</p>
+        <p>After the database has been formed you will be asked to enter
+        username and password, followed by the maximum number of league or
+        shootout rounds and the type of group identifiers (alpha or numeric).
+        The script will then load the validation tables of the database will be
+        loaded.</p>
+      </li>
+    </ul>
+  </li>
   <li>You can run the data-entry application in one of two ways: 
     <ul>
       <li>From the command-line in the <code>code/pyqt/</code> directory: 
