@@ -42,8 +42,8 @@ class DBDriverDlg(QDialog, ui_fmrddrivers.Ui_DBDriverDlg):
         self.setupUi(self)
         
         self.option = Constants.SQLITE*self.sqliteButton.isChecked() + Constants.POSTGRES*self.postgresButton.isChecked()
-        self.connect(self.sqliteButton, SIGNAL("toggled()"), self.updateSelection)
-        self.connect(self.postgresButton, SIGNAL("toggled()"), self.updateSelection)
+        self.connect(self.sqliteButton, SIGNAL("clicked()"), self.updateSelection)
+        self.connect(self.postgresButton, SIGNAL("clicked()"), self.updateSelection)
 
     def updateSelection(self):
         """Updates status of radio buttons."""
