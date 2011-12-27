@@ -1,0 +1,43 @@
+FMRD-Desktop Version 1.3.0
+==========================
+
+Version 1.3.0 is the club team implementation of FMRD-Desktop.
+
+There are two major changes in the application.  First, the FMRD now 
+captures overview data that correspond to the three phases of football 
+competitions: league, group, and knockout.  Second, a SQLite-compatible 
+implementation of the FMRD has been added to the current PostgreSQL version.
+
+(+) - external changes to user
+(*) - internal changes
+
+Changes relative to Version 1.2.0
+---------------------------------
+
++ Add SQLite functionality to FMRD-Desktop: database backend selection UI
++ Refuse authentication to PostgreSQL database if no database name entered
++ Create Competition Phases setup UI
++ Create Groups setup UI
++ Create Group Rounds setup UI
++ Create Knockout Rounds setup UI
++ Create Matchdays setup UI
++ Create Penalty Shootouts data entry UI
++ Add links to setup UIs to switchboard Setup menu
++ Add phase-specific widgets to Matches data entry UI
++ Add phase-specific widgets to Match Events data entry UI
++ Correct erroneous tooltip of Save button in UIs
++ Change line edit field in Date of Birth fields in Personnel 
+  data entry UIs to drop-down calendar
++ Change earliest birth date to 1 January 1856
+
+* Develop activation logic for phase-specific widgets
+* Write new primary key ID constants for setup UIs
+* Write class methods to filter league/group/knockout matches
+  given Competition Phase selection
+* Create linking models for league/group/knockout match models
+* Create delegates for league/group/knockout widgets
+* Bug fixes in Lineup dialog implementation
+* Define maximum match time length in Match Event UIs
+  (90 minutes for league/group matches, 120 minutes for knockout matches)
+* Refactor fmrd_matchevents.py into separate source files
+  (Goals, Offenses, Penalties, Substitutions)
