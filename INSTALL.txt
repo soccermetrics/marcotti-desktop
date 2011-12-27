@@ -4,27 +4,45 @@ INSTALLATION
 FMRD-Desktop is run from either the command line or the standalone
 application.
 
-Requirements:
+Build Requirements:
     - Python 2.6 (3.0 not supported)
     - Nokia Qt 4.6 toolkit
-    - PyQt 4
-    - Perl (DBI and Term packages)
-    - PostgreSQL 8.x
+    - PyQt 4.6
     
-(1) Install local Postgres server. Consult system administrator
-for assistance.  Obtain a username and password.
+Database Requirements:
+    - Perl (DBI and Term packages)
+    - PostgreSQL 8.x, OR
+    - SQLite3 3.6.19+
+    
+(1) If you are using PostgreSQL, you should have access to an 
+installed local Postgres server. If not, consult your system
+administrator for assistance.
 
 (2) Go to sql/ directory and enter the following command:
     
-    > installdb-fmrd.sh db_name
-
-    The database tables and views will be created, after which
-    you will be challenged to enter your username and password:
+    > installdb-fmrd.sh db_name  (PostgreSQL)
     
+    > installdb-fmrd-sqlite.sh db_name.db (SQLite)
+    
+    In the case of the SQLite script, you must have '*.db'
+    as the filetype so that the file dialog can locate it.
+
+    The database tables and views will be created.  If you are
+    using PostgreSQL you will be challenged to enter your 
+    username and password:
+    
+    -----------------------------------
     Enter username: user
     Enter password: ******
     Database authentication confirmed.
-    Enter number of rounds: ##
+    -----------------------------------
+    
+    There are two other input fields:
+    
+    ------------------------------------------------------
+    Enter maximum number of league or shootout rounds: ##
+    [A]lpha or [N]umeric group names: #
+    ------------------------------------------------------
 
     The validation tables will then be populated.
 
@@ -32,7 +50,7 @@ for assistance.  Obtain a username and password.
 
     > ./fmrd-main.pyw
     
-    Alternatively, you can go to the dist/ directory and click on the 
-    executable icon for either the Windows or Linux distributions.
+    Alternatively, you can click on the executable icon for either 
+    the Windows or Linux distributions.
 
 
