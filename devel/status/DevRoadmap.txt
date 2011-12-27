@@ -47,9 +47,9 @@ Roadmap
 
 1.2.0 <---  League competitions for National Teams
 
-1.4.0 <---  Hybrid competitions for Club Teams
+1.3.0 <---  Hybrid competitions for Club Teams
 
-1.6.0 <---  Hybrid competitions for National Teams
+1.4.0 <---  Hybrid competitions for National Teams
 
-2.0.0 <---  Major change in DB design (go to object-relational?)
+2.0.0 <---  Major change in DB design (Python 3.0+, go to object-relational?)
 
