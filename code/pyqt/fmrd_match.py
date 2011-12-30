@@ -22,7 +22,7 @@ from PyQt4.QtGui import *
 from PyQt4.QtSql import *
 
 from FmrdMain import *
-from FmrdLib import (Constants, MsgPrompts)
+from FmrdLib import (CheckTables, Constants, MsgPrompts)
 from FmrdLib.CustomDelegates import *
 from FmrdLib.CustomModels import *
 from FmrdLib.CheckTables import *
@@ -45,7 +45,7 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
     
     """
     
-    ID,  DATE, HALF1, HALF2, ATTEND, COMP_ID, ROUND_ID, VENUE_ID, REF_ID = range(9)
+    ID,  DATE, HALF1, HALF2, EXTRA1, EXTRA2, ATTEND, COMP_ID, PHASE_ID, VENUE_ID, REF_ID = range(11)
     
     def __init__(self, parent=None):
         """Constructor for MatchEntryDlg class."""
@@ -57,24 +57,58 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
         TEAM_NAME = 1
         COUNTRY = 2
         CMP_ID,  COMP_NAME = range(2)
+        PHS_ID,  PHASE_NAME = range(2)
         RND_ID,  ROUND_NAME = range(2)
+        GRP_ID,  GROUP_NAME = range(2)
+        MCH_ID,  MATCHDAY_NAME = range(2)
         VEN_ID,  VENUE_NAME = range(2)
         RF_ID,  REF_NAME,  REF_SORT = range(3)
         CONFED_ID, CONFED_NAME = range(2)
         MG_ID,  MGR_NAME,  MGR_SORT = range(3)
+        
+        GROUP_ROUND,  GROUP,  GROUP_MATCHDAY = range(1, 4)
+        KO_ROUND, KO_MATCHDAY = range(1, 3)
+        
+        # define lists of comboboxes
+        self.selectWidgets = (
+            self.matchCompSelect, self.matchPhaseSelect, self.lgRoundSelect, self.groupSelect, 
+            self.grpRoundSelect, self.grpMatchdaySelect, self.koRoundSelect, self.koMatchdaySelect,  
+            self.matchRefSelect, self.matchVenueSelect, self.hometeamSelect, self.homemgrSelect, 
+            self.hometeamSelect, self.awaymgrSelect, self.awayteamSelect
+        )
+        
+        self.upperFormWidgets = (
+            self.matchCompSelect, self.matchDateEdit, self.matchPhaseSelect
+        )
+        
+        self.lowerFormWidgets = (
+            self.matchRefSelect, self.matchVenueSelect, self.matchAttendanceEdit, self.firstHalfLengthEdit, 
+            self.secondHalfLengthEdit, self.firstExtraLengthEdit, self.secondExtraLengthEdit,
+        )
+        
+        self.phaseWidgets = (
+            self.lgRoundSelect, self.koRoundSelect, self.koMatchdaySelect, self.groupSelect, 
+            self.grpRoundSelect, self.grpMatchdaySelect                             
+        )
+        
+        self.homeawayWidgets = (
+            self.homeconfedSelect, self.hometeamSelect, self.homemgrSelect, 
+            self.awayconfedSelect, self.awayteamSelect, self.awaymgrSelect, 
+            self.homeLineupButton, self.awayLineupButton,  self.enviroButton
+        )
         
         # define underlying database model (tbl_matches)
         # because of foreign keys, instantiate QSqlRelationalTableModel and define relations to it
         self.model = QSqlRelationalTableModel(self)
         self.model.setTable("tbl_matches")
         self.model.setRelation(MatchEntryDlg.COMP_ID, QSqlRelation("tbl_competitions", "competition_id", "comp_name"))
-        self.model.setRelation(MatchEntryDlg.ROUND_ID, QSqlRelation("tbl_rounds", "round_id", "round_desc"))
+        self.model.setRelation(MatchEntryDlg.PHASE_ID, QSqlRelation("tbl_phases", "phase_id", "phase_desc"))
         self.model.setRelation(MatchEntryDlg.VENUE_ID, QSqlRelation("tbl_venues", "venue_id", "ven_name"))
         self.model.setRelation(MatchEntryDlg.REF_ID, QSqlRelation("referees_list", "referee_id", "full_name"))
         self.model.setSort(MatchEntryDlg.ID, Qt.AscendingOrder)
         self.model.select()
         
-        # define mapper
+        # define main mapper (Matches)
         # establish ties between underlying database model and data widgets on form
         self.mapper = QDataWidgetMapper(self)
         self.mapper.setSubmitPolicy(QDataWidgetMapper.ManualSubmit)
@@ -89,17 +123,17 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
         self.matchCompSelect.setCurrentIndex(-1)
         self.mapper.addMapping(self.matchCompSelect, MatchEntryDlg.COMP_ID)
         
-        # relation model for Rounds combobox
-        self.roundModel = self.model.relationModel(MatchEntryDlg.ROUND_ID)
-        self.roundModel.setSort(RND_ID, Qt.AscendingOrder)
-        self.matchRoundSelect.setModel(self.roundModel)
-        self.matchRoundSelect.setModelColumn(self.roundModel.fieldIndex("round_desc"))
-        self.matchRoundSelect.setCurrentIndex(-1)
-        self.mapper.addMapping(self.matchRoundSelect, MatchEntryDlg.ROUND_ID)
+        # relation model for Competition Phases combobox
+        self.phaseModel = self.model.relationModel(MatchEntryDlg.PHASE_ID)
+        self.phaseModel.setSort(PHS_ID, Qt.AscendingOrder)
+        self.matchPhaseSelect.setModel(self.phaseModel)
+        self.matchPhaseSelect.setModelColumn(self.phaseModel.fieldIndex("phase_desc"))
+        self.matchPhaseSelect.setCurrentIndex(-1)
+        self.mapper.addMapping(self.matchPhaseSelect, MatchEntryDlg.PHASE_ID)
         
         # relation model for Venues combobox
         self.venueModel = self.model.relationModel(MatchEntryDlg.VENUE_ID)
-        self.venueModel.setSort(VEN_ID, Qt.AscendingOrder)
+        self.venueModel.setSort(VENUE_NAME, Qt.AscendingOrder)
         self.matchVenueSelect.setModel(self.venueModel)
         self.matchVenueSelect.setModelColumn(self.venueModel.fieldIndex("ven_name"))
         self.matchVenueSelect.setCurrentIndex(-1)
@@ -118,9 +152,117 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
         self.mapper.addMapping(self.matchDateEdit, MatchEntryDlg.DATE)
         self.mapper.addMapping(self.firstHalfLengthEdit, MatchEntryDlg.HALF1)
         self.mapper.addMapping(self.secondHalfLengthEdit, MatchEntryDlg.HALF2)
-        self.mapper.addMapping(self.attendanceEdit, MatchEntryDlg.ATTEND)
+        self.mapper.addMapping(self.firstExtraLengthEdit, MatchEntryDlg.EXTRA1)
+        self.mapper.addMapping(self.secondExtraLengthEdit, MatchEntryDlg.EXTRA2)
+        self.mapper.addMapping(self.matchAttendanceEdit, MatchEntryDlg.ATTEND)
         self.mapper.toFirst()
         
+        #
+        # define models used for League matches
+        #
+        
+        leagueRoundModel = QSqlTableModel(self)
+        leagueRoundModel.setTable("tbl_rounds")
+        leagueRoundModel.setSort(ROUND_NAME, Qt.AscendingOrder)
+        leagueRoundModel.select()
+        
+        # League Match linking model
+        self.leagueMatchModel = LeagueLinkingModel("tbl_leaguematches", self)
+        self.lgRoundSelect.setModel(leagueRoundModel)
+        self.lgRoundSelect.setModelColumn(leagueRoundModel.fieldIndex("round_desc"))
+        self.lgRoundSelect.setCurrentIndex(-1)
+        
+        # League Match mapper
+        self.leagueMatchMapper = QDataWidgetMapper(self)
+        self.leagueMatchMapper.setSubmitPolicy(QDataWidgetMapper.ManualSubmit)
+        self.leagueMatchMapper.setModel(self.leagueMatchModel)
+        leagueMatchDelegate = GenericDelegate(self)
+        leagueMatchDelegate.insertColumnDelegate(ROUND_NAME, RoundsComboBoxDelegate(self))
+        self.leagueMatchMapper.setItemDelegate(leagueMatchDelegate)
+        self.leagueMatchMapper.addMapping(self.lgRoundSelect, ROUND_NAME)
+        self.leagueMatchMapper.toFirst()
+        
+        #
+        # define models used for Group matches
+        #
+        
+        groupNameModel = QSqlTableModel(self)
+        groupNameModel.setTable("tbl_groups")
+        groupNameModel.setSort(GROUP_NAME, Qt.AscendingOrder)
+        groupNameModel.select()
+        
+        groupRoundModel = QSqlTableModel(self)
+        groupRoundModel.setTable("tbl_grouprounds")
+        groupRoundModel.setSort(RND_ID, Qt.AscendingOrder)
+        groupRoundModel.select()
+        
+        groupMatchdayModel = QSqlTableModel(self)
+        groupMatchdayModel.setTable("tbl_rounds")
+        groupMatchdayModel.setSort(ROUND_NAME, Qt.AscendingOrder)
+        groupMatchdayModel.select()
+        
+        # Group Match linking model
+        self.groupMatchModel = GroupLinkingModel("tbl_groupmatches", self)
+        self.groupSelect.setModel(groupNameModel)
+        self.groupSelect.setModelColumn(groupNameModel.fieldIndex("group_desc"))
+        self.groupSelect.setCurrentIndex(-1)
+        self.grpRoundSelect.setModel(groupRoundModel)
+        self.grpRoundSelect.setModelColumn(groupRoundModel.fieldIndex("grpround_desc"))
+        self.grpRoundSelect.setCurrentIndex(-1)
+        self.grpMatchdaySelect.setModel(groupMatchdayModel)
+        self.grpMatchdaySelect.setModelColumn(groupMatchdayModel.fieldIndex("round_desc"))
+        self.grpMatchdaySelect.setCurrentIndex(-1)
+        
+        # Group Match mapper
+        self.groupMatchMapper = QDataWidgetMapper(self)
+        self.groupMatchMapper.setSubmitPolicy(QDataWidgetMapper.ManualSubmit)
+        self.groupMatchMapper.setModel(self.groupMatchModel)
+        groupMatchDelegate = GenericDelegate(self)
+        groupMatchDelegate.insertColumnDelegate(GROUP, GroupsComboBoxDelegate(self))
+        groupMatchDelegate.insertColumnDelegate(GROUP_ROUND, GroupRoundsComboBoxDelegate(self))
+        groupMatchDelegate.insertColumnDelegate(GROUP_MATCHDAY, RoundsComboBoxDelegate(self))
+        self.groupMatchMapper.setItemDelegate(groupMatchDelegate)
+        self.groupMatchMapper.addMapping(self.groupSelect, GROUP)
+        self.groupMatchMapper.addMapping(self.grpRoundSelect, GROUP_ROUND)
+        self.groupMatchMapper.addMapping(self.grpMatchdaySelect, GROUP_MATCHDAY)
+        self.groupMatchMapper.toFirst()
+        
+        #
+        # define models used for Knockout matches
+        #
+
+        knockoutRoundModel = QSqlTableModel(self)
+        knockoutRoundModel.setTable("tbl_knockoutrounds")
+        knockoutRoundModel.setSort(RND_ID, Qt.AscendingOrder)
+        knockoutRoundModel.select()
+        
+        knockoutMatchdayModel = QSqlTableModel(self)
+        knockoutMatchdayModel.setTable("tbl_matchdays")
+        knockoutMatchdayModel.setSort(MATCHDAY_NAME, Qt.AscendingOrder)
+        knockoutMatchdayModel.select()
+        
+        # Knockout Match linking model
+        self.knockoutMatchModel = KnockoutLinkingModel("tbl_knockoutmatches", self)
+        self.koRoundSelect.setModel(knockoutRoundModel)
+        self.koRoundSelect.setModelColumn(knockoutRoundModel.fieldIndex("koround_desc"))
+        self.koRoundSelect.setCurrentIndex(-1)
+        self.koMatchdaySelect.setModel(knockoutMatchdayModel)
+        self.koMatchdaySelect.setModelColumn(knockoutMatchdayModel.fieldIndex("matchday_desc"))
+        self.koMatchdaySelect.setCurrentIndex(-1)
+        
+        # Knockout Match mapper
+        self.knockoutMatchMapper = QDataWidgetMapper(self)
+        self.knockoutMatchMapper.setSubmitPolicy(QDataWidgetMapper.ManualSubmit)
+        self.knockoutMatchMapper.setModel(self.knockoutMatchModel)
+        knockoutMatchDelegate = GenericDelegate(self)
+        knockoutMatchDelegate.insertColumnDelegate(KO_ROUND, KnockoutRoundsComboBoxDelegate(self))
+        knockoutMatchDelegate.insertColumnDelegate(KO_MATCHDAY, KnockoutMatchdayComboBoxDelegate(self))
+        self.knockoutMatchMapper.setItemDelegate(knockoutMatchDelegate)
+        self.knockoutMatchMapper.addMapping(self.koRoundSelect, KO_ROUND)
+        self.knockoutMatchMapper.addMapping(self.koMatchdaySelect, KO_MATCHDAY)
+        self.knockoutMatchMapper.toFirst()
+
+        #
         # define models used in Team and Manager comboboxes
         # we need multiple instantiations of Teams and Managers tables
         # so that there is no confusion in SQL logic
@@ -256,30 +398,33 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
 
         # disable all fields if no records in database table
         if not self.model.rowCount():
-            self.matchID_display.setDisabled(True)
-            self.matchCompSelect.setDisabled(True)
-            self.matchRoundSelect.setDisabled(True)
-            self.matchDateEdit.setDisabled(True)
-            self.matchRefSelect.setDisabled(True)
-            self.matchVenueSelect.setDisabled(True)
-            self.firstHalfLengthEdit.setDisabled(True)
-            self.secondHalfLengthEdit.setDisabled(True)
-            self.attendanceEdit.setDisabled(True)
-            self.homeconfedSelect.setDisabled(True)
-            self.hometeamSelect.setDisabled(True)
-            self.homemgrSelect.setDisabled(True)
-            self.awayconfedSelect.setDisabled(True)
-            self.awayteamSelect.setDisabled(True)
-            self.awaymgrSelect.setDisabled(True)
             
-            self.homeLineupButton.setDisabled(True)
-            self.awayLineupButton.setDisabled(True)
-            self.enviroButton.setDisabled(True)
+            # disable form widgets
+            for widget in self.upperFormWidgets:
+                widget.setDisabled(True)
+            
+            # disable remaining form widgets
+            for widget in self.lowerFormWidgets:
+                widget.setDisabled(True)
+                
+            # disable phase-related widgets
+            for widget in self.phaseWidgets:
+                widget.setDisabled(True)
+                
+            # disable home/away widgets
+            for widget in self.homeawayWidgets:
+                widget.setDisabled(True)
             
             # disable save and delete entry buttons
             self.saveEntry.setDisabled(True)
             self.deleteEntry.setDisabled(True)
         
+        # disable phase-related widgets if mapper points to first record
+        if not self.mapper.currentIndex():
+            self.matchPhaseSelect.setDisabled(True)
+            for widget in self.phaseWidgets:
+                widget.setDisabled(True)
+                
         # disable First and Previous Entry buttons
         self.firstEntry.setDisabled(True)
         self.prevEntry.setDisabled(True)        
@@ -288,6 +433,7 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
         if self.model.rowCount() < 2:
             self.nextEntry.setDisabled(True)
             self.lastEntry.setDisabled(True)
+            
         
         # configure signal/slots
         self.connect(self.firstEntry, SIGNAL("clicked()"), lambda: self.saveRecord(Constants.FIRST))
@@ -298,7 +444,7 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
         self.connect(self.addEntry, SIGNAL("clicked()"), self.addRecord)
         self.connect(self.deleteEntry, SIGNAL("clicked()"), self.deleteRecord)           
         self.connect(self.closeButton, SIGNAL("clicked()"), self.accept)
-        
+
         self.connect(self.mapper, SIGNAL("currentIndexChanged(int)"), 
                             lambda: self.updateConfed((self.homeconfedSelect, self.awayconfedSelect), (self.hometeamSelect, self.awayteamSelect)))
         
@@ -311,7 +457,28 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
                                                                         lambda: self.filterCountryBox(self.homeconfedSelect, self.hometeamSelect))
         self.connect(self.awayconfedSelect, SIGNAL("activated(int)"), 
                                                                         lambda: self.filterCountryBox(self.awayconfedSelect, self.awayteamSelect))
+        self.connect(self.matchPhaseSelect, SIGNAL("currentIndexChanged(int)"), self.enablePhaseDetails)
+        
+        self.connect(self.lgRoundSelect, SIGNAL("currentIndexChanged(int)"),
+                                                                lambda: self.enableWidget(self.matchVenueSelect))        
+        self.connect(self.grpRoundSelect, SIGNAL("currentIndexChanged(int)"), 
+                                                                lambda: self.enableWidget(self.groupSelect))
+        self.connect(self.groupSelect, SIGNAL("currentIndexChanged(int)"), 
+                                                                lambda: self.enableWidget(self.grpMatchdaySelect))
+        self.connect(self.grpMatchdaySelect, SIGNAL("currentIndexChanged(int)"),
+                                                                lambda: self.enableWidget(self.matchVenueSelect))
 
+        self.connect(self.koRoundSelect, SIGNAL("currentIndexChanged(int)"), 
+                                                                lambda: self.enableWidget(self.koMatchdaySelect))
+        self.connect(self.koMatchdaySelect, SIGNAL("currentIndexChanged(int)"),
+                                                                lambda: self.enableWidget(self.matchVenueSelect))
+                                                                
+        self.connect(self.matchVenueSelect, SIGNAL("currentIndexChanged(int)"), 
+                                                                lambda: self.enableWidget(self.matchRefSelect))
+        self.connect(self.matchRefSelect, SIGNAL("currentIndexChanged(int)"), self.enableDefaults)
+        
+        self.connect(self.hometeamSelect, SIGNAL("currentIndexChanged(int)"), 
+                                                                      lambda: self.enableWidget(self.homemgrSelect))
         self.connect(self.hometeamSelect, SIGNAL("currentIndexChanged(int)"), 
                                                                       lambda: self.enableWidget(self.homemgrSelect))
         self.connect(self.homemgrSelect, SIGNAL("currentIndexChanged(int)"), 
@@ -323,8 +490,6 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
                                                                       lambda: self.enableWidget(self.awaymgrSelect))
         self.connect(self.awaymgrSelect, SIGNAL("currentIndexChanged(int)"), 
                                                                      lambda: self.enableWidget(self.awayLineupButton))
-        self.connect(self.awaymgrSelect, SIGNAL("currentIndexChanged(int)"), 
-                                                                     lambda: self.enableWidget(self.enviroButton))
 
         self.connect(self.enviroButton, SIGNAL("clicked()"), lambda: self.openEnviros(self.matchID_display.text()))
         self.connect(self.homeLineupButton, SIGNAL("clicked()"), 
@@ -344,18 +509,33 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
         QDialog.accept(self)
     
     def submitForms(self):
-        """Writes to main database table and linking tables and returns result boolean."""
+        """Writes to linking tables."""
         
-        mapperList = [self.hometeamMapper, self.awayteamMapper, self.homemgrMapper, self.awaymgrMapper] 
+        mapperList = [self.hometeamMapper, self.awayteamMapper, self.homemgrMapper, self.awaymgrMapper]
         editorList = [self.hometeamSelect, self.awayteamSelect, self.homemgrSelect, self.awaymgrSelect]
         
-        if self.mapper.submit(): 
-            for mapper, editor in zip(mapperList, editorList):
-                if not self.updateLinkingTable(mapper, editor):
-                    return False
-        else:
-            return False
-    
+        # write to home/away linking tables
+        for mapper, editor in zip(mapperList, editorList):
+            if not self.updateLinkingTable(mapper, editor, 0):
+                return
+        
+        # write to specific Phase linking tables
+        # update linking table, then call submit()
+        phaseText = self.matchPhaseSelect.currentText()
+        if phaseText == "League":
+            self.updateLinkingTable(self.leagueMatchMapper, self.lgRoundSelect, 1)
+            self.leagueMatchModel.submit()
+        elif phaseText == "Group":
+            editorList = [self.groupSelect, self.grpRoundSelect, self.grpMatchdaySelect]
+            for editor,  column in zip(editorList, range(1, 4)):
+                self.updateLinkingTable(self.groupMatchMapper, editor, column)
+            self.groupMatchModel.submit()
+        elif phaseText == "Knockout":
+            editorList = [self.koRoundSelect, self.koMatchdaySelect]
+            for editor,  column in zip(editorList, range(1, 3)):
+                self.updateLinkingTable(self.knockoutMatchMapper, editor, column)                
+            self.knockoutMatchModel.submit()
+            
     def saveRecord(self, where):
         """"Submits changes to database, navigates through form, and resets subforms."""
         row = self.mapper.currentIndex()
@@ -367,6 +547,9 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
                     self.submitForms()
             else:
                 self.mapper.revert()
+        
+        for widget in self.phaseWidgets:
+            widget.blockSignals(True)
         
         if where == Constants.FIRST:
             self.firstEntry.setDisabled(True)
@@ -399,14 +582,26 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
                 self.firstEntry.setEnabled(True)
             row = self.model.rowCount() - 1
         self.mapper.setCurrentIndex(row)
-        
+                    
+        # disable Phase comboboxes
+        # prevent user from editing Competition Phase once record is saved
+        self.matchPhaseSelect.setDisabled(True)
+            
         # enable Delete button if at least one record
         if self.model.rowCount():
             self.deleteEntry.setEnabled(True)        
         
-        # refresh subforms
+        # enable time boxes and refresh subforms
         currentID = self.matchID_display.text()
+        phaseText = self.matchPhaseSelect.currentText()
+        self.enableTimes(phaseText)
+        self.resetPhaseDetails(phaseText)
         self.refreshSubForms(currentID)
+        self.refreshPhaseForms(currentID, phaseText)
+        
+        for widget in self.phaseWidgets:
+            widget.blockSignals(False)
+
 
     def refreshSubForms(self, currentID):
         """Sets match ID for linking models and refreshes models and mappers."""
@@ -428,6 +623,27 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
         self.homemgrMapper.toFirst()
         self.awaymgrMapper.toFirst()
 
+    def refreshPhaseForms(self, currentID, phaseText):
+        """Sets match ID for linking models and refreshed models and mappers.
+        
+        Parameters:
+        currentID: matchID key
+        phaseText: text associated with current index in Competition Phase combobox
+        """
+        self.leagueMatchModel.setID(currentID)
+        self.groupMatchModel.setID(currentID)
+        self.knockoutMatchModel.setID(currentID)
+            
+        if phaseText == "League":
+            self.leagueMatchModel.refresh()
+            self.leagueMatchMapper.toFirst()
+        elif phaseText == "Group":
+            self.groupMatchModel.refresh()
+            self.groupMatchMapper.toFirst()
+        elif phaseText == "Knockout":
+            self.knockoutMatchModel.refresh()
+            self.knockoutMatchMapper.toFirst()
+        
     def addRecord(self):
         """Adds new record at end of entry list.
         
@@ -463,6 +679,9 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
         # assign value to matchID field
         self.matchID_display.setText(match_id)
         
+        # obtain Competition Phase of current record
+        phaseText = self.matchPhaseSelect.currentText()
+        
         # disable next/last navigation buttons
         self.nextEntry.setDisabled(True)
         self.lastEntry.setDisabled(True)
@@ -478,70 +697,72 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
             self.saveEntry.setEnabled(True)
         
         # flush filters
-        for widget in [self.homeCountryModel, self.homeManagerModel, self.awayCountryModel, self.awayManagerModel]:
+        for widget in [self.homeTeamModel, self.homeManagerModel, self.awayTeamModel, self.awayManagerModel]:
             widget.blockSignals(True)
             widget.setFilter(QString())
-            widget.blockSignals(False)
-        
+            widget.blockSignals(False)    
+    
+        # block all dropbox signals
+        for widget in self.selectWidgets:
+            widget.blockSignals(True)
+            
         # enable form widgets
-        self.matchID_display.setEnabled(True)
-        self.matchCompSelect.setEnabled(True)
-        self.matchRoundSelect.setEnabled(True)
-        self.matchDateEdit.setEnabled(True)
-        self.matchRefSelect.setEnabled(True)
-        self.matchVenueSelect.setEnabled(True)
-        self.firstHalfLengthEdit.setEnabled(True)
-        self.secondHalfLengthEdit.setEnabled(True)
-        self.attendanceEdit.setEnabled(True)
-        self.homeconfedSelect.setEnabled(True)
+        for widget in self.upperFormWidgets:
+            widget.setEnabled(True)
         
+        # disable phase-related widgets
+        for widget in self.phaseWidgets:
+            widget.setDisabled(True)
+            
+        # disable remaining form widgets
+        for widget in self.lowerFormWidgets:
+            widget.setDisabled(True)
+            
+        # disable home/away widgets
+        for widget in self.homeawayWidgets:
+            widget.setDisabled(True)
+            
         # initialize form widgets
-        self.matchRefSelect.setCurrentIndex(-1)
-        self.matchVenueSelect.setCurrentIndex(-1)
-        self.homeconfedSelect.setCurrentIndex(-1)
-        self.homemgrSelect.setCurrentIndex(-1)
-        self.hometeamSelect.setCurrentIndex(-1)
-        self.awaymgrSelect.setCurrentIndex(-1)
-        self.awayteamSelect.setCurrentIndex(-1)
-        self.awayconfedSelect.setCurrentIndex(-1)
+        for widget in self.selectWidgets:
+            widget.setCurrentIndex(-1)
         
-        # disable comboboxes in home/away section
-        self.awayconfedSelect.setDisabled(True)
-        self.hometeamSelect.setDisabled(True)
-        self.homemgrSelect.setDisabled(True)
-        self.awayteamSelect.setDisabled(True)
-        self.awaymgrSelect.setDisabled(True)
-        self.homeLineupButton.setDisabled(True)
-        self.awayLineupButton.setDisabled(True)
-        self.enviroButton.setDisabled(True)
-        
+        # unblock all dropbox signals
+        for widget in self.selectWidgets:
+            widget.blockSignals(False)
+            
         self.firstHalfLengthEdit.setText("45")
         self.secondHalfLengthEdit.setText("45")
-        self.attendanceEdit.setText("0")
+        self.firstExtraLengthEdit.setText("0")
+        self.secondExtraLengthEdit.setText("0")
+        self.matchAttendanceEdit.setText("0")
+        self.matchDateEdit.setDate(QDate(1856, 1, 1))
         self.matchDateEdit.setFocus()
         
         # refresh subforms
-        self.refreshSubForms(match_id)        
-        
+        self.refreshSubForms(match_id)    
+        self.refreshPhaseForms(match_id, phaseText)
+
     def deleteRecord(self):
         """Deletes record from database upon user confirmation.
         
-        First, check that the match record is not being referenced in the Lineups table.
-        If it is not being referenced in Lineups, ask for user confirmation and upon pos-
+        First, check that the match record is not being referenced in any of the following tables:
+            - Lineups table
+            - PenShootoutOpeners linking table
+        If it is not being referenced in the child tables, ask for user confirmation and upon pos-
         itive confirmation, delete records in the following order:
             (1) HomeTeams and AwayTeams linking tables
             (2) HomeManagers and AwayManagers linking tables
-            (3) WeatherKickoff, WeatherHalftime, and WeatherFulltime linking tables
-            (4) Environments table
-            (5) Match table
+            (3) LeagueMatches, GroupMatches, and KnockoutMatches linking tables
+            (4) WeatherKickoff, WeatherHalftime, and WeatherFulltime linking tables
+            (5) Environments table
+            (6) Match table
         If match record is being referenced by Lineups, alert user.
         """
-        
-        childTableList = ["tbl_lineups"]
+        childTableList = ["tbl_lineups", "tbl_penshootoutopeners"]
         fieldName = "match_id"
         match_id = self.matchID_display.text()
         
-        if not CountChildRecords(childTableList, fieldName, match_id):
+        if not CheckTables.CountChildRecords(childTableList, fieldName, match_id):
             if QMessageBox.question(self, QString("Delete Record"), 
                                                 QString("Delete current record?"), 
                                                 QMessageBox.Yes|QMessageBox.No) == QMessageBox.No:
@@ -555,6 +776,12 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
                 self.homemgrModel.delete(match_id)
                 self.awaymgrModel.delete(match_id)
                 
+                # delete corresponding records in LeagueMatches, GroupMatches, and KnockoutMatches
+                # (will be in one of either, but make a sweep through all three to make sure)
+                self.leagueMatchModel.delete(match_id)
+                self.groupMatchModel.delete(match_id)
+                self.knockoutMatchModel.delete(match_id)
+                
                 # find enviro_id in Environments table that contains match_id
                 self.deleteEnviroTables(match_id)
                 
@@ -567,9 +794,50 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
                 if row + 1 >= self.model.rowCount():
                     row = self.model.rowCount() - 1
                 self.mapper.setCurrentIndex(row) 
-                # disable Delete button if no records in database
+                
+                # enable time boxes and refresh subforms
+                currentID = self.matchID_display.text()
+                phaseText = self.matchPhaseSelect.currentText()
+                self.enableTimes(phaseText)
+                self.refreshSubForms(currentID)
+                self.refreshPhaseForms(currentID, phaseText)
+                
                 if not self.model.rowCount():
+                    # disable Delete button if no records in database
                     self.deleteEntry.setDisabled(True)
+                    
+                    self.firstHalfLengthEdit.setText("45")
+                    self.secondHalfLengthEdit.setText("45")
+                    self.firstExtraLengthEdit.setText("0")
+                    self.secondExtraLengthEdit.setText("0")
+                    self.matchAttendanceEdit.setText("0")
+                    self.matchDateEdit.setDate(QDate(1856, 1, 1))
+                    self.matchDateEdit.setFocus()
+                    self.matchID_display.setText(QString())
+                        
+                    # initialize form widgets
+                    for widget in self.selectWidgets:
+                        widget.setCurrentIndex(-1)
+                        
+                    # enable form widgets
+                    for widget in self.upperFormWidgets:
+                        widget.setDisabled(True)
+                    
+                    # disable phase-related widgets
+                    for widget in self.phaseWidgets:
+                        widget.setDisabled(True)
+                        
+                    # disable remaining form widgets
+                    for widget in self.lowerFormWidgets:
+                        widget.setDisabled(True)
+                        
+                    # disable home/away widgets
+                    for widget in self.homeawayWidgets:
+                        widget.setDisabled(True)
+                        
+                    # disable all navigation widgets
+                    for widget in (self.prevEntry, self.firstEntry, self.nextEntry, self.lastEntry):
+                        widget.setDisabled(True)
         else:
                 DeletionErrorPrompt(self)
                 
@@ -584,17 +852,28 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
                       or new record in database
             FALSE: no changes between data entry form and current record in database
         """
+        
+        # date field
+        dateList = (self.matchDateEdit, )
+        columnList = (MatchEntryDlg.DATE, )
+        for editor, column in zip(dateList, columnList):
+            index = self.model.index(row, column)
+            if editor.date().toString(Qt.ISODate) != self.model.data(index).toString():
+                return True
+                
         # line edit fields
-        editorList = (self.matchDateEdit, self.firstHalfLengthEdit, self.secondHalfLengthEdit, self.attendanceEdit)
-        columnList = (MatchEntryDlg.DATE, MatchEntryDlg.HALF1, MatchEntryDlg.HALF2, MatchEntryDlg.ATTEND)
+        editorList = (self.firstHalfLengthEdit, self.secondHalfLengthEdit, 
+                            self.firstExtraLengthEdit,  self.secondExtraLengthEdit, self.matchAttendanceEdit)
+        columnList = (MatchEntryDlg.HALF1, MatchEntryDlg.HALF2, 
+                              MatchEntryDlg.EXTRA1, MatchEntryDlg.EXTRA2, MatchEntryDlg.ATTEND)
         for editor, column in zip(editorList, columnList):
             index = self.model.index(row, column)        
             if editor.text() != self.model.data(index).toString():
                 return True
                 
         # combobox fields
-        editorList = (self.matchCompSelect, self.matchRoundSelect, self.matchRefSelect, self.matchVenueSelect)
-        columnList = (MatchEntryDlg.COMP_ID, MatchEntryDlg.ROUND_ID, MatchEntryDlg.REF_ID, MatchEntryDlg.VENUE_ID)
+        editorList = (self.matchCompSelect, self.matchPhaseSelect, self.matchRefSelect, self.matchVenueSelect)
+        columnList = (MatchEntryDlg.COMP_ID, MatchEntryDlg.PHASE_ID, MatchEntryDlg.REF_ID, MatchEntryDlg.VENUE_ID)
         for editor, column in zip(editorList, columnList):
             index = self.model.index(row, column)        
             if editor.currentText() != self.model.data(index).toString():
@@ -681,36 +960,47 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
         query.exec_()
         if query.next():
             enviro_id = query.value(0).toInt()[0]
+        else:
+            return
             
-            list = ["tbl_weatherkickoff", "tbl_weatherhalftime", "tbl_weatherfulltime",  "tbl_environments"]
-            deletionQuery = QSqlQuery()
-            for table in list:
-                deletionQuery.prepare("DELETE FROM %1 WHERE enviro_id = ?")
-                deletionQuery.addBindValue(QVariant(enviro_id))
-                deletionQuery.exec_()
+        list = ["tbl_weatherkickoff", "tbl_weatherhalftime", "tbl_weatherfulltime",  "tbl_environments"]
+        deletionQuery = QSqlQuery()
+        for table in list:
+            deletionQuery.prepare(QString("DELETE FROM %1 WHERE enviro_id = ?").arg(table))
+            deletionQuery.addBindValue(QVariant(enviro_id))
+            deletionQuery.exec_()
                 
-    def updateLinkingTable(self, mapper, editor):
+    def updateLinkingTable(self, mapper, editor, column):
         """Updates custom linking table."""
         
         # database table associated with mapper
         # get current index of model
         linkmodel = mapper.model()
-        index = linkmodel.index(linkmodel.rowCount()-1, 0)
+        index = linkmodel.index(linkmodel.rowCount()-1, column, QModelIndex())
         boxIndex = editor.currentIndex()
         value = editor.model().record(boxIndex).value(0)
         ok = linkmodel.setData(index, value)
         return ok
         
-#        print linkmodel.rowCount()
-#        print "%d %d" % (index.row(), index.column())
-#        # if no entries in model, call setData() directly
-#        if not linkmodel.rowCount():
-#            index = QModelIndex()
-#            boxIndex = editor.currentIndex()
-#            value = editor.model().record(boxIndex).value(0)
-#            ok = linkmodel.setData(index, value)
-#            print ok
-
+    def resetPhaseDetails(self, phaseText):
+        """Sets phase widgets not corresponding to selected competition phase to -1."""
+        if phaseText == "League":
+            for widget in (self.groupSelect, self.grpRoundSelect, self.grpMatchdaySelect):
+                widget.setCurrentIndex(-1)
+            for widget in (self.koRoundSelect, self.koMatchdaySelect):
+                widget.setCurrentIndex(-1)
+        elif phaseText == "Group":
+            self.lgRoundSelect.setCurrentIndex(-1)
+            for widget in (self.koRoundSelect, self.koMatchdaySelect):
+                widget.setCurrentIndex(-1)
+        elif phaseText == "Knockout":
+            self.lgRoundSelect.setCurrentIndex(-1)
+            for widget in (self.groupSelect, self.grpRoundSelect, self.grpMatchdaySelect):
+                widget.setCurrentIndex(-1)
+                
+        for widget in self.phaseWidgets:
+            widget.setDisabled(True)
+            
     def enableWidget(self, widget):
         """Enables widget passed in function parameter, if not already enabled."""
         widget.blockSignals(True)
@@ -718,10 +1008,38 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
             widget.setEnabled(True)
         widget.blockSignals(False)
         
+    def enablePhaseDetails(self):
+        """Enables comboboxes associated with specific competition phase."""
+        phaseText = self.matchPhaseSelect.currentText()
+        if phaseText == "League":
+            self.lgRoundSelect.setEnabled(True)
+        elif phaseText == "Group":
+            self.grpRoundSelect.setEnabled(True)
+        elif phaseText == "Knockout":
+            self.koRoundSelect.setEnabled(True)
+            
+    def enableTimes(self, phaseText):
+        """Enables Time edit boxes according to Competition Phase.
+        
+        Enables 1st/2nd extra time edit boxes only if Knockout phase match.
+        """
+        self.firstHalfLengthEdit.setEnabled(True)
+        self.secondHalfLengthEdit.setEnabled(True)
+        if phaseText == "Knockout":
+            self.firstExtraLengthEdit.setEnabled(True)
+            self.secondExtraLengthEdit.setEnabled(True)
+        
+    def enableDefaults(self):
+        """Enables Attendance and Time edit boxes, Home Team comboboxes and Enviroments button."""
+        self.matchAttendanceEdit.setEnabled(True)
+        self.enableTimes(self.matchPhaseSelect.currentText())
+        self.hometeamSelect.setEnabled(True)
+        self.enviroButton.setEnabled(True)
+        
     def openEnviros(self, match_id):
         """Opens Environment subdialog for a specific match from Match dialog.
         
-        Saves current match record and instantiates EnviroEntryDlg object and opens window.
+        Saves current match record (but not subforms), instantiates EnviroEntryDlg object and opens window.
         Argument: 
         match_id -- primary key of current record in Matches table
         
