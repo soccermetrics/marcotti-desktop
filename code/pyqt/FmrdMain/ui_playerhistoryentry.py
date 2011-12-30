@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'gui/playerhistory_entry.ui'
 #
-# Created: Wed Aug 31 01:23:53 2011
+# Created: Thu Dec 29 23:31:11 2011
 #      by: PyQt4 UI code generator 4.7.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -200,7 +200,7 @@ class Ui_PlayerHistoryDlg(object):
         self.lastEntry.setToolTip(QtGui.QApplication.translate("PlayerHistoryDlg", "Last Entry", None, QtGui.QApplication.UnicodeUTF8))
         self.closeButton.setToolTip(QtGui.QApplication.translate("PlayerHistoryDlg", "Close Window", None, QtGui.QApplication.UnicodeUTF8))
         self.closeButton.setText(QtGui.QApplication.translate("PlayerHistoryDlg", "&Close", None, QtGui.QApplication.UnicodeUTF8))
-        self.saveEntry.setToolTip(QtGui.QApplication.translate("PlayerHistoryDlg", "Delete Entry", None, QtGui.QApplication.UnicodeUTF8))
+        self.saveEntry.setToolTip(QtGui.QApplication.translate("PlayerHistoryDlg", "Save Entry", None, QtGui.QApplication.UnicodeUTF8))
         self.saveEntry.setText(QtGui.QApplication.translate("PlayerHistoryDlg", "&Save", None, QtGui.QApplication.UnicodeUTF8))
         self.deleteEntry.setToolTip(QtGui.QApplication.translate("PlayerHistoryDlg", "Delete Entry", None, QtGui.QApplication.UnicodeUTF8))
         self.deleteEntry.setText(QtGui.QApplication.translate("PlayerHistoryDlg", "&Delete", None, QtGui.QApplication.UnicodeUTF8))

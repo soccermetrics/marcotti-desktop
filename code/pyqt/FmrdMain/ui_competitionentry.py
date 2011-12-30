@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'gui/competition_entry.ui'
 #
-# Created: Mon Aug  8 00:36:08 2011
+# Created: Thu Dec 29 23:31:03 2011
 #      by: PyQt4 UI code generator 4.7.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -117,7 +117,7 @@ class Ui_CompEntryDlg(object):
         CompEntryDlg.setWindowTitle(QtGui.QApplication.translate("CompEntryDlg", "Competition Entry", None, QtGui.QApplication.UnicodeUTF8))
         self.addEntry.setToolTip(QtGui.QApplication.translate("CompEntryDlg", "Add Entry", None, QtGui.QApplication.UnicodeUTF8))
         self.addEntry.setText(QtGui.QApplication.translate("CompEntryDlg", "&Add", None, QtGui.QApplication.UnicodeUTF8))
-        self.saveEntry.setToolTip(QtGui.QApplication.translate("CompEntryDlg", "Delete Entry", None, QtGui.QApplication.UnicodeUTF8))
+        self.saveEntry.setToolTip(QtGui.QApplication.translate("CompEntryDlg", "Save Entry", None, QtGui.QApplication.UnicodeUTF8))
         self.saveEntry.setText(QtGui.QApplication.translate("CompEntryDlg", "&Save", None, QtGui.QApplication.UnicodeUTF8))
         self.deleteEntry.setToolTip(QtGui.QApplication.translate("CompEntryDlg", "Delete Entry", None, QtGui.QApplication.UnicodeUTF8))
         self.deleteEntry.setText(QtGui.QApplication.translate("CompEntryDlg", "&Delete", None, QtGui.QApplication.UnicodeUTF8))

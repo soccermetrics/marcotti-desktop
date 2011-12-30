@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'gui/venuehistory_entry.ui'
 #
-# Created: Thu Sep  1 02:14:36 2011
+# Created: Thu Dec 29 23:31:14 2011
 #      by: PyQt4 UI code generator 4.7.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -238,7 +238,7 @@ class Ui_VenueHistoryDlg(object):
         VenueHistoryDlg.setWindowTitle(QtGui.QApplication.translate("VenueHistoryDlg", "Surface/Capacity History", None, QtGui.QApplication.UnicodeUTF8))
         self.closeButton.setToolTip(QtGui.QApplication.translate("VenueHistoryDlg", "Close Window", None, QtGui.QApplication.UnicodeUTF8))
         self.closeButton.setText(QtGui.QApplication.translate("VenueHistoryDlg", "&Close", None, QtGui.QApplication.UnicodeUTF8))
-        self.saveEntry.setToolTip(QtGui.QApplication.translate("VenueHistoryDlg", "Delete Entry", None, QtGui.QApplication.UnicodeUTF8))
+        self.saveEntry.setToolTip(QtGui.QApplication.translate("VenueHistoryDlg", "Save Entry", None, QtGui.QApplication.UnicodeUTF8))
         self.saveEntry.setText(QtGui.QApplication.translate("VenueHistoryDlg", "&Save", None, QtGui.QApplication.UnicodeUTF8))
         self.deleteEntry.setToolTip(QtGui.QApplication.translate("VenueHistoryDlg", "Delete Entry", None, QtGui.QApplication.UnicodeUTF8))
         self.deleteEntry.setText(QtGui.QApplication.translate("VenueHistoryDlg", "&Delete", None, QtGui.QApplication.UnicodeUTF8))

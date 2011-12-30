@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'gui/lineup_select.ui'
 #
-# Created: Mon Aug  8 00:36:10 2011
+# Created: Thu Dec 29 23:31:06 2011
 #      by: PyQt4 UI code generator 4.7.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -208,12 +208,12 @@ class Ui_LineupEntryDlg(object):
         self.NumGK_display.setReadOnly(True)
         self.NumGK_display.setObjectName("NumGK_display")
         self.horizontalLayout_3.addWidget(self.NumGK_display)
-        self.widget = QtGui.QWidget(LineupEntryDlg)
-        self.widget.setGeometry(QtCore.QRect(380, 30, 101, 191))
-        self.widget.setObjectName("widget")
-        self.verticalLayout = QtGui.QVBoxLayout(self.widget)
+        self.layoutWidget4 = QtGui.QWidget(LineupEntryDlg)
+        self.layoutWidget4.setGeometry(QtCore.QRect(380, 30, 101, 191))
+        self.layoutWidget4.setObjectName("layoutWidget4")
+        self.verticalLayout = QtGui.QVBoxLayout(self.layoutWidget4)
         self.verticalLayout.setObjectName("verticalLayout")
-        self.addEntry = QtGui.QPushButton(self.widget)
+        self.addEntry = QtGui.QPushButton(self.layoutWidget4)
         self.addEntry.setMinimumSize(QtCore.QSize(80, 33))
         self.addEntry.setMaximumSize(QtCore.QSize(80, 33))
         icon4 = QtGui.QIcon()
@@ -223,7 +223,7 @@ class Ui_LineupEntryDlg(object):
         self.verticalLayout.addWidget(self.addEntry)
         spacerItem1 = QtGui.QSpacerItem(20, 13, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
         self.verticalLayout.addItem(spacerItem1)
-        self.saveEntry = QtGui.QPushButton(self.widget)
+        self.saveEntry = QtGui.QPushButton(self.layoutWidget4)
         self.saveEntry.setMinimumSize(QtCore.QSize(80, 33))
         self.saveEntry.setMaximumSize(QtCore.QSize(80, 33))
         icon5 = QtGui.QIcon()
@@ -233,7 +233,7 @@ class Ui_LineupEntryDlg(object):
         self.verticalLayout.addWidget(self.saveEntry)
         spacerItem2 = QtGui.QSpacerItem(20, 13, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
         self.verticalLayout.addItem(spacerItem2)
-        self.deleteEntry = QtGui.QPushButton(self.widget)
+        self.deleteEntry = QtGui.QPushButton(self.layoutWidget4)
         self.deleteEntry.setMinimumSize(QtCore.QSize(80, 33))
         self.deleteEntry.setMaximumSize(QtCore.QSize(80, 33))
         icon6 = QtGui.QIcon()
@@ -243,7 +243,7 @@ class Ui_LineupEntryDlg(object):
         self.verticalLayout.addWidget(self.deleteEntry)
         spacerItem3 = QtGui.QSpacerItem(20, 13, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
         self.verticalLayout.addItem(spacerItem3)
-        self.closeButton = QtGui.QPushButton(self.widget)
+        self.closeButton = QtGui.QPushButton(self.layoutWidget4)
         self.closeButton.setMinimumSize(QtCore.QSize(80, 33))
         self.closeButton.setMaximumSize(QtCore.QSize(80, 33))
         icon7 = QtGui.QIcon()
@@ -315,7 +315,7 @@ class Ui_LineupEntryDlg(object):
         self.NumGK_display.setToolTip(QtGui.QApplication.translate("LineupEntryDlg", "Number of starters", None, QtGui.QApplication.UnicodeUTF8))
         self.addEntry.setToolTip(QtGui.QApplication.translate("LineupEntryDlg", "Add Entry", None, QtGui.QApplication.UnicodeUTF8))
         self.addEntry.setText(QtGui.QApplication.translate("LineupEntryDlg", "&Add", None, QtGui.QApplication.UnicodeUTF8))
-        self.saveEntry.setToolTip(QtGui.QApplication.translate("LineupEntryDlg", "Delete Entry", None, QtGui.QApplication.UnicodeUTF8))
+        self.saveEntry.setToolTip(QtGui.QApplication.translate("LineupEntryDlg", "Save Entry", None, QtGui.QApplication.UnicodeUTF8))
         self.saveEntry.setText(QtGui.QApplication.translate("LineupEntryDlg", "&Save", None, QtGui.QApplication.UnicodeUTF8))
         self.deleteEntry.setToolTip(QtGui.QApplication.translate("LineupEntryDlg", "Delete Entry", None, QtGui.QApplication.UnicodeUTF8))
         self.deleteEntry.setText(QtGui.QApplication.translate("LineupEntryDlg", "&Delete", None, QtGui.QApplication.UnicodeUTF8))
