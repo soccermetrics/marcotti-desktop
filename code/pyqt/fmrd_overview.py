@@ -24,8 +24,10 @@ from PyQt4.QtSql import *
 
 from FmrdMain import *
 from FmrdLib import (Constants, MsgPrompts)
+from FmrdLib.CheckTables import *
 from FmrdLib.CustomDelegates import *
 from FmrdLib.CheckTables import *
+
 
 """Contains classes that implement match overview entry forms to main tables of FMRD.
 
