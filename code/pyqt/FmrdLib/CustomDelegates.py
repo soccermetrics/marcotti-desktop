@@ -690,7 +690,8 @@ class ShootoutPlayerComboBoxDelegate(QSqlRelationalDelegate):
         # get team_id from lineup player
         team_id = 0
         query = QSqlQuery()
-        query.prepare(QString("SELECT team_id FROM tbl_lineups WHERE lineup_id = ?"))
+        query.prepare(QString("SELECT country_id FROM tbl_countries WHERE cty_name IN "
+                                            "(SELECT team FROM lineup_list WHERE lineup_id = ?)"))
         query.addBindValue(QVariant(lineup_id))
         query.exec_()
         if query.next():
@@ -738,9 +739,11 @@ class ShootoutPlayerComboBoxDelegate(QSqlRelationalDelegate):
         lineupQuery = QSqlQuery()
         eligibleQueryString = QString("SELECT lineup_id FROM tbl_lineups WHERE "
                 "lineup_id NOT IN (SELECT lineup_id FROM tbl_outsubstitutions) "
-                "AND lineup_id IN (SELECT lineup_id FROM tbl_lineups WHERE lp_starting AND match_id = %1 AND team_id = %2) "
+                "AND lineup_id IN (SELECT lineup_id FROM tbl_lineups WHERE lp_starting AND match_id = %1 AND player_id IN "
+                "(SELECT player_id FROM tbl_players WHERE country_id = %2)) "
                 "OR (lineup_id IN (SELECT lineup_id FROM tbl_insubstitutions) AND "
-                "lineup_id IN (SELECT lineup_id FROM tbl_lineups WHERE NOT lp_starting AND match_id = %1 AND team_id = %2))"
+                "lineup_id IN (SELECT lineup_id FROM tbl_lineups WHERE NOT lp_starting AND match_id = %1 AND player_id IN "
+                "(SELECT player_id FROM tbl_players WHERE country_id = %2)) "
                 ).arg(str(match_id)).arg(str(team_id))
         lineupQuery.prepare(eligibleQueryString)
         lineupQuery.exec_()
@@ -758,7 +761,8 @@ class ShootoutPlayerComboBoxDelegate(QSqlRelationalDelegate):
         
         # query players in match lineup who have already participated in a round of penalty shootout
         participateQuery = QSqlQuery()
-        participateQuery.prepare(QString("SELECT lineup_id FROM tbl_lineups WHERE match_id = %1 AND team_id = %2 "
+        participateQuery.prepare(QString("SELECT lineup_id FROM tbl_lineups WHERE match_id = %1 AND player_id IN "
+                                 "(SELECT player_id FROM tbl_players WHERE country_id = %2)) "
                                  "INTERSECT SELECT lineup_id FROM tbl_penaltyshootouts WHERE round_id = ?").arg(str(match_id), str(team_id)))
         for round_id in rotationList:
             participateQuery.addBindValue(round_id)
@@ -921,7 +925,7 @@ class ShootoutOpenerComboBoxDelegate(QStyledItemDelegate):
         # get team name from shootout opener model
         team_id = eventModel.data(index, Qt.DisplayRole).toString()
         query = QSqlQuery()
-        query.prepare("SELECT tm_name FROM tbl_teams WHERE team_id = ?")
+        query.prepare("SELECT cty_name FROM tbl_countries WHERE country_id = ?")
         query.addBindValue(QVariant(team_id))
         query.exec_()
         if query.next():
@@ -940,9 +944,9 @@ class ShootoutOpenerComboBoxDelegate(QStyledItemDelegate):
         # filter team combobox
         # result: home and away teams for specific match
         teamModel.setFilter(QString())
-        teamQueryString = QString("team_id IN"
-            "(SELECT team_id FROM tbl_hometeams WHERE match_id = %1"
-            "UNION SELECT team_id FROM tbl_awayteams WHERE match_id = %1)").arg(match_id)
+        teamQueryString = QString("country_id IN"
+            "(SELECT country_id FROM tbl_hometeams WHERE match_id = %1"
+            "UNION SELECT country_id FROM tbl_awayteams WHERE match_id = %1)").arg(match_id)
         teamModel.setFilter(teamQueryString)
         
         # set current index of team combobox
