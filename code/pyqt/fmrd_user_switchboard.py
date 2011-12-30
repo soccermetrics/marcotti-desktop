@@ -29,7 +29,11 @@ from FmrdLib.MsgPrompts import *
 from FmrdLib.Constants import *
 
 from fmrd_match import *
-from fmrd_matchevent import *
+from fmrd_goals import *
+from fmrd_penalties import *
+from fmrd_subs import *
+from fmrd_offenses import *
+from fmrd_shootouts import *
 from fmrd_overview import *
 from fmrd_personnel import *
 
@@ -80,6 +84,7 @@ class UserMainSwitchboard(QMainWindow, ui_usermainswitchboard.Ui_UserMainSwitchb
         QObject.connect(self.offenseButton, SIGNAL("clicked()"), self.OpenOffenses)
         QObject.connect(self.subButton, SIGNAL("clicked()"), self.OpenSubstitutions)
         QObject.connect(self.switchButton, SIGNAL("clicked()"), self.OpenPosSwitches)
+        QObject.connect(self.shootoutButton, SIGNAL("clicked()"), self.OpenPenaltyShootouts)
         
         # signal/slot connections for menu actions
         QObject.connect(self.actionAbout, SIGNAL("triggered()"), self.OpenAbout)
@@ -203,6 +208,17 @@ class UserMainSwitchboard(QMainWindow, ui_usermainswitchboard.Ui_UserMainSwitchb
             MatchDetailErrorPrompt(self)
         else:        
             dialog = SwitchEntryDlg(self)
+            dialog.exec_()
+            
+    def OpenPenaltyShootouts(self):
+        """Opens Penalty Kick Shootouts window.
+        
+        Window opens only if there is at least one record in KnockoutMatches table.
+        """
+        if not CheckMinimumKnockoutMatches():
+            KnockoutMatchErrorPrompt(self)
+        else:
+            dialog = PenShootoutEntryDlg(self)
             dialog.exec_()
         
     def close(self):

@@ -30,7 +30,11 @@ from FmrdLib.Constants import *
 
 from fmrd_setup import *
 from fmrd_match import *
-from fmrd_matchevent import *
+from fmrd_goals import *
+from fmrd_penalties import *
+from fmrd_subs import *
+from fmrd_offenses import *
+from fmrd_shootouts import *
 from fmrd_overview import *
 from fmrd_personnel import *
 
@@ -83,11 +87,17 @@ class MainSwitchboard(QMainWindow, ui_mainswitchboard.Ui_MainSwitchboard):
         QObject.connect(self.offenseButton, SIGNAL("clicked()"), self.OpenOffenses)
         QObject.connect(self.subButton, SIGNAL("clicked()"), self.OpenSubstitutions)
         QObject.connect(self.switchButton, SIGNAL("clicked()"), self.OpenPosSwitches)
+        QObject.connect(self.shootoutButton, SIGNAL("clicked()"), self.OpenPenaltyShootouts)
         
         # signal/slot connections for menu actions
         QObject.connect(self.actionField_Surfaces, SIGNAL("triggered()"), self.OpenVenueSurfaces)
         QObject.connect(self.actionTime_Zones, SIGNAL("triggered()"), self.OpenTimeZones)
+        QObject.connect(self.actionPhases, SIGNAL("triggered()"), self.OpenPhases)
+        QObject.connect(self.actionGroups, SIGNAL("triggered()"), self.OpenGroups)
         QObject.connect(self.actionRounds, SIGNAL("triggered()"), self.OpenRounds)
+        QObject.connect(self.actionGroup_Rounds, SIGNAL("triggered()"), self.OpenGroupRounds)
+        QObject.connect(self.actionKnockout_Rounds, SIGNAL("triggered()"), self.OpenKnockoutRounds)
+        QObject.connect(self.actionMatchdays, SIGNAL("triggered()"), self.OpenMatchdays)
         QObject.connect(self.actionWeather_Conditions,  SIGNAL("triggered()"), self.OpenWeatherConditions)
         QObject.connect(self.actionConfederations, SIGNAL("triggered()"), self.OpenConfederations)
         QObject.connect(self.actionCountries, SIGNAL("triggered()"), self.OpenCountries)
@@ -157,9 +167,34 @@ class MainSwitchboard(QMainWindow, ui_mainswitchboard.Ui_MainSwitchboard):
         dialog = ConfedSetupDlg(self)
         dialog.exec_()
         
+    def OpenPhases(self):
+        """Open Competition Phases window."""
+        dialog = PhaseSetupDlg(self)
+        dialog.exec_()
+        
+    def OpenGroups(self):
+        """Open Groups window."""
+        dialog = GroupSetupDlg(self)
+        dialog.exec_()
+        
     def OpenRounds(self):
-        """Opens Matchday (Rounds) window."""
+        """Opens Rounds (League phase) window."""
         dialog = RoundSetupDlg(self)
+        dialog.exec_()
+        
+    def OpenGroupRounds(self):
+        """Open Rounds (Group phase) window."""
+        dialog = GroupRoundSetupDlg(self)
+        dialog.exec_()
+        
+    def OpenKnockoutRounds(self):
+        """Open Rounds (Knockout phase) window."""
+        dialog = KnockoutRoundSetupDlg(self)
+        dialog.exec_()
+        
+    def OpenMatchdays(self):
+        """Open Matchdays (Knockout phase) window."""
+        dialog = MatchdaySetupDlg(self)
         dialog.exec_()
         
     def OpenTimeZones(self):
@@ -290,6 +325,17 @@ class MainSwitchboard(QMainWindow, ui_mainswitchboard.Ui_MainSwitchboard):
             MatchDetailErrorPrompt(self)
         else:        
             dialog = SwitchEntryDlg(self)
+            dialog.exec_()
+        
+    def OpenPenaltyShootouts(self):
+        """Opens Penalty Kick Shootouts window.
+        
+        Window opens only if there is at least one record in KnockoutMatches table.
+        """
+        if not CheckMinimumKnockoutMatches():
+            KnockoutMatchErrorPrompt(self)
+        else:
+            dialog = PenShootoutEntryDlg(self)
             dialog.exec_()
         
     def close(self):
