@@ -6,163 +6,60 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>580</width>
+    <width>920</width>
     <height>460</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>580</width>
+    <width>920</width>
     <height>460</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>580</width>
+    <width>920</width>
     <height>460</height>
    </size>
   </property>
   <property name="windowTitle">
    <string>Substitution Entry</string>
   </property>
-  <widget class="QWidget" name="layoutWidget_3">
+  <widget class="Line" name="line_2">
    <property name="geometry">
     <rect>
-     <x>20</x>
-     <y>400</y>
-     <width>361</width>
-     <height>41</height>
+     <x>0</x>
+     <y>180</y>
+     <width>921</width>
+     <height>16</height>
     </rect>
    </property>
-   <layout class="QHBoxLayout" name="horizontalLayout_2">
-    <item>
-     <widget class="QPushButton" name="firstEntry">
-      <property name="minimumSize">
-       <size>
-        <width>77</width>
-        <height>27</height>
-       </size>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>77</width>
-        <height>27</height>
-       </size>
-      </property>
-      <property name="toolTip">
-       <string>First Entry</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="icon">
-       <iconset resource="fmrd_resources.qrc">
-        <normaloff>:/images/first.png</normaloff>:/images/first.png</iconset>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QPushButton" name="prevEntry">
-      <property name="minimumSize">
-       <size>
-        <width>77</width>
-        <height>27</height>
-       </size>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>77</width>
-        <height>27</height>
-       </size>
-      </property>
-      <property name="toolTip">
-       <string>Previous Entry</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="icon">
-       <iconset resource="fmrd_resources.qrc">
-        <normaloff>:/images/prev.png</normaloff>:/images/prev.png</iconset>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QPushButton" name="nextEntry">
-      <property name="minimumSize">
-       <size>
-        <width>77</width>
-        <height>27</height>
-       </size>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>77</width>
-        <height>27</height>
-       </size>
-      </property>
-      <property name="toolTip">
-       <string>Next Entry</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="icon">
-       <iconset resource="fmrd_resources.qrc">
-        <normaloff>:/images/next.png</normaloff>:/images/next.png</iconset>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QPushButton" name="lastEntry">
-      <property name="minimumSize">
-       <size>
-        <width>77</width>
-        <height>27</height>
-       </size>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>77</width>
-        <height>27</height>
-       </size>
-      </property>
-      <property name="toolTip">
-       <string>Last Entry</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="icon">
-       <iconset resource="fmrd_resources.qrc">
-        <normaloff>:/images/last.png</normaloff>:/images/last.png</iconset>
-      </property>
-     </widget>
-    </item>
-   </layout>
+   <property name="orientation">
+    <enum>Qt::Horizontal</enum>
+   </property>
   </widget>
-  <widget class="QWidget" name="layoutWidget_4">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>6</y>
-     <width>451</width>
-     <height>121</height>
+     <y>0</y>
+     <width>851</width>
+     <height>51</height>
     </rect>
    </property>
-   <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="0">
+   <layout class="QHBoxLayout" name="horizontalLayout_3">
+    <item>
      <widget class="QLabel" name="label">
       <property name="minimumSize">
        <size>
-        <width>101</width>
-        <height>31</height>
+        <width>105</width>
+        <height>30</height>
        </size>
       </property>
       <property name="maximumSize">
        <size>
-        <width>101</width>
-        <height>31</height>
+        <width>105</width>
+        <height>30</height>
        </size>
       </property>
       <property name="text">
@@ -174,34 +71,50 @@ p, li { white-space: pre-wrap; }
       </property>
      </widget>
     </item>
-    <item row="0" column="1">
+    <item>
      <widget class="QComboBox" name="compSelect">
       <property name="minimumSize">
        <size>
-        <width>331</width>
-        <height>31</height>
+        <width>330</width>
+        <height>30</height>
        </size>
       </property>
       <property name="maximumSize">
        <size>
-        <width>331</width>
-        <height>31</height>
+        <width>330</width>
+        <height>30</height>
        </size>
+      </property>
+      <property name="toolTip">
+       <string>Competition Name</string>
       </property>
      </widget>
     </item>
-    <item row="1" column="0">
-     <widget class="QLabel" name="label_2">
+    <item>
+     <spacer name="horizontalSpacer_2">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>118</width>
+        <height>20</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_11">
       <property name="minimumSize">
        <size>
-        <width>101</width>
-        <height>31</height>
+        <width>50</width>
+        <height>30</height>
        </size>
       </property>
       <property name="maximumSize">
        <size>
-        <width>101</width>
-        <height>31</height>
+        <width>50</width>
+        <height>30</height>
        </size>
       </property>
       <property name="text">
@@ -209,62 +122,26 @@ p, li { white-space: pre-wrap; }
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Round&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Phase&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
      </widget>
     </item>
-    <item row="1" column="1">
-     <widget class="QComboBox" name="roundSelect">
+    <item>
+     <widget class="QComboBox" name="phaseSelect">
       <property name="minimumSize">
        <size>
-        <width>171</width>
-        <height>31</height>
+        <width>180</width>
+        <height>30</height>
        </size>
       </property>
       <property name="maximumSize">
        <size>
-        <width>171</width>
-        <height>31</height>
+        <width>180</width>
+        <height>30</height>
        </size>
       </property>
-     </widget>
-    </item>
-    <item row="2" column="0">
-     <widget class="QLabel" name="label_3">
-      <property name="minimumSize">
-       <size>
-        <width>101</width>
-        <height>31</height>
-       </size>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>101</width>
-        <height>31</height>
-       </size>
-      </property>
-      <property name="text">
-       <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Match&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-      </property>
-     </widget>
-    </item>
-    <item row="2" column="1">
-     <widget class="QComboBox" name="matchSelect">
-      <property name="minimumSize">
-       <size>
-        <width>331</width>
-        <height>31</height>
-       </size>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>331</width>
-        <height>31</height>
-       </size>
+      <property name="toolTip">
+       <string>Competition Phase</string>
       </property>
      </widget>
     </item>
@@ -273,9 +150,9 @@ p, li { white-space: pre-wrap; }
   <widget class="Line" name="line">
    <property name="geometry">
     <rect>
-     <x>20</x>
-     <y>130</y>
-     <width>451</width>
+     <x>0</x>
+     <y>50</y>
+     <width>921</width>
      <height>16</height>
     </rect>
    </property>
@@ -283,41 +160,404 @@ p, li { white-space: pre-wrap; }
     <enum>Qt::Horizontal</enum>
    </property>
   </widget>
-  <widget class="Line" name="line_2">
+  <widget class="QFrame" name="frame_2">
    <property name="geometry">
     <rect>
-     <x>460</x>
-     <y>10</y>
-     <width>20</width>
-     <height>381</height>
+     <x>500</x>
+     <y>400</y>
+     <width>411</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>411</width>
+     <height>51</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>411</width>
+     <height>51</height>
+    </size>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::StyledPanel</enum>
+   </property>
+   <property name="frameShadow">
+    <enum>QFrame::Raised</enum>
+   </property>
+   <widget class="QPushButton" name="addEntry">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>10</y>
+      <width>90</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>90</width>
+      <height>30</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>90</width>
+      <height>30</height>
+     </size>
+    </property>
+    <property name="toolTip">
+     <string>Add Entry</string>
+    </property>
+    <property name="text">
+     <string>&amp;Add</string>
+    </property>
+    <property name="icon">
+     <iconset resource="fmrd_resources.qrc">
+      <normaloff>:/images/add.png</normaloff>:/images/add.png</iconset>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="deleteEntry">
+    <property name="geometry">
+     <rect>
+      <x>210</x>
+      <y>10</y>
+      <width>90</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>90</width>
+      <height>30</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>90</width>
+      <height>30</height>
+     </size>
+    </property>
+    <property name="toolTip">
+     <string>Delete Entry</string>
+    </property>
+    <property name="text">
+     <string>&amp;Delete</string>
+    </property>
+    <property name="icon">
+     <iconset resource="fmrd_resources.qrc">
+      <normaloff>:/images/delete.png</normaloff>:/images/delete.png</iconset>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="saveEntry">
+    <property name="geometry">
+     <rect>
+      <x>110</x>
+      <y>10</y>
+      <width>90</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>90</width>
+      <height>30</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>90</width>
+      <height>30</height>
+     </size>
+    </property>
+    <property name="toolTip">
+     <string>Save Entry</string>
+    </property>
+    <property name="text">
+     <string>&amp;Save</string>
+    </property>
+    <property name="icon">
+     <iconset resource="fmrd_resources.qrc">
+      <normaloff>:/images/save.png</normaloff>:/images/save.png</iconset>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="closeButton">
+    <property name="geometry">
+     <rect>
+      <x>310</x>
+      <y>10</y>
+      <width>90</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>90</width>
+      <height>30</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>90</width>
+      <height>30</height>
+     </size>
+    </property>
+    <property name="toolTip">
+     <string>Close Window</string>
+    </property>
+    <property name="text">
+     <string>&amp;Close</string>
+    </property>
+    <property name="icon">
+     <iconset resource="fmrd_resources.qrc">
+      <normaloff>:/images/quit.png</normaloff>:/images/quit.png</iconset>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QFrame" name="frame">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>400</y>
+     <width>411</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>411</width>
+     <height>51</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>411</width>
+     <height>51</height>
+    </size>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::StyledPanel</enum>
+   </property>
+   <property name="frameShadow">
+    <enum>QFrame::Raised</enum>
+   </property>
+   <widget class="QPushButton" name="firstEntry">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>10</y>
+      <width>90</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>90</width>
+      <height>30</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>90</width>
+      <height>30</height>
+     </size>
+    </property>
+    <property name="toolTip">
+     <string>First Entry</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="fmrd_resources.qrc">
+      <normaloff>:/images/first.png</normaloff>:/images/first.png</iconset>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="prevEntry">
+    <property name="geometry">
+     <rect>
+      <x>110</x>
+      <y>10</y>
+      <width>90</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>90</width>
+      <height>30</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>90</width>
+      <height>30</height>
+     </size>
+    </property>
+    <property name="toolTip">
+     <string>Previous Entry</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="fmrd_resources.qrc">
+      <normaloff>:/images/prev.png</normaloff>:/images/prev.png</iconset>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="nextEntry">
+    <property name="geometry">
+     <rect>
+      <x>210</x>
+      <y>10</y>
+      <width>90</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>90</width>
+      <height>30</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>90</width>
+      <height>30</height>
+     </size>
+    </property>
+    <property name="toolTip">
+     <string>Next Entry</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="fmrd_resources.qrc">
+      <normaloff>:/images/next.png</normaloff>:/images/next.png</iconset>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="lastEntry">
+    <property name="geometry">
+     <rect>
+      <x>310</x>
+      <y>10</y>
+      <width>90</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>90</width>
+      <height>30</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>90</width>
+      <height>30</height>
+     </size>
+    </property>
+    <property name="toolTip">
+     <string>Last Entry</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="fmrd_resources.qrc">
+      <normaloff>:/images/last.png</normaloff>:/images/last.png</iconset>
+    </property>
+   </widget>
+  </widget>
+  <widget class="Line" name="line_3">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>380</y>
+     <width>921</width>
+     <height>16</height>
     </rect>
    </property>
    <property name="orientation">
-    <enum>Qt::Vertical</enum>
+    <enum>Qt::Horizontal</enum>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_3">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>200</y>
+     <width>105</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>105</width>
+     <height>30</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>105</width>
+     <height>30</height>
+    </size>
+   </property>
+   <property name="text">
+    <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Match&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="matchSelect">
+   <property name="geometry">
+    <rect>
+     <x>120</x>
+     <y>200</y>
+     <width>330</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>330</width>
+     <height>30</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>330</width>
+     <height>30</height>
+    </size>
    </property>
   </widget>
   <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>150</y>
-     <width>391</width>
-     <height>241</height>
+     <y>240</y>
+     <width>891</width>
+     <height>141</height>
     </rect>
    </property>
-   <layout class="QGridLayout" name="gridLayout_2">
+   <layout class="QGridLayout" name="gridLayout">
     <item row="0" column="0">
      <widget class="QLabel" name="label_4">
       <property name="minimumSize">
        <size>
-        <width>101</width>
-        <height>31</height>
+        <width>105</width>
+        <height>30</height>
        </size>
       </property>
       <property name="maximumSize">
        <size>
-        <width>101</width>
-        <height>31</height>
+        <width>105</width>
+        <height>30</height>
        </size>
       </property>
       <property name="text">
@@ -331,10 +571,16 @@ p, li { white-space: pre-wrap; }
     </item>
     <item row="0" column="1">
      <widget class="QLineEdit" name="subsID_display">
+      <property name="minimumSize">
+       <size>
+        <width>120</width>
+        <height>30</height>
+       </size>
+      </property>
       <property name="maximumSize">
        <size>
         <width>120</width>
-        <height>27</height>
+        <height>30</height>
        </size>
       </property>
       <property name="styleSheet">
@@ -348,18 +594,18 @@ p, li { white-space: pre-wrap; }
       </property>
      </widget>
     </item>
-    <item row="1" column="0">
+    <item row="0" column="3">
      <widget class="QLabel" name="label_5">
       <property name="minimumSize">
        <size>
-        <width>101</width>
-        <height>31</height>
+        <width>105</width>
+        <height>30</height>
        </size>
       </property>
       <property name="maximumSize">
        <size>
-        <width>101</width>
-        <height>31</height>
+        <width>105</width>
+        <height>30</height>
        </size>
       </property>
       <property name="text">
@@ -371,18 +617,18 @@ p, li { white-space: pre-wrap; }
       </property>
      </widget>
     </item>
-    <item row="1" column="1" colspan="2">
+    <item row="0" column="4">
      <widget class="QComboBox" name="teamSelect">
       <property name="minimumSize">
        <size>
-        <width>261</width>
-        <height>31</height>
+        <width>270</width>
+        <height>30</height>
        </size>
       </property>
       <property name="maximumSize">
        <size>
-        <width>261</width>
-        <height>31</height>
+        <width>270</width>
+        <height>30</height>
        </size>
       </property>
       <property name="toolTip">
@@ -390,18 +636,18 @@ p, li { white-space: pre-wrap; }
       </property>
      </widget>
     </item>
-    <item row="2" column="0">
+    <item row="1" column="0">
      <widget class="QLabel" name="label_10">
       <property name="minimumSize">
        <size>
-        <width>101</width>
-        <height>31</height>
+        <width>105</width>
+        <height>30</height>
        </size>
       </property>
       <property name="maximumSize">
        <size>
-        <width>101</width>
-        <height>31</height>
+        <width>105</width>
+        <height>30</height>
        </size>
       </property>
       <property name="text">
@@ -413,18 +659,18 @@ p, li { white-space: pre-wrap; }
       </property>
      </widget>
     </item>
-    <item row="2" column="1" colspan="2">
+    <item row="1" column="1" colspan="2">
      <widget class="QComboBox" name="outplayerSelect">
       <property name="minimumSize">
        <size>
-        <width>231</width>
-        <height>31</height>
+        <width>270</width>
+        <height>30</height>
        </size>
       </property>
       <property name="maximumSize">
        <size>
-        <width>231</width>
-        <height>31</height>
+        <width>270</width>
+        <height>30</height>
        </size>
       </property>
       <property name="toolTip">
@@ -432,18 +678,18 @@ p, li { white-space: pre-wrap; }
       </property>
      </widget>
     </item>
-    <item row="3" column="0">
+    <item row="1" column="3">
      <widget class="QLabel" name="label_7">
       <property name="minimumSize">
        <size>
-        <width>101</width>
-        <height>31</height>
+        <width>105</width>
+        <height>30</height>
        </size>
       </property>
       <property name="maximumSize">
        <size>
-        <width>101</width>
-        <height>31</height>
+        <width>105</width>
+        <height>30</height>
        </size>
       </property>
       <property name="text">
@@ -455,18 +701,18 @@ p, li { white-space: pre-wrap; }
       </property>
      </widget>
     </item>
-    <item row="3" column="1" colspan="2">
+    <item row="1" column="4">
      <widget class="QComboBox" name="inplayerSelect">
       <property name="minimumSize">
        <size>
-        <width>231</width>
-        <height>31</height>
+        <width>270</width>
+        <height>30</height>
        </size>
       </property>
       <property name="maximumSize">
        <size>
-        <width>231</width>
-        <height>31</height>
+        <width>270</width>
+        <height>30</height>
        </size>
       </property>
       <property name="toolTip">
@@ -474,18 +720,18 @@ p, li { white-space: pre-wrap; }
       </property>
      </widget>
     </item>
-    <item row="4" column="0">
+    <item row="2" column="0">
      <widget class="QLabel" name="label_8">
       <property name="minimumSize">
        <size>
-        <width>101</width>
-        <height>31</height>
+        <width>105</width>
+        <height>30</height>
        </size>
       </property>
       <property name="maximumSize">
        <size>
-        <width>101</width>
-        <height>31</height>
+        <width>105</width>
+        <height>30</height>
        </size>
       </property>
       <property name="text">
@@ -497,30 +743,30 @@ p, li { white-space: pre-wrap; }
       </property>
      </widget>
     </item>
-    <item row="4" column="1">
+    <item row="2" column="1">
      <layout class="QHBoxLayout" name="horizontalLayout">
       <item>
        <widget class="QLineEdit" name="subtimeEdit">
         <property name="minimumSize">
          <size>
-          <width>41</width>
-          <height>27</height>
+          <width>45</width>
+          <height>30</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>41</width>
-          <height>27</height>
+          <width>45</width>
+          <height>30</height>
          </size>
         </property>
         <property name="toolTip">
          <string>Match time</string>
         </property>
         <property name="inputMask">
-         <string>00; </string>
+         <string/>
         </property>
         <property name="maxLength">
-         <number>2</number>
+         <number>3</number>
         </property>
        </widget>
       </item>
@@ -539,21 +785,21 @@ p, li { white-space: pre-wrap; }
        <widget class="QLineEdit" name="stoppageEdit">
         <property name="minimumSize">
          <size>
-          <width>41</width>
-          <height>27</height>
+          <width>45</width>
+          <height>30</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>41</width>
-          <height>27</height>
+          <width>45</width>
+          <height>30</height>
          </size>
         </property>
         <property name="toolTip">
          <string>Stoppage time</string>
         </property>
         <property name="inputMask">
-         <string>00; </string>
+         <string/>
         </property>
         <property name="maxLength">
          <number>2</number>
@@ -562,14 +808,27 @@ p, li { white-space: pre-wrap; }
       </item>
      </layout>
     </item>
-    <item row="4" column="2">
+    <item row="2" column="2">
      <spacer name="horizontalSpacer">
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
       </property>
       <property name="sizeHint" stdset="0">
        <size>
-        <width>138</width>
+        <width>178</width>
+        <height>20</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item row="2" column="3" colspan="2">
+     <spacer name="horizontalSpacer_3">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>388</width>
         <height>20</height>
        </size>
       </property>
@@ -580,128 +839,392 @@ p, li { white-space: pre-wrap; }
   <widget class="QWidget" name="layoutWidget_2">
    <property name="geometry">
     <rect>
-     <x>480</x>
-     <y>150</y>
-     <width>91</width>
-     <height>241</height>
+     <x>10</x>
+     <y>60</y>
+     <width>871</width>
+     <height>131</height>
     </rect>
    </property>
-   <layout class="QVBoxLayout" name="verticalLayout">
-    <item>
-     <widget class="QPushButton" name="addEntry">
+   <layout class="QGridLayout" name="gridLayout_2">
+    <item row="0" column="0">
+     <widget class="QGroupBox" name="leagueBox">
       <property name="minimumSize">
        <size>
-        <width>80</width>
-        <height>33</height>
+        <width>270</width>
+        <height>60</height>
        </size>
       </property>
       <property name="maximumSize">
        <size>
-        <width>80</width>
-        <height>33</height>
+        <width>270</width>
+        <height>60</height>
        </size>
       </property>
-      <property name="toolTip">
-       <string>Add Entry</string>
+      <property name="title">
+       <string>League Phase</string>
       </property>
-      <property name="text">
-       <string>&amp;Add</string>
-      </property>
-      <property name="icon">
-       <iconset resource="fmrd_resources.qrc">
-        <normaloff>:/images/add.png</normaloff>:/images/add.png</iconset>
-      </property>
+      <widget class="QLabel" name="label_2">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>20</y>
+         <width>50</width>
+         <height>30</height>
+        </rect>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>50</width>
+         <height>30</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>50</width>
+         <height>30</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Round&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+      </widget>
+      <widget class="QComboBox" name="lgRoundSelect">
+       <property name="geometry">
+        <rect>
+         <x>80</x>
+         <y>20</y>
+         <width>180</width>
+         <height>30</height>
+        </rect>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>180</width>
+         <height>30</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>180</width>
+         <height>30</height>
+        </size>
+       </property>
+       <property name="toolTip">
+        <string>League Round</string>
+       </property>
+      </widget>
      </widget>
     </item>
-    <item>
-     <widget class="QPushButton" name="deleteEntry">
+    <item row="0" column="1">
+     <widget class="QGroupBox" name="knockoutBox">
       <property name="minimumSize">
        <size>
-        <width>80</width>
-        <height>33</height>
+        <width>330</width>
+        <height>60</height>
        </size>
       </property>
       <property name="maximumSize">
        <size>
-        <width>80</width>
-        <height>33</height>
+        <width>585</width>
+        <height>100</height>
        </size>
       </property>
-      <property name="toolTip">
-       <string>Delete Entry</string>
+      <property name="title">
+       <string>Knockout Phase</string>
       </property>
-      <property name="text">
-       <string>&amp;Delete</string>
-      </property>
-      <property name="icon">
-       <iconset resource="fmrd_resources.qrc">
-        <normaloff>:/images/delete.png</normaloff>:/images/delete.png</iconset>
-      </property>
+      <widget class="QLabel" name="label_12">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>20</y>
+         <width>50</width>
+         <height>30</height>
+        </rect>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>50</width>
+         <height>30</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>50</width>
+         <height>30</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Round&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+      </widget>
+      <widget class="QComboBox" name="koRoundSelect">
+       <property name="geometry">
+        <rect>
+         <x>60</x>
+         <y>20</y>
+         <width>240</width>
+         <height>30</height>
+        </rect>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>240</width>
+         <height>30</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>240</width>
+         <height>30</height>
+        </size>
+       </property>
+       <property name="toolTip">
+        <string>Knockout Round</string>
+       </property>
+      </widget>
+      <widget class="QComboBox" name="koMatchdaySelect">
+       <property name="geometry">
+        <rect>
+         <x>390</x>
+         <y>20</y>
+         <width>180</width>
+         <height>30</height>
+        </rect>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>180</width>
+         <height>30</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>180</width>
+         <height>30</height>
+        </size>
+       </property>
+       <property name="toolTip">
+        <string>Knockout Round Matchday</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_13">
+       <property name="geometry">
+        <rect>
+         <x>310</x>
+         <y>20</y>
+         <width>75</width>
+         <height>30</height>
+        </rect>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>75</width>
+         <height>30</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>75</width>
+         <height>30</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Matchday&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+      </widget>
      </widget>
     </item>
-    <item>
-     <widget class="QPushButton" name="saveEntry">
+    <item row="1" column="0" colspan="2">
+     <widget class="QGroupBox" name="groupBox">
       <property name="minimumSize">
        <size>
-        <width>80</width>
-        <height>33</height>
+        <width>280</width>
+        <height>50</height>
        </size>
       </property>
       <property name="maximumSize">
        <size>
-        <width>80</width>
-        <height>33</height>
+        <width>940</width>
+        <height>100</height>
        </size>
       </property>
-      <property name="toolTip">
-       <string>Delete Entry</string>
+      <property name="title">
+       <string>Group Phase</string>
       </property>
-      <property name="text">
-       <string>&amp;Save</string>
-      </property>
-      <property name="icon">
-       <iconset resource="fmrd_resources.qrc">
-        <normaloff>:/images/save.png</normaloff>:/images/save.png</iconset>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <spacer name="verticalSpacer_2">
-      <property name="orientation">
-       <enum>Qt::Vertical</enum>
-      </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>20</width>
-        <height>168</height>
-       </size>
-      </property>
-     </spacer>
-    </item>
-    <item>
-     <widget class="QPushButton" name="closeButton">
-      <property name="minimumSize">
-       <size>
-        <width>80</width>
-        <height>33</height>
-       </size>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>80</width>
-        <height>33</height>
-       </size>
-      </property>
-      <property name="toolTip">
-       <string>Close Window</string>
-      </property>
-      <property name="text">
-       <string>&amp;Close</string>
-      </property>
-      <property name="icon">
-       <iconset resource="fmrd_resources.qrc">
-        <normaloff>:/images/quit.png</normaloff>:/images/quit.png</iconset>
-      </property>
+      <widget class="QLabel" name="label_14">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>20</y>
+         <width>50</width>
+         <height>30</height>
+        </rect>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>50</width>
+         <height>30</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>50</width>
+         <height>30</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Round&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+      </widget>
+      <widget class="QComboBox" name="grpRoundSelect">
+       <property name="geometry">
+        <rect>
+         <x>80</x>
+         <y>20</y>
+         <width>240</width>
+         <height>30</height>
+        </rect>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>240</width>
+         <height>30</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>240</width>
+         <height>30</height>
+        </size>
+       </property>
+       <property name="toolTip">
+        <string>Group Phase Round</string>
+       </property>
+      </widget>
+      <widget class="QComboBox" name="grpMatchdaySelect">
+       <property name="geometry">
+        <rect>
+         <x>670</x>
+         <y>20</y>
+         <width>180</width>
+         <height>30</height>
+        </rect>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>180</width>
+         <height>30</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>180</width>
+         <height>30</height>
+        </size>
+       </property>
+       <property name="toolTip">
+        <string>Group Round Matchday</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_16">
+       <property name="geometry">
+        <rect>
+         <x>590</x>
+         <y>20</y>
+         <width>75</width>
+         <height>30</height>
+        </rect>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>75</width>
+         <height>30</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>75</width>
+         <height>30</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Matchday&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+      </widget>
+      <widget class="QComboBox" name="groupSelect">
+       <property name="geometry">
+        <rect>
+         <x>450</x>
+         <y>20</y>
+         <width>60</width>
+         <height>30</height>
+        </rect>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>60</width>
+         <height>30</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>60</width>
+         <height>30</height>
+        </size>
+       </property>
+       <property name="toolTip">
+        <string>Group Name</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_15">
+       <property name="geometry">
+        <rect>
+         <x>400</x>
+         <y>20</y>
+         <width>50</width>
+         <height>30</height>
+        </rect>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>50</width>
+         <height>30</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>50</width>
+         <height>30</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Group&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+      </widget>
      </widget>
     </item>
    </layout>

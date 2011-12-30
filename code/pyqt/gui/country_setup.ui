@@ -320,7 +320,7 @@ p, li { white-space: pre-wrap; }
     </item>
    </layout>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>410</x>
@@ -357,6 +357,32 @@ p, li { white-space: pre-wrap; }
      </widget>
     </item>
     <item>
+     <widget class="QPushButton" name="saveEntry">
+      <property name="minimumSize">
+       <size>
+        <width>85</width>
+        <height>33</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>85</width>
+        <height>33</height>
+       </size>
+      </property>
+      <property name="toolTip">
+       <string>Save Entry</string>
+      </property>
+      <property name="text">
+       <string>&amp;Save</string>
+      </property>
+      <property name="icon">
+       <iconset resource="fmrd_resources.qrc">
+        <normaloff>:/images/save.png</normaloff>:/images/save.png</iconset>
+      </property>
+     </widget>
+    </item>
+    <item>
      <widget class="QPushButton" name="deleteEntry">
       <property name="minimumSize">
        <size>
@@ -379,32 +405,6 @@ p, li { white-space: pre-wrap; }
       <property name="icon">
        <iconset resource="fmrd_resources.qrc">
         <normaloff>:/images/delete.png</normaloff>:/images/delete.png</iconset>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QPushButton" name="saveEntry">
-      <property name="minimumSize">
-       <size>
-        <width>85</width>
-        <height>33</height>
-       </size>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>85</width>
-        <height>33</height>
-       </size>
-      </property>
-      <property name="toolTip">
-       <string>Delete Entry</string>
-      </property>
-      <property name="text">
-       <string>&amp;Save</string>
-      </property>
-      <property name="icon">
-       <iconset resource="fmrd_resources.qrc">
-        <normaloff>:/images/save.png</normaloff>:/images/save.png</iconset>
       </property>
      </widget>
     </item>

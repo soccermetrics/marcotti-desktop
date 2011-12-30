@@ -6,19 +6,19 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>360</width>
+    <width>420</width>
     <height>420</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>360</width>
+    <width>420</width>
     <height>420</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>360</width>
+    <width>420</width>
     <height>420</height>
    </size>
   </property>
@@ -45,13 +45,13 @@
           <widget class="QPushButton" name="compButton">
            <property name="minimumSize">
             <size>
-             <width>140</width>
+             <width>150</width>
              <height>30</height>
             </size>
            </property>
            <property name="maximumSize">
             <size>
-             <width>140</width>
+             <width>150</width>
              <height>30</height>
             </size>
            </property>
@@ -64,13 +64,13 @@
           <widget class="QPushButton" name="venueButton">
            <property name="minimumSize">
             <size>
-             <width>140</width>
+             <width>150</width>
              <height>30</height>
             </size>
            </property>
            <property name="maximumSize">
             <size>
-             <width>140</width>
+             <width>150</width>
              <height>30</height>
             </size>
            </property>
@@ -108,13 +108,13 @@
           <widget class="QPushButton" name="playerButton">
            <property name="minimumSize">
             <size>
-             <width>140</width>
+             <width>150</width>
              <height>30</height>
             </size>
            </property>
            <property name="maximumSize">
             <size>
-             <width>140</width>
+             <width>150</width>
              <height>30</height>
             </size>
            </property>
@@ -127,13 +127,13 @@
           <widget class="QPushButton" name="refereeButton">
            <property name="minimumSize">
             <size>
-             <width>140</width>
+             <width>150</width>
              <height>30</height>
             </size>
            </property>
            <property name="maximumSize">
             <size>
-             <width>140</width>
+             <width>150</width>
              <height>30</height>
             </size>
            </property>
@@ -146,13 +146,13 @@
           <widget class="QPushButton" name="managerButton">
            <property name="minimumSize">
             <size>
-             <width>140</width>
+             <width>150</width>
              <height>30</height>
             </size>
            </property>
            <property name="maximumSize">
             <size>
-             <width>140</width>
+             <width>150</width>
              <height>30</height>
             </size>
            </property>
@@ -166,14 +166,7 @@
       </item>
      </layout>
     </item>
-    <item row="0" column="1">
-     <widget class="Line" name="line">
-      <property name="orientation">
-       <enum>Qt::Vertical</enum>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="2">
+    <item row="0" column="3">
      <widget class="QGroupBox" name="groupBox_3">
       <property name="title">
        <string>Match Details</string>
@@ -183,13 +176,13 @@
         <widget class="QPushButton" name="matchButton">
          <property name="minimumSize">
           <size>
-           <width>140</width>
+           <width>150</width>
            <height>30</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>140</width>
+           <width>150</width>
            <height>30</height>
           </size>
          </property>
@@ -202,13 +195,13 @@
         <widget class="QPushButton" name="goalButton">
          <property name="minimumSize">
           <size>
-           <width>140</width>
+           <width>150</width>
            <height>30</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>140</width>
+           <width>150</width>
            <height>30</height>
           </size>
          </property>
@@ -221,13 +214,13 @@
         <widget class="QPushButton" name="penButton">
          <property name="minimumSize">
           <size>
-           <width>140</width>
+           <width>150</width>
            <height>30</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>140</width>
+           <width>150</width>
            <height>30</height>
           </size>
          </property>
@@ -240,13 +233,13 @@
         <widget class="QPushButton" name="offenseButton">
          <property name="minimumSize">
           <size>
-           <width>140</width>
+           <width>150</width>
            <height>30</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>140</width>
+           <width>150</width>
            <height>30</height>
           </size>
          </property>
@@ -259,13 +252,13 @@
         <widget class="QPushButton" name="subButton">
          <property name="minimumSize">
           <size>
-           <width>140</width>
+           <width>150</width>
            <height>30</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>140</width>
+           <width>150</width>
            <height>30</height>
           </size>
          </property>
@@ -278,13 +271,13 @@
         <widget class="QPushButton" name="switchButton">
          <property name="minimumSize">
           <size>
-           <width>140</width>
+           <width>150</width>
            <height>30</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>140</width>
+           <width>150</width>
            <height>30</height>
           </size>
          </property>
@@ -293,7 +286,33 @@
          </property>
         </widget>
        </item>
+       <item>
+        <widget class="QPushButton" name="shootoutButton">
+         <property name="minimumSize">
+          <size>
+           <width>150</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>150</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Penalty Shootouts</string>
+         </property>
+        </widget>
+       </item>
       </layout>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="Line" name="line">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
      </widget>
     </item>
    </layout>
@@ -303,7 +322,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>360</width>
+     <width>420</width>
      <height>23</height>
     </rect>
    </property>
