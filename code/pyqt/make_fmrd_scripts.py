@@ -26,6 +26,8 @@ guiDir = "gui/"
 
 GuiMainList = ["competition_entry.ui",
             	 "enviro_entry.ui",
+            	 "fmrd_dbfile.ui",
+            	 "fmrd_drivers.ui",
             	 "fmrd_login.ui",
             	 "goal_entry.ui",
             	 "lineup_select.ui",
@@ -34,6 +36,7 @@ GuiMainList = ["competition_entry.ui",
             	 "match_entry.ui",
             	 "offense_entry.ui",
             	 "penalty_entry.ui",
+            	 "penshootout_entry.ui",
             	 "player_entry.ui",
             	 "playerhistory_entry.ui",
             	 "referee_entry.ui",
@@ -45,7 +48,9 @@ GuiMainList = ["competition_entry.ui",
             	 "venuehistory_entry.ui"]   
             
 MainList = ["ui_competitionentry.py",           		
-            "ui_enviroentry.py", 
+            "ui_enviroentry.py",
+            "ui_fmrddbfile.py",
+            "ui_fmrddrivers.py", 
             "ui_fmrdlogin.py", 
             "ui_goalentry.py", 
             "ui_lineupentry.py", 
@@ -54,6 +59,7 @@ MainList = ["ui_competitionentry.py",
             "ui_matchentry.py",
             "ui_offenseentry.py",
             "ui_penaltyentry.py",
+            "ui_penshootoutentry.py",
             "ui_playerentry.py", 
             "ui_playerhistoryentry.py",
             "ui_refereeentry.py",
@@ -72,7 +78,12 @@ GuiAdminList = ["card_setup.ui",
                 "fouls_setup.ui",
                 "goalevent_setup.ui",
                 "goalstrike_setup.ui",
+                "group_setup.ui",
+                "grpround_setup.ui",
+                "koround_setup.ui",
+                "matchday_setup.ui",
                 "penoutcome_setup.ui",
+                "phase_setup.ui",
                 "position_setup.ui",
                 "round_setup.ui",
                 "timezone_setup.ui",
@@ -86,8 +97,13 @@ AdminList = ["ui_cardsetup.py",
              "ui_flankpossetup.py",  
              "ui_foulsetup.py",  
              "ui_goaleventsetup.py",
-             "ui_goalstrikesetup.py",  
+             "ui_goalstrikesetup.py",
+             "ui_groupsetup.py",
+             "ui_grproundsetup.py",
+             "ui_koroundsetup.py",
+             "ui_matchdaysetup.py",               
              "ui_penoutcomesetup.py",  
+             "ui_phasesetup.py",
              "ui_positionsetup.py",  
              "ui_roundsetup.py",
              "ui_timezonesetup.py",  
@@ -99,7 +115,8 @@ resourceFile = "fmrd_resources_rc.py"
                    
 print "Autoencoding main UIs..."                   
 for mainFile,guiFile in zip(MainList,GuiMainList):
-	if os.path.getmtime(mainDir+mainFile) < os.path.getmtime(guiDir+guiFile):
+	if not os.path.isfile(mainDir+mainFile) or \
+	 os.path.getmtime(mainDir+mainFile) < os.path.getmtime(guiDir+guiFile):
 		print "Building %s" % mainFile
 		subprocess.call("pyuic4 -o "+mainDir+mainFile+" "+guiDir+guiFile,shell=True)
 	else:
@@ -107,7 +124,8 @@ for mainFile,guiFile in zip(MainList,GuiMainList):
 
 print "Autoencoding setup UIs..."
 for adminFile,guiFile in zip(AdminList,GuiAdminList):
-	if os.path.getmtime(adminDir+adminFile) < os.path.getmtime(guiDir+guiFile):
+	if not os.path.isfile(adminDir+adminFile) or \
+	 os.path.getmtime(adminDir+adminFile) < os.path.getmtime(guiDir+guiFile):
 		print "Building %s" % adminFile
 		subprocess.call("pyuic4 -o "+adminDir+adminFile+" "+guiDir+guiFile,shell=True)		
 	else:
@@ -115,7 +133,8 @@ for adminFile,guiFile in zip(AdminList,GuiAdminList):
 	
 print "Autoencoding resource files..."
 for localDir in (adminDir,mainDir):
-	if os.path.getmtime(localDir+resourceFile) < os.path.getmtime(guiDir+guiResourceFile):
+	if not os.path.isfile(localDir+resourceFile) or \
+	 os.path.getmtime(localDir+resourceFile) < os.path.getmtime(guiDir+guiResourceFile):
 		print "Building %s" % resourceFile
 		subprocess.call("pyrcc4 -o "+localDir+resourceFile+" "+guiDir+guiResourceFile,shell=True)		
 	else:
