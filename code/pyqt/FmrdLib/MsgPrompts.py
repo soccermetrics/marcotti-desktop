@@ -56,7 +56,12 @@ def MatchErrorPrompt(parent):
                          -- at least <b>ONE</b> entry in Venues table<br>
                          -- at least <b>TWO</b> entries in Managers table<br>
                          -- at least <b>ONE</b> entry in Referees table""", QMessageBox.Close)
-    
+
+def KnockoutMatchErrorPrompt(parent):
+    """Displays pop-up message box to alert user of insufficient number of entries in KnockoutMatches table."""
+    QMessageBox.critical(parent, "Insufficient Knockout Match Table", 
+                         """You need at least <b>ONE</b> entry in Knockout Matches table""", QMessageBox.Close)
+
 def MatchDetailErrorPrompt(parent):
     """Displays pop-up message box to alert user of insufficient data in Lineup table."""
     QMessageBox.critical(parent, "Insufficient Lineup Table", 
@@ -70,7 +75,7 @@ def LineupErrorPrompt(parent):
                          """You need exactly <b>11</b> starting players in the team lineup, of which<br>
                          <b>ONE</b> is designated captain<br>
                          <b>ONE</b> is designated goalkeeper""", QMessageBox.Close)
-                         
+
 def DeletionErrorPrompt(parent):
     """Displays pop-up message box to alert user of existing records that depend on parent record to be deleted."""
     QMessageBox.critical(parent, "Cannot Delete Record", 

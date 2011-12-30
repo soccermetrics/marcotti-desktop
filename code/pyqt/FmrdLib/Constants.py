@@ -23,8 +23,8 @@
 # Software version
 # #############
 
-DATAENTRY_VERSION = "1.2.0"
-SQL_VERSION = "1.2.1"
+DATAENTRY_VERSION = "1.4.0"
+SQL_VERSION = "1.4.0a"
 
 # #############
 # Table IDs
@@ -49,6 +49,7 @@ MinMatchID        = "1000000"
 MinPenaltyID      = "10000"
 MinGoalID         = "100000"
 MinOffenseID      = "100000"
+MinShootoutID     = "100000"
 MinSubstitutionID = "100000"
 MinSwitchID       = "100000"
 
@@ -57,19 +58,29 @@ MinCardID             = "1"
 MinFieldID             = "1"
 MinFlankID            = "1"
 MinGoalStrikeID     = "1"
+MinMatchdayID      = "1"
+MinPhaseID            = "1"
 MinPenOutcomeID = "1"
 MinSurfaceID         = "1"
 MinConfedID          = "10"
 MinFoulID              = "10"
 MinGoalEventID     = "10"
-MinPositionID         = "10"
-MinRoundID           = "10"
-MinWeatherID        = "10"
-MinCountryID         = "100"
+MinGroupID           = "10"
+MinGroupRoundID = "10"
+MinKnockoutRoundID = "10"
+MinPositionID        = "10"
+MinRoundID          = "10"
+MinWeatherID       = "10"
+MinCountryID        = "100"
+
 
 # #############
 # Constants
 # #############
+
+# database type definition
+SQLITE = 1
+POSTGRES = 2
 
 # switchboard type definition
 USER = 1
@@ -92,8 +103,16 @@ MIN_REFEREES = 1
 # Define minimum number of entities
 MIN_VENUES = 1
 MIN_COMPETITIONS = 1
+MIN_KNOCKOUT_MATCHES = 1
 
 # Define maximum number of entities for a team lineup
 MAX_TEAM_STARTERS = 11
 MAX_TEAM_STARTING_CAPTAINS = 1
 MAX_TEAM_STARTING_GOALKEEPERS = 1
+
+# Define maximum match time
+MAX_MINUTES = 90
+MAX_KO_MINUTES = 120
+
+# Define maximum participation in penalty shootout
+MAX_PARTICIPATION = 2

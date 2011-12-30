@@ -26,7 +26,12 @@ from PyQt4.QtSql import *
 Classes:
 SqlRelationalProxyModel - proxy model for SQL relational table models
 LinkingSqlModel -- base editable linking table model
+
+GroupLinkingModel -- implement GroupMatches table
+KnockoutLinkingModel -- implement KnockoutMatches table
+LeagueLinkingModel -- implement LeagueMatches table
 ManagerLinkingModel -- implement HomeManagers and AwayManagers tables
+ShootoutLinkingModel -- implement ShootoutOpeners table
 SubstituteLinkingModel -- implement InSubstitutions and OutSubstitutions tables
 TeamLinkingModel -- implement HomeTeams and AwayTeams tables
 WeatherLinkingModel -- implement KickoffWeather, HalftimeWeather, and FulltimeWeather tables
@@ -74,12 +79,11 @@ class LinkingSqlModel(QSqlQueryModel):
     def __init__(self, parent=None):
         """Constructor for LinkingSqlModel class."""
         super(LinkingSqlModel, self).__init__(parent)
-#        print "Calling init() in LinkingSqlModel"
         
     def flags(self, index):
-        """Defines item flags for index.  Make second element in table record editable."""
+        """Defines item flags for index.  Make all columns besides first in database table editable. """
         flags = QSqlQueryModel.flags(index)
-        if index.column() == 1:
+        if index.column() != 0:
             flags |= Qt.ItemIsEditable
         
         return flags
@@ -91,8 +95,6 @@ class LinkingSqlModel(QSqlQueryModel):
     def setData(self, index, value):
         """Sets role data at index with value.  Calls setCompositeKey()."""
         ok = False
-#        print "Calling setData() in LinkingSqlModel"
-#        print "%d  %d" % (index.row(),  index.column())
         ok = self.setCompositeKey(index,  self.primary_id, value.toString())
         self.refresh()
         return ok
@@ -100,7 +102,7 @@ class LinkingSqlModel(QSqlQueryModel):
     def delete(self, primary_id):
         """Deletes row with primary_id from the linking model.
         
-        This function always return False; must be implemented by subclass.
+        This function always returns False; must be implemented by subclass.
         Arguments:
             primary_id - key ID in linking table
         """
@@ -111,10 +113,265 @@ class LinkingSqlModel(QSqlQueryModel):
         This method returns false in class definition, must be implemented by subclass.
         
         """
-#        print "Calling base setCompositeKey()"
         return False
+
+
+class GroupLinkingModel(LinkingSqlModel):
+    """Implements linking model for matches played in the group phase of a football competition.
+    
+    Argument:
+    tbl_name - SQL table name
         
+    """
+    
+    def __init__(self, tbl_name, parent=None):
+        """Constructor for GroupLinkingModel class."""
+        super(GroupLinkingModel, self).__init__(parent)
         
+        self.table = tbl_name
+        self.primary_id = parent.matchID_display.text()
+        self.grpround_id = QString()
+        self.group_id = QString()
+        self.round_id = QString()
+        self.calls = 0
+        self.setQuery(QString("SELECT match_id, grpround_id, group_id, round_id FROM %1 WHERE match_id = %2"
+                              ).arg(self.table).arg(self.primary_id))
+        
+    def refresh(self):
+        """Refreshes query model."""
+        self.setQuery(QString("SELECT match_id, grpround_id, group_id, round_id FROM %1 WHERE match_id = %2"
+                              ).arg(self.table).arg(self.primary_id))
+    
+    def resetID(self):
+        """Resets member variables in class."""
+        self.grpround_id = QString()
+        self.group_id = QString()
+        self.round_id = QString()
+        self.calls = 0
+        
+    def setData(self, index, value):
+        """Sets role data at index with value.  Calls setXXX().
+        
+        This function must be called in order of the fields defined
+        in the database table.        
+        """
+        if self.calls == 0:
+            self.grpround_id = value
+            self.calls += 1
+        elif self.calls == 1:
+            self.group_id = value
+            self.calls += 1
+        elif self.calls == 2:
+            self.round_id = value
+            self.calls += 1
+        return True
+
+    def submit(self):
+        """Inserts new row into database if no prior record exists.  
+        
+        Updates row if record already exists..
+        """
+        insertString = QString("INSERT INTO %1 (match_id, grpround_id, group_id, round_id) VALUES (?,?,?,?)").arg(self.table)
+        
+        # test for already existing record in table
+        query = QSqlQuery()
+        query.prepare(QString("SELECT COUNT(*) FROM %1 WHERE match_id = ?").arg(self.table))
+        query.addBindValue(self.primary_id)
+        query.exec_()
+        if query.next():
+            if query.value(0).toInt()[0]:
+                # update current record
+                updateQuery = QSqlQuery()
+                varList = (self.grpround_id, self.group_id, self.round_id)
+                fieldList = ("grpround_id", "group_id", "round_id")
+                for field,  var in zip(fieldList, varList):
+                    updateString = QString("UPDATE %1 SET %2 = ? WHERE match_id = ?").arg(self.table, field)
+                    updateQuery.prepare(updateString)
+                    updateQuery.addBindValue(var)
+                    updateQuery.addBindValue(self.primary_id)
+                    updateQuery.exec_()
+                self.resetID()
+                return
+                
+        # no prior record...insert new row
+        insertQuery = QSqlQuery()
+        insertQuery.prepare(insertString)
+        insertQuery.addBindValue(self.primary_id)
+        insertQuery.addBindValue(self.grpround_id)
+        insertQuery.addBindValue(self.group_id)
+        insertQuery.addBindValue(self.round_id)
+        ok = insertQuery.exec_()
+        
+        self.resetID()
+
+        
+    def delete(self, match_id):    
+        """Deletes entry in database.
+        
+        Argument:
+            match_id - primary key ID that links to Matches table
+            
+        """
+        deleteString = QString("DELETE FROM %1 WHERE match_id = ?").arg(self.table)
+        
+        deleteQuery = QSqlQuery()
+        deleteQuery.prepare(deleteString)
+        deleteQuery.addBindValue(match_id)
+        return deleteQuery.exec_()
+
+
+class KnockoutLinkingModel(LinkingSqlModel):
+    """Implements linking model for matches played in the knockout phase of a football competition.
+    
+    Argument:
+    tbl_name - SQL table name
+        
+    """
+    
+    def __init__(self, tbl_name, parent=None):
+        """Constructor for LeagueLinkingModel class."""
+        super(KnockoutLinkingModel, self).__init__(parent)
+        
+        self.table = tbl_name
+        self.primary_id = parent.matchID_display.text()
+        self.koround_id = QString()
+        self.matchday_id = QString()
+        self.calls = 0
+        self.setQuery(QString("SELECT match_id, koround_id, matchday_id FROM %1 WHERE match_id = %2").arg(self.table).arg(self.primary_id))
+        
+    def refresh(self):
+        """Refreshes query model."""
+        self.setQuery(QString("SELECT match_id, koround_id, matchday_id FROM %1 WHERE match_id = %2").arg(self.table).arg(self.primary_id))
+    
+    def resetID(self):
+        """Resets member variables in class."""
+        self.koround_id = QString()
+        self.matchday_id = QString()
+        self.calls = 0
+        
+    def setData(self, index, value):
+        """Sets role data at index with value.
+        
+        This function must be called in order of the fields defined
+        in the database table.
+        """
+        if self.calls == 0:
+            self.koround_id = value.toString()
+            self.calls += 1
+        elif self.calls == 1:
+            self.matchday_id = value.toString()
+            self.calls += 1
+        return True
+
+    def submit(self):
+        """Inserts new row into database if no prior record exists.  
+        
+        Updates row if record already exists.
+        """
+        insertString = QString("INSERT INTO %1 (match_id, koround_id, matchday_id) VALUES (?,?,?)").arg(self.table)
+        
+        # test for already existing record in table
+        query = QSqlQuery()
+        query.prepare(QString("SELECT COUNT(*) FROM %1 WHERE match_id = ?").arg(self.table))
+        query.addBindValue(self.primary_id)
+        query.exec_()
+        if query.next():
+            if query.value(0).toInt()[0]:
+                updateQuery = QSqlQuery()
+                varList = (self.koround_id, self.matchday_id)
+                fieldList = ("koround_id", "matchday_id")
+                for field,  var in zip(fieldList, varList):
+                    updateString = QString("UPDATE %1 SET %2 = ? WHERE match_id = ?").arg(self.table, field)
+                    updateQuery.prepare(updateString)
+                    updateQuery.addBindValue(var)
+                    updateQuery.addBindValue(self.primary_id)
+                    updateQuery.exec_()
+                self.resetID()
+                return
+                
+        insertQuery = QSqlQuery()
+        insertQuery.prepare(insertString)
+        insertQuery.addBindValue(self.primary_id)
+        insertQuery.addBindValue(self.koround_id)
+        insertQuery.addBindValue(self.matchday_id)
+        insertQuery.exec_()
+        self.resetID()
+
+        
+    def delete(self, match_id):    
+        """Deletes entry in database.
+        
+        Argument:
+            match_id - primary key ID that links to Matches table
+            
+        """
+        deleteString = QString("DELETE FROM %1 WHERE match_id = ?").arg(self.table)
+        
+        deleteQuery = QSqlQuery()
+        deleteQuery.prepare(deleteString)
+        deleteQuery.addBindValue(match_id)
+        return deleteQuery.exec_()
+    
+    
+class LeagueLinkingModel(LinkingSqlModel):
+    """Implements linking model for matches played in the league phase of a football competition.
+    
+    Argument:
+    tbl_name - SQL table name
+        
+    """
+
+    def __init__(self, tbl_name, parent=None):
+        """Constructor for LeagueLinkingModel class."""
+        super(LeagueLinkingModel, self).__init__(parent)
+        
+        self.table = tbl_name
+        self.primary_id = parent.matchID_display.text()
+        self.setQuery(QString("SELECT match_id, round_id FROM %1 WHERE match_id = %2").arg(self.table).arg(self.primary_id))
+        
+    def refresh(self):
+        """Refreshes query model."""
+        self.setQuery(QString("SELECT match_id, round_id FROM %1 WHERE match_id = %2").arg(self.table).arg(self.primary_id))
+        
+    def setCompositeKey(self, index, match_id, round_id):
+        """Inserts or updates entry in database."""
+        # setup SQL statements
+        insertString = QString("INSERT INTO %1 (match_id, round_id) VALUES (?,?)").arg(self.table)
+        updateString = QString("UPDATE %1 SET round_id = ? WHERE match_id = ?").arg(self.table)
+        
+        if index.row() == -1:
+            # insert into table if no existing match_id record in linking table
+            insertQuery = QSqlQuery()
+            insertQuery.prepare(insertString)
+            insertQuery.addBindValue(match_id)
+            insertQuery.addBindValue(round_id)
+            return insertQuery.exec_()
+        elif index.row() == 0:
+            # update into table if there exists match_id record in linking table
+            updateQuery = QSqlQuery()
+            updateQuery.prepare(updateString)
+            updateQuery.addBindValue(round_id)
+            updateQuery.addBindValue(match_id)
+            return updateQuery.exec_()
+        else:
+            # any other failure, return False
+            return False
+        
+    def delete(self, match_id):    
+        """Deletes entry in database.
+        
+        Argument:
+            match_id - primary key ID that links to Matches table
+            
+        """
+        deleteString = QString("DELETE FROM %1 WHERE match_id = ?").arg(self.table)
+        
+        deleteQuery = QSqlQuery()
+        deleteQuery.prepare(deleteString)
+        deleteQuery.addBindValue(match_id)
+        return deleteQuery.exec_()
+
+
 class WeatherLinkingModel(LinkingSqlModel):
     """Implements linking models for weather conditions at different intervals of the match.
     
@@ -126,7 +383,6 @@ class WeatherLinkingModel(LinkingSqlModel):
     def __init__(self, tbl_name, parent=None):
         """Constructor for WeatherLinkingModel class."""
         super(WeatherLinkingModel, self).__init__(parent)
-#        print "Calling init() in WeatherLinkingModel"
         
         self.table = tbl_name
         self.primary_id = parent.enviroID_display.text()
@@ -138,13 +394,11 @@ class WeatherLinkingModel(LinkingSqlModel):
         
     def setCompositeKey(self, index, enviro_id, weather_id):
         """Inserts or updates entry in database."""
-#        print "Calling setCompositeKey() in WeatherLinkingModel"
         # setup SQL statements
         insertString = QString("INSERT INTO %1 (enviro_id, weather_id) VALUES (?,?)").arg(self.table)
         updateString = QString("UPDATE %1 SET weather_id = ? WHERE enviro_id = ?").arg(self.table)
         
         if index.row() == -1:
-#            print "No entries of ID %s in linking table" % enviro_id
             # insert into table if no existing match_id record in linking table
             insertQuery = QSqlQuery()
             insertQuery.prepare(insertString)
@@ -152,7 +406,6 @@ class WeatherLinkingModel(LinkingSqlModel):
             insertQuery.addBindValue(weather_id)
             return insertQuery.exec_()
         elif index.row() == 0:
-#            print "Entry of ID %s in linking table" % enviro_id
             # update into table if there exists match_id record in linking table
             updateQuery = QSqlQuery()
             updateQuery.prepare(updateString)
@@ -189,7 +442,6 @@ class TeamLinkingModel(LinkingSqlModel):
     def __init__(self, tbl_name, parent=None):
         """Constructor for TeamLinkingModel class for national teams."""
         super(TeamLinkingModel, self).__init__(parent)
-#        print "Calling init() in TeamLinkingModel"
         
         self.table = tbl_name
         self.primary_id = parent.matchID_display.text()
@@ -201,13 +453,11 @@ class TeamLinkingModel(LinkingSqlModel):
      
     def setCompositeKey(self, index,  match_id, country_id):
         """Inserts or updates entry in database."""
-#        print "Calling setCompositeKey() in TeamLinkingModel"
         # setup SQL statements
         insertString = QString("INSERT INTO %1 (match_id,country_id) VALUES (?,?)").arg(self.table)
         updateString = QString("UPDATE %1 SET country_id = ? WHERE match_id = ?").arg(self.table)
         
         if index.row() == -1:
-#            print "No entries of ID %s in linking table" % match_id
             # insert into table if no existing match_id record in linking table
             insertQuery = QSqlQuery()
             insertQuery.prepare(insertString)
@@ -215,7 +465,6 @@ class TeamLinkingModel(LinkingSqlModel):
             insertQuery.addBindValue(country_id)
             return insertQuery.exec_()
         elif index.row() == 0:
-#            print "Entry of ID %s in linking table" % match_id
             # update into table if there exists match_id record in linking table
             updateQuery = QSqlQuery()
             updateQuery.prepare(updateString)
@@ -224,7 +473,6 @@ class TeamLinkingModel(LinkingSqlModel):
             return updateQuery.exec_()
         else:
             # any other failure, return False
-#            print "Error with entry Query"
             return False    
 
     def delete(self, match_id):    
@@ -253,7 +501,6 @@ class SubstituteLinkingModel(LinkingSqlModel):
     def __init__(self, tbl_name, parent=None):
         """Constructor for SubstituteLinkingModel class."""
         super(SubstituteLinkingModel, self).__init__(parent)
-#        print "Calling init() in SubstituteLinkingModel"
         
         self.table = tbl_name
         self.primary_id = parent.subsID_display.text()
@@ -272,13 +519,11 @@ class SubstituteLinkingModel(LinkingSqlModel):
         lineup_id - secondary key ID in linking table
         
         """
-#        print "Calling setCompositeKey() in SubstituteLinkingModel"
         # set up SQL statements
         insertString = QString("INSERT INTO %1 (subs_id,lineup_id) VALUES (?,?)").arg(self.table)
         updateString = QString("UPDATE %1 SET lineup_id = ? WHERE subs_id = ?").arg(self.table)
         
         if index.row() == -1:
-#            print "No entries of ID %s in linking table" % subs_id
             # insert into table if no existing subs_id record in linking table
             insertQuery = QSqlQuery()
             insertQuery.prepare(insertString)
@@ -286,7 +531,6 @@ class SubstituteLinkingModel(LinkingSqlModel):
             insertQuery.addBindValue(lineup_id)
             return insertQuery.exec_()
         elif index.row() == 0:
-#            print "Entry of ID %s in linking table" % subs_id
             # update into table if there exists subs_id record in linking table
             updateQuery = QSqlQuery()
             updateQuery.prepare(updateString)
@@ -295,7 +539,6 @@ class SubstituteLinkingModel(LinkingSqlModel):
             return updateQuery.exec_()
         else:
             # any other failure, return False
-            print "Error with entry Query"
             return False    
             
     def delete(self, subs_id):    
@@ -323,7 +566,6 @@ class ManagerLinkingModel(LinkingSqlModel):
     def __init__(self, tbl_name, parent=None):
         """Constructor for ManagerLinkingModel class."""
         super(ManagerLinkingModel, self).__init__(parent)
-#        print "Calling init() in ManagerLinkingModel"
 
         self.table = tbl_name
         self.primary_id = parent.matchID_display.text()
@@ -342,13 +584,11 @@ class ManagerLinkingModel(LinkingSqlModel):
         manager_id - secondary key ID in linking table
         
         """
-#        print "Calling setCompositeKey() in ManagerLinkingModel"
         # set up SQL statements
         insertString = QString("INSERT INTO %1 (match_id,manager_id) VALUES (?,?)").arg(self.table)
         updateString = QString("UPDATE %1 SET manager_id = ? WHERE match_id = ?").arg(self.table)
         
         if index.row() == -1:
-#            print "No entries of ID %s in linking table" % match_id
             # insert into table if no existing match_id record in linking table
             insertQuery = QSqlQuery()
             insertQuery.prepare(insertString)
@@ -356,7 +596,6 @@ class ManagerLinkingModel(LinkingSqlModel):
             insertQuery.addBindValue(manager_id)
             return insertQuery.exec_()
         elif index.row() == 0:
-#            print "Entry of ID %s in linking table" % match_id
             # update into table if there exists match_id record in linking table
             updateQuery = QSqlQuery()
             updateQuery.prepare(updateString)
@@ -365,9 +604,69 @@ class ManagerLinkingModel(LinkingSqlModel):
             return updateQuery.exec_()
         else:
             # any other failure, return False
-            print "Error with entry Query"
             return False    
 
+    def delete(self, match_id):    
+        """Deletes entry in database.
+        
+        Argument:
+            match_id - primary key ID that links to Matches table
+            
+        """
+        deleteString = QString("DELETE FROM %1 WHERE match_id = ?").arg(self.table)
+        
+        deleteQuery = QSqlQuery()
+        deleteQuery.prepare(deleteString)
+        deleteQuery.addBindValue(match_id)
+        return deleteQuery.exec_()
+
+class ShootoutLinkingModel(LinkingSqlModel):
+    """Implements linking model for teams shooting first in the penalty shootout at the end of a football match.
+    
+    Argument:
+    tbl_name - SQL table name
+        
+    """
+
+    def __init__(self, tbl_name, parent=None):
+        """Constructor for ShootoutLinkingModel class."""
+        super(ShootoutLinkingModel, self).__init__(parent)
+        
+        matchSelect = parent.matchSelect
+        matchModel = matchSelect.model()
+        
+        self.table = tbl_name
+        self.primary_id = matchModel.record(matchSelect.currentIndex()).value("match_id").toString()
+        self.setQuery(QString("SELECT match_id, team_id FROM %1 WHERE match_id = %2").arg(self.table).arg(self.primary_id))
+        
+    def refresh(self):
+        """Refreshes query model."""
+        self.setQuery(QString("SELECT match_id, team_id FROM %1 WHERE match_id = %2").arg(self.table).arg(self.primary_id))
+        
+    def setCompositeKey(self, index, match_id, team_id):
+        """Inserts or updates entry in database."""
+        # setup SQL statements
+        insertString = QString("INSERT INTO %1 (match_id, team_id) VALUES (?,?)").arg(self.table)
+        updateString = QString("UPDATE %1 SET team_id = ? WHERE match_id = ?").arg(self.table)
+        
+        if index.row() == -1:
+            # insert into table if no existing match_id record in linking table
+            insertQuery = QSqlQuery()
+            insertQuery.prepare(insertString)
+            insertQuery.addBindValue(match_id)
+            insertQuery.addBindValue(team_id)
+            return insertQuery.exec_()
+        elif index.row() == 0:
+            # update into table if there exists match_id record in linking table
+            updateQuery = QSqlQuery()
+            updateQuery.prepare(updateString)
+            updateQuery.addBindValue(team_id)
+            updateQuery.addBindValue(match_id)
+            return updateQuery.exec_()
+        else:
+            # any other failure, return False
+            return False
+        
     def delete(self, match_id):    
         """Deletes entry in database.
         
