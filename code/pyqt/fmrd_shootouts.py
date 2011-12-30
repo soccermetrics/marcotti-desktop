@@ -45,7 +45,8 @@ class PenShootoutEntryDlg(QDialog, ui_penshootoutentry.Ui_PenShootoutEntryDlg):
         self.setupUi(self)
     
         RND_ID = MCH_ID = 0
-        MATCHDAY_NAME= TEAM = OUTCOME = OPENER = 1
+        MATCHDAY_NAME= OUTCOME = OPENER = 1
+        TEAM = 2
         SORT_NAME = 4
     
         CMP_ID,  COMP_NAME = range(2)        
@@ -110,11 +111,11 @@ class PenShootoutEntryDlg(QDialog, ui_penshootoutentry.Ui_PenShootoutEntryDlg):
         
         # Team combobox
         self.teamModel = QSqlTableModel(self)
-        self.teamModel.setTable("tbl_teams")
+        self.teamModel.setTable("tbl_countries")
         self.teamModel.setSort(TEAM,  Qt.AscendingOrder)
         self.teamModel.select()
         self.teamSelect.setModel(self.teamModel)
-        self.teamSelect.setModelColumn(self.teamModel.fieldIndex("tm_name"))
+        self.teamSelect.setModelColumn(self.teamModel.fieldIndex("cty_name"))
         self.teamSelect.setCurrentIndex(-1)        
 
         #
@@ -123,11 +124,11 @@ class PenShootoutEntryDlg(QDialog, ui_penshootoutentry.Ui_PenShootoutEntryDlg):
         
         # Combobox for Team shooting first
         self.openerTeamModel = QSqlTableModel(self)
-        self.openerTeamModel.setTable("tbl_teams")
+        self.openerTeamModel.setTable("tbl_countries")
         self.openerTeamModel.setSort(TEAM, Qt.AscendingOrder)
         self.openerTeamModel.select()
         self.penFirstSelect.setModel(self.openerTeamModel)
-        self.penFirstSelect.setModelColumn(self.openerTeamModel.fieldIndex("tm_name"))
+        self.penFirstSelect.setModelColumn(self.openerTeamModel.fieldIndex("cty_name"))
         self.penFirstSelect.setCurrentIndex(-1)
         
         # Linking table model and mapper definition
@@ -568,16 +569,17 @@ class PenShootoutEntryDlg(QDialog, ui_penshootoutentry.Ui_PenShootoutEntryDlg):
         
         # query participating teams in match, save results to list
         teamQuery = QSqlQuery()
-        teamQuery.exec_(QString("SELECT team_id FROM tbl_teams where team_id IN"
-            "(SELECT team_id FROM tbl_hometeams WHERE match_id = %1"
-            "UNION SELECT team_id FROM tbl_awayteams WHERE match_id = %1)").arg(match_id))
+        teamQuery.exec_(QString("SELECT country_id FROM tbl_countries where country_id IN"
+            "(SELECT country_id FROM tbl_hometeams WHERE match_id = %1"
+            "UNION SELECT country_id FROM tbl_awayteams WHERE match_id = %1)").arg(match_id))
         while teamQuery.next():
             teamList.append(teamQuery.value(0).toInt()[0])
             
         # count number of players in team lineup who have participated in specific round of penalty shootout
         countQuery = QSqlQuery()
         countQuery.prepare("SELECT COUNT(*) FROM tbl_penaltyshootouts WHERE round_id = ? "
-                                "AND lineup_id IN (SELECT lineup_id FROM tbl_lineups WHERE match_id = ? AND team_id = ?)")
+                                "AND lineup_id IN (SELECT lineup_id FROM tbl_lineups WHERE match_id = ? "
+                                                                "AND player_id IN (SELECT player_id FROM tbl_players WHERE country_id = ?))")
         # loop through list of teams
         for team_id in teamList:
             countQuery.addBindValue(QVariant(round_id))
@@ -602,9 +604,11 @@ class PenShootoutEntryDlg(QDialog, ui_penshootoutentry.Ui_PenShootoutEntryDlg):
         lineupQuery = QSqlQuery()
         eligibleQueryString = QString("SELECT lineup_id FROM tbl_lineups WHERE "
                 "lineup_id NOT IN (SELECT lineup_id FROM tbl_outsubstitutions) "
-                "AND lineup_id IN (SELECT lineup_id FROM tbl_lineups WHERE lp_starting AND match_id = %1 AND team_id = %2) "
+                "AND lineup_id IN (SELECT lineup_id FROM tbl_lineups WHERE lp_starting AND match_id = %1 AND player_id IN "
+                "(SELECT player_id FROM tbl_players WHERE country_id = %2)) "
                 "OR (lineup_id IN (SELECT lineup_id FROM tbl_insubstitutions) AND "
-                "lineup_id IN (SELECT lineup_id FROM tbl_lineups WHERE NOT lp_starting AND match_id = %1 AND team_id = %2))"
+                "lineup_id IN (SELECT lineup_id FROM tbl_lineups WHERE NOT lp_starting AND match_id = %1 AND player_id IN "
+                "(SELECT player_id FROM tbl_players WHERE country_id = %2)) "
                 ).arg(match_id).arg(team_id)  
         lineupQuery.prepare(eligibleQueryString)
         lineupQuery.exec_()
@@ -621,7 +625,8 @@ class PenShootoutEntryDlg(QDialog, ui_penshootoutentry.Ui_PenShootoutEntryDlg):
         rotationList = self.getShootoutRotation(round_id)
         
         participateQuery = QSqlQuery()
-        participateQuery.prepare(QString("SELECT lineup_id FROM tbl_lineups WHERE match_id = %1 AND team_id = %2 "
+        participateQuery.prepare(QString("SELECT lineup_id FROM tbl_lineups WHERE match_id = %1 AND player_id IN "
+                                 "(SELECT player_id FROM tbl_players WHERE country_id = %2) "
                                  "AND lineup_id IN (SELECT lineup_id FROM tbl_penaltyshootouts WHERE round_id = ?)").arg(match_id, team_id))
         for round_id in rotationList:
             participateQuery.addBindValue(round_id)
@@ -716,7 +721,7 @@ class PenShootoutEntryDlg(QDialog, ui_penshootoutentry.Ui_PenShootoutEntryDlg):
         # if player name has been passed, get its team_id and add it to list
         if player:
             teamQuery = QSqlQuery()
-            teamQuery.prepare("SELECT team_id FROM tbl_teams WHERE tm_name IN "
+            teamQuery.prepare("SELECT country_id FROM tbl_countries WHERE cty_name IN "
             "(SELECT team FROM lineup_list WHERE player = ? AND matchup IN "
             "(SELECT matchup FROM knockout_match_list WHERE match_id = ?))")
             teamQuery.addBindValue(player)
@@ -729,9 +734,9 @@ class PenShootoutEntryDlg(QDialog, ui_penshootoutentry.Ui_PenShootoutEntryDlg):
             
         # filter teams involved in match
         self.teamModel.setFilter(QString())
-        baseFilterString = QString("team_id IN (SELECT team_id FROM tbl_hometeams WHERE match_id = %1"
-            "UNION SELECT team_id FROM tbl_awayteams WHERE match_id = %1) ").arg(match_id)
-        augFilterString = "AND team_id IN (" + ",".join((str(n) for n in teamList)) + ")"
+        baseFilterString = QString("country_id IN (SELECT country_id FROM tbl_hometeams WHERE match_id = %1"
+            "UNION SELECT country_id FROM tbl_awayteams WHERE match_id = %1) ").arg(match_id)
+        augFilterString = "AND country_id IN (" + ",".join((str(n) for n in teamList)) + ")"
         teamFilterString = baseFilterString + augFilterString
         self.teamModel.setFilter(baseFilterString)
         
@@ -794,9 +799,9 @@ class PenShootoutEntryDlg(QDialog, ui_penshootoutentry.Ui_PenShootoutEntryDlg):
         self.openerTeamModel.setFilter(QString())
         
         # team filter
-        teamQueryString = QString("team_id IN"
-            "(SELECT team_id FROM tbl_hometeams WHERE match_id = %1"
-            "UNION SELECT team_id FROM tbl_awayteams WHERE match_id = %1)").arg(match_id)
+        teamQueryString = QString("country_id IN"
+            "(SELECT country_id FROM tbl_hometeams WHERE match_id = %1"
+            "UNION SELECT country_id FROM tbl_awayteams WHERE match_id = %1)").arg(match_id)
         self.openerTeamModel.setFilter(teamQueryString)
         # reset index to -1
         self.penFirstSelect.setCurrentIndex(-1)

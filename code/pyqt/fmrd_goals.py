@@ -44,7 +44,8 @@ class GoalEntryDlg(QDialog, ui_goalentry.Ui_GoalEntryDlg):
         self.setupUi(self)
         
         RND_ID = 0
-        MATCHDAY_NAME= TEAM = PLAY = BODY = 1
+        MATCHDAY_NAME= PLAY = BODY = 1
+        TEAM = 2
         SORT_NAME = 4
         
         CMP_ID,  COMP_NAME = range(2)
@@ -178,7 +179,7 @@ class GoalEntryDlg(QDialog, ui_goalentry.Ui_GoalEntryDlg):
         # because of foreign keys, instantiate QSqlRelationalTableModel and define relations to it        
         self.model = QSqlRelationalTableModel(self)
         self.model.setTable("tbl_goals")
-        self.model.setRelation(GoalEntryDlg.TEAM_ID, QSqlRelation("tbl_teams", "team_id", "tm_name"))
+        self.model.setRelation(GoalEntryDlg.TEAM_ID, QSqlRelation("tbl_countries", "country_id", "cty_name"))
         self.model.setRelation(GoalEntryDlg.LINEUP_ID, QSqlRelation("lineup_list", "lineup_id", "player"))
         self.model.setRelation(GoalEntryDlg.BODY_ID, QSqlRelation("tbl_goalstrikes", "gtstype_id", "gts_desc"))
         self.model.setRelation(GoalEntryDlg.PLAY_ID, QSqlRelation("tbl_goalevents", "gtetype_id", "gte_desc"))
@@ -199,7 +200,7 @@ class GoalEntryDlg(QDialog, ui_goalentry.Ui_GoalEntryDlg):
         self.teamModel = self.model.relationModel(GoalEntryDlg.TEAM_ID)
         self.teamModel.setSort(TEAM, Qt.AscendingOrder)
         self.teamSelect.setModel(self.teamModel)
-        self.teamSelect.setModelColumn(self.teamModel.fieldIndex("tm_name"))
+        self.teamSelect.setModelColumn(self.teamModel.fieldIndex("cty_name"))
         self.teamSelect.setCurrentIndex(-1)
         self.mapper.addMapping(self.teamSelect, GoalEntryDlg.TEAM_ID)
         

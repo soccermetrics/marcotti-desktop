@@ -47,7 +47,8 @@ class PenaltyEntryDlg(QDialog, ui_penaltyentry.Ui_PenaltyEntryDlg):
         self.setupUi(self)
         
         CMP_ID = RND_ID = TM_ID = 0
-        MATCHDAY_NAME= TEAM = FOUL = OUTCOME = 1
+        MATCHDAY_NAME= FOUL = OUTCOME = 1
+        TEAM = 2
         SORT_NAME = 4
 
         CMP_ID,  COMP_NAME = range(2)
@@ -174,11 +175,11 @@ class PenaltyEntryDlg(QDialog, ui_penaltyentry.Ui_PenaltyEntryDlg):
         
         # Team combobox
         self.teamModel = QSqlTableModel(self)
-        self.teamModel.setTable("tbl_teams")
+        self.teamModel.setTable("tbl_countries")
         self.teamModel.setSort(TEAM,  Qt.AscendingOrder)
         self.teamModel.select()
         self.teamSelect.setModel(self.teamModel)
-        self.teamSelect.setModelColumn(self.teamModel.fieldIndex("tm_name"))
+        self.teamSelect.setModelColumn(self.teamModel.fieldIndex("cty_name"))
         self.teamSelect.setCurrentIndex(-1)        
         
         #
@@ -534,18 +535,19 @@ class PenaltyEntryDlg(QDialog, ui_penaltyentry.Ui_PenaltyEntryDlg):
         # get current team
         teamName = self.teamSelect.currentText()
         
-        # get team_id by querying tbl_teams with team name
+        # get team_id by querying tbl_countries with team name
         team_id = "-1"
         query = QSqlQuery()
-        query.prepare("SELECT team_id FROM tbl_teams WHERE tm_name = ?")
+        query.prepare("SELECT country_id FROM tbl_countries WHERE cty_name = ?")
         query.addBindValue(QVariant(teamName))
         query.exec_()
         if query.next():
             team_id = query.value(0).toString()
         
-        # filter lineup list model by match_id
+        # filter lineup list model by match_id and team_id
         lineupListModel.setFilter(QString("lineup_id IN "
-                                                          "(SELECT lineup_id FROM tbl_lineups WHERE match_id = %1 AND team_id = %2)").arg(match_id, team_id))
+                                                          "(SELECT lineup_id FROM tbl_lineups WHERE match_id = %1 AND "
+                                                          "player_id IN (SELECT player_id FROM tbl_players WHERE country_id = %2))").arg(match_id, team_id))
                 
         # enable remaining comboboxes on form
         for widget in (self.playerSelect, self.foulSelect,  self.penoutcomeSelect, self.pentimeEdit):
@@ -580,12 +582,12 @@ class PenaltyEntryDlg(QDialog, ui_penaltyentry.Ui_PenaltyEntryDlg):
                                                     "(SELECT matchup FROM match_list WHERE match_id = %1))").arg(match_id))
         self.mapper.toFirst()        
         
-        # filter teams involved in match
+        # filter national teams involved in match
         teamModel = self.teamSelect.model()
         teamModel.setFilter(QString())
-        teamModel.setFilter(QString("team_id IN"
-            "(SELECT team_id FROM tbl_hometeams WHERE match_id = %1"
-            "UNION SELECT team_id FROM tbl_awayteams WHERE match_id = %1)").arg(match_id))
+        teamModel.setFilter(QString("country_id IN"
+            "(SELECT country_id FROM tbl_hometeams WHERE match_id = %1"
+            "UNION SELECT country_id FROM tbl_awayteams WHERE match_id = %1)").arg(match_id))
         self.teamSelect.setCurrentIndex(-1)            
         
         # refresh team select box

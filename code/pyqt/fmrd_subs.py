@@ -48,7 +48,8 @@ class SubsEntryDlg(QDialog, ui_subsentry.Ui_SubsEntryDlg):
         
         # define local parameters
         CMP_ID = RND_ID = TM_ID = 0
-        MATCHDAY_NAME= TEAM = IN_ID = OUT_ID = 1
+        MATCHDAY_NAME= IN_ID = OUT_ID = 1
+        TEAM = 2
         SORT_NAME = 4
         
         CMP_ID,  COMP_NAME = range(2)
@@ -175,11 +176,11 @@ class SubsEntryDlg(QDialog, ui_subsentry.Ui_SubsEntryDlg):
         
         # Team combobox
         self.teamModel = QSqlTableModel(self)
-        self.teamModel.setTable("tbl_teams")
+        self.teamModel.setTable("tbl_countries")
         self.teamModel.setSort(TEAM,  Qt.AscendingOrder)
         self.teamModel.select()
         self.teamSelect.setModel(self.teamModel)
-        self.teamSelect.setModelColumn(self.teamModel.fieldIndex("tm_name"))
+        self.teamSelect.setModelColumn(self.teamModel.fieldIndex("cty_name"))
         self.teamSelect.setCurrentIndex(-1)        
         
         #
@@ -631,9 +632,9 @@ class SubsEntryDlg(QDialog, ui_subsentry.Ui_SubsEntryDlg):
         else:
             match_id = "-1"
 
-        # get team_id from tbl_teams
+        # get team_id by querying tbl_countries with team name
         teamQuery = QSqlQuery()
-        teamQuery.prepare("SELECT team_id FROM tbl_teams WHERE tm_name = ?")
+        teamQuery.prepare("SELECT country_id FROM tbl_countries WHERE cty_name = ?")
         teamQuery.addBindValue(QVariant(teamName))
         teamQuery.exec_()        
         if teamQuery.next():
@@ -653,7 +654,8 @@ class SubsEntryDlg(QDialog, ui_subsentry.Ui_SubsEntryDlg):
         filterString = QString("lineup_id NOT IN "
                                    "(SELECT lineup_id FROM tbl_insubstitutions WHERE lineup_id <> %1) AND "
                                    "lineup_id IN (SELECT lineup_id from tbl_lineups WHERE "
-                                   "NOT lp_starting AND match_id = %2 AND team_id = %3)").arg(lineup_id).arg(match_id).arg(team_id)
+                                   "NOT lp_starting AND match_id = %2 AND player_id IN "
+                                   "(SELECT player_id FROM tbl_players WHERE country_id = %3))").arg(lineup_id).arg(match_id).arg(team_id)
 
         # filter Player combobox
         lineupListModel.setFilter(filterString)
@@ -713,9 +715,9 @@ class SubsEntryDlg(QDialog, ui_subsentry.Ui_SubsEntryDlg):
         else:
             match_id = "-1"
 
-        # get team_id from tbl_teams
+        # get team_id by querying tbl_countries with team name
         teamQuery = QSqlQuery()
-        teamQuery.prepare("SELECT team_id FROM tbl_teams WHERE tm_name = ?")
+        teamQuery.prepare("SELECT country_id FROM tbl_countries WHERE cty_name = ?")
         teamQuery.addBindValue(QVariant(teamName))
         teamQuery.exec_()        
         if teamQuery.next():
@@ -732,9 +734,11 @@ class SubsEntryDlg(QDialog, ui_subsentry.Ui_SubsEntryDlg):
         #        (SELECT lineup_id FROM tbl_insubstitutions) AND NOT lp_starting AND match_id = ? AND team_id = ?
 
         filterString = QString("lineup_id NOT IN (SELECT lineup_id FROM tbl_outsubstitutions WHERE lineup_id <> %1) "
-                               "AND lineup_id IN (SELECT lineup_id FROM tbl_lineups WHERE lp_starting AND match_id = %2 AND team_id = %3) "
+                               "AND lineup_id IN (SELECT lineup_id FROM tbl_lineups WHERE lp_starting AND match_id = %2 AND player_id IN "
+                                   "(SELECT player_id FROM tbl_players WHERE country_id = %3)) "
                                "OR (lineup_id IN (SELECT lineup_id FROM tbl_insubstitutions WHERE lineup_id <> %1) AND "
-                               "lineup_id IN (SELECT lineup_id FROM tbl_lineups WHERE NOT lp_starting AND match_id = %2 AND team_id = %3))"
+                               "lineup_id IN (SELECT lineup_id FROM tbl_lineups WHERE NOT lp_starting AND match_id = %2 AND player_id IN "
+                                   "(SELECT player_id FROM tbl_players WHERE country_id = %3)))"
                                ).arg(lineup_id).arg(match_id).arg(team_id)
             
         # filter Player combobox
@@ -772,9 +776,9 @@ class SubsEntryDlg(QDialog, ui_subsentry.Ui_SubsEntryDlg):
         # filter teams involved in match
         teamModel = self.teamSelect.model()
         teamModel.setFilter(QString())
-        teamModel.setFilter(QString("team_id IN"
-            "(SELECT team_id FROM tbl_hometeams WHERE match_id = %1"
-            "UNION SELECT team_id FROM tbl_awayteams WHERE match_id = %1)").arg(match_id))
+        teamModel.setFilter(QString("country_id IN"
+            "(SELECT country_id FROM tbl_hometeams WHERE match_id = %1"
+            "UNION SELECT country_id FROM tbl_awayteams WHERE match_id = %1)").arg(match_id))
         self.teamSelect.setCurrentIndex(-1)            
         
         # refresh team select box
@@ -1060,7 +1064,8 @@ class SwitchEntryDlg(QDialog, ui_switchentry.Ui_SwitchEntryDlg):
         
         # define local parameters
         CMP_ID = RND_ID = TM_ID = 0
-        MATCHDAY_NAME= TEAM = POS = 1
+        MATCHDAY_NAME= POS = 1
+        TEAM = 2
         SORT_NAME = 4
         
         CMP_ID,  COMP_NAME = range(2)
@@ -1187,11 +1192,11 @@ class SwitchEntryDlg(QDialog, ui_switchentry.Ui_SwitchEntryDlg):
         
         # Team combobox
         self.teamModel = QSqlTableModel(self)
-        self.teamModel.setTable("tbl_teams")
+        self.teamModel.setTable("tbl_countries")
         self.teamModel.setSort(TEAM,  Qt.AscendingOrder)
         self.teamModel.select()
         self.teamSelect.setModel(self.teamModel)
-        self.teamSelect.setModelColumn(self.teamModel.fieldIndex("tm_name"))
+        self.teamSelect.setModelColumn(self.teamModel.fieldIndex("cty_name"))
         self.teamSelect.setCurrentIndex(-1)        
 
         #
@@ -1565,10 +1570,10 @@ class SwitchEntryDlg(QDialog, ui_switchentry.Ui_SwitchEntryDlg):
         if matchQuery.next():
             match_id = matchQuery.value(0).toString()
         
-        # get team_id by querying tbl_teams with team name
+        # get team_id by querying tbl_countries with team name
         team_id = "-1"
         teamQuery = QSqlQuery()
-        teamQuery.prepare("SELECT team_id FROM tbl_teams WHERE tm_name = ?")
+        teamQuery.prepare("SELECT country_id FROM tbl_countries WHERE cty_name = ?")
         teamQuery.addBindValue(QVariant(teamName))
         teamQuery.exec_()
         if teamQuery.next():
@@ -1582,11 +1587,13 @@ class SwitchEntryDlg(QDialog, ui_switchentry.Ui_SwitchEntryDlg):
         #    SELECT player FROM tbl_lineups WHERE lineup_id IN
         #        (SELECT lineup_id FROM tbl_insubstitutions) AND NOT lp_starting AND match_id = ? AND team_id = ?
         
-        filterString = QString("lineup_id NOT IN (SELECT lineup_id FROM tbl_outsubstitutions) "
-                               "AND lineup_id IN (SELECT lineup_id FROM tbl_lineups WHERE lp_starting AND match_id = %1 AND team_id = %2) "
-                               "OR (lineup_id IN (SELECT lineup_id FROM tbl_insubstitutions) AND "
-                               "lineup_id IN (SELECT lineup_id FROM tbl_lineups WHERE NOT lp_starting AND match_id = %1 AND team_id = %2))"
-                               ).arg(match_id).arg(team_id)
+        filterString = QString("lineup_id NOT IN (SELECT lineup_id FROM tbl_outsubstitutions WHERE lineup_id <> %1) "
+                               "AND lineup_id IN (SELECT lineup_id FROM tbl_lineups WHERE lp_starting AND match_id = %2 AND player_id IN "
+                                   "(SELECT player_id FROM tbl_players WHERE country_id = %3)) "
+                               "OR (lineup_id IN (SELECT lineup_id FROM tbl_insubstitutions WHERE lineup_id <> %1) AND "
+                               "lineup_id IN (SELECT lineup_id FROM tbl_lineups WHERE NOT lp_starting AND match_id = %2 AND player_id IN "
+                                   "(SELECT player_id FROM tbl_players WHERE country_id = %3)))"
+                               ).arg(lineup_id).arg(match_id).arg(team_id)
         
         # filter Players combobox
         lineupListModel.setFilter(filterString)
@@ -1628,9 +1635,9 @@ class SwitchEntryDlg(QDialog, ui_switchentry.Ui_SwitchEntryDlg):
         # filter teams involved in match
         teamModel = self.teamSelect.model()
         teamModel.setFilter(QString())
-        teamModel.setFilter(QString("team_id IN"
-            "(SELECT team_id FROM tbl_hometeams WHERE match_id = %1"
-            "UNION SELECT team_id FROM tbl_awayteams WHERE match_id = %1)").arg(match_id))
+        teamModel.setFilter(QString("country_id IN"
+            "(SELECT country_id FROM tbl_hometeams WHERE match_id = %1"
+            "UNION SELECT country_id FROM tbl_awayteams WHERE match_id = %1)").arg(match_id))
         self.teamSelect.setCurrentIndex(-1)            
         
         # refresh team select box
