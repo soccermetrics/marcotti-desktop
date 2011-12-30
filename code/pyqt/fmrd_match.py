@@ -602,7 +602,6 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
         for widget in self.phaseWidgets:
             widget.blockSignals(False)
 
-
     def refreshSubForms(self, currentID):
         """Sets match ID for linking models and refreshes models and mappers."""
         self.hometeamModel.setID(currentID)
