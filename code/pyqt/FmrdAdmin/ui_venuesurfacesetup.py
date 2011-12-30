@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'gui/venuesurface_setup.ui'
 #
-# Created: Sat Aug 20 00:33:38 2011
+# Created: Thu Dec 29 23:31:25 2011
 #      by: PyQt4 UI code generator 4.7.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -132,7 +132,7 @@ class Ui_VenueSurfaceSetupDlg(object):
         self.lastEntry.setToolTip(QtGui.QApplication.translate("VenueSurfaceSetupDlg", "Last Entry", None, QtGui.QApplication.UnicodeUTF8))
         self.addEntry.setToolTip(QtGui.QApplication.translate("VenueSurfaceSetupDlg", "Add Entry", None, QtGui.QApplication.UnicodeUTF8))
         self.addEntry.setText(QtGui.QApplication.translate("VenueSurfaceSetupDlg", "&Add", None, QtGui.QApplication.UnicodeUTF8))
-        self.saveEntry.setToolTip(QtGui.QApplication.translate("VenueSurfaceSetupDlg", "Delete Entry", None, QtGui.QApplication.UnicodeUTF8))
+        self.saveEntry.setToolTip(QtGui.QApplication.translate("VenueSurfaceSetupDlg", "Save Entry", None, QtGui.QApplication.UnicodeUTF8))
         self.saveEntry.setText(QtGui.QApplication.translate("VenueSurfaceSetupDlg", "&Save", None, QtGui.QApplication.UnicodeUTF8))
         self.deleteEntry.setToolTip(QtGui.QApplication.translate("VenueSurfaceSetupDlg", "Delete Entry", None, QtGui.QApplication.UnicodeUTF8))
         self.deleteEntry.setText(QtGui.QApplication.translate("VenueSurfaceSetupDlg", "&Delete", None, QtGui.QApplication.UnicodeUTF8))
