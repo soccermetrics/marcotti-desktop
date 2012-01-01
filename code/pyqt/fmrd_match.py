@@ -71,10 +71,11 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
         
         # define lists of comboboxes
         self.selectWidgets = (
-            self.matchCompSelect, self.matchPhaseSelect, self.lgRoundSelect, self.groupSelect, 
-            self.grpRoundSelect, self.grpMatchdaySelect, self.koRoundSelect, self.koMatchdaySelect,  
-            self.matchRefSelect, self.matchVenueSelect, self.hometeamSelect, self.homemgrSelect, 
-            self.hometeamSelect, self.awaymgrSelect, self.awayteamSelect
+            self.matchCompSelect, self.matchPhaseSelect, self.lgRoundSelect, 
+            self.groupSelect, self.grpRoundSelect, self.grpMatchdaySelect, 
+            self.koRoundSelect, self.koMatchdaySelect,  self.matchRefSelect, self.matchVenueSelect, 
+            self.homeconfedSelect, self.hometeamSelect, self.homemgrSelect, 
+            self.awayconfedSelect, self.awayteamSelect, self.awaymgrSelect
         )
         
         self.upperFormWidgets = (
@@ -163,7 +164,7 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
         
         leagueRoundModel = QSqlTableModel(self)
         leagueRoundModel.setTable("tbl_rounds")
-        leagueRoundModel.setSort(ROUND_NAME, Qt.AscendingOrder)
+        leagueRoundModel.setSort(RND_ID, Qt.AscendingOrder)
         leagueRoundModel.select()
         
         # League Match linking model
@@ -188,7 +189,7 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
         
         groupNameModel = QSqlTableModel(self)
         groupNameModel.setTable("tbl_groups")
-        groupNameModel.setSort(GROUP_NAME, Qt.AscendingOrder)
+        groupNameModel.setSort(GRP_ID,  Qt.AscendingOrder)
         groupNameModel.select()
         
         groupRoundModel = QSqlTableModel(self)
@@ -198,7 +199,7 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
         
         groupMatchdayModel = QSqlTableModel(self)
         groupMatchdayModel.setTable("tbl_rounds")
-        groupMatchdayModel.setSort(ROUND_NAME, Qt.AscendingOrder)
+        groupMatchdayModel.setSort(RND_ID, Qt.AscendingOrder)
         groupMatchdayModel.select()
         
         # Group Match linking model
@@ -526,7 +527,7 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
             self.updateLinkingTable(self.leagueMatchMapper, self.lgRoundSelect, 1)
             self.leagueMatchModel.submit()
         elif phaseText == "Group":
-            editorList = [self.groupSelect, self.grpRoundSelect, self.grpMatchdaySelect]
+            editorList = [self.grpRoundSelect, self.groupSelect, self.grpMatchdaySelect]
             for editor,  column in zip(editorList, range(1, 4)):
                 self.updateLinkingTable(self.groupMatchMapper, editor, column)
             self.groupMatchModel.submit()
@@ -696,7 +697,7 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
             self.saveEntry.setEnabled(True)
         
         # flush filters
-        for widget in [self.homeTeamModel, self.homeManagerModel, self.awayTeamModel, self.awayManagerModel]:
+        for widget in [self.homeCountryModel, self.homeManagerModel, self.awayCountryModel, self.awayManagerModel]:
             widget.blockSignals(True)
             widget.setFilter(QString())
             widget.blockSignals(False)    
@@ -802,8 +803,9 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
                 self.refreshPhaseForms(currentID, phaseText)
                 
                 if not self.model.rowCount():
-                    # disable Delete button if no records in database
+                    # disable Save and Delete buttons if no records in database
                     self.deleteEntry.setDisabled(True)
+                    self.saveEntry.setDisabled(True)
                     
                     self.firstHalfLengthEdit.setText("45")
                     self.secondHalfLengthEdit.setText("45")
@@ -1032,7 +1034,7 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
         """Enables Attendance and Time edit boxes, Home Team comboboxes and Enviroments button."""
         self.matchAttendanceEdit.setEnabled(True)
         self.enableTimes(self.matchPhaseSelect.currentText())
-        self.hometeamSelect.setEnabled(True)
+        self.homeconfedSelect.setEnabled(True)
         self.enviroButton.setEnabled(True)
         
     def openEnviros(self, match_id):
