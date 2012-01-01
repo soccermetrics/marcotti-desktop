@@ -654,7 +654,7 @@ class SubsEntryDlg(QDialog, ui_subsentry.Ui_SubsEntryDlg):
         filterString = QString("lineup_id NOT IN "
                                    "(SELECT lineup_id FROM tbl_insubstitutions WHERE lineup_id <> %1) AND "
                                    "lineup_id IN (SELECT lineup_id from tbl_lineups WHERE "
-                                   "NOT lp_starting AND match_id = %2 AND player_id IN "
+                                   "lp_starting = 'false' AND match_id = %2 AND player_id IN "
                                    "(SELECT player_id FROM tbl_players WHERE country_id = %3))").arg(lineup_id).arg(match_id).arg(team_id)
 
         # filter Player combobox
@@ -734,10 +734,10 @@ class SubsEntryDlg(QDialog, ui_subsentry.Ui_SubsEntryDlg):
         #        (SELECT lineup_id FROM tbl_insubstitutions) AND NOT lp_starting AND match_id = ? AND team_id = ?
 
         filterString = QString("lineup_id NOT IN (SELECT lineup_id FROM tbl_outsubstitutions WHERE lineup_id <> %1) "
-                               "AND lineup_id IN (SELECT lineup_id FROM tbl_lineups WHERE lp_starting AND match_id = %2 AND player_id IN "
+                               "AND lineup_id IN (SELECT lineup_id FROM tbl_lineups WHERE lp_starting = 'true' AND match_id = %2 AND player_id IN "
                                    "(SELECT player_id FROM tbl_players WHERE country_id = %3)) "
                                "OR (lineup_id IN (SELECT lineup_id FROM tbl_insubstitutions WHERE lineup_id <> %1) AND "
-                               "lineup_id IN (SELECT lineup_id FROM tbl_lineups WHERE NOT lp_starting AND match_id = %2 AND player_id IN "
+                               "lineup_id IN (SELECT lineup_id FROM tbl_lineups WHERE lp_starting = 'false' AND match_id = %2 AND player_id IN "
                                    "(SELECT player_id FROM tbl_players WHERE country_id = %3)))"
                                ).arg(lineup_id).arg(match_id).arg(team_id)
             
@@ -1588,10 +1588,10 @@ class SwitchEntryDlg(QDialog, ui_switchentry.Ui_SwitchEntryDlg):
         #        (SELECT lineup_id FROM tbl_insubstitutions) AND NOT lp_starting AND match_id = ? AND team_id = ?
         
         filterString = QString("lineup_id NOT IN (SELECT lineup_id FROM tbl_outsubstitutions WHERE lineup_id <> %1) "
-                               "AND lineup_id IN (SELECT lineup_id FROM tbl_lineups WHERE lp_starting AND match_id = %2 AND player_id IN "
+                               "AND lineup_id IN (SELECT lineup_id FROM tbl_lineups WHERE lp_starting = 'true' AND match_id = %2 AND player_id IN "
                                    "(SELECT player_id FROM tbl_players WHERE country_id = %3)) "
                                "OR (lineup_id IN (SELECT lineup_id FROM tbl_insubstitutions WHERE lineup_id <> %1) AND "
-                               "lineup_id IN (SELECT lineup_id FROM tbl_lineups WHERE NOT lp_starting AND match_id = %2 AND player_id IN "
+                               "lineup_id IN (SELECT lineup_id FROM tbl_lineups WHERE lp_starting = 'false' AND match_id = %2 AND player_id IN "
                                    "(SELECT player_id FROM tbl_players WHERE country_id = %3)))"
                                ).arg(lineup_id).arg(match_id).arg(team_id)
         

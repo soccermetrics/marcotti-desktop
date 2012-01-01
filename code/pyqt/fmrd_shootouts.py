@@ -604,10 +604,10 @@ class PenShootoutEntryDlg(QDialog, ui_penshootoutentry.Ui_PenShootoutEntryDlg):
         lineupQuery = QSqlQuery()
         eligibleQueryString = QString("SELECT lineup_id FROM tbl_lineups WHERE "
                 "lineup_id NOT IN (SELECT lineup_id FROM tbl_outsubstitutions) "
-                "AND lineup_id IN (SELECT lineup_id FROM tbl_lineups WHERE lp_starting AND match_id = %1 AND player_id IN "
+                "AND lineup_id IN (SELECT lineup_id FROM tbl_lineups WHERE lp_starting = 'true' AND match_id = %1 AND player_id IN "
                 "(SELECT player_id FROM tbl_players WHERE country_id = %2)) "
                 "OR (lineup_id IN (SELECT lineup_id FROM tbl_insubstitutions) AND "
-                "lineup_id IN (SELECT lineup_id FROM tbl_lineups WHERE NOT lp_starting AND match_id = %1 AND player_id IN "
+                "lineup_id IN (SELECT lineup_id FROM tbl_lineups WHERE lp_starting = 'false' AND match_id = %1 AND player_id IN "
                 "(SELECT player_id FROM tbl_players WHERE country_id = %2)) "
                 ).arg(match_id).arg(team_id)  
         lineupQuery.prepare(eligibleQueryString)
