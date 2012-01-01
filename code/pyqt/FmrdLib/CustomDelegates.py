@@ -1553,6 +1553,7 @@ class ConfedComboBoxDelegateTemplate(QStyledItemDelegate):
             
         """          
 #        print "Calling setEditorData() of ConfedComboBoxDelegateTemplate"
+        editor.blockSignals(True)
         countryIndex = self.countryBox.currentIndex()
         countryModel = self.countryBox.model()
         
@@ -1570,6 +1571,7 @@ class ConfedComboBoxDelegateTemplate(QStyledItemDelegate):
 
         # search for confederation name in combobox, set index to current index
         editor.setCurrentIndex(editor.findText(confedStr, Qt.MatchExactly))
+        editor.blockSignals(False)
 
 
 class WeatherComboBoxDelegate(QStyledItemDelegate):
@@ -2008,7 +2010,7 @@ class GeoCoordinateDelegate(QStyledItemDelegate):
             index -- current index of database table model
             
         """
-        value = editor.text().toFloat()[0]
+        value = editor.text().toFloat()[0] + 0.000000000000000
         model.setData(index, QVariant(value))
 
 
