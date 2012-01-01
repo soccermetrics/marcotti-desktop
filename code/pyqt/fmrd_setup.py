@@ -3419,6 +3419,10 @@ class TimeZoneSetupDlg(QDialog, ui_timezonesetup.Ui_TimeZoneSetupDlg):
         self.model.setSort(TimeZoneSetupDlg.ID, Qt.AscendingOrder)
         self.model.select()
         
+        # fetch entire record list
+        while self.model.canFetchMore():
+            self.model.fetchMore()
+            
         # define mapper
         # establish ties between underlying database model and data widgets on form
         self.mapper = QDataWidgetMapper(self)
