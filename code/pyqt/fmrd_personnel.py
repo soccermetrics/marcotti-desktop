@@ -1393,6 +1393,8 @@ class LineupEntryDlg(QDialog, ui_lineupentry.Ui_LineupEntryDlg):
         
         self.playerModel = self.model.relationModel(LineupEntryDlg.PLYR_ID)
         self.playerModel.setSort(PLYR_SORT_NAME, Qt.AscendingOrder)
+        while self.playerModel.canFetchMore():
+            self.playerModel.fetchMore()        
         self.playerSelect.setModel(self.playerModel)
         self.playerSelect.setModelColumn(self.playerModel.fieldIndex("full_name"))
         self.playerSelect.setCurrentIndex(-1)
