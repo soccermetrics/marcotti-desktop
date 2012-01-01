@@ -82,7 +82,7 @@
     <bool>true</bool>
    </property>
   </widget>
-  <widget class="QLabel" name="label">
+  <widget class="QLabel" name="matchLabel">
    <property name="geometry">
     <rect>
      <x>9</x>
@@ -453,7 +453,7 @@ p, li { white-space: pre-wrap; }
       <property name="title">
        <string>League Phase</string>
       </property>
-      <widget class="QLabel" name="label_2">
+      <widget class="QLabel" name="leagueLabel">
        <property name="geometry">
         <rect>
          <x>20</x>
@@ -480,6 +480,9 @@ p, li { white-space: pre-wrap; }
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Round&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+       <property name="buddy">
+        <cstring>lgRoundSelect</cstring>
        </property>
       </widget>
       <widget class="QComboBox" name="lgRoundSelect">
@@ -526,7 +529,7 @@ p, li { white-space: pre-wrap; }
       <property name="title">
        <string>Knockout Phase</string>
       </property>
-      <widget class="QLabel" name="label_17">
+      <widget class="QLabel" name="koroundLabel">
        <property name="geometry">
         <rect>
          <x>10</x>
@@ -553,6 +556,9 @@ p, li { white-space: pre-wrap; }
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Round&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+       <property name="buddy">
+        <cstring>koRoundSelect</cstring>
        </property>
       </widget>
       <widget class="QComboBox" name="koRoundSelect">
@@ -605,7 +611,7 @@ p, li { white-space: pre-wrap; }
         <string>Knockout Round Matchday</string>
        </property>
       </widget>
-      <widget class="QLabel" name="label_18">
+      <widget class="QLabel" name="komatchdayLabel">
        <property name="geometry">
         <rect>
          <x>310</x>
@@ -633,6 +639,9 @@ p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Matchday&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
+       <property name="buddy">
+        <cstring>koMatchdaySelect</cstring>
+       </property>
       </widget>
      </widget>
     </item>
@@ -653,7 +662,7 @@ p, li { white-space: pre-wrap; }
       <property name="title">
        <string>Group Phase</string>
       </property>
-      <widget class="QLabel" name="label_19">
+      <widget class="QLabel" name="grproundLabel">
        <property name="geometry">
         <rect>
          <x>20</x>
@@ -680,6 +689,9 @@ p, li { white-space: pre-wrap; }
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Round&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+       <property name="buddy">
+        <cstring>grpRoundSelect</cstring>
        </property>
       </widget>
       <widget class="QComboBox" name="grpRoundSelect">
@@ -732,36 +744,7 @@ p, li { white-space: pre-wrap; }
         <string>Group Round Matchday</string>
        </property>
       </widget>
-      <widget class="QLabel" name="label_21">
-       <property name="geometry">
-        <rect>
-         <x>600</x>
-         <y>20</y>
-         <width>75</width>
-         <height>30</height>
-        </rect>
-       </property>
-       <property name="minimumSize">
-        <size>
-         <width>75</width>
-         <height>30</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>75</width>
-         <height>30</height>
-        </size>
-       </property>
-       <property name="text">
-        <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Matchday&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-       </property>
-      </widget>
-      <widget class="QLabel" name="label_20">
+      <widget class="QLabel" name="grpLabel">
        <property name="geometry">
         <rect>
          <x>390</x>
@@ -789,6 +772,9 @@ p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Group&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
+       <property name="buddy">
+        <cstring>groupSelect</cstring>
+       </property>
       </widget>
       <widget class="QComboBox" name="groupSelect">
        <property name="geometry">
@@ -813,6 +799,35 @@ p, li { white-space: pre-wrap; }
        </property>
        <property name="toolTip">
         <string>Group Name</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="matchdayLabel">
+       <property name="geometry">
+        <rect>
+         <x>600</x>
+         <y>20</y>
+         <width>75</width>
+         <height>30</height>
+        </rect>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>75</width>
+         <height>30</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>75</width>
+         <height>30</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Matchday&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
       </widget>
      </widget>
@@ -842,7 +857,7 @@ p, li { white-space: pre-wrap; }
     </property>
     <layout class="QGridLayout" name="gridLayout_4">
      <item row="0" column="0">
-      <widget class="QLabel" name="label_11">
+      <widget class="QLabel" name="firsthalfLabel">
        <property name="minimumSize">
         <size>
          <width>75</width>
@@ -896,7 +911,7 @@ p, li { white-space: pre-wrap; }
       </widget>
      </item>
      <item row="0" column="2">
-      <widget class="QLabel" name="label_12">
+      <widget class="QLabel" name="secondhalfLabel">
        <property name="minimumSize">
         <size>
          <width>75</width>
@@ -950,7 +965,7 @@ p, li { white-space: pre-wrap; }
       </widget>
      </item>
      <item row="1" column="0">
-      <widget class="QLabel" name="label_15">
+      <widget class="QLabel" name="firstextraLabel">
        <property name="minimumSize">
         <size>
          <width>75</width>
@@ -971,7 +986,7 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;1st ET&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
        <property name="buddy">
-        <cstring>firstHalfLengthEdit</cstring>
+        <cstring>firstExtraLengthEdit</cstring>
        </property>
       </widget>
      </item>
@@ -1004,7 +1019,7 @@ p, li { white-space: pre-wrap; }
       </widget>
      </item>
      <item row="1" column="2">
-      <widget class="QLabel" name="label_16">
+      <widget class="QLabel" name="secondExtraLabel">
        <property name="minimumSize">
         <size>
          <width>75</width>
@@ -1025,7 +1040,7 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;2nd ET&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
        <property name="buddy">
-        <cstring>secondHalfLengthEdit</cstring>
+        <cstring>secondExtraLengthEdit</cstring>
        </property>
       </widget>
      </item>
@@ -1146,7 +1161,7 @@ p, li { white-space: pre-wrap; }
      </widget>
     </item>
     <item row="4" column="0">
-     <widget class="QLabel" name="label_2">
+     <widget class="QLabel" name="homemgrLabel">
       <property name="minimumSize">
        <size>
         <width>120</width>
@@ -1167,12 +1182,12 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Manager&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
       <property name="buddy">
-       <cstring>matchRefSelect</cstring>
+       <cstring>homemgrSelect</cstring>
       </property>
      </widget>
     </item>
     <item row="1" column="0">
-     <widget class="QLabel" name="label_7">
+     <widget class="QLabel" name="hometeamLabel">
       <property name="minimumSize">
        <size>
         <width>120</width>
@@ -1193,7 +1208,7 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Team&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
       <property name="buddy">
-       <cstring>awaymgrSelect</cstring>
+       <cstring>hometeamSelect</cstring>
       </property>
      </widget>
     </item>
@@ -1217,7 +1232,7 @@ p, li { white-space: pre-wrap; }
      </widget>
     </item>
     <item row="0" column="0">
-     <widget class="QLabel" name="label_22">
+     <widget class="QLabel" name="homeconfedLabel">
       <property name="minimumSize">
        <size>
         <width>120</width>
@@ -1238,7 +1253,7 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Confederation&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
       <property name="buddy">
-       <cstring>awayteamSelect</cstring>
+       <cstring>homeconfedSelect</cstring>
       </property>
      </widget>
     </item>
@@ -1289,7 +1304,7 @@ p, li { white-space: pre-wrap; }
    </property>
    <layout class="QGridLayout" name="gridLayout">
     <item row="3" column="0">
-     <widget class="QLabel" name="label_10">
+     <widget class="QLabel" name="awaymgrLabel">
       <property name="minimumSize">
        <size>
         <width>120</width>
@@ -1310,7 +1325,7 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Manager&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
       <property name="buddy">
-       <cstring>matchRefSelect</cstring>
+       <cstring>awaymgrSelect</cstring>
       </property>
      </widget>
     </item>
@@ -1340,7 +1355,7 @@ p, li { white-space: pre-wrap; }
      </widget>
     </item>
     <item row="1" column="0">
-     <widget class="QLabel" name="label_9">
+     <widget class="QLabel" name="awayteamLabel">
       <property name="minimumSize">
        <size>
         <width>120</width>
@@ -1407,7 +1422,7 @@ p, li { white-space: pre-wrap; }
      </widget>
     </item>
     <item row="0" column="0">
-     <widget class="QLabel" name="label_23">
+     <widget class="QLabel" name="awayconfedLabel">
       <property name="minimumSize">
        <size>
         <width>120</width>
@@ -1428,7 +1443,7 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Confederation&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
       <property name="buddy">
-       <cstring>awayteamSelect</cstring>
+       <cstring>awayconfedSelect</cstring>
       </property>
      </widget>
     </item>
@@ -1464,7 +1479,7 @@ p, li { white-space: pre-wrap; }
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout">
     <item>
-     <widget class="QLabel" name="label_4">
+     <widget class="QLabel" name="dateLabel">
       <property name="minimumSize">
        <size>
         <width>45</width>
@@ -1483,6 +1498,9 @@ p, li { white-space: pre-wrap; }
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Date&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+      <property name="buddy">
+       <cstring>matchDateEdit</cstring>
       </property>
      </widget>
     </item>
@@ -1526,7 +1544,7 @@ p, li { white-space: pre-wrap; }
      </widget>
     </item>
     <item>
-     <widget class="QLabel" name="label_13">
+     <widget class="QLabel" name="compLabel">
       <property name="minimumSize">
        <size>
         <width>105</width>
@@ -1545,6 +1563,9 @@ p, li { white-space: pre-wrap; }
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt; Competition&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+      <property name="buddy">
+       <cstring>matchCompSelect</cstring>
       </property>
      </widget>
     </item>
@@ -1568,7 +1589,7 @@ p, li { white-space: pre-wrap; }
      </widget>
     </item>
     <item>
-     <widget class="QLabel" name="label_14">
+     <widget class="QLabel" name="phaseLabel">
       <property name="minimumSize">
        <size>
         <width>50</width>
@@ -1587,6 +1608,9 @@ p, li { white-space: pre-wrap; }
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt; Phase&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+      <property name="buddy">
+       <cstring>matchPhaseSelect</cstring>
       </property>
      </widget>
     </item>
@@ -1666,7 +1690,7 @@ p, li { white-space: pre-wrap; }
    </property>
    <layout class="QGridLayout" name="gridLayout_2">
     <item row="0" column="0">
-     <widget class="QLabel" name="label_3">
+     <widget class="QLabel" name="venueLabel">
       <property name="minimumSize">
        <size>
         <width>120</width>
@@ -1685,6 +1709,9 @@ p, li { white-space: pre-wrap; }
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Venue&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+      <property name="buddy">
+       <cstring>matchVenueSelect</cstring>
       </property>
      </widget>
     </item>
@@ -1708,7 +1735,7 @@ p, li { white-space: pre-wrap; }
      </widget>
     </item>
     <item row="1" column="0">
-     <widget class="QLabel" name="label_6">
+     <widget class="QLabel" name="refereeLabel">
       <property name="minimumSize">
        <size>
         <width>120</width>
@@ -1729,7 +1756,7 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Referee&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
       <property name="buddy">
-       <cstring>awaymgrSelect</cstring>
+       <cstring>matchRefSelect</cstring>
       </property>
      </widget>
     </item>
@@ -1756,7 +1783,7 @@ p, li { white-space: pre-wrap; }
      </widget>
     </item>
     <item row="2" column="0">
-     <widget class="QLabel" name="label_9">
+     <widget class="QLabel" name="attendanceLabel">
       <property name="minimumSize">
        <size>
         <width>120</width>
@@ -1777,7 +1804,7 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Attendance&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
       <property name="buddy">
-       <cstring>matchRefSelect</cstring>
+       <cstring>matchAttendanceEdit</cstring>
       </property>
      </widget>
     </item>
@@ -1803,6 +1830,42 @@ p, li { white-space: pre-wrap; }
    </layout>
   </widget>
  </widget>
+ <tabstops>
+  <tabstop>matchID_display</tabstop>
+  <tabstop>matchDateEdit</tabstop>
+  <tabstop>matchCompSelect</tabstop>
+  <tabstop>matchPhaseSelect</tabstop>
+  <tabstop>lgRoundSelect</tabstop>
+  <tabstop>koRoundSelect</tabstop>
+  <tabstop>koMatchdaySelect</tabstop>
+  <tabstop>grpRoundSelect</tabstop>
+  <tabstop>groupSelect</tabstop>
+  <tabstop>grpMatchdaySelect</tabstop>
+  <tabstop>matchVenueSelect</tabstop>
+  <tabstop>matchRefSelect</tabstop>
+  <tabstop>matchAttendanceEdit</tabstop>
+  <tabstop>firstHalfLengthEdit</tabstop>
+  <tabstop>secondHalfLengthEdit</tabstop>
+  <tabstop>firstExtraLengthEdit</tabstop>
+  <tabstop>secondExtraLengthEdit</tabstop>
+  <tabstop>homeconfedSelect</tabstop>
+  <tabstop>hometeamSelect</tabstop>
+  <tabstop>homemgrSelect</tabstop>
+  <tabstop>awayconfedSelect</tabstop>
+  <tabstop>awayteamSelect</tabstop>
+  <tabstop>awaymgrSelect</tabstop>
+  <tabstop>homeLineupButton</tabstop>
+  <tabstop>awayLineupButton</tabstop>
+  <tabstop>enviroButton</tabstop>
+  <tabstop>firstEntry</tabstop>
+  <tabstop>prevEntry</tabstop>
+  <tabstop>nextEntry</tabstop>
+  <tabstop>lastEntry</tabstop>
+  <tabstop>addEntry</tabstop>
+  <tabstop>saveEntry</tabstop>
+  <tabstop>deleteEntry</tabstop>
+  <tabstop>closeButton</tabstop>
+ </tabstops>
  <resources>
   <include location="fmrd_resources.qrc"/>
  </resources>

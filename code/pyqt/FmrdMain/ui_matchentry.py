@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'gui/match_entry.ui'
 #
-# Created: Thu Dec 29 23:31:08 2011
+# Created: Sat Dec 31 23:55:46 2011
 #      by: PyQt4 UI code generator 4.7.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -33,11 +33,11 @@ class Ui_MatchEntryDlg(object):
         self.matchID_display.setMaxLength(7)
         self.matchID_display.setReadOnly(True)
         self.matchID_display.setObjectName("matchID_display")
-        self.label = QtGui.QLabel(MatchEntryDlg)
-        self.label.setGeometry(QtCore.QRect(9, 9, 75, 30))
-        self.label.setMinimumSize(QtCore.QSize(75, 30))
-        self.label.setMaximumSize(QtCore.QSize(75, 30))
-        self.label.setObjectName("label")
+        self.matchLabel = QtGui.QLabel(MatchEntryDlg)
+        self.matchLabel.setGeometry(QtCore.QRect(9, 9, 75, 30))
+        self.matchLabel.setMinimumSize(QtCore.QSize(75, 30))
+        self.matchLabel.setMaximumSize(QtCore.QSize(75, 30))
+        self.matchLabel.setObjectName("matchLabel")
         self.frame = QtGui.QFrame(MatchEntryDlg)
         self.frame.setGeometry(QtCore.QRect(20, 610, 411, 51))
         self.frame.setMinimumSize(QtCore.QSize(411, 51))
@@ -129,11 +129,11 @@ class Ui_MatchEntryDlg(object):
         self.leagueBox.setMinimumSize(QtCore.QSize(270, 60))
         self.leagueBox.setMaximumSize(QtCore.QSize(270, 60))
         self.leagueBox.setObjectName("leagueBox")
-        self.label_2 = QtGui.QLabel(self.leagueBox)
-        self.label_2.setGeometry(QtCore.QRect(20, 20, 50, 30))
-        self.label_2.setMinimumSize(QtCore.QSize(50, 30))
-        self.label_2.setMaximumSize(QtCore.QSize(50, 30))
-        self.label_2.setObjectName("label_2")
+        self.leagueLabel = QtGui.QLabel(self.leagueBox)
+        self.leagueLabel.setGeometry(QtCore.QRect(20, 20, 50, 30))
+        self.leagueLabel.setMinimumSize(QtCore.QSize(50, 30))
+        self.leagueLabel.setMaximumSize(QtCore.QSize(50, 30))
+        self.leagueLabel.setObjectName("leagueLabel")
         self.lgRoundSelect = QtGui.QComboBox(self.leagueBox)
         self.lgRoundSelect.setGeometry(QtCore.QRect(80, 20, 180, 30))
         self.lgRoundSelect.setMinimumSize(QtCore.QSize(180, 30))
@@ -144,11 +144,11 @@ class Ui_MatchEntryDlg(object):
         self.knockoutBox.setMinimumSize(QtCore.QSize(330, 60))
         self.knockoutBox.setMaximumSize(QtCore.QSize(585, 100))
         self.knockoutBox.setObjectName("knockoutBox")
-        self.label_17 = QtGui.QLabel(self.knockoutBox)
-        self.label_17.setGeometry(QtCore.QRect(10, 20, 50, 30))
-        self.label_17.setMinimumSize(QtCore.QSize(50, 30))
-        self.label_17.setMaximumSize(QtCore.QSize(50, 30))
-        self.label_17.setObjectName("label_17")
+        self.koroundLabel = QtGui.QLabel(self.knockoutBox)
+        self.koroundLabel.setGeometry(QtCore.QRect(10, 20, 50, 30))
+        self.koroundLabel.setMinimumSize(QtCore.QSize(50, 30))
+        self.koroundLabel.setMaximumSize(QtCore.QSize(50, 30))
+        self.koroundLabel.setObjectName("koroundLabel")
         self.koRoundSelect = QtGui.QComboBox(self.knockoutBox)
         self.koRoundSelect.setGeometry(QtCore.QRect(60, 20, 240, 30))
         self.koRoundSelect.setMinimumSize(QtCore.QSize(240, 30))
@@ -159,21 +159,21 @@ class Ui_MatchEntryDlg(object):
         self.koMatchdaySelect.setMinimumSize(QtCore.QSize(180, 30))
         self.koMatchdaySelect.setMaximumSize(QtCore.QSize(180, 30))
         self.koMatchdaySelect.setObjectName("koMatchdaySelect")
-        self.label_18 = QtGui.QLabel(self.knockoutBox)
-        self.label_18.setGeometry(QtCore.QRect(310, 20, 75, 30))
-        self.label_18.setMinimumSize(QtCore.QSize(75, 30))
-        self.label_18.setMaximumSize(QtCore.QSize(75, 30))
-        self.label_18.setObjectName("label_18")
+        self.komatchdayLabel = QtGui.QLabel(self.knockoutBox)
+        self.komatchdayLabel.setGeometry(QtCore.QRect(310, 20, 75, 30))
+        self.komatchdayLabel.setMinimumSize(QtCore.QSize(75, 30))
+        self.komatchdayLabel.setMaximumSize(QtCore.QSize(75, 30))
+        self.komatchdayLabel.setObjectName("komatchdayLabel")
         self.gridLayout_3.addWidget(self.knockoutBox, 0, 1, 1, 1)
         self.groupBox = QtGui.QGroupBox(self.layoutWidget)
         self.groupBox.setMinimumSize(QtCore.QSize(280, 50))
         self.groupBox.setMaximumSize(QtCore.QSize(940, 100))
         self.groupBox.setObjectName("groupBox")
-        self.label_19 = QtGui.QLabel(self.groupBox)
-        self.label_19.setGeometry(QtCore.QRect(20, 20, 50, 30))
-        self.label_19.setMinimumSize(QtCore.QSize(50, 30))
-        self.label_19.setMaximumSize(QtCore.QSize(50, 30))
-        self.label_19.setObjectName("label_19")
+        self.grproundLabel = QtGui.QLabel(self.groupBox)
+        self.grproundLabel.setGeometry(QtCore.QRect(20, 20, 50, 30))
+        self.grproundLabel.setMinimumSize(QtCore.QSize(50, 30))
+        self.grproundLabel.setMaximumSize(QtCore.QSize(50, 30))
+        self.grproundLabel.setObjectName("grproundLabel")
         self.grpRoundSelect = QtGui.QComboBox(self.groupBox)
         self.grpRoundSelect.setGeometry(QtCore.QRect(80, 20, 240, 30))
         self.grpRoundSelect.setMinimumSize(QtCore.QSize(240, 30))
@@ -184,21 +184,21 @@ class Ui_MatchEntryDlg(object):
         self.grpMatchdaySelect.setMinimumSize(QtCore.QSize(180, 30))
         self.grpMatchdaySelect.setMaximumSize(QtCore.QSize(180, 30))
         self.grpMatchdaySelect.setObjectName("grpMatchdaySelect")
-        self.label_21 = QtGui.QLabel(self.groupBox)
-        self.label_21.setGeometry(QtCore.QRect(600, 20, 75, 30))
-        self.label_21.setMinimumSize(QtCore.QSize(75, 30))
-        self.label_21.setMaximumSize(QtCore.QSize(75, 30))
-        self.label_21.setObjectName("label_21")
-        self.label_20 = QtGui.QLabel(self.groupBox)
-        self.label_20.setGeometry(QtCore.QRect(390, 20, 50, 30))
-        self.label_20.setMinimumSize(QtCore.QSize(50, 30))
-        self.label_20.setMaximumSize(QtCore.QSize(50, 30))
-        self.label_20.setObjectName("label_20")
+        self.grpLabel = QtGui.QLabel(self.groupBox)
+        self.grpLabel.setGeometry(QtCore.QRect(390, 20, 50, 30))
+        self.grpLabel.setMinimumSize(QtCore.QSize(50, 30))
+        self.grpLabel.setMaximumSize(QtCore.QSize(50, 30))
+        self.grpLabel.setObjectName("grpLabel")
         self.groupSelect = QtGui.QComboBox(self.groupBox)
         self.groupSelect.setGeometry(QtCore.QRect(450, 20, 60, 30))
         self.groupSelect.setMinimumSize(QtCore.QSize(60, 30))
         self.groupSelect.setMaximumSize(QtCore.QSize(60, 30))
         self.groupSelect.setObjectName("groupSelect")
+        self.matchdayLabel = QtGui.QLabel(self.groupBox)
+        self.matchdayLabel.setGeometry(QtCore.QRect(600, 20, 75, 30))
+        self.matchdayLabel.setMinimumSize(QtCore.QSize(75, 30))
+        self.matchdayLabel.setMaximumSize(QtCore.QSize(75, 30))
+        self.matchdayLabel.setObjectName("matchdayLabel")
         self.gridLayout_3.addWidget(self.groupBox, 1, 0, 1, 2)
         self.matchtimeBox = QtGui.QGroupBox(MatchEntryDlg)
         self.matchtimeBox.setGeometry(QtCore.QRect(600, 250, 281, 121))
@@ -208,44 +208,44 @@ class Ui_MatchEntryDlg(object):
         self.layoutWidget1.setObjectName("layoutWidget1")
         self.gridLayout_4 = QtGui.QGridLayout(self.layoutWidget1)
         self.gridLayout_4.setObjectName("gridLayout_4")
-        self.label_11 = QtGui.QLabel(self.layoutWidget1)
-        self.label_11.setMinimumSize(QtCore.QSize(75, 30))
-        self.label_11.setMaximumSize(QtCore.QSize(75, 30))
-        self.label_11.setObjectName("label_11")
-        self.gridLayout_4.addWidget(self.label_11, 0, 0, 1, 1)
+        self.firsthalfLabel = QtGui.QLabel(self.layoutWidget1)
+        self.firsthalfLabel.setMinimumSize(QtCore.QSize(75, 30))
+        self.firsthalfLabel.setMaximumSize(QtCore.QSize(75, 30))
+        self.firsthalfLabel.setObjectName("firsthalfLabel")
+        self.gridLayout_4.addWidget(self.firsthalfLabel, 0, 0, 1, 1)
         self.firstHalfLengthEdit = QtGui.QLineEdit(self.layoutWidget1)
         self.firstHalfLengthEdit.setMinimumSize(QtCore.QSize(30, 30))
         self.firstHalfLengthEdit.setMaximumSize(QtCore.QSize(30, 30))
         self.firstHalfLengthEdit.setMaxLength(2)
         self.firstHalfLengthEdit.setObjectName("firstHalfLengthEdit")
         self.gridLayout_4.addWidget(self.firstHalfLengthEdit, 0, 1, 1, 1)
-        self.label_12 = QtGui.QLabel(self.layoutWidget1)
-        self.label_12.setMinimumSize(QtCore.QSize(75, 30))
-        self.label_12.setMaximumSize(QtCore.QSize(75, 30))
-        self.label_12.setObjectName("label_12")
-        self.gridLayout_4.addWidget(self.label_12, 0, 2, 1, 1)
+        self.secondhalfLabel = QtGui.QLabel(self.layoutWidget1)
+        self.secondhalfLabel.setMinimumSize(QtCore.QSize(75, 30))
+        self.secondhalfLabel.setMaximumSize(QtCore.QSize(75, 30))
+        self.secondhalfLabel.setObjectName("secondhalfLabel")
+        self.gridLayout_4.addWidget(self.secondhalfLabel, 0, 2, 1, 1)
         self.secondHalfLengthEdit = QtGui.QLineEdit(self.layoutWidget1)
         self.secondHalfLengthEdit.setMinimumSize(QtCore.QSize(30, 30))
         self.secondHalfLengthEdit.setMaximumSize(QtCore.QSize(30, 30))
         self.secondHalfLengthEdit.setMaxLength(2)
         self.secondHalfLengthEdit.setObjectName("secondHalfLengthEdit")
         self.gridLayout_4.addWidget(self.secondHalfLengthEdit, 0, 3, 1, 1)
-        self.label_15 = QtGui.QLabel(self.layoutWidget1)
-        self.label_15.setMinimumSize(QtCore.QSize(75, 30))
-        self.label_15.setMaximumSize(QtCore.QSize(75, 30))
-        self.label_15.setObjectName("label_15")
-        self.gridLayout_4.addWidget(self.label_15, 1, 0, 1, 1)
+        self.firstextraLabel = QtGui.QLabel(self.layoutWidget1)
+        self.firstextraLabel.setMinimumSize(QtCore.QSize(75, 30))
+        self.firstextraLabel.setMaximumSize(QtCore.QSize(75, 30))
+        self.firstextraLabel.setObjectName("firstextraLabel")
+        self.gridLayout_4.addWidget(self.firstextraLabel, 1, 0, 1, 1)
         self.firstExtraLengthEdit = QtGui.QLineEdit(self.layoutWidget1)
         self.firstExtraLengthEdit.setMinimumSize(QtCore.QSize(30, 30))
         self.firstExtraLengthEdit.setMaximumSize(QtCore.QSize(30, 30))
         self.firstExtraLengthEdit.setMaxLength(2)
         self.firstExtraLengthEdit.setObjectName("firstExtraLengthEdit")
         self.gridLayout_4.addWidget(self.firstExtraLengthEdit, 1, 1, 1, 1)
-        self.label_16 = QtGui.QLabel(self.layoutWidget1)
-        self.label_16.setMinimumSize(QtCore.QSize(75, 30))
-        self.label_16.setMaximumSize(QtCore.QSize(75, 30))
-        self.label_16.setObjectName("label_16")
-        self.gridLayout_4.addWidget(self.label_16, 1, 2, 1, 1)
+        self.secondExtraLabel = QtGui.QLabel(self.layoutWidget1)
+        self.secondExtraLabel.setMinimumSize(QtCore.QSize(75, 30))
+        self.secondExtraLabel.setMaximumSize(QtCore.QSize(75, 30))
+        self.secondExtraLabel.setObjectName("secondExtraLabel")
+        self.gridLayout_4.addWidget(self.secondExtraLabel, 1, 2, 1, 1)
         self.secondExtraLengthEdit = QtGui.QLineEdit(self.layoutWidget1)
         self.secondExtraLengthEdit.setMinimumSize(QtCore.QSize(30, 30))
         self.secondExtraLengthEdit.setMaximumSize(QtCore.QSize(30, 30))
@@ -276,26 +276,26 @@ class Ui_MatchEntryDlg(object):
         self.homeLineupButton.setMaximumSize(QtCore.QSize(120, 30))
         self.homeLineupButton.setObjectName("homeLineupButton")
         self.gridLayout_31.addWidget(self.homeLineupButton, 5, 1, 1, 1)
-        self.label_21 = QtGui.QLabel(self.hometeamBox)
-        self.label_21.setMinimumSize(QtCore.QSize(120, 30))
-        self.label_21.setMaximumSize(QtCore.QSize(120, 30))
-        self.label_21.setObjectName("label_21")
-        self.gridLayout_31.addWidget(self.label_21, 4, 0, 1, 1)
-        self.label_7 = QtGui.QLabel(self.hometeamBox)
-        self.label_7.setMinimumSize(QtCore.QSize(120, 30))
-        self.label_7.setMaximumSize(QtCore.QSize(120, 30))
-        self.label_7.setObjectName("label_7")
-        self.gridLayout_31.addWidget(self.label_7, 1, 0, 1, 1)
+        self.homemgrLabel = QtGui.QLabel(self.hometeamBox)
+        self.homemgrLabel.setMinimumSize(QtCore.QSize(120, 30))
+        self.homemgrLabel.setMaximumSize(QtCore.QSize(120, 30))
+        self.homemgrLabel.setObjectName("homemgrLabel")
+        self.gridLayout_31.addWidget(self.homemgrLabel, 4, 0, 1, 1)
+        self.hometeamLabel = QtGui.QLabel(self.hometeamBox)
+        self.hometeamLabel.setMinimumSize(QtCore.QSize(120, 30))
+        self.hometeamLabel.setMaximumSize(QtCore.QSize(120, 30))
+        self.hometeamLabel.setObjectName("hometeamLabel")
+        self.gridLayout_31.addWidget(self.hometeamLabel, 1, 0, 1, 1)
         self.homeconfedSelect = QtGui.QComboBox(self.hometeamBox)
         self.homeconfedSelect.setMinimumSize(QtCore.QSize(240, 30))
         self.homeconfedSelect.setMaximumSize(QtCore.QSize(270, 30))
         self.homeconfedSelect.setObjectName("homeconfedSelect")
         self.gridLayout_31.addWidget(self.homeconfedSelect, 0, 1, 1, 1)
-        self.label_22 = QtGui.QLabel(self.hometeamBox)
-        self.label_22.setMinimumSize(QtCore.QSize(120, 30))
-        self.label_22.setMaximumSize(QtCore.QSize(120, 30))
-        self.label_22.setObjectName("label_22")
-        self.gridLayout_31.addWidget(self.label_22, 0, 0, 1, 1)
+        self.homeconfedLabel = QtGui.QLabel(self.hometeamBox)
+        self.homeconfedLabel.setMinimumSize(QtCore.QSize(120, 30))
+        self.homeconfedLabel.setMaximumSize(QtCore.QSize(120, 30))
+        self.homeconfedLabel.setObjectName("homeconfedLabel")
+        self.gridLayout_31.addWidget(self.homeconfedLabel, 0, 0, 1, 1)
         self.hometeamSelect = QtGui.QComboBox(self.hometeamBox)
         self.hometeamSelect.setMinimumSize(QtCore.QSize(240, 30))
         self.hometeamSelect.setMaximumSize(QtCore.QSize(240, 30))
@@ -308,22 +308,22 @@ class Ui_MatchEntryDlg(object):
         self.awayteamBox.setObjectName("awayteamBox")
         self.gridLayout = QtGui.QGridLayout(self.awayteamBox)
         self.gridLayout.setObjectName("gridLayout")
-        self.label_10 = QtGui.QLabel(self.awayteamBox)
-        self.label_10.setMinimumSize(QtCore.QSize(120, 30))
-        self.label_10.setMaximumSize(QtCore.QSize(120, 30))
-        self.label_10.setObjectName("label_10")
-        self.gridLayout.addWidget(self.label_10, 3, 0, 1, 1)
+        self.awaymgrLabel = QtGui.QLabel(self.awayteamBox)
+        self.awaymgrLabel.setMinimumSize(QtCore.QSize(120, 30))
+        self.awaymgrLabel.setMaximumSize(QtCore.QSize(120, 30))
+        self.awaymgrLabel.setObjectName("awaymgrLabel")
+        self.gridLayout.addWidget(self.awaymgrLabel, 3, 0, 1, 1)
         self.awayLineupButton = QtGui.QPushButton(self.awayteamBox)
         self.awayLineupButton.setEnabled(True)
         self.awayLineupButton.setMinimumSize(QtCore.QSize(120, 30))
         self.awayLineupButton.setMaximumSize(QtCore.QSize(120, 30))
         self.awayLineupButton.setObjectName("awayLineupButton")
         self.gridLayout.addWidget(self.awayLineupButton, 4, 1, 1, 1)
-        self.label_9 = QtGui.QLabel(self.awayteamBox)
-        self.label_9.setMinimumSize(QtCore.QSize(120, 30))
-        self.label_9.setMaximumSize(QtCore.QSize(120, 30))
-        self.label_9.setObjectName("label_9")
-        self.gridLayout.addWidget(self.label_9, 1, 0, 1, 1)
+        self.awayteamLabel = QtGui.QLabel(self.awayteamBox)
+        self.awayteamLabel.setMinimumSize(QtCore.QSize(120, 30))
+        self.awayteamLabel.setMaximumSize(QtCore.QSize(120, 30))
+        self.awayteamLabel.setObjectName("awayteamLabel")
+        self.gridLayout.addWidget(self.awayteamLabel, 1, 0, 1, 1)
         self.awayteamSelect = QtGui.QComboBox(self.awayteamBox)
         self.awayteamSelect.setEnabled(True)
         self.awayteamSelect.setMinimumSize(QtCore.QSize(240, 30))
@@ -335,11 +335,11 @@ class Ui_MatchEntryDlg(object):
         self.awayconfedSelect.setMaximumSize(QtCore.QSize(240, 30))
         self.awayconfedSelect.setObjectName("awayconfedSelect")
         self.gridLayout.addWidget(self.awayconfedSelect, 0, 1, 1, 1)
-        self.label_23 = QtGui.QLabel(self.awayteamBox)
-        self.label_23.setMinimumSize(QtCore.QSize(120, 30))
-        self.label_23.setMaximumSize(QtCore.QSize(120, 30))
-        self.label_23.setObjectName("label_23")
-        self.gridLayout.addWidget(self.label_23, 0, 0, 1, 1)
+        self.awayconfedLabel = QtGui.QLabel(self.awayteamBox)
+        self.awayconfedLabel.setMinimumSize(QtCore.QSize(120, 30))
+        self.awayconfedLabel.setMaximumSize(QtCore.QSize(120, 30))
+        self.awayconfedLabel.setObjectName("awayconfedLabel")
+        self.gridLayout.addWidget(self.awayconfedLabel, 0, 0, 1, 1)
         self.awaymgrSelect = QtGui.QComboBox(self.awayteamBox)
         self.awaymgrSelect.setMinimumSize(QtCore.QSize(240, 30))
         self.awaymgrSelect.setMaximumSize(QtCore.QSize(240, 30))
@@ -350,11 +350,11 @@ class Ui_MatchEntryDlg(object):
         self.layoutWidget2.setObjectName("layoutWidget2")
         self.horizontalLayout = QtGui.QHBoxLayout(self.layoutWidget2)
         self.horizontalLayout.setObjectName("horizontalLayout")
-        self.label_4 = QtGui.QLabel(self.layoutWidget2)
-        self.label_4.setMinimumSize(QtCore.QSize(45, 30))
-        self.label_4.setMaximumSize(QtCore.QSize(45, 30))
-        self.label_4.setObjectName("label_4")
-        self.horizontalLayout.addWidget(self.label_4)
+        self.dateLabel = QtGui.QLabel(self.layoutWidget2)
+        self.dateLabel.setMinimumSize(QtCore.QSize(45, 30))
+        self.dateLabel.setMaximumSize(QtCore.QSize(45, 30))
+        self.dateLabel.setObjectName("dateLabel")
+        self.horizontalLayout.addWidget(self.dateLabel)
         self.matchDateEdit = QtGui.QDateEdit(self.layoutWidget2)
         self.matchDateEdit.setMinimumSize(QtCore.QSize(120, 30))
         self.matchDateEdit.setMaximumSize(QtCore.QSize(120, 30))
@@ -363,21 +363,21 @@ class Ui_MatchEntryDlg(object):
         self.matchDateEdit.setDate(QtCore.QDate(1856, 1, 1))
         self.matchDateEdit.setObjectName("matchDateEdit")
         self.horizontalLayout.addWidget(self.matchDateEdit)
-        self.label_13 = QtGui.QLabel(self.layoutWidget2)
-        self.label_13.setMinimumSize(QtCore.QSize(105, 30))
-        self.label_13.setMaximumSize(QtCore.QSize(105, 30))
-        self.label_13.setObjectName("label_13")
-        self.horizontalLayout.addWidget(self.label_13)
+        self.compLabel = QtGui.QLabel(self.layoutWidget2)
+        self.compLabel.setMinimumSize(QtCore.QSize(105, 30))
+        self.compLabel.setMaximumSize(QtCore.QSize(105, 30))
+        self.compLabel.setObjectName("compLabel")
+        self.horizontalLayout.addWidget(self.compLabel)
         self.matchCompSelect = QtGui.QComboBox(self.layoutWidget2)
         self.matchCompSelect.setMinimumSize(QtCore.QSize(330, 30))
         self.matchCompSelect.setMaximumSize(QtCore.QSize(330, 30))
         self.matchCompSelect.setObjectName("matchCompSelect")
         self.horizontalLayout.addWidget(self.matchCompSelect)
-        self.label_14 = QtGui.QLabel(self.layoutWidget2)
-        self.label_14.setMinimumSize(QtCore.QSize(50, 30))
-        self.label_14.setMaximumSize(QtCore.QSize(50, 30))
-        self.label_14.setObjectName("label_14")
-        self.horizontalLayout.addWidget(self.label_14)
+        self.phaseLabel = QtGui.QLabel(self.layoutWidget2)
+        self.phaseLabel.setMinimumSize(QtCore.QSize(50, 30))
+        self.phaseLabel.setMaximumSize(QtCore.QSize(50, 30))
+        self.phaseLabel.setObjectName("phaseLabel")
+        self.horizontalLayout.addWidget(self.phaseLabel)
         self.matchPhaseSelect = QtGui.QComboBox(self.layoutWidget2)
         self.matchPhaseSelect.setMinimumSize(QtCore.QSize(180, 30))
         self.matchPhaseSelect.setMaximumSize(QtCore.QSize(180, 30))
@@ -399,57 +399,99 @@ class Ui_MatchEntryDlg(object):
         self.layoutWidget3.setObjectName("layoutWidget3")
         self.gridLayout_2 = QtGui.QGridLayout(self.layoutWidget3)
         self.gridLayout_2.setObjectName("gridLayout_2")
-        self.label_3 = QtGui.QLabel(self.layoutWidget3)
-        self.label_3.setMinimumSize(QtCore.QSize(120, 30))
-        self.label_3.setMaximumSize(QtCore.QSize(120, 30))
-        self.label_3.setObjectName("label_3")
-        self.gridLayout_2.addWidget(self.label_3, 0, 0, 1, 1)
+        self.venueLabel = QtGui.QLabel(self.layoutWidget3)
+        self.venueLabel.setMinimumSize(QtCore.QSize(120, 30))
+        self.venueLabel.setMaximumSize(QtCore.QSize(120, 30))
+        self.venueLabel.setObjectName("venueLabel")
+        self.gridLayout_2.addWidget(self.venueLabel, 0, 0, 1, 1)
         self.matchVenueSelect = QtGui.QComboBox(self.layoutWidget3)
         self.matchVenueSelect.setMinimumSize(QtCore.QSize(360, 30))
         self.matchVenueSelect.setMaximumSize(QtCore.QSize(360, 30))
         self.matchVenueSelect.setObjectName("matchVenueSelect")
         self.gridLayout_2.addWidget(self.matchVenueSelect, 0, 1, 1, 1)
-        self.label_6 = QtGui.QLabel(self.layoutWidget3)
-        self.label_6.setMinimumSize(QtCore.QSize(120, 30))
-        self.label_6.setMaximumSize(QtCore.QSize(120, 30))
-        self.label_6.setObjectName("label_6")
-        self.gridLayout_2.addWidget(self.label_6, 1, 0, 1, 1)
+        self.refereeLabel = QtGui.QLabel(self.layoutWidget3)
+        self.refereeLabel.setMinimumSize(QtCore.QSize(120, 30))
+        self.refereeLabel.setMaximumSize(QtCore.QSize(120, 30))
+        self.refereeLabel.setObjectName("refereeLabel")
+        self.gridLayout_2.addWidget(self.refereeLabel, 1, 0, 1, 1)
         self.matchRefSelect = QtGui.QComboBox(self.layoutWidget3)
         self.matchRefSelect.setEnabled(True)
         self.matchRefSelect.setMinimumSize(QtCore.QSize(300, 30))
         self.matchRefSelect.setMaximumSize(QtCore.QSize(300, 30))
         self.matchRefSelect.setObjectName("matchRefSelect")
         self.gridLayout_2.addWidget(self.matchRefSelect, 1, 1, 1, 1)
-        self.label_91 = QtGui.QLabel(self.layoutWidget3)
-        self.label_91.setMinimumSize(QtCore.QSize(120, 30))
-        self.label_91.setMaximumSize(QtCore.QSize(120, 30))
-        self.label_91.setObjectName("label_91")
-        self.gridLayout_2.addWidget(self.label_91, 2, 0, 1, 1)
+        self.attendanceLabel = QtGui.QLabel(self.layoutWidget3)
+        self.attendanceLabel.setMinimumSize(QtCore.QSize(120, 30))
+        self.attendanceLabel.setMaximumSize(QtCore.QSize(120, 30))
+        self.attendanceLabel.setObjectName("attendanceLabel")
+        self.gridLayout_2.addWidget(self.attendanceLabel, 2, 0, 1, 1)
         self.matchAttendanceEdit = QtGui.QLineEdit(self.layoutWidget3)
         self.matchAttendanceEdit.setMinimumSize(QtCore.QSize(120, 30))
         self.matchAttendanceEdit.setMaximumSize(QtCore.QSize(120, 30))
         self.matchAttendanceEdit.setObjectName("matchAttendanceEdit")
         self.gridLayout_2.addWidget(self.matchAttendanceEdit, 2, 1, 1, 1)
-        self.label.setBuddy(self.matchID_display)
-        self.label_11.setBuddy(self.firstHalfLengthEdit)
-        self.label_12.setBuddy(self.secondHalfLengthEdit)
-        self.label_15.setBuddy(self.firstHalfLengthEdit)
-        self.label_16.setBuddy(self.secondHalfLengthEdit)
-        self.label_21.setBuddy(self.matchRefSelect)
-        self.label_7.setBuddy(self.awaymgrSelect)
-        self.label_22.setBuddy(self.awayteamSelect)
-        self.label_10.setBuddy(self.matchRefSelect)
-        self.label_9.setBuddy(self.awayteamSelect)
-        self.label_23.setBuddy(self.awayteamSelect)
-        self.label_6.setBuddy(self.awaymgrSelect)
-        self.label_91.setBuddy(self.matchRefSelect)
+        self.matchLabel.setBuddy(self.matchID_display)
+        self.leagueLabel.setBuddy(self.lgRoundSelect)
+        self.koroundLabel.setBuddy(self.koRoundSelect)
+        self.komatchdayLabel.setBuddy(self.koMatchdaySelect)
+        self.grproundLabel.setBuddy(self.grpRoundSelect)
+        self.grpLabel.setBuddy(self.groupSelect)
+        self.firsthalfLabel.setBuddy(self.firstHalfLengthEdit)
+        self.secondhalfLabel.setBuddy(self.secondHalfLengthEdit)
+        self.firstextraLabel.setBuddy(self.firstExtraLengthEdit)
+        self.secondExtraLabel.setBuddy(self.secondExtraLengthEdit)
+        self.homemgrLabel.setBuddy(self.homemgrSelect)
+        self.hometeamLabel.setBuddy(self.hometeamSelect)
+        self.homeconfedLabel.setBuddy(self.homeconfedSelect)
+        self.awaymgrLabel.setBuddy(self.awaymgrSelect)
+        self.awayteamLabel.setBuddy(self.awayteamSelect)
+        self.awayconfedLabel.setBuddy(self.awayconfedSelect)
+        self.dateLabel.setBuddy(self.matchDateEdit)
+        self.compLabel.setBuddy(self.matchCompSelect)
+        self.phaseLabel.setBuddy(self.matchPhaseSelect)
+        self.venueLabel.setBuddy(self.matchVenueSelect)
+        self.refereeLabel.setBuddy(self.matchRefSelect)
+        self.attendanceLabel.setBuddy(self.matchAttendanceEdit)
 
         self.retranslateUi(MatchEntryDlg)
         QtCore.QMetaObject.connectSlotsByName(MatchEntryDlg)
+        MatchEntryDlg.setTabOrder(self.matchID_display, self.matchDateEdit)
+        MatchEntryDlg.setTabOrder(self.matchDateEdit, self.matchCompSelect)
+        MatchEntryDlg.setTabOrder(self.matchCompSelect, self.matchPhaseSelect)
+        MatchEntryDlg.setTabOrder(self.matchPhaseSelect, self.lgRoundSelect)
+        MatchEntryDlg.setTabOrder(self.lgRoundSelect, self.koRoundSelect)
+        MatchEntryDlg.setTabOrder(self.koRoundSelect, self.koMatchdaySelect)
+        MatchEntryDlg.setTabOrder(self.koMatchdaySelect, self.grpRoundSelect)
+        MatchEntryDlg.setTabOrder(self.grpRoundSelect, self.groupSelect)
+        MatchEntryDlg.setTabOrder(self.groupSelect, self.grpMatchdaySelect)
+        MatchEntryDlg.setTabOrder(self.grpMatchdaySelect, self.matchVenueSelect)
+        MatchEntryDlg.setTabOrder(self.matchVenueSelect, self.matchRefSelect)
+        MatchEntryDlg.setTabOrder(self.matchRefSelect, self.matchAttendanceEdit)
+        MatchEntryDlg.setTabOrder(self.matchAttendanceEdit, self.firstHalfLengthEdit)
+        MatchEntryDlg.setTabOrder(self.firstHalfLengthEdit, self.secondHalfLengthEdit)
+        MatchEntryDlg.setTabOrder(self.secondHalfLengthEdit, self.firstExtraLengthEdit)
+        MatchEntryDlg.setTabOrder(self.firstExtraLengthEdit, self.secondExtraLengthEdit)
+        MatchEntryDlg.setTabOrder(self.secondExtraLengthEdit, self.homeconfedSelect)
+        MatchEntryDlg.setTabOrder(self.homeconfedSelect, self.hometeamSelect)
+        MatchEntryDlg.setTabOrder(self.hometeamSelect, self.homemgrSelect)
+        MatchEntryDlg.setTabOrder(self.homemgrSelect, self.awayconfedSelect)
+        MatchEntryDlg.setTabOrder(self.awayconfedSelect, self.awayteamSelect)
+        MatchEntryDlg.setTabOrder(self.awayteamSelect, self.awaymgrSelect)
+        MatchEntryDlg.setTabOrder(self.awaymgrSelect, self.homeLineupButton)
+        MatchEntryDlg.setTabOrder(self.homeLineupButton, self.awayLineupButton)
+        MatchEntryDlg.setTabOrder(self.awayLineupButton, self.enviroButton)
+        MatchEntryDlg.setTabOrder(self.enviroButton, self.firstEntry)
+        MatchEntryDlg.setTabOrder(self.firstEntry, self.prevEntry)
+        MatchEntryDlg.setTabOrder(self.prevEntry, self.nextEntry)
+        MatchEntryDlg.setTabOrder(self.nextEntry, self.lastEntry)
+        MatchEntryDlg.setTabOrder(self.lastEntry, self.addEntry)
+        MatchEntryDlg.setTabOrder(self.addEntry, self.saveEntry)
+        MatchEntryDlg.setTabOrder(self.saveEntry, self.deleteEntry)
+        MatchEntryDlg.setTabOrder(self.deleteEntry, self.closeButton)
 
     def retranslateUi(self, MatchEntryDlg):
         MatchEntryDlg.setWindowTitle(QtGui.QApplication.translate("MatchEntryDlg", "Match Entry", None, QtGui.QApplication.UnicodeUTF8))
-        self.label.setText(QtGui.QApplication.translate("MatchEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.matchLabel.setText(QtGui.QApplication.translate("MatchEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
@@ -467,46 +509,46 @@ class Ui_MatchEntryDlg(object):
         self.closeButton.setToolTip(QtGui.QApplication.translate("MatchEntryDlg", "Close Window", None, QtGui.QApplication.UnicodeUTF8))
         self.closeButton.setText(QtGui.QApplication.translate("MatchEntryDlg", "&Close", None, QtGui.QApplication.UnicodeUTF8))
         self.leagueBox.setTitle(QtGui.QApplication.translate("MatchEntryDlg", "League Phase", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_2.setText(QtGui.QApplication.translate("MatchEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.leagueLabel.setText(QtGui.QApplication.translate("MatchEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Round</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
         self.lgRoundSelect.setToolTip(QtGui.QApplication.translate("MatchEntryDlg", "League Round", None, QtGui.QApplication.UnicodeUTF8))
         self.knockoutBox.setTitle(QtGui.QApplication.translate("MatchEntryDlg", "Knockout Phase", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_17.setText(QtGui.QApplication.translate("MatchEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.koroundLabel.setText(QtGui.QApplication.translate("MatchEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Round</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
         self.koRoundSelect.setToolTip(QtGui.QApplication.translate("MatchEntryDlg", "Knockout Round", None, QtGui.QApplication.UnicodeUTF8))
         self.koMatchdaySelect.setToolTip(QtGui.QApplication.translate("MatchEntryDlg", "Knockout Round Matchday", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_18.setText(QtGui.QApplication.translate("MatchEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.komatchdayLabel.setText(QtGui.QApplication.translate("MatchEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Matchday</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
         self.groupBox.setTitle(QtGui.QApplication.translate("MatchEntryDlg", "Group Phase", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_19.setText(QtGui.QApplication.translate("MatchEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.grproundLabel.setText(QtGui.QApplication.translate("MatchEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Round</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
         self.grpRoundSelect.setToolTip(QtGui.QApplication.translate("MatchEntryDlg", "Group Phase Round", None, QtGui.QApplication.UnicodeUTF8))
         self.grpMatchdaySelect.setToolTip(QtGui.QApplication.translate("MatchEntryDlg", "Group Round Matchday", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_21.setText(QtGui.QApplication.translate("MatchEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Matchday</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_20.setText(QtGui.QApplication.translate("MatchEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.grpLabel.setText(QtGui.QApplication.translate("MatchEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Group</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
         self.groupSelect.setToolTip(QtGui.QApplication.translate("MatchEntryDlg", "Group Name", None, QtGui.QApplication.UnicodeUTF8))
+        self.matchdayLabel.setText(QtGui.QApplication.translate("MatchEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Matchday</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
         self.matchtimeBox.setTitle(QtGui.QApplication.translate("MatchEntryDlg", "Match Time", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_11.setText(QtGui.QApplication.translate("MatchEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.firsthalfLabel.setText(QtGui.QApplication.translate("MatchEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
@@ -514,7 +556,7 @@ class Ui_MatchEntryDlg(object):
         self.firstHalfLengthEdit.setToolTip(QtGui.QApplication.translate("MatchEntryDlg", "Total playing time of first half", None, QtGui.QApplication.UnicodeUTF8))
         self.firstHalfLengthEdit.setInputMask(QtGui.QApplication.translate("MatchEntryDlg", "99; ", None, QtGui.QApplication.UnicodeUTF8))
         self.firstHalfLengthEdit.setText(QtGui.QApplication.translate("MatchEntryDlg", "45", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_12.setText(QtGui.QApplication.translate("MatchEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.secondhalfLabel.setText(QtGui.QApplication.translate("MatchEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
@@ -522,7 +564,7 @@ class Ui_MatchEntryDlg(object):
         self.secondHalfLengthEdit.setToolTip(QtGui.QApplication.translate("MatchEntryDlg", "Total playing time of second half", None, QtGui.QApplication.UnicodeUTF8))
         self.secondHalfLengthEdit.setInputMask(QtGui.QApplication.translate("MatchEntryDlg", "99; ", None, QtGui.QApplication.UnicodeUTF8))
         self.secondHalfLengthEdit.setText(QtGui.QApplication.translate("MatchEntryDlg", "45", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_15.setText(QtGui.QApplication.translate("MatchEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.firstextraLabel.setText(QtGui.QApplication.translate("MatchEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
@@ -530,7 +572,7 @@ class Ui_MatchEntryDlg(object):
         self.firstExtraLengthEdit.setToolTip(QtGui.QApplication.translate("MatchEntryDlg", "Total playing time of first extra time period", None, QtGui.QApplication.UnicodeUTF8))
         self.firstExtraLengthEdit.setInputMask(QtGui.QApplication.translate("MatchEntryDlg", "99; ", None, QtGui.QApplication.UnicodeUTF8))
         self.firstExtraLengthEdit.setText(QtGui.QApplication.translate("MatchEntryDlg", "0", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_16.setText(QtGui.QApplication.translate("MatchEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.secondExtraLabel.setText(QtGui.QApplication.translate("MatchEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
@@ -542,58 +584,58 @@ class Ui_MatchEntryDlg(object):
         self.homemgrSelect.setToolTip(QtGui.QApplication.translate("MatchEntryDlg", "Home team manager", None, QtGui.QApplication.UnicodeUTF8))
         self.homeLineupButton.setToolTip(QtGui.QApplication.translate("MatchEntryDlg", "Home team match lineups", None, QtGui.QApplication.UnicodeUTF8))
         self.homeLineupButton.setText(QtGui.QApplication.translate("MatchEntryDlg", "&Home Lineup", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_21.setText(QtGui.QApplication.translate("MatchEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.homemgrLabel.setText(QtGui.QApplication.translate("MatchEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Manager</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_7.setText(QtGui.QApplication.translate("MatchEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.hometeamLabel.setText(QtGui.QApplication.translate("MatchEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Team</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
         self.homeconfedSelect.setToolTip(QtGui.QApplication.translate("MatchEntryDlg", "Confederation of home team", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_22.setText(QtGui.QApplication.translate("MatchEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.homeconfedLabel.setText(QtGui.QApplication.translate("MatchEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Confederation</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
         self.hometeamSelect.setToolTip(QtGui.QApplication.translate("MatchEntryDlg", "Home team name", None, QtGui.QApplication.UnicodeUTF8))
         self.awayteamBox.setTitle(QtGui.QApplication.translate("MatchEntryDlg", "Away Team", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_10.setText(QtGui.QApplication.translate("MatchEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.awaymgrLabel.setText(QtGui.QApplication.translate("MatchEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Manager</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
         self.awayLineupButton.setToolTip(QtGui.QApplication.translate("MatchEntryDlg", "Away team match lineups", None, QtGui.QApplication.UnicodeUTF8))
         self.awayLineupButton.setText(QtGui.QApplication.translate("MatchEntryDlg", "A&way Lineup", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_9.setText(QtGui.QApplication.translate("MatchEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.awayteamLabel.setText(QtGui.QApplication.translate("MatchEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Team</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
         self.awayteamSelect.setToolTip(QtGui.QApplication.translate("MatchEntryDlg", "Away team name", None, QtGui.QApplication.UnicodeUTF8))
         self.awayconfedSelect.setToolTip(QtGui.QApplication.translate("MatchEntryDlg", "Confederation of away team", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_23.setText(QtGui.QApplication.translate("MatchEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.awayconfedLabel.setText(QtGui.QApplication.translate("MatchEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Confederation</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
         self.awaymgrSelect.setToolTip(QtGui.QApplication.translate("MatchEntryDlg", "Away manager name", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_4.setText(QtGui.QApplication.translate("MatchEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.dateLabel.setText(QtGui.QApplication.translate("MatchEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Date</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
         self.matchDateEdit.setToolTip(QtGui.QApplication.translate("MatchEntryDlg", "Match date", None, QtGui.QApplication.UnicodeUTF8))
         self.matchDateEdit.setDisplayFormat(QtGui.QApplication.translate("MatchEntryDlg", "yyyy-MM-dd", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_13.setText(QtGui.QApplication.translate("MatchEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.compLabel.setText(QtGui.QApplication.translate("MatchEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\"> Competition</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
         self.matchCompSelect.setToolTip(QtGui.QApplication.translate("MatchEntryDlg", "Competition Name", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_14.setText(QtGui.QApplication.translate("MatchEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.phaseLabel.setText(QtGui.QApplication.translate("MatchEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
@@ -601,19 +643,19 @@ class Ui_MatchEntryDlg(object):
         self.matchPhaseSelect.setToolTip(QtGui.QApplication.translate("MatchEntryDlg", "Competition Phase", None, QtGui.QApplication.UnicodeUTF8))
         self.enviroButton.setToolTip(QtGui.QApplication.translate("MatchEntryDlg", "Environmental conditions", None, QtGui.QApplication.UnicodeUTF8))
         self.enviroButton.setText(QtGui.QApplication.translate("MatchEntryDlg", "&Environments", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_3.setText(QtGui.QApplication.translate("MatchEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.venueLabel.setText(QtGui.QApplication.translate("MatchEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Venue</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
         self.matchVenueSelect.setToolTip(QtGui.QApplication.translate("MatchEntryDlg", "Match venue", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_6.setText(QtGui.QApplication.translate("MatchEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.refereeLabel.setText(QtGui.QApplication.translate("MatchEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Referee</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
         self.matchRefSelect.setToolTip(QtGui.QApplication.translate("MatchEntryDlg", "Match referee", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_91.setText(QtGui.QApplication.translate("MatchEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.attendanceLabel.setText(QtGui.QApplication.translate("MatchEntryDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
