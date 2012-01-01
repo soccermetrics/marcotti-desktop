@@ -26,14 +26,12 @@ from FmrdMain import *
 from FmrdLib import (Constants, MsgPrompts)
 from FmrdLib.CheckTables import *
 from FmrdLib.CustomDelegates import *
-from FmrdLib.CheckTables import *
 
 
 """Contains classes that implement match overview entry forms to main tables of FMRD.
 
 Classes:
 CompEntryDlg -- data entry to Competitions table
-TeamEntryDlg -- data entry to Teams table
 VenueEntryDlg -- data entry to Venues table
 
 """
@@ -316,6 +314,8 @@ class VenueEntryDlg(QDialog, ui_venueentry.Ui_VenueEntryDlg):
         # relation model for Time Zone combobox
         self.timezoneModel = self.model.relationModel(VenueEntryDlg.TZ_ID)
         self.timezoneModel.setSort(TIMEZONE_OFFSET, Qt.AscendingOrder)
+        while self.timezoneModel.canFetchMore():
+            self.timezoneModel.fetchMore()
         self.venueTimezoneSelect.setModel(self.timezoneModel)
         self.venueTimezoneSelect.setModelColumn(self.timezoneModel.fieldIndex("tz_name"))
         self.venueTimezoneSelect.setCurrentIndex(-1)
@@ -328,7 +328,7 @@ class VenueEntryDlg(QDialog, ui_venueentry.Ui_VenueEntryDlg):
         self.mapper.addMapping(self.venueLatitudeEdit, VenueEntryDlg.LAT)
         self.mapper.addMapping(self.venueLongitudeEdit, VenueEntryDlg.LONG)
         self.mapper.toFirst()        
-                
+        
         # set up Confederation combobox that links to tbl_confederations
         # this result is not saved in database record, only used to filter Country combobox
         self.confedModel = QSqlTableModel(self)
@@ -345,7 +345,7 @@ class VenueEntryDlg(QDialog, ui_venueentry.Ui_VenueEntryDlg):
         self.venueConfedSelect.setCurrentIndex(-1)
         confedMapper.addMapping(self.venueConfedSelect, CONFED_NAME)
         confedMapper.toFirst()       
-       
+
         # disable all fields if no records in database table
         if not self.model.rowCount():
             self.venueID_display.setDisabled(True)
@@ -642,8 +642,8 @@ class VenueEntryDlg(QDialog, ui_venueentry.Ui_VenueEntryDlg):
         self.timezoneModel.setFilter(QString("confed_id = %1").arg(id))
         self.countryModel.select()
         self.timezoneModel.select()
-        self.venueTimezoneSelect.setCurrentIndex(-1)
-        self.venueConfedSelect.setCurrentIndex(-1)        
+        #self.venueTimezoneSelect.setCurrentIndex(-1)
+        #self.venueConfedSelect.setCurrentIndex(-1)        
     
     def openVenueHistory(self, venue_id):
         """Opens Venue History subdialog for a specific match from Match dialog.
