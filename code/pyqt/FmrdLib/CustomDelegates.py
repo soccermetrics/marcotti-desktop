@@ -346,10 +346,10 @@ class SwitchPlayerComboBoxDelegate(QSqlRelationalDelegate):
             team_id = "-1"        
         
         filterString = QString("lineup_id NOT IN (SELECT lineup_id FROM tbl_outsubstitutions WHERE lineup_id <> %1) "
-                               "AND lineup_id IN (SELECT lineup_id FROM tbl_lineups WHERE lp_starting AND match_id = %2 AND player_id IN "
+                               "AND lineup_id IN (SELECT lineup_id FROM tbl_lineups WHERE lp_starting = 'true' AND match_id = %2 AND player_id IN "
                                    "(SELECT player_id FROM tbl_players WHERE country_id = %3)) "
                                "OR (lineup_id IN (SELECT lineup_id FROM tbl_insubstitutions WHERE lineup_id <> %1) AND "
-                               "lineup_id IN (SELECT lineup_id FROM tbl_lineups WHERE NOT lp_starting AND match_id = %2 AND player_id IN "
+                               "lineup_id IN (SELECT lineup_id FROM tbl_lineups WHERE NOT lp_starting = 'true' AND match_id = %2 AND player_id IN "
                                    "(SELECT player_id FROM tbl_players WHERE country_id = %3)))"
                                ).arg(lineup_id).arg(match_id).arg(team_id)
 
@@ -481,10 +481,10 @@ class SubOutComboBoxDelegate(QStyledItemDelegate):
 #        print "Current (OUT) player: %s" % playerName
         
         filterString = QString("lineup_id NOT IN (SELECT lineup_id FROM tbl_outsubstitutions WHERE lineup_id <> %1) "
-                               "AND lineup_id IN (SELECT lineup_id FROM tbl_lineups WHERE lp_starting AND match_id = %2 AND player_id IN "
+                               "AND lineup_id IN (SELECT lineup_id FROM tbl_lineups WHERE lp_starting = 'true' AND match_id = %2 AND player_id IN "
                                    "(SELECT player_id FROM tbl_players WHERE country_id = %3)) "
                                "OR (lineup_id IN (SELECT lineup_id FROM tbl_insubstitutions WHERE lineup_id <> %1) AND "
-                               "lineup_id IN (SELECT lineup_id FROM tbl_lineups WHERE NOT lp_starting AND match_id = %2 AND player_id IN "
+                               "lineup_id IN (SELECT lineup_id FROM tbl_lineups WHERE lp_starting = 'false' AND match_id = %2 AND player_id IN "
                                    "(SELECT player_id FROM tbl_players WHERE country_id = %3)))"
                                ).arg(lineup_id).arg(match_id).arg(team_id)
 
@@ -610,7 +610,7 @@ class SubInComboBoxDelegate(QStyledItemDelegate):
         filterString = QString("lineup_id NOT IN "
                                    "(SELECT lineup_id FROM tbl_insubstitutions WHERE lineup_id <> %1) AND "
                                    "lineup_id IN (SELECT lineup_id from tbl_lineups WHERE "
-                                   "NOT lp_starting AND match_id = %2 AND player_id IN "
+                                   "lp_starting = 'false' AND match_id = %2 AND player_id IN "
                                    "(SELECT player_id FROM tbl_players WHERE country_id = %3))").arg(lineup_id).arg(match_id).arg(team_id)
 
         # filter Player combobox
@@ -739,10 +739,10 @@ class ShootoutPlayerComboBoxDelegate(QSqlRelationalDelegate):
         lineupQuery = QSqlQuery()
         eligibleQueryString = QString("SELECT lineup_id FROM tbl_lineups WHERE "
                 "lineup_id NOT IN (SELECT lineup_id FROM tbl_outsubstitutions) "
-                "AND lineup_id IN (SELECT lineup_id FROM tbl_lineups WHERE lp_starting AND match_id = %1 AND player_id IN "
+                "AND lineup_id IN (SELECT lineup_id FROM tbl_lineups WHERE lp_starting = 'true' AND match_id = %1 AND player_id IN "
                 "(SELECT player_id FROM tbl_players WHERE country_id = %2)) "
                 "OR (lineup_id IN (SELECT lineup_id FROM tbl_insubstitutions) AND "
-                "lineup_id IN (SELECT lineup_id FROM tbl_lineups WHERE NOT lp_starting AND match_id = %1 AND player_id IN "
+                "lineup_id IN (SELECT lineup_id FROM tbl_lineups WHERE lp_starting = 'false' AND match_id = %1 AND player_id IN "
                 "(SELECT player_id FROM tbl_players WHERE country_id = %2)) "
                 ).arg(str(match_id)).arg(str(team_id))
         lineupQuery.prepare(eligibleQueryString)
