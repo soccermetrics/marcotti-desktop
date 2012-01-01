@@ -214,12 +214,12 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
         self.groupMatchMapper.setSubmitPolicy(QDataWidgetMapper.ManualSubmit)
         self.groupMatchMapper.setModel(self.groupMatchModel)
         groupMatchDelegate = GenericDelegate(self)
-        groupMatchDelegate.insertColumnDelegate(GROUP, GroupsComboBoxDelegate(self))
         groupMatchDelegate.insertColumnDelegate(GROUP_ROUND, GroupRoundsComboBoxDelegate(self))
+        groupMatchDelegate.insertColumnDelegate(GROUP, GroupsComboBoxDelegate(self))
         groupMatchDelegate.insertColumnDelegate(GROUP_MATCHDAY, RoundsComboBoxDelegate(self))
         self.groupMatchMapper.setItemDelegate(groupMatchDelegate)
-        self.groupMatchMapper.addMapping(self.groupSelect, GROUP)
         self.groupMatchMapper.addMapping(self.grpRoundSelect, GROUP_ROUND)
+        self.groupMatchMapper.addMapping(self.groupSelect, GROUP)
         self.groupMatchMapper.addMapping(self.grpMatchdaySelect, GROUP_MATCHDAY)
         self.groupMatchMapper.toFirst()
         
@@ -468,7 +468,7 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
             self.updateLinkingTable(self.leagueMatchMapper, self.lgRoundSelect, 1)
             self.leagueMatchModel.submit()
         elif phaseText == "Group":
-            editorList = [self.groupSelect, self.grpRoundSelect, self.grpMatchdaySelect]
+            editorList = [self.grpRoundSelect, self.groupSelect, self.grpMatchdaySelect]
             for editor,  column in zip(editorList, range(1, 4)):
                 self.updateLinkingTable(self.groupMatchMapper, editor, column)
             self.groupMatchModel.submit()
