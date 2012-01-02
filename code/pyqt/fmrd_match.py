@@ -477,20 +477,26 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
         self.connect(self.matchVenueSelect, SIGNAL("currentIndexChanged(int)"), 
                                                                 lambda: self.enableWidget(self.matchRefSelect))
         self.connect(self.matchRefSelect, SIGNAL("currentIndexChanged(int)"), self.enableDefaults)
-        
+
         self.connect(self.hometeamSelect, SIGNAL("currentIndexChanged(int)"), 
                                                                       lambda: self.enableWidget(self.homemgrSelect))
         self.connect(self.hometeamSelect, SIGNAL("currentIndexChanged(int)"), 
-                                                                      lambda: self.enableWidget(self.homemgrSelect))
+                                                                      lambda: self.removeDuplicateTeam(self.awayteamSelect, self.hometeamSelect))
         self.connect(self.homemgrSelect, SIGNAL("currentIndexChanged(int)"), 
                                                                      lambda: self.enableWidget(self.homeLineupButton))
         self.connect(self.homemgrSelect, SIGNAL("currentIndexChanged(int)"), 
                                                                      lambda: self.enableWidget(self.awayconfedSelect))
-
+        self.connect(self.homemgrSelect, SIGNAL("currentIndexChanged(int)"), 
+                                                                     lambda: self.removeDuplicateManager(self.awaymgrSelect, self.homemgrSelect))
+        
         self.connect(self.awayteamSelect, SIGNAL("currentIndexChanged(int)"), 
                                                                       lambda: self.enableWidget(self.awaymgrSelect))
+        self.connect(self.awayteamSelect, SIGNAL("currentIndexChanged(int)"), 
+                                                                      lambda: self.removeDuplicateTeam(self.hometeamSelect, self.awayteamSelect))
         self.connect(self.awaymgrSelect, SIGNAL("currentIndexChanged(int)"), 
                                                                      lambda: self.enableWidget(self.awayLineupButton))
+        self.connect(self.awaymgrSelect, SIGNAL("currentIndexChanged(int)"), 
+                                                                     lambda: self.removeDuplicateManager(self.homemgrSelect, self.awaymgrSelect))
 
         self.connect(self.enviroButton, SIGNAL("clicked()"), lambda: self.openEnviros(self.matchID_display.text()))
         self.connect(self.homeLineupButton, SIGNAL("clicked()"), 
@@ -945,7 +951,58 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
         id = confedModel.record(currIdx).value("confed_id").toString()
         countryModel.setFilter(QString("confed_id = %1").arg(id))
         
+        # check current indices of confederation comboboxes
+        # if same, call removeDuplicateTeam()
+        if self.homeconfedSelect.currentIndex() == self.awayconfedSelect.currentIndex():
+            self.removeDuplicateTeam(self.hometeamSelect, self.awayteamSelect)
+            self.removeDuplicateTeam(self.awayteamSelect, self.hometeamSelect)
+        
         countrySelect.blockSignals(False)
+        
+    def removeDuplicateTeam(self, teamSelect, opposingSelect):
+        """Filters selected team in opposingSelect combobox from teamSelect combobox."""
+        teamSelect.blockSignals(True)
+        currentModel = teamSelect.model()
+        currentIndex = teamSelect.currentIndex()
+        currentTeam = teamSelect.currentText()
+
+        # get current confed_id in teamSelect
+        if currentIndex == -1:
+            confed_id = currentModel.record(0).value("confed_id").toString()
+        else:
+            confed_id = currentModel.record(currentIndex).value("confed_id").toString()
+            
+        # current index in selected item in opposingSelect
+        opposingIndex = opposingSelect.currentIndex()
+        opposing_id = opposingSelect.model().record(opposingIndex).value("country_id").toString()
+        
+        # set filter in underlying teamSelect model
+        currentModel.setFilter(QString())        
+        currentModel.setFilter(QString("confed_id = %1 AND country_id NOT IN (%2)").arg(confed_id, opposing_id))
+        # set current index to item that matches team name
+        teamSelect.setCurrentIndex(teamSelect.findText(currentTeam, Qt.MatchExactly))
+        teamSelect.blockSignals(False)
+        
+    def removeDuplicateManager(self, mgrSelect, opposingSelect):
+        """Filters selected manager in opposingSelect combobox from mgrSelect combobox."""
+        mgrSelect.blockSignals(True)
+        
+        currentModel = mgrSelect.model()
+        currentIndex = mgrSelect.currentIndex()
+        currentMgr = mgrSelect.currentText()
+        
+        # flush filter of underlying mgrSelect model
+        currentModel.setFilter(QString())
+        
+        # current index in selected item in opposingSelect
+        opposingIndex = opposingSelect.currentIndex()
+        opposing_id = opposingSelect.model().record(opposingIndex).value("manager_id").toString()
+        
+        # set filter in underlying mgrSelect model
+        currentModel.setFilter(QString("manager_id NOT IN (%1)").arg(opposing_id))
+        # set current index to item that matches manager name
+        mgrSelect.setCurrentIndex(mgrSelect.findText(currentMgr, Qt.MatchExactly))
+        mgrSelect.blockSignals(False)
         
     def deleteEnviroTables(self, match_id):
         """Deletes environmental conditions tables that reference a specific match.
