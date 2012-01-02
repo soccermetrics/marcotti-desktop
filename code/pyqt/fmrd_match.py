@@ -425,6 +425,7 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
             self.matchPhaseSelect.setDisabled(True)
             for widget in self.phaseWidgets:
                 widget.setDisabled(True)
+            self.filterReferees()
                 
         # disable First and Previous Entry buttons
         self.firstEntry.setDisabled(True)
@@ -474,8 +475,7 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
         self.connect(self.koMatchdaySelect, SIGNAL("currentIndexChanged(int)"),
                                                                 lambda: self.enableWidget(self.matchVenueSelect))
                                                                 
-        self.connect(self.matchVenueSelect, SIGNAL("currentIndexChanged(int)"), 
-                                                                lambda: self.enableWidget(self.matchRefSelect))
+        self.connect(self.matchVenueSelect, SIGNAL("currentIndexChanged(int)"), self.enableAndFilterReferees)
         self.connect(self.matchRefSelect, SIGNAL("currentIndexChanged(int)"), self.enableDefaults)
 
         self.connect(self.hometeamSelect, SIGNAL("currentIndexChanged(int)"), 
@@ -649,6 +649,8 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
         elif phaseText == "Knockout":
             self.knockoutMatchModel.refresh()
             self.knockoutMatchMapper.toFirst()
+        
+        self.filterReferees()
         
     def addRecord(self):
         """Adds new record at end of entry list.
@@ -958,6 +960,102 @@ class MatchEntryDlg(QDialog, ui_matchentry.Ui_MatchEntryDlg):
             self.removeDuplicateTeam(self.awayteamSelect, self.hometeamSelect)
         
         countrySelect.blockSignals(False)
+        
+    def enableAndFilterReferees(self):
+        """Enables and filters Referees combobox.
+        
+        Ensures that referee is not selected twice on same matchday in football competition.
+        """
+        self.enableWidget(self.matchRefSelect)
+        self.filterReferees()
+            
+    def filterReferees(self):
+        """Filters Referees combobox."""
+        row = self.mapper.currentIndex()
+        # current referee name
+        currentReferee = self.model.record(row).value("full_name").toString()
+        
+        # match ID and competition phase information
+        match_id = self.matchID_display.text()
+        phaseText = self.matchPhaseSelect.currentText()        
+        # get list of used referees for current competition phase details
+        usedRefereeList = self.getUsedReferees(match_id, phaseText)       
+       
+        self.matchRefSelect.blockSignals(True)
+        # set filter on underlying referee model
+        self.refereeModel.setFilter(QString())
+        filterString = "referee_id NOT IN (" + ",".join((str(n) for n in usedRefereeList)) + ")"
+        self.refereeModel.setFilter(filterString)
+        # set index of combobox to current referee
+        self.matchRefSelect.setCurrentIndex(self.matchRefSelect.findText(currentReferee, Qt.MatchExactly))
+        self.matchRefSelect.blockSignals(False)
+        
+    def getUsedReferees(self, match_id, phaseText):
+        """Returns list of referees who have already been selected for matches that cover a specific competition matchday."""
+        compName = self.matchCompSelect.currentText()        
+        usedRefereeList = []
+        
+        refereeQuery = QSqlQuery()
+        idQuery = QSqlQuery()
+        if phaseText == "League":
+            # get text from current index of Rounds combobox
+            roundName = self.lgRoundSelect.currentText()
+            # query match referees currently in database for specific league round
+            refereeQuery.prepare("SELECT referee FROM league_match_list WHERE "
+                "competition = ? AND round = ? AND match_id NOT IN (?)")
+            refereeQuery.addBindValue(compName)
+            refereeQuery.addBindValue(roundName)
+            refereeQuery.addBindValue(match_id)
+            refereeQuery.exec_()
+            while refereeQuery.next():
+                idQuery.prepare("SELECT referee_id FROM referees_list WHERE full_name = ?")
+                idQuery.addBindValue(refereeQuery.value(0).toString())
+                idQuery.exec_()
+                while idQuery.next():
+                    usedRefereeList.append(idQuery.value(0).toString())
+        elif phaseText == "Group":
+            # get text from current index of Group Rounds combobox
+            groupRoundName = self.grpRoundSelect.currentText()
+            # get text from current index of Group Name combobox
+            groupName = self.groupSelect.currentText()
+            # get text from current index of Group Matchdays combobox
+            matchdayName = self.grpMatchdaySelect.currentText()
+            # query match referees currently in database for specific group stage round, group, and matchday
+            refereeQuery.prepare("SELECT referee FROM group_match_list WHERE "
+                "competition = ? AND round = ? AND group_name = ? AND matchday = ? AND match_id NOT IN (?)")
+            refereeQuery.addBindValue(compName)
+            refereeQuery.addBindValue(groupRoundName)
+            refereeQuery.addBindValue(groupName)
+            refereeQuery.addBindValue(matchdayName)
+            refereeQuery.addBindValue(match_id)
+            refereeQuery.exec_()
+            while refereeQuery.next():
+                idQuery.prepare("SELECT referee_id FROM referees_list WHERE full_name = ?")
+                idQuery.addBindValue(refereeQuery.value(0).toString())
+                idQuery.exec_()
+                while idQuery.next():
+                    usedRefereeList.append(idQuery.value(0).toString())
+        elif phaseText == "Knockout":
+            # get text from current index of Knockout Rounds combobox
+            knockoutRoundName = self.koRoundSelect.currentText()
+            # get text from current index of Knockout Matchdays combobox
+            matchdayName = self.koMatchdaySelect.currentText()
+            # query match referees currently in database for specific knockout stage round and matchday
+            refereeQuery.prepare("SELECT referee FROM knockout_match_list WHERE "
+                "competition = ? AND round = ? AND game = ? AND match_id NOT IN (?)")
+            refereeQuery.addBindValue(compName)
+            refereeQuery.addBindValue(knockoutRoundName)
+            refereeQuery.addBindValue(matchdayName)
+            refereeQuery.addBindValue(match_id)
+            refereeQuery.exec_()
+            while refereeQuery.next():
+                idQuery.prepare("SELECT referee_id FROM referees_list WHERE full_name = ?")
+                idQuery.addBindValue(refereeQuery.value(0).toString())
+                idQuery.exec_()
+                while idQuery.next():
+                    usedRefereeList.append(idQuery.value(0).toString())
+                
+        return usedRefereeList
         
     def removeDuplicateTeam(self, teamSelect, opposingSelect):
         """Filters selected team in opposingSelect combobox from teamSelect combobox."""
