@@ -776,8 +776,8 @@ class SubsEntryDlg(QDialog, ui_subsentry.Ui_SubsEntryDlg):
         # filter teams involved in match
         teamModel = self.teamSelect.model()
         teamModel.setFilter(QString())
-        teamModel.setFilter(QString("country_id IN"
-            "(SELECT country_id FROM tbl_hometeams WHERE match_id = %1"
+        teamModel.setFilter(QString("country_id IN "
+            "(SELECT country_id FROM tbl_hometeams WHERE match_id = %1 "
             "UNION SELECT country_id FROM tbl_awayteams WHERE match_id = %1)").arg(match_id))
         self.teamSelect.setCurrentIndex(-1)            
         
@@ -1635,8 +1635,8 @@ class SwitchEntryDlg(QDialog, ui_switchentry.Ui_SwitchEntryDlg):
         # filter teams involved in match
         teamModel = self.teamSelect.model()
         teamModel.setFilter(QString())
-        teamModel.setFilter(QString("country_id IN"
-            "(SELECT country_id FROM tbl_hometeams WHERE match_id = %1"
+        teamModel.setFilter(QString("country_id IN "
+            "(SELECT country_id FROM tbl_hometeams WHERE match_id = %1 "
             "UNION SELECT country_id FROM tbl_awayteams WHERE match_id = %1)").arg(match_id))
         self.teamSelect.setCurrentIndex(-1)            
         
