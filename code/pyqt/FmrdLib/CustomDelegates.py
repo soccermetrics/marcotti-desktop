@@ -152,8 +152,8 @@ class EventTeamComboBoxDelegate(QSqlRelationalDelegate):
 
         # filter team combobox
         # result: home and away teams for specific match
-        teamQueryString = QString("country_id IN"
-            "(SELECT country_id FROM tbl_hometeams WHERE match_id = %1"
+        teamQueryString = QString("country_id IN "
+            "(SELECT country_id FROM tbl_hometeams WHERE match_id = %1 "
             "UNION SELECT country_id FROM tbl_awayteams WHERE match_id = %1)").arg(match_id)
         teamModel.setFilter(teamQueryString)
         
