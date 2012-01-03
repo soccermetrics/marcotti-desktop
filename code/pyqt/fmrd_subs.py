@@ -374,14 +374,14 @@ class SubsEntryDlg(QDialog, ui_subsentry.Ui_SubsEntryDlg):
                 self.firstEntry.setEnabled(True)
             row = self.model.rowCount() - 1
             
+        subs_id = self.subsID_display.text()
+
         self.teamSelect.blockSignals(True)
         self.mapper.setCurrentIndex(row)
+        self.refreshSubForms(subs_id)                
         self.refreshTeamBox()
         self.teamSelect.blockSignals(False)
-        
-        subs_id = self.subsID_display.text()
-        self.refreshSubForms(subs_id)                
-        
+                
         # enable stoppage time field if there is an entry
         if self.stoppageEdit.text() == "0":
             self.stoppageEdit.setEnabled(False)
