@@ -3,7 +3,7 @@
 #    Football Match Result Database (FMRD)
 #    Desktop-based data entry tool for the Football Match Result Database (FMRD)
 #
-#    Copyright (C) 2010-2011, Howard Hamilton
+#    Copyright (C) 2010-2012, Howard Hamilton
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by

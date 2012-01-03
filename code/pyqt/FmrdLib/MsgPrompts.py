@@ -2,7 +2,7 @@
 #
 #    Desktop-based data entry tool for the Football Match Result Database (FMRD)
 #
-#    Copyright (C) 2010-2011, Howard Hamilton
+#    Copyright (C) 2010-2012, Howard Hamilton
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -27,7 +27,7 @@ def DisplayAboutDialog(parent, version, db_version):
     """Display information about the application and current version."""
     QMessageBox.about(parent, "About FMRD-Desktop", 
                       """<p align="center"> <b>FMRD-Desktop</b> %s <br>
-                    Copyright &copy; 2010-2011 by Howard Hamilton.  All rights reserved.<br>
+                    Copyright &copy; 2010-2012 by Howard Hamilton.  All rights reserved.<br>
                     This is the desktop-based data entry tool for the<br>
                     <b>Football Match Result Database</b> %s <br>
                     Python %s - Qt %s - PyQt %s on %s</p>""" % 
