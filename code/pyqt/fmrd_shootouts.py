@@ -569,8 +569,8 @@ class PenShootoutEntryDlg(QDialog, ui_penshootoutentry.Ui_PenShootoutEntryDlg):
         
         # query participating teams in match, save results to list
         teamQuery = QSqlQuery()
-        teamQuery.exec_(QString("SELECT country_id FROM tbl_countries where country_id IN"
-            "(SELECT country_id FROM tbl_hometeams WHERE match_id = %1"
+        teamQuery.exec_(QString("SELECT country_id FROM tbl_countries where country_id IN "
+            "(SELECT country_id FROM tbl_hometeams WHERE match_id = %1 "
             "UNION SELECT country_id FROM tbl_awayteams WHERE match_id = %1)").arg(match_id))
         while teamQuery.next():
             teamList.append(teamQuery.value(0).toInt()[0])
@@ -734,7 +734,7 @@ class PenShootoutEntryDlg(QDialog, ui_penshootoutentry.Ui_PenShootoutEntryDlg):
             
         # filter teams involved in match
         self.teamModel.setFilter(QString())
-        baseFilterString = QString("country_id IN (SELECT country_id FROM tbl_hometeams WHERE match_id = %1"
+        baseFilterString = QString("country_id IN (SELECT country_id FROM tbl_hometeams WHERE match_id = %1 "
             "UNION SELECT country_id FROM tbl_awayteams WHERE match_id = %1) ").arg(match_id)
         augFilterString = "AND country_id IN (" + ",".join((str(n) for n in teamList)) + ")"
         teamFilterString = baseFilterString + augFilterString
@@ -799,8 +799,8 @@ class PenShootoutEntryDlg(QDialog, ui_penshootoutentry.Ui_PenShootoutEntryDlg):
         self.openerTeamModel.setFilter(QString())
         
         # team filter
-        teamQueryString = QString("country_id IN"
-            "(SELECT country_id FROM tbl_hometeams WHERE match_id = %1"
+        teamQueryString = QString("country_id IN "
+            "(SELECT country_id FROM tbl_hometeams WHERE match_id = %1 "
             "UNION SELECT country_id FROM tbl_awayteams WHERE match_id = %1)").arg(match_id)
         self.openerTeamModel.setFilter(teamQueryString)
         # reset index to -1
@@ -907,8 +907,8 @@ class PenShootoutEntryDlg(QDialog, ui_penshootoutentry.Ui_PenShootoutEntryDlg):
         boxModel.setFilter(QString())
         # filter combobox model on competition and round names using knockout_match_list table
         # therefore we only access matchdays currently entered in database
-        boxModel.setFilter(QString("matchday_desc IN (SELECT game FROM knockout_match_list WHERE \
-                competition = '%1' AND round = '%2')").arg(compName, roundName))
+        boxModel.setFilter(QString("matchday_desc IN (SELECT game FROM knockout_match_list WHERE "
+                                                "competition = '%1' AND round = '%2')").arg(compName, roundName))
         self.koMatchdaySelect.setCurrentIndex(-1)
         
         self.koMatchdaySelect.blockSignals(False)
@@ -932,7 +932,7 @@ class PenShootoutEntryDlg(QDialog, ui_penshootoutentry.Ui_PenShootoutEntryDlg):
         # reset Match model filter
         self.matchModel.setFilter(QString())
         # filter match model on competition, round, and matchday names
-        self.matchModel.setFilter(QString("competition = '%1' AND round = '%2' AND \
-        game = '%3'").arg(compName, roundName, matchdayName))
+        self.matchModel.setFilter(QString("competition = '%1' AND round = '%2' AND "
+                                                            "game = '%3'").arg(compName, roundName, matchdayName))
         self.matchSelect.setCurrentIndex(-1)
         self.matchSelect.blockSignals(False)
