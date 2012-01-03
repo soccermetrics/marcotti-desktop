@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'gui/main_switchboard.ui'
 #
-# Created: Thu Dec 29 23:31:06 2011
+# Created: Tue Jan  3 00:55:22 2012
 #      by: PyQt4 UI code generator 4.7.2
 #
 # WARNING! All changes made in this file will be lost!
