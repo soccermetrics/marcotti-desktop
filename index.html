@@ -10,13 +10,13 @@
 
 <body
 style="font-family: Times New Roman,Times,serif; font-size: medium; font-style: normal; font-weight:normal; font-variant: normal; text-align: left; text-decoration: none; border: solid medium #0000ff;">
-<h1>FMRD-Desktop 1.3.0/1.2.0</h1>
+<h1>FMRD-Desktop 1.3.0/1.4.0</h1>
 
-<p>The Football Match Result Database (FMRD) stores and maintains the match
-result data needed to support football (soccer) research activities for the
-benefit of the football analytics community. Version 1.2.0 of the database
-models league competitions for national teams, and Version 1.3.0 models league,
-knockout, and hybrid competitions for club teams. </p>
+<p>The Football Match Result Database (FMRD) is a database schema that
+facilitates the storage and maintenance of match result data needed to support
+football (soccer) research activities for the benefit of the football analytics
+community. Version 1.3.0 models league, knockout, and hybrid competitions for
+club teams and Version 1.4.0 does the same for national teams. </p>
 
 <p>The Football Match Result Database has the following features: </p>
 <ul>
@@ -26,8 +26,8 @@ knockout, and hybrid competitions for club teams. </p>
     <ul>
       <li>Match date</li>
       <li>Competition name</li>
-      <li>Competition phase (v1.3.0 only)</li>
-      <li>Phase-specific identifiers (v1.3.0 only) 
+      <li>Competition phase </li>
+      <li>Phase-specific identifiers
         <ul>
           <li>League phase: Matchday</li>
           <li>Group phase: Round, Group, Matchday</li>
@@ -55,7 +55,7 @@ knockout, and hybrid competitions for club teams. </p>
       <li>Disciplinary incidents</li>
       <li>Substitutions</li>
       <li>Forced or tactical position changes</li>
-      <li>Penalty kick shootouts (v1.3.0 only)</li>
+      <li>Penalty kick shootouts</li>
     </ul>
   </li>
 </ul>
@@ -82,7 +82,7 @@ to the terms of the GNU General Public License (GPLv3).</p>
 
 <h2>Downloads</h2>
 
-<p>The current versions of the application are 1.3.0 (clubs) and 1.2.0
+<p>The current versions of the application are 1.3.0 (clubs) and 1.4.0
 (national teams). </p>
 
 <p>The 'master' branch contains the most recent version of the code repository
@@ -98,7 +98,9 @@ submodule.</p>
   <col />
   <tbody>
     <tr>
-      <td>Current master branch</td>
+      <td><a
+        href="http://github.com/hhamilton-src/fmrd-desktop/tree/master">Current
+        master branch</a></td>
       <td><a
         href="http://github.com/hhamilton-src/fmrd-desktop/zipball/master">ZIP</a>
         file</td>
@@ -107,7 +109,9 @@ submodule.</p>
         file</td>
     </tr>
     <tr>
-      <td>Current national-teams branch</td>
+      <td><a
+        href="https://github.com/hhamilton-src/fmrd-desktop/tree/national-teams">Current
+        national-teams branch</a></td>
       <td><a
         href="http://github.com/hhamilton-src/fmrd-desktop/zipball/national-teams">ZIP</a>
         file</td>
@@ -166,7 +170,7 @@ href="http://github.com">Github</a> account.</p>
         The script will then load the validation tables of the database.</li>
     </ul>
   </li>
-  <li>For use with SQLite3 (v1.3.0 only): 
+  <li>For use with SQLite3: 
     <ul>
       <li>Go to the <code>sql/</code> directory and run the following script: 
         <p><code>$ installdb-fmrd-sqlite.sh db_name.db</code></p>
