@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'gui/venue_entry.ui'
 #
-# Created: Sun Dec 18 22:24:39 2011
+# Created: Tue Jan  3 00:55:24 2012
 #      by: PyQt4 UI code generator 4.7.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -63,8 +63,8 @@ class Ui_VenueEntryDlg(object):
         self.gridLayout_2 = QtGui.QGridLayout(self.layoutWidget)
         self.gridLayout_2.setObjectName("gridLayout_2")
         self.venueAltEdit = QtGui.QLineEdit(self.layoutWidget)
-        self.venueAltEdit.setMinimumSize(QtCore.QSize(90, 30))
-        self.venueAltEdit.setMaximumSize(QtCore.QSize(81, 30))
+        self.venueAltEdit.setMinimumSize(QtCore.QSize(100, 30))
+        self.venueAltEdit.setMaximumSize(QtCore.QSize(100, 30))
         self.venueAltEdit.setInputMask("")
         self.venueAltEdit.setMaxLength(5)
         self.venueAltEdit.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)

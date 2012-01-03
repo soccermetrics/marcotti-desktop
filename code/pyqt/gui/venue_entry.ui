@@ -172,13 +172,13 @@
      <widget class="QLineEdit" name="venueAltEdit">
       <property name="minimumSize">
        <size>
-        <width>90</width>
+        <width>100</width>
         <height>30</height>
        </size>
       </property>
       <property name="maximumSize">
        <size>
-        <width>81</width>
+        <width>100</width>
         <height>30</height>
        </size>
       </property>
