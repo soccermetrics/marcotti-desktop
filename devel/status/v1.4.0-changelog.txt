@@ -1,0 +1,42 @@
+FMRD-Desktop Version 1.4.0
+==========================
+
+Version 1.4.0 is the national team implementation of FMRD-Desktop.
+
+This version of the application merges features of Version 1.3.0
+into Version 1.2.0.  The result is that as in the club implementation,
+the FMRD now captures overview data that correspond to the three phases 
+of football competitions: league, group, and knockout.  Second, a 
+SQLite-compatible implementation of the FMRD has been added to the 
+current PostgreSQL implementation.
+
+(+) - external changes to user
+(*) - internal changes
+
+Changes relative to Version 1.2.0
+---------------------------------
++ Merge and/or import data entry UIs from Version 1.3.0:
+    - Competition Phases
+    - Groups
+    - Group Rounds
+    - Knockout Rounds
+    - Matchdays
+    - Matches
+    - Match Events
+    - Penalty Shootouts
++ Merge functionalties and bug fixes from Version 1.3.0.
++ Filter Team comboboxes in Match dialog for new entry to prevent
+  duplicate home/away teams
++ Filter Manager comboboxes in Match dialog for new entry to prevent
+  duplicate home/away managers
++ Filter Referee combobox so that referees already selected for 
+  matches corresponding to same competition and phase details 
+  do not appear in current record
++ Fix syntax errors in embedded SQL for filtering of match teams
+
+* Merge FmrdLib module from Version 1.3.0
+* Ensure all records from Timezone, Country, Player tables
+  are fetched to ensure proper functioning in SQLite databases
+* Establish explicit Boolean tests for Starting/Captain flags
+  in CheckTables module and Substitutions delegates
+* Fix reset issue in subform of Substitutions dialog when Save button pressed
