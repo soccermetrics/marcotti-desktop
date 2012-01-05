@@ -21,7 +21,20 @@
 \graphics default
 \paperfontsize default
 \spacing single
-\use_hyperref false
+\use_hyperref true
+\pdf_title "FMRD-Desktop v1.4.0 Data Entry App Manual"
+\pdf_author "Howard Hamilton"
+\pdf_subject "Football Match Result Database"
+\pdf_keywords "football, soccer, match database, soccermetrics"
+\pdf_bookmarks true
+\pdf_bookmarksnumbered false
+\pdf_bookmarksopen false
+\pdf_bookmarksopenlevel 1
+\pdf_breaklinks false
+\pdf_pdfborder false
+\pdf_colorlinks false
+\pdf_backref false
+\pdf_pdfusetitle true
 \papersize default
 \use_geometry true
 \use_amsmath 0
@@ -50,24 +63,11 @@
 \begin_body
 
 \begin_layout Title
-FMRD v1.2.0: Desktop-Based Data Entry Application
+FMRD: Desktop-Based Data Entry Application
 \end_layout
 
 \begin_layout Author
 Howard Hamilton (hhamilton@soccermetrics.net)
-\end_layout
-
-\begin_layout Section*
-Version
-\end_layout
-
-\begin_layout Standard
-This manual refers to 
-\series bold
-v1.2.0
-\series default
- of the Football Match Result Database, which handles data entry for national
- team matches.
 \end_layout
 
 \begin_layout Section
@@ -78,8 +78,8 @@ Introduction
 The Football Match Result Database (FMRD) stores and maintains the match
  result data needed to support football (soccer) research activities for
  the benefit of the football analytics community.
- The current version of the database handles domestic league competitions.
- 
+ The current version of the database handles national team competitions
+ that have league, group, and/or knockout phases.
 \end_layout
 
 \begin_layout Standard
@@ -87,24 +87,32 @@ The Football Match Result Database does the following:
 \end_layout
 
 \begin_layout Itemize
-Maintain data on matches that occur within football league competitions,
- whether among national teams or domestic clubs.
+Maintain data on matches within the various types of football competitions.
 \end_layout
 
 \begin_layout Itemize
-Maintain complete top-level information on the football match, including
- match date, competition name and stage, participating teams, venues, and
- environmental conditions.
+Maintain identifying data of participating personnel such as players, managers,
+ and match referees.
 \end_layout
 
 \begin_layout Itemize
-Maintain complete information on macro-events that occur during a match,
- including goals, penalties, disciplinary incidents, and substitutions.
+Maintain complete top-level historical data on the football match, including
+ the match date, competition name and phase, phase-specific details, participati
+ng teams, venues, and environmental conditions.
 \end_layout
 
 \begin_layout Itemize
-Maintain complete information on participating personnel, such as players,
- managers, and match referees.
+Maintain complete historical data on macro-events that occur during a match,
+ including goals, penalties, disciplinary incidents, substitutions, position
+ changes, and penalty kick shootouts.
+\end_layout
+
+\begin_layout Subsection
+Scope
+\end_layout
+
+\begin_layout Standard
+This user's manual applies to FMRD-Desktop version 1.4.0.
 \end_layout
 
 \begin_layout Section
@@ -112,7 +120,19 @@ System Requirements
 \end_layout
 
 \begin_layout Standard
-Requires:
+The desktop-based data entry application (FMRD-Desktop) operates on Windows
+ and Unix/Linux platforms.
+ The application is written in the Python language with the PyQt toolkit,
+ which is a Python binding of the Nokia Qt 4 framework.
+\end_layout
+
+\begin_layout Subsection
+Build requirements
+\end_layout
+
+\begin_layout Standard
+If you wish to run the application from source, you will need the following
+ components:
 \end_layout
 
 \begin_layout Itemize
@@ -120,11 +140,32 @@ Python 2.6-2.7 (3.0 not supported)
 \end_layout
 
 \begin_layout Itemize
+Nokia Qt 4 framework
+\end_layout
+
+\begin_layout Itemize
+PyQt 4.6 library
+\end_layout
+
+\begin_layout Subsection
+Database requirements
+\end_layout
+
+\begin_layout Standard
+FMRD-Desktop v1.4.0 is compatible with the PostgreSQL and SQLite database
+ backends.
+\end_layout
+
+\begin_layout Itemize
 PostgreSQL 8.x+
 \end_layout
 
 \begin_layout Itemize
-Perl (DBI package)
+SQLite3 3.6.19+
+\end_layout
+
+\begin_layout Itemize
+Perl 5+ (DBI package)
 \end_layout
 
 \begin_layout Section
@@ -136,37 +177,83 @@ Software download
 \end_layout
 
 \begin_layout Standard
-Check out FMRD from the Downloads section of the website located at 
+The FMRD-related software is located at the websites and repositories of
+ Soccermetrics Research & Consulting, LLC.
 \end_layout
 
 \begin_layout Standard
+To check out the source of FMRD-Desktop, go to the Downloads section the
+ SRC GitHub repository which is located at
+\end_layout
 
-\family typewriter
+\begin_layout Standard
+\begin_inset Flex URL
+status open
+
+\begin_layout Plain Layout
+
 http://hhamilton-src.github.com/fmrd-desktop/
 \end_layout
 
+\end_inset
+
+
+\end_layout
+
 \begin_layout Standard
-\noindent
-The binary executable files for the Windows and Linux platforms are located
- in the 
+The current and previous versions of the application executable are stored
+ on the SRC public FTP site 
 \family typewriter
-dist/
+(
 \family default
- folder.
+
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+ftp://ftp.src-development.net
+\end_layout
+
+\end_inset
+
+
+\family typewriter
+)
+\family default
+ and can be accessed by anonymous FTP: 
+\end_layout
+
+\begin_layout Description
+\noindent
+Username: 
+\family typewriter
+anonymous@src-development.net
+\family default
+ 
+\end_layout
+
+\begin_layout Description
+\noindent
+Password: 
+\family typewriter
+<any text>
 \end_layout
 
 \begin_layout Subsection
 Database setup
 \end_layout
 
-\begin_layout Standard
-FMRD applications require a Postgres server installation.
- To setup such a server, you may have to work with your system administrator,
- who will then give you a username and password for access.
+\begin_layout Subsubsection
+PostgreSQL databases
 \end_layout
 
 \begin_layout Standard
-\noindent
+To setup a PostgreSQL server, you may have to work with your system administrato
+r who will then give you a username and password for access.
+\begin_inset Newline newline
+\end_inset
+
 Go to sql/ directory and run the 
 \family typewriter
 installdb-fmrd
@@ -223,15 +310,57 @@ Database authentication confirmed.
 \begin_layout Standard
 
 \family typewriter
-Enter number of rounds: ##
+Enter maximum number of league or shootout rounds: ##
 \end_layout
 
 \begin_layout Standard
-After entering the maximum number of rounds in the league competition, the
- script will populate the base tables.
+
+\family typewriter
+Enter [A]lpha or [N]umeric group names: #
+\end_layout
+
+\begin_layout Standard
+After entering the maximum number of rounds in the league competition and
+ the type of group names, the script will populate the base tables.
  These tables support the main tables of the database and will be altered
  very seldom by the user.
  
+\end_layout
+
+\begin_layout Subsubsection
+SQLite3 databases
+\end_layout
+
+\begin_layout Standard
+Go to the 
+\family typewriter
+sql/
+\family default
+ directory and run the following script:
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+$ installdb-fmrd-sqlite.sh db_name.db
+\family default
+ 
+\end_layout
+
+\begin_layout Standard
+The database file must have a 
+\family typewriter
+*.db
+\family default
+ extension.
+ 
+\end_layout
+
+\begin_layout Standard
+After the database has been formed the script will proceed as in the previous
+ section with the exception of username and password authentication (SQLite
+ does not require password protection).
+ The script will then load the validation tables of the database.
 \end_layout
 
 \begin_layout Section
@@ -239,20 +368,145 @@ Logging In
 \end_layout
 
 \begin_layout Standard
-The user can populate the main tables of the FMRD with the data-entry applicatio
-n.
+You can populate the main tables of the FMRD with the data-entry application.
  You can run the data-entry application in one of two ways: by double-clicking
- on the appropriate executable in the 
-\family typewriter
-dist/
-\family default
- folder, or by either entering the following at the command prompt:
+ on the appropriate executable, or by either entering the following at the
+ command prompt:
 \end_layout
 
 \begin_layout Standard
 
 \family typewriter
 >./fmrd-main.py
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /home/howard/research/soccermetrics/SoccerResultDB/fmrd-desktop/docs/screenshots/fmrd-login-backend.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Database backend selector.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+You will see a dialog that will allow you to select a database backend.
+ As of version 1.3.0, FMRD is compatible with PostgreSQL and SQLite3 databases.
+ Select one of the two options and press Ok.
+\end_layout
+
+\begin_layout Subsection
+SQLite backend
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /home/howard/research/soccermetrics/SoccerResultDB/fmrd-desktop/docs/screenshots/fmrd-login-sqlite.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+SQLite backend dialog.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+If you select the SQLite backend, you will next see a SQLite-specific dialog.
+ There is a pair of radio buttons along the top of the dialog to select
+ between data-entry switchboards for users and administrators.
+ Below the radio buttons is an Open Database File push button.
+ Click on this button to open the database file dialog.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /home/howard/research/soccermetrics/SoccerResultDB/fmrd-desktop/docs/screenshots/fmrd-login-dbfile.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+SQLite database file selector.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The file dialog will contain all database files with a 
+\family typewriter
+*.db
+\family default
+ extension.
+ Select the appropriate file and click the Open button to continue.
+\end_layout
+
+\begin_layout Subsection
+PostgreSQL backend
 \end_layout
 
 \begin_layout Standard
@@ -277,15 +531,11 @@ status open
 \begin_inset Caption
 
 \begin_layout Plain Layout
-Login Window
+Login window for PostgreSQL backend.
 \end_layout
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Plain Layout
 
 \end_layout
 
@@ -296,17 +546,17 @@ Login Window
 
 \begin_layout Standard
 \noindent
-The user will be challenged by the login dialog to enter the database name,
- username and password.
+If you select the PostgreSQL backend, you will be challenged by the login
+ dialog to enter the database name, username and password.
  There is also a pair of radio buttons along the top of the dialog to select
  between data-entry switchboards for users and administrators.
  
 \end_layout
 
 \begin_layout Standard
-After the login information is entered, the user can authenticate by pressing
+After the login information is entered, you can authenticate by pressing
  the Ok button (keyboard shortcut Alt-O).
- If the user wishes to exit the program, press the Cancel button (Alt-C).
+ If you wish to exit the program, press the Cancel button (Alt-C).
 \end_layout
 
 \begin_layout Standard
@@ -348,7 +598,7 @@ status open
 
 \begin_layout Plain Layout
 \begin_inset Graphics
-	filename /home/howard/research/soccermetrics/SoccerResultDB/fmrd-desktop/docs/screenshots/fmrd-user-switchboard.png
+	filename /home/howard/research/soccermetrics/SoccerResultDB/fmrd-desktop/docs/screenshots/fmrd-user-switchboard-natl.png
 	scale 50
 
 \end_inset
@@ -363,7 +613,7 @@ status open
 
 \begin_layout Plain Layout
 \begin_inset Graphics
-	filename /home/howard/research/soccermetrics/SoccerResultDB/fmrd-desktop/docs/screenshots/fmrd-admin-switchboard.png
+	filename /home/howard/research/soccermetrics/SoccerResultDB/fmrd-desktop/docs/screenshots/fmrd-admin-switchboard-natl.png
 	scale 50
 
 \end_inset
@@ -470,7 +720,7 @@ About
 
 \end_deeper
 \begin_layout Section
-Getting Started with Data Entry
+Data Entry
 \end_layout
 
 \begin_layout Standard
@@ -478,7 +728,11 @@ This section describes the data entry dialogs on the application.
  For each dialog there is a read-only field for the ID number of the current
  record and fields that populate the underlying database table by entering
  data or selecting from a data list.
- Unless stated otherwise, the fields cannot be left blank or unselected.
+ Unless stated otherwise, 
+\series bold
+the fields cannot be left blank or unselected
+\series default
+.
  
 \end_layout
 
@@ -560,12 +814,6 @@ The Competitions dialog allows entry of the names of the league competitions.
 \end_layout
 
 \begin_layout Standard
-If data from multiple league seasons are to be contained in a single database,
- it is recommended that the user differentiate the competition names, such
- as "2009-10 English Premier League" and "2010-11 English Premier League".
-\end_layout
-
-\begin_layout Standard
 \begin_inset Float figure
 placement H
 wide false
@@ -623,7 +871,7 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename /home/howard/research/soccermetrics/SoccerResultDB/fmrd-desktop/docs/screenshots/fmrd-venues.png
+	filename /home/howard/research/soccermetrics/SoccerResultDB/fmrd-desktop/docs/screenshots/fmrd-venues-natl.png
 	scale 50
 
 \end_inset
@@ -1275,7 +1523,7 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename /home/howard/research/soccermetrics/SoccerResultDB/fmrd-desktop/docs/screenshots/fmrd-matches.png
+	filename /home/howard/research/soccermetrics/SoccerResultDB/fmrd-desktop/docs/screenshots/fmrd-matches-natl.png
 	scale 50
 
 \end_inset
@@ -1309,6 +1557,11 @@ The following fields are in the Match dialog:
 \end_layout
 
 \begin_layout Itemize
+Competition Overview:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
 
 \series bold
 Date
@@ -1316,11 +1569,6 @@ Date
 : Date of the match in ISO YYYY-MM-DD format.
 \end_layout
 
-\begin_layout Itemize
-Match Overview:
-\end_layout
-
-\begin_deeper
 \begin_layout Itemize
 
 \series bold
@@ -1332,11 +1580,84 @@ Competition
 \begin_layout Itemize
 
 \series bold
-Round
+Phase
 \series default
-: The matchday to which the match belongs.
+: The competition phase in which the match belongs.
 \end_layout
 
+\end_deeper
+\begin_layout Itemize
+League Phase:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\series bold
+Round
+\series default
+: The matchday of the league phase match.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Group (Mini-League) Phase:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\series bold
+Round
+\series default
+: The round of the football competition in which the group match belongs.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Group
+\series default
+: The specific group name corresponding to the group phase match.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Matchday
+\series default
+: The matchday of the group phase match.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Knockout Phase:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\series bold
+Round
+\series default
+: The round of the football competition in which the knockout phase match
+ belongs.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Matchday
+\series default
+: The matchday of the knockout phase match.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Match Overview:
+\end_layout
+
+\begin_deeper
 \begin_layout Itemize
 
 \series bold
@@ -1351,6 +1672,15 @@ Venue
 Referee
 \series default
 : The central referee for the match.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Attendance
+\series default
+: The number of people who attended the football match.
+ Default attendance is 0.
 \end_layout
 
 \end_deeper
@@ -1379,16 +1709,29 @@ Match Time:
  Default elapsed time is 45.
 \end_layout
 
-\end_deeper
 \begin_layout Itemize
 
 \series bold
-Attendance
+1st ET
 \series default
-: The number of people who attended the football match.
- Default attendance is 0.
+: The elapsed time of the first extra time period (including stoppage time),
+ in minutes.
+ Time must be nonnegative (zero minutes permitted).
+ Default elapsed time is 0.
 \end_layout
 
+\begin_layout Itemize
+
+\series bold
+2nd ET
+\series default
+: The elapsed time of the second extra time period (including stoppage time),
+ in minutes.
+ Time must be nonnegative (zero minutes permitted).
+ Default elapsed time is 0.
+\end_layout
+
+\end_deeper
 \begin_layout Itemize
 Home/Away Teams:
 \end_layout
@@ -1704,47 +2047,90 @@ The Match event dialogs use a series of listboxes to filter the database
 \end_layout
 
 \begin_layout Enumerate
-Upon opening the dialog, only the 
-\series bold
-Competition
-\series default
- listbox will be activated.
+Upon opening the dialog, only the Competition listbox will be activated.
  Select the appropriate competition.
 \end_layout
 
 \begin_layout Enumerate
-The 
-\series bold
-Rounds
-\series default
- listbox will become active.
- The listbox will be populated with the matchdays for which there exist
- a competition's matches in the database.
- Select the appropriate matchday.
+The Phases listbox will become active.
+ The listbox will be contain the three main phases in a football competition
+ -- League, Knockout, or Group phase.
+ Select the appropriate phase.
 \end_layout
 
 \begin_layout Enumerate
-The 
+The following listboxes will become active upon selection of the Competition
+ Phase:
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+
 \series bold
-Match
+League
 \series default
- listbox will become active.
- It will be populated with the matches of the selected competition and matchday.
- Select the appropriate match.
+: The Round listbox will become active.
+ It will be populated with the league rounds for which there exist entries
+ in the Matches table.
+ Select the appropriate round.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Knockout
+\series default
+: The Knockout Round listbox will become active.
+ It will be populated with the knockout rounds for which there exist entries
+ in the Matches table.
+ Select the desired knockout round.
+ 
+\begin_inset Newline newline
+\end_inset
+
+The Matchdays listbox will then become active and populate in the same manner.
+ Select the desired matchday.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Group
+\series default
+: The Group Round listbox will become active.
+ It will be populated with the group stage rounds for which there exist
+ entries in the Matches table.
+ Select the desired group round.
+\begin_inset Newline newline
+\end_inset
+
+The Group listbox will then become active and populate in the same manner,
+ followed by the Matchdays listbox.
+ Make the desired selections in each listbox.
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+After the phase-specific fields has been selected, the Match listbox will
+ become active.
+ It will be populated with the matches of the selected competition and phase-spe
+cific fields.
+ Select the desired match.
 \end_layout
 
 \begin_layout Standard
 Upon selecting the match, the rest of the dialog will become active if there
- are entries in the database corresponding to the selected match, matchday,
- and competition, or only the Add/Close buttons will become active in the
- case of no entries.
+ are entries in the database corresponding to the selected competition,
+ phase-specific information, and match, or only the Add/Close buttons will
+ become active in the case of no entries.
 \end_layout
 
 \begin_layout Standard
-If there are entries in the database that correspond to the selected match,
- matchday, and competition, the dialog will start at the first of the entries.
- The user can advance through the entries, add a new entry, or modify current
- entries.
+If there are entries in the database that correspond to the selected competition
+, phase-specific details, and match, the dialog will start at the first
+ of the entries.
+ You can either advance through the entries, add a new entry, or modify
+ current entries.
 \end_layout
 
 \begin_layout Standard
@@ -1788,7 +2174,7 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename /home/howard/research/soccermetrics/SoccerResultDB/fmrd-desktop/docs/screenshots/fmrd-goals.png
+	filename /home/howard/research/soccermetrics/SoccerResultDB/fmrd-desktop/docs/screenshots/fmrd-goals-natl.png
 	scale 50
 
 \end_inset
@@ -1884,7 +2270,7 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename /home/howard/research/soccermetrics/SoccerResultDB/fmrd-desktop/docs/screenshots/fmrd-penalties.png
+	filename /home/howard/research/soccermetrics/SoccerResultDB/fmrd-desktop/docs/screenshots/fmrd-penalties-natl.png
 	scale 50
 
 \end_inset
@@ -1981,7 +2367,7 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename /home/howard/research/soccermetrics/SoccerResultDB/fmrd-desktop/docs/screenshots/fmrd-offenses.png
+	filename /home/howard/research/soccermetrics/SoccerResultDB/fmrd-desktop/docs/screenshots/fmrd-offenses-natl.png
 	scale 50
 
 \end_inset
@@ -2079,7 +2465,7 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename /home/howard/research/soccermetrics/SoccerResultDB/fmrd-desktop/docs/screenshots/fmrd-subs.png
+	filename /home/howard/research/soccermetrics/SoccerResultDB/fmrd-desktop/docs/screenshots/fmrd-subs-natl.png
 	scale 50
 
 \end_inset
@@ -2261,6 +2647,307 @@ Match Time
  user may enter the stoppage time, also in whole minutes.
 \end_layout
 
+\begin_layout Subsubsection
+Penalty Kick Shootouts
+\end_layout
+
+\begin_layout Standard
+The Penalty Kick Shootout dialog is used to record all events during a penalty
+ kick shootout at the end of a knockout stage match.
+ It also records which team opened the shootout by kicking first.
+ The players eligible to participate in the penalty shootout are those players
+ still on the pitch at the end of the second extra time period, that is:
+\end_layout
+
+\begin_layout Enumerate
+Players who started and were not substituted out of the match
+\end_layout
+
+\begin_layout Enumerate
+Players who did not start and were substituted into the match, without being
+ substituted out themselves.
+\end_layout
+
+\begin_layout Standard
+Consistent with the rules that govern penalty shootouts, an eligible player
+ may take only one penalty during a shootout rotation of 11 rounds.
+ (The first rotation is defined as rounds 1-11, the second rotation defined
+ rounds 12-22, and so on.) The Penalty Kick Shootout dialog filters the listboxes
+ so that only the rounds in which both teams have not taken a penalty are
+ listed and the players still eligible to take a penalty in the current
+ rotation are listed.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /home/howard/research/soccermetrics/SoccerResultDB/fmrd-desktop/docs/screenshots/fmrd-shootouts.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Penalty Shootouts data entry dialog.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The following fields are used to filter the database so that the user views
+ (and inputs) data for a specific team in a specific knockout match:
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Competition
+\series default
+: The competition to which the match belongs.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Knockout Round
+\series default
+: The round of the football competition in which the knockout phase match
+ belongs.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Matchday
+\series default
+: The matchday of the knockout phase match.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Match
+\series default
+: The knockout phase match corresponding to selected competition, knockout
+ round, and matchday.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Team Kicked First
+\series default
+: Of the participating teams in the selected match, the side that kicked
+ first in the penalty shootout.
+\end_layout
+
+\begin_layout Standard
+Upon selecting the Team Kicked First field, the rest of the dialog will
+ become active if there are entries in the database corresponding to the
+ selected competition, knockout-specific details, and match, or only the
+ Add/Close buttons will become active in the case of no entries.
+\end_layout
+
+\begin_layout Standard
+If there are no knockout matches in the database, an error message will
+ appear:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /home/howard/research/soccermetrics/SoccerResultDB/fmrd-desktop/docs/screenshots/fmrd-ko-table-error.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Error prompt for lack of Knockout stage matches in database.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+If there are entries in the database that correspond to the selected competition
+, phase-specific details, and match, the dialog will start at the first
+ of the entries.
+ You can either advance through the entries, add a new entry, or modify
+ current entries.
+ The Team Kicked First field will become active on the first entry only.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /home/howard/research/soccermetrics/SoccerResultDB/fmrd-desktop/docs/screenshots/fmrd-shootouts-rec-2.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Second record in Penalty Shootouts data entry dialog.
+ Note the disabled Team Kicked First field.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The remaining fields are used to enter information into the Penalty Shootouts
+ table:
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Round
+\series default
+: The round of the penalty kick shootout.
+ Only the rounds in which both teams have not yet participated will be displayed.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Team
+\series default
+: One of the two teams participating in the match, who have not yet participated
+ in this shootout round.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Player
+\series default
+: A player from the selected team who is in the match lineup and is eligible
+ to participate in the penalty shootout.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Penalty Outcome
+\series default
+: The outcome of the penalty kick.
+\end_layout
+
+\begin_layout Section
+Data Entry Best Practices
+\end_layout
+
+\begin_layout Standard
+The Football Match Result Database has become a useful schema for organizing
+ football match data.
+ In the course of development and testing of the FMRD-Desktop application,
+ we've developed a list of Best Practices that will facilitate a reliable
+ database:
+\end_layout
+
+\begin_layout Itemize
+If data from multiple league seasons are to be contained in a single database,
+ it is best to differentiate the Competition names by the year, e.g.
+ "2009-10 English Premier League" and "2010-11 English Premier League".
+\end_layout
+
+\begin_layout Itemize
+The player positions are described by flank location instead of role.
+ So "central midfielder" can be either "attacking midfielder" or "defensive/hold
+ing midfielder".
+\end_layout
+
+\begin_layout Itemize
+The Match Overview and Personnel tables can be populated in any order, with
+ the exception of Venues if there are home teams to be assigned to a venue.
+ In this situation, the Teams table must be populated first.
+\end_layout
+
+\begin_layout Itemize
+Even if a player is known by a nickname, it is best to enter his first and
+ surnames if known.
+\end_layout
+
+\begin_layout Itemize
+Measurement units are metric/ISO.
+ So all length dimensions are in meters, temperatures in degrees Celsius,
+ date in YYYY-MM-DD and time in 24-hour HH:MM format.
+\end_layout
+
+\begin_layout Itemize
+Populate the Match Event dialogs in the order of their occurrence in the
+ football match.
+ For example, if a player is substituted into the match in the 50th minute,
+ scored a goal in the 55th minute, and is cautioned in the 70th minute,
+ access the Substitutions, Goals, and Offenses dialog in that order.
+\end_layout
+
+\begin_layout Itemize
+If there is a penalty kick shootout, those events should be recorded last,
+ or at the very least after all substitution data have been entered into
+ the database.
+\end_layout
+
 \begin_layout Section
 Altering the Base Tables
 \end_layout
@@ -2320,17 +3007,19 @@ Overview submenu in Setup menu.
 \end_layout
 
 \begin_layout Subsubsection
-Field Surfaces
+Phases
 \end_layout
 
 \begin_layout Standard
-The Field Surfaces dialog allows the user to change the description of the
- playing surfaces of a football pitch.
- The 
+The Competition Phases dialog allows you to change the descriptors of the
+ competition phases in a football competition.
+ The three main phases are "League", "Knockout", or "Group".
+ There shouldn't be any need to change the descriptors, but if there is,
+ the 
 \series bold
-Field Surface
+Phase Description
 \series default
- field (Alt-F) is the only active field.
+ field (Alt-P) is the only active field.
 \end_layout
 
 \begin_layout Standard
@@ -2343,7 +3032,7 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename /home/howard/research/soccermetrics/SoccerResultDB/fmrd-desktop/docs/screenshots/fmrd-setup-surfaces.png
+	filename /home/howard/research/soccermetrics/SoccerResultDB/fmrd-desktop/docs/screenshots/fmrd-setup-phases.png
 	scale 50
 
 \end_inset
@@ -2355,7 +3044,7 @@ status open
 \begin_inset Caption
 
 \begin_layout Plain Layout
-Field Surfaces setup dialog.
+Competition Phase setup dialog.
 \end_layout
 
 \end_inset
@@ -2369,14 +3058,64 @@ Field Surfaces setup dialog.
 \end_layout
 
 \begin_layout Subsubsection
-Competition Phase
+Groups
 \end_layout
 
 \begin_layout Standard
-The Competition Phase dialog allows the user to change the matchday descriptions
- in a league competition.
- In some leagues all of the teams play matches on the same day or weekend;
- in other leagues matches are spread out during the week.
+The Groups dialog allows you to change the descriptors of the group names
+ in the group phase of a football competition.
+ Some descriptors use the alphabet (A,B,C,...), while others use numbers (1,2,3...).
+ You can choose either an alpha or numeric descriptor when pre-loading the
+ database.
+ The 
+\series bold
+Group Name
+\series default
+ field (Alt-G) is the only active field.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /home/howard/research/soccermetrics/SoccerResultDB/fmrd-desktop/docs/screenshots/fmrd-setup-groups.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Groups setup dialog.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Rounds
+\end_layout
+
+\begin_layout Standard
+The Rounds dialog allows you to change the round descriptions for use in
+ either a league match or the penalty-kick shootout of a knockout match.
  The 
 \series bold
 Round Description
@@ -2406,7 +3145,7 @@ status open
 \begin_inset Caption
 
 \begin_layout Plain Layout
-Competition Phase setup dialog.
+Rounds setup dialog.
 \end_layout
 
 \end_inset
@@ -2414,7 +3153,101 @@ Competition Phase setup dialog.
 
 \end_layout
 
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Group Rounds
+\end_layout
+
+\begin_layout Standard
+The Group Rounds dialog allows you to change the round descriptions for
+ use in a group match.
+ The 
+\series bold
+Group Round Description
+\series default
+ field (Alt-G) is the only active field.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
 \begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /home/howard/research/soccermetrics/SoccerResultDB/fmrd-desktop/docs/screenshots/fmrd-setup-group-rounds.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Group Rounds setup dialog.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Knockout Rounds
+\end_layout
+
+\begin_layout Standard
+The Knockout Rounds dialog allows you to change the round descriptions for
+ use in a knockout match.
+ The 
+\series bold
+Knockout Round Description
+\series default
+ field (Alt-K) is the only active field.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /home/howard/research/soccermetrics/SoccerResultDB/fmrd-desktop/docs/screenshots/fmrd-setup-knockout-rounds.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Knockout Rounds setup dialog.
+\end_layout
+
+\end_inset
+
 
 \end_layout
 
@@ -2660,6 +3493,55 @@ status open
 
 \begin_layout Plain Layout
 Weather Conditions setup dialog.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Field Surfaces
+\end_layout
+
+\begin_layout Standard
+The Field Surfaces dialog allows the user to change the description of the
+ playing surfaces of a football pitch.
+ The 
+\series bold
+Field Surface
+\series default
+ field (Alt-F) is the only active field.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /home/howard/research/soccermetrics/SoccerResultDB/fmrd-desktop/docs/screenshots/fmrd-setup-surfaces.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Field Surfaces setup dialog.
 \end_layout
 
 \end_inset
