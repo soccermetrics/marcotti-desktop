@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'gui/round_setup.ui'
 #
-# Created: Thu Dec 29 23:31:24 2011
+# Created: Thu Jan  5 03:38:34 2012
 #      by: PyQt4 UI code generator 4.7.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -113,7 +113,7 @@ class Ui_RoundSetupDlg(object):
         QtCore.QMetaObject.connectSlotsByName(RoundSetupDlg)
 
     def retranslateUi(self, RoundSetupDlg):
-        RoundSetupDlg.setWindowTitle(QtGui.QApplication.translate("RoundSetupDlg", "Competition Phase Setup", None, QtGui.QApplication.UnicodeUTF8))
+        RoundSetupDlg.setWindowTitle(QtGui.QApplication.translate("RoundSetupDlg", "League/Shootout Round Setup", None, QtGui.QApplication.UnicodeUTF8))
         self.label.setText(QtGui.QApplication.translate("RoundSetupDlg", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"

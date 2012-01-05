@@ -23,7 +23,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>Competition Phase Setup</string>
+   <string>League/Shootout Round Setup</string>
   </property>
   <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
