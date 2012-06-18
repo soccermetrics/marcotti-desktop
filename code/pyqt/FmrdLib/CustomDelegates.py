@@ -308,18 +308,10 @@ class SwitchPlayerComboBoxDelegate(QSqlRelationalDelegate):
         lineupListModel = editor.model()
         lineupListModel.setFilter(QString())
         
-        # get current matchup
-        matchup = self.matchSelect.currentText()
-        
-        # get match_id by making a query on match_list with matchup
-        query = QSqlQuery()
-        query.prepare("SELECT match_id FROM match_list WHERE matchup = ?")
-        query.addBindValue(QVariant(matchup))
-        query.exec_()
-        if query.next():
-            match_id = query.value(0).toString()
-        else:
-            match_id = "-1"
+        # get current match_id
+        matchModel = self.matchSelect.model()
+        matchIndex = self.matchSelect.currentIndex()
+        match_id = matchModel.record(matchIndex).value("match_id").toInt()[0]
         
         # get player name from model
         playerName = eventModel.data(index).toString()
@@ -395,8 +387,7 @@ class SubOutComboBoxDelegate(QStyledItemDelegate):
 #        print "Calling init() of SubOutComboBoxDelegate"
         super(SubOutComboBoxDelegate, self).__init__(parent)
         
-        self.match = parent.matchSelect
-        self.team = parent.teamSelect        
+        self.matchSelect = parent.matchSelect
         
     def setEditorData(self, editor, index):
         """Writes current data from model into editor. 
@@ -415,21 +406,13 @@ class SubOutComboBoxDelegate(QStyledItemDelegate):
         subsLinkingModel = index.model()
 
         # get match_id from current text in matchSelect (main form)
-        matchup = self.match.currentText()
+        matchModel = self.matchSelect.model()
+        matchIndex = self.matchSelect.currentIndex()
+        match_id = matchModel.record(matchIndex).value("match_id").toInt()[0]
        
         # lineup list model for combobox, reset filter on lineup list
         lineupListModel = editor.model()
         lineupListModel.setFilter(QString())
-
-        # get match_id by making a query on match_list with matchup
-        matchQuery = QSqlQuery()
-        matchQuery.prepare("SELECT match_id FROM match_list WHERE matchup = ?")
-        matchQuery.addBindValue(QVariant(matchup))
-        matchQuery.exec_()
-        if matchQuery.next():
-            match_id = matchQuery.value(0).toString()
-        else:
-            match_id = "-1"
 
         # get lineup_id from linking model
         # if there exists an entry, then find player name and set filter string for
@@ -526,8 +509,7 @@ class SubInComboBoxDelegate(QStyledItemDelegate):
         """Constructor for SubInComboBoxDelegate class."""
         super(SubInComboBoxDelegate, self).__init__(parent)
         
-        self.match = parent.matchSelect
-        self.team = parent.teamSelect
+        self.matchSelect = parent.matchSelect
         
     def setEditorData(self, editor, index):
         """Writes current data from model into editor. 
@@ -546,22 +528,14 @@ class SubInComboBoxDelegate(QStyledItemDelegate):
         subsLinkingModel = index.model()
 
         # get match_id from current text in matchSelect (main form)
-        matchup = self.match.currentText()
+        matchModel = self.matchSelect.model()
+        matchIndex = self.matchSelect.currentIndex()
+        match_id = matchModel.record(matchIndex).value("match_id").toInt()[0]
        
         # lineup list model for combobox, reset filter on lineup list
         lineupListModel = editor.model()
         lineupListModel.setFilter(QString())        
             
-        # get match_id by making a query on match_list with matchup
-        matchQuery = QSqlQuery()
-        matchQuery.prepare("SELECT match_id FROM match_list WHERE matchup = ?")
-        matchQuery.addBindValue(QVariant(matchup))
-        matchQuery.exec_()
-        if matchQuery.next():
-            match_id = matchQuery.value(0).toString()
-        else:
-            match_id = "-1"
-
         # get lineup_id from linking model
         # if there exists an entry, then find player name and set filter string for
         # Player combobox
@@ -743,7 +717,7 @@ class ShootoutPlayerComboBoxDelegate(QSqlRelationalDelegate):
                 "(SELECT player_id FROM tbl_players WHERE country_id = %2)) "
                 "OR (lineup_id IN (SELECT lineup_id FROM tbl_insubstitutions) AND "
                 "lineup_id IN (SELECT lineup_id FROM tbl_lineups WHERE lp_starting = 'false' AND match_id = %1 AND player_id IN "
-                "(SELECT player_id FROM tbl_players WHERE country_id = %2)) "
+                "(SELECT player_id FROM tbl_players WHERE country_id = %2))) "
                 ).arg(str(match_id)).arg(str(team_id))
         lineupQuery.prepare(eligibleQueryString)
         lineupQuery.exec_()
@@ -1005,18 +979,10 @@ class GoalPlayerComboBoxDelegate(QSqlRelationalDelegate):
         lineupListModel = editor.model()
         lineupListModel.setFilter(QString())
         
-        # get current matchup
-        matchup = self.matchSelect.currentText()
-        
-        # get match_id by making a query on match_list with matchup
-        query = QSqlQuery()
-        query.prepare("SELECT match_id FROM match_list WHERE matchup = ?")
-        query.addBindValue(QVariant(matchup))
-        query.exec_()
-        if query.next():
-            match_id = query.value(0).toString()
-        else:
-            match_id = "-1"
+        # get match_id from current index of matchup
+        matchModel = self.matchSelect.model()
+        matchIndex = self.matchSelect.currentIndex()
+        match_id = matchModel.record(matchIndex).value("match_id").toInt()[0]
             
         # filter lineup list model by match_id
         lineupListModel.setFilter(QString("lineup_id IN (SELECT lineup_id FROM tbl_lineups WHERE match_id = %1)").arg(match_id))
