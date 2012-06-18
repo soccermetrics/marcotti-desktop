@@ -477,15 +477,12 @@ class GoalEntryDlg(QDialog, ui_goalentry.Ui_GoalEntryDlg):
         # clear filter
         self.model.setFilter(QString())
         
-        # get current index
+        # get match_id from current index of matchup
         currentIndex = self.matchSelect.currentIndex()
-        
-        # get match_id
         match_id = self.matchModel.record(currentIndex).value("match_id").toString()
         
         # filter goals to those scored by players who were in the lineup for the match (match_id)
-        self.model.setFilter(QString("tbl_goals.lineup_id IN (SELECT lineup_id FROM lineup_list WHERE matchup IN "
-                                                    "(SELECT matchup FROM match_list WHERE match_id = %1))").arg(match_id))
+        self.model.setFilter(QString("tbl_goals.lineup_id IN (SELECT lineup_id FROM tbl_lineups WHERE match_id = %1)").arg(match_id))
         self.mapper.toFirst()        
         
         # enable add/delete buttons

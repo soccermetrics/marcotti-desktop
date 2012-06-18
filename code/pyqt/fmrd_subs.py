@@ -600,8 +600,9 @@ class SubsEntryDlg(QDialog, ui_subsentry.Ui_SubsEntryDlg):
         # suppress signals from inplayerSelect
         self.inplayerSelect.blockSignals(True)
         
-        # get matchup from current text in matchSelect (main form)
-        matchup = self.matchSelect.currentText()
+        # get match_id from current index of matchup
+        currentIndex = self.matchSelect.currentIndex()
+        match_id = self.matchModel.record(currentIndex).value("match_id").toString()
        
         # get team name from current text in teamSelect (main form)
         teamName = self.teamSelect.currentText()
@@ -622,16 +623,6 @@ class SubsEntryDlg(QDialog, ui_subsentry.Ui_SubsEntryDlg):
         else:
            lineup_id = "-1"
            
-        # get match_id by making a query on match_list with matchup
-        matchQuery = QSqlQuery()
-        matchQuery.prepare("SELECT match_id FROM match_list WHERE matchup = ?")
-        matchQuery.addBindValue(QVariant(matchup))
-        matchQuery.exec_()
-        if matchQuery.next():
-            match_id = matchQuery.value(0).toString()
-        else:
-            match_id = "-1"
-
         # get team_id by querying tbl_countries with team name
         teamQuery = QSqlQuery()
         teamQuery.prepare("SELECT country_id FROM tbl_countries WHERE cty_name = ?")
@@ -683,7 +674,8 @@ class SubsEntryDlg(QDialog, ui_subsentry.Ui_SubsEntryDlg):
         self.outplayerSelect.blockSignals(True)
         
         # get match_id from current text in matchSelect (main form)
-        matchup = self.matchSelect.currentText()
+        currentIndex = self.matchSelect.currentIndex()
+        match_id = self.matchModel.record(currentIndex).value("match_id").toString()
        
         # get team_id from current text in teamSelect (main form)
         teamName = self.teamSelect.currentText()
@@ -705,16 +697,6 @@ class SubsEntryDlg(QDialog, ui_subsentry.Ui_SubsEntryDlg):
         else:
            lineup_id = "-1"
            
-        # get match_id by making a query on match_list with matchup
-        matchQuery = QSqlQuery()
-        matchQuery.prepare("SELECT match_id FROM match_list WHERE matchup = ?")
-        matchQuery.addBindValue(QVariant(matchup))
-        matchQuery.exec_()
-        if matchQuery.next():
-            match_id = matchQuery.value(0).toString()
-        else:
-            match_id = "-1"
-
         # get team_id by querying tbl_countries with team name
         teamQuery = QSqlQuery()
         teamQuery.prepare("SELECT country_id FROM tbl_countries WHERE cty_name = ?")
@@ -1539,8 +1521,11 @@ class SwitchEntryDlg(QDialog, ui_switchentry.Ui_SwitchEntryDlg):
         """
         self.playerSelect.blockSignals(True)
         
-        # get current matchup from current text in matchSelect (main form)
-        matchup = self.matchSelect.currentText()
+        # get current index
+        currentIndex = self.matchSelect.currentIndex()
+        
+        # get match_id
+        match_id = self.matchModel.record(currentIndex).value("match_id").toString()
                 
         # get current team from current text in teamSelect (main form)
         teamName = self.teamSelect.currentText()
@@ -1628,8 +1613,7 @@ class SwitchEntryDlg(QDialog, ui_switchentry.Ui_SwitchEntryDlg):
         match_id = self.matchModel.record(currentIndex).value("match_id").toString()
         
         # filter position switches of players who were in lineup for match (match_id)
-        self.model.setFilter(QString("tbl_switchpositions.lineup_id IN (SELECT lineup_id FROM lineup_list WHERE matchup IN "
-                                                    "(SELECT matchup FROM match_list WHERE match_id = %1))").arg(match_id))
+        self.model.setFilter(QString("tbl_switchpositions.lineup_id IN (SELECT lineup_id FROM tbl_lineups WHERE match_id = %1)").arg(match_id))
         self.mapper.toFirst()        
         
         # filter teams involved in match

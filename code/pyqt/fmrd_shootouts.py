@@ -608,7 +608,7 @@ class PenShootoutEntryDlg(QDialog, ui_penshootoutentry.Ui_PenShootoutEntryDlg):
                 "(SELECT player_id FROM tbl_players WHERE country_id = %2)) "
                 "OR (lineup_id IN (SELECT lineup_id FROM tbl_insubstitutions) AND "
                 "lineup_id IN (SELECT lineup_id FROM tbl_lineups WHERE lp_starting = 'false' AND match_id = %1 AND player_id IN "
-                "(SELECT player_id FROM tbl_players WHERE country_id = %2)) "
+                "(SELECT player_id FROM tbl_players WHERE country_id = %2))) "
                 ).arg(match_id).arg(team_id)  
         lineupQuery.prepare(eligibleQueryString)
         lineupQuery.exec_()
@@ -627,7 +627,7 @@ class PenShootoutEntryDlg(QDialog, ui_penshootoutentry.Ui_PenShootoutEntryDlg):
         participateQuery = QSqlQuery()
         participateQuery.prepare(QString("SELECT lineup_id FROM tbl_lineups WHERE match_id = %1 AND player_id IN "
                                  "(SELECT player_id FROM tbl_players WHERE country_id = %2) "
-                                 "AND lineup_id IN (SELECT lineup_id FROM tbl_penaltyshootouts WHERE round_id = ?)").arg(match_id, team_id))
+                                 "INTERSECT SELECT lineup_id FROM tbl_penaltyshootouts WHERE round_id = ?").arg(match_id, team_id))
         for round_id in rotationList:
             participateQuery.addBindValue(round_id)
             participateQuery.exec_()
@@ -653,7 +653,7 @@ class PenShootoutEntryDlg(QDialog, ui_penshootoutentry.Ui_PenShootoutEntryDlg):
         
         # get current index from team combobox
         teamIndex = self.teamSelect.currentIndex()
-        team_id = self.teamModel.record(teamIndex).value("team_id").toInt()[0]
+        team_id = self.teamModel.record(teamIndex).value("country_id").toInt()[0]
         
         # get current index from shootout round combobox
         roundIndex = self.roundSelect.currentIndex()
@@ -728,8 +728,7 @@ class PenShootoutEntryDlg(QDialog, ui_penshootoutentry.Ui_PenShootoutEntryDlg):
             teamQuery.addBindValue(match_id)
             teamQuery.exec_()
             if teamQuery.next():
-                team_id = teamQuery.value(0).toInt()[0]
-            teamList.append(team_id)
+                teamList.append(teamQuery.value(0).toInt()[0])
             teamList = list(set(teamList))
             
         # filter teams involved in match
@@ -816,8 +815,7 @@ class PenShootoutEntryDlg(QDialog, ui_penshootoutentry.Ui_PenShootoutEntryDlg):
         match_id = self.matchModel.record(matchIndex).value("match_id").toString()
         
         # filter penalty shootouts taken by players who were in lineup for match (match_id)
-        self.model.setFilter(QString("tbl_penaltyshootouts.lineup_id IN (SELECT lineup_id FROM lineup_list WHERE matchup IN "
-                                                    "(SELECT matchup FROM match_list WHERE match_id = %1))").arg(match_id))
+        self.model.setFilter(QString("tbl_penaltyshootouts.lineup_id IN (SELECT lineup_id FROM tbl_lineups WHERE match_id = %1)").arg(match_id))
         self.mapper.toFirst()       
         self.refreshSubForm()
         # refresh team select box

@@ -211,7 +211,7 @@ class PenaltyEntryDlg(QDialog, ui_penaltyentry.Ui_PenaltyEntryDlg):
         self.mapper.setSubmitPolicy(QDataWidgetMapper.ManualSubmit)
         self.mapper.setModel(self.model)
         penaltyDelegate = GenericDelegate(self)
-        penaltyDelegate.insertColumnDelegate(PenaltyEntryDlg.LINEUP_ID, EventPlayerComboBoxDelegate(self))
+        penaltyDelegate.insertColumnDelegate(PenaltyEntryDlg.LINEUP_ID, GoalPlayerComboBoxDelegate(self))
         self.mapper.setItemDelegate(penaltyDelegate)        
 
         # set up Player combobox
@@ -521,17 +521,10 @@ class PenaltyEntryDlg(QDialog, ui_penaltyentry.Ui_PenaltyEntryDlg):
         lineupListModel = self.playerSelect.model()
         lineupListModel.setFilter(QString())
         
-        # get current matchup
-        matchup = self.matchSelect.currentText()
+        # get match_id from current index of matchup
+        currentIndex = self.matchSelect.currentIndex()
+        match_id = self.matchModel.record(currentIndex).value("match_id").toString()
                 
-        # get match_id by making a query on match_list with matchup
-        query = QSqlQuery()
-        query.prepare("SELECT match_id FROM match_list WHERE matchup = ?")
-        query.addBindValue(QVariant(matchup))
-        query.exec_()
-        if query.next():
-            match_id = query.value(0).toString()
-        
         # get current team
         teamName = self.teamSelect.currentText()
         
@@ -578,8 +571,7 @@ class PenaltyEntryDlg(QDialog, ui_penaltyentry.Ui_PenaltyEntryDlg):
         match_id = self.matchModel.record(currentIndex).value("match_id").toString()
         
         # filter penalties taken by players who were in lineup for match (match_id)
-        self.model.setFilter(QString("tbl_penalties.lineup_id IN (SELECT lineup_id FROM lineup_list WHERE matchup IN "
-                                                    "(SELECT matchup FROM match_list WHERE match_id = %1))").arg(match_id))
+        self.model.setFilter(QString("tbl_penalties.lineup_id IN (SELECT lineup_id FROM tbl_lineups WHERE match_id = %1)").arg(match_id))
         self.mapper.toFirst()        
         
         # filter national teams involved in match

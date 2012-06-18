@@ -206,7 +206,7 @@ class OffenseEntryDlg(QDialog, ui_offenseentry.Ui_OffenseEntryDlg):
         self.mapper.setSubmitPolicy(QDataWidgetMapper.ManualSubmit)
         self.mapper.setModel(self.model)
         foulDelegate = GenericDelegate(self)
-        foulDelegate.insertColumnDelegate(OffenseEntryDlg.LINEUP_ID, EventPlayerComboBoxDelegate(self))
+        foulDelegate.insertColumnDelegate(OffenseEntryDlg.LINEUP_ID, GoalPlayerComboBoxDelegate(self))
         self.mapper.setItemDelegate(foulDelegate)        
 
         # set up Player combobox
@@ -516,17 +516,10 @@ class OffenseEntryDlg(QDialog, ui_offenseentry.Ui_OffenseEntryDlg):
         lineupListModel = self.playerSelect.model()
         lineupListModel.setFilter(QString())
         
-        # get current matchup
-        matchup = self.matchSelect.currentText()
+        # get match_id from current index of matchup
+        currentIndex = self.matchSelect.currentIndex()
+        match_id = self.matchModel.record(currentIndex).value("match_id").toString()
                 
-        # get match_id by making a query on match_list with matchup
-        query = QSqlQuery()
-        query.prepare("SELECT match_id FROM match_list WHERE matchup = ?")
-        query.addBindValue(QVariant(matchup))
-        query.exec_()
-        if query.next():
-            match_id = query.value(0).toString()
-        
         # get current national team
         teamName = self.teamSelect.currentText()
         
@@ -543,7 +536,7 @@ class OffenseEntryDlg(QDialog, ui_offenseentry.Ui_OffenseEntryDlg):
         lineupListModel.setFilter(QString("lineup_id IN "
                                                           "(SELECT lineup_id FROM tbl_lineups WHERE match_id = %1 AND "
                                                           "player_id IN (SELECT player_id FROM tbl_players WHERE country_id = %2))").arg(match_id, team_id))
-                
+        
         # enable remaining comboboxes on form
         for widget in (self.playerSelect, self.foulSelect,  self.cardSelect, self.foultimeEdit):
             widget.setEnabled(True)
@@ -573,8 +566,7 @@ class OffenseEntryDlg(QDialog, ui_offenseentry.Ui_OffenseEntryDlg):
         match_id = self.matchModel.record(currentIndex).value("match_id").toString()
         
         # filter penalties taken by players who were in lineup for match (match_id)
-        self.model.setFilter(QString("tbl_offenses.lineup_id IN (SELECT lineup_id FROM lineup_list WHERE matchup IN "
-                                                    "(SELECT matchup FROM match_list WHERE match_id = %1))").arg(match_id))
+        self.model.setFilter(QString("tbl_offenses.lineup_id IN (SELECT lineup_id FROM tbl_lineups WHERE match_id = %1)").arg(match_id))
         self.mapper.toFirst()        
         
         # filter national teams involved in match
