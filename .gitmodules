@@ -1,6 +1,6 @@
 [submodule "sql"]
 	path = sql
-	url = git@github.com:hhamilton-src/fmrd-sql.git
+	url = git@github.com:soccermetrics/fmrd-sql.git
 [submodule "docs"]
 	path = docs
-	url = git@github.com:hhamilton-src/fmrd-desktop.git
+	url = git@github.com:soccermetrics/fmrd-desktop.git
